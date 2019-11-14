@@ -18,11 +18,18 @@
     "autoload": {
         "psr-4": {
             "": "class/"
-        }
+        },
+        "files": [
+            "function/default.php"
+        ]
     },
     "require": {
         "php": ">=7.0",
         "mathsgod/r": "^3.0",
-        "mathsgod/r-db": "^3.1"
+        "mathsgod/r-db": "^3.1",
+        "twig/twig": "^2.12",
+        "firebase/php-jwt": "^5.0",
+        "twig/extensions": "^1.5",
+        "fortawesome/font-awesome": "^5.11"
     }
 }
