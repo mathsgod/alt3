@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "780fbab61e34bc8ad5d3b1cba3192833",
+    "content-hash": "70efe39d0fa00c12cdc7ee6836a071fb",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -114,6 +114,42 @@
                 "svg"
             ],
             "time": "2019-09-23T18:57:22+00:00"
+        },
+        {
+            "name": "mathsgod/alt-app-core",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/alt-app-core.git",
+                "reference": "28022effbd73557d82ff064f38efcd8860d2f57a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/alt-app-core/mathsgod-alt-app-core-1.1.0-222a33.zip",
+                "reference": "28022effbd73557d82ff064f38efcd8860d2f57a",
+                "shasum": "dc47fc3c4344778a89c7415c2d59be9f8fff7ea6"
+            },
+            "require": {
+                "mathsgod/r-db": "^3.0",
+                "php": ">=7.0",
+                "phpmailer/phpmailer": "^6.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "App\\Core\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "mathsgod@yahoo.com"
+                }
+            ],
+            "time": "2019-11-07T02:58:03+00:00"
         },
         {
             "name": "mathsgod/data-structure",
@@ -263,6 +299,72 @@
             ],
             "description": "psr7",
             "time": "2019-02-13T04:15:40+00:00"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "0ae8505d26fa7fa15d3d2d5ec1e695e854bb1538"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0ae8505d26fa7fa15d3d2d5ec1e695e854bb1538",
+                "reference": "0ae8505d26fa7fa15d3d2d5ec1e695e854bb1538",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-filter": "*",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "1.2.*",
+                "friendsofphp/php-cs-fixer": "^2.2",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "^4.8 || ^5.7",
+                "zendframework/zend-eventmanager": "3.0.*",
+                "zendframework/zend-i18n": "2.7.3",
+                "zendframework/zend-serializer": "2.7.*"
+            },
+            "suggest": {
+                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
+                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
+                "psr/log": "For optional PSR-3 debug logging",
+                "stevenmaguire/oauth2-microsoft": "Needed for Microsoft XOAUTH2 authentication",
+                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPMailer\\PHPMailer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-only"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2019-11-13T20:09:28+00:00"
         },
         {
             "name": "psr/http-message",

@@ -2,12 +2,20 @@
 
 namespace App;
 
+use Composer\Autoload\ClassLoader;
+use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 
 class App extends \R\App
 {
+
+    public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
+    {
+        parent::__construct($root, $loader, $logger);
+        Core\Model::$_db = $this->db;
+    }
 
     public function run()
     {
@@ -21,6 +29,7 @@ class App extends \R\App
 
         $route = $router->getRoute($this->request, $this->loader);
 
+        $request = $request->withAttribute("route", $route);
 
         $class = $route->class;
         $page = new $class($this);

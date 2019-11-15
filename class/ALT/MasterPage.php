@@ -10,7 +10,7 @@ use R\Psr7\Stream;
 class MasterPage extends \R\Page
 {
 
-    private $data = [];
+    public $data = [];
     private $template;
 
     public function __construct($app)

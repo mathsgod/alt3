@@ -8,6 +8,10 @@ use Exception;
 
 class Page extends \App\Page
 {
+    public function __construct(\App\App $app)
+    {
+        parent::__construct($app);
+    }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
@@ -18,6 +22,9 @@ class Page extends \App\Page
 
         try {
             $response = parent::__invoke($request, $response);
+            if ($this->master) {
+                $this->master->data["content"] .= (string) $response;
+            }
         } catch (Exception $e) {
             throw $e;
         }
