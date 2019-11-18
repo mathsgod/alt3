@@ -9,6 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="robots" content="noindex, nofollow">
+    <base href="{{base}}" />
 
     <title>AdminLTE 3 | Starter</title>
 
@@ -18,6 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{system_base}}/adminlte/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <script src="{{system_base}}/plugins/vue/vue.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini text-sm">
@@ -163,14 +167,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="d-block">Alexander Pierce</a>
                     </div>
                 </div>
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column" data-widget="treeview" role="menu" data-accordion="false" id="nav-sidebar">
 
-                        
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+
+                        {% for menu in sidebar_menu %}
+                        <li class="nav-item" is="nav-item" :menu="{{menu|json_encode}}"></li>
+                        {% endfor %}
+
+                        {#
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -203,9 +209,86 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
+
+                     
+                        <!-- Add icons to the links using the .nav-icon cl
+                            ass
+               with font-awesome or any other icon font library -->
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Starter Pages 2
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Active Page</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Inactive Page</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Simple Link
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                           #}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
+
+                {% verbatim %}
+                <script>
+                    Vue.component("nav-item", {
+                        template: `
+                            <li class="has-treeview" :class="{'menu-open':menu.active}">
+                                <a :href="menu.link" class="nav-link" :class="{active:isActive}">
+                                    <i class="nav-icon" :class="menu.icon"></i>
+                                    <p>
+                                        {{menu.label}}
+                                        <i v-if="menu.submenu" class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul v-if="menu.submenu" class="nav nav-treeview">
+                                    <li class="nav-item" v-for="sub in menu.submenu" is="nav-item" :menu="sub"></li>
+                                </ul>
+                            </li>
+                            `,
+                        props: {
+                            menu: Object
+                        }, mounted() {
+
+                        }, computed: {
+                            isActive() {
+                                if (this.menu.submenu) {
+                                    return false;
+                                }
+                                return this.menu.active;
+                            }
+
+                        }
+                    });
+
+                    var v = new Vue({
+                        el: "#nav-sidebar"
+                    });
+                </script>
+
+                {% endverbatim %}
             </div>
             <!-- /.sidebar -->
         </aside>

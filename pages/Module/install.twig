@@ -1,0 +1,204 @@
+<div id="div1">
+
+    <div is="alt-box">
+        <div is="alt-box-body">
+            <div class="form-horizontal" v-if="!useFTP">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">FTP server</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="ftp.server">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Username</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="ftp.username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Password</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="ftp.password">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-success" @click="onClickUseFTP">OK</button>
+                </div>
+            </div>
+
+            <div class="form-horizontal" v-if="useFTP">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Upload path</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" v-model="ftp.path" @click="onClickFTPPath">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="tree" ref="tree">
+                        <div id="ftp_tree" style="max-height:500px; overflow:auto">
+                            <ul>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="repo in repos">
+                        <td><button class="btn btn-xs btn-primary" @click="getRelease(repo)">
+                                <i v-if="!repo.release" class="fa fa-fw fa-angle-up"></i>
+                                <i v-if="repo.release" class="fa fa-fw fa-angle-down"></i>
+                            </button></td>
+                        <td>
+                            <div v-text="repo.full_name"></div>
+
+                            <div v-if="repo.release">
+                                <table class="table table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Tag</th>
+                                            <th>FTP</th>
+                                            <th>Download</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="release in repo.release">
+                                            <td v-text="release.tag_name"></td>
+                                            <td>
+                                                <button v-if="useFTP" class="btn btn-xs btn-success" @click="installRelease(repo,release)">Install</button>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-xs btn-primary" :href="downloadLink(repo,release)">Download</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% verbatim %}
+<script>
+    var vm = new Vue({
+        el: "#div1",
+        data: {
+            ftp: {
+                server: "127.0.0.1",
+                username: "",
+                password: "",
+                path: "/"
+            },
+            repos: [],
+            useFTP: false
+        },
+        created() {
+            this.$http.get("Module/install/getGitHub").then(resp => {
+                this.repos = resp.data;
+            });
+        }, methods: {
+            onClickFTPPath() {
+                var selected_id = "";
+                var that = this;
+                this.$nextTick(() => {
+                    bootbox.dialog({
+                        message: this.$refs.tree,
+                        buttons: {
+                            OK() {
+                                that.ftp.path = selected_id;
+                                that.$forceUpdate();
+                            },
+                            Cancel() {
+
+                            }
+                        }
+                    });
+
+                    $("#ftp_tree").jstree({
+                        core: {
+                            data: {
+                                url: 'Module/install/ftp',
+                                data(node) {
+                                    return {
+                                        id: node.id
+                                    };
+                                }
+                            }
+                        }
+                    }).on("select_node.jstree", (e, data) => {
+                        selected_id = data.node.id;
+                    });
+                });
+
+            },
+            onClickUseFTP() {
+                this.$http.post("Module/install/useFTP", this.ftp).then(resp => {
+                    if (resp.data.error) {
+                        alert(resp.data.error.message);
+                    } else {
+                        this.useFTP = true;
+
+
+
+                    }
+                });
+            },
+            getRelease(repo) {
+
+                if (repo.release) {
+                    repo.release = null;
+                    this.$forceUpdate();
+                    return;
+                }
+
+                this.$http.get("Module/install/getGitHubRelease", {
+                    params: {
+                        full_name: repo.full_name
+                    }
+                }).then(resp => {
+                    repo.release = resp.data;
+                    this.$forceUpdate();
+                });
+            }, installRelease(repo, release) {
+                if (this.ftp.path == "") {
+                    alert("Please select upload path");
+                    return;
+                }
+
+                if (!confirm("Are you sure install module to " + this.ftp.path + "?")) {
+                    return;
+                }
+
+                this.$http.get("Module/install/installRelease", {
+                    params: {
+                        target: this.ftp.path,
+                        name: repo.full_name,
+                        tag: release.tag_name,
+                        use_ftp: this.useFTP ? 1 : 0
+                    }
+                }).then(resp => {
+                    if (resp.data.code == 200) {
+                        alert("Install success");
+                    }
+                });
+            }, downloadLink(repo, release) {
+                return "https://github.com/" + repo.full_name + "/archive/" + release.tag_name + ".zip";
+            }
+        }
+    });
+</script>
+{% endverbatim %}

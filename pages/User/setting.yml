@@ -1,0 +1,9 @@
+class: App\User
+show_create: 1
+icon: fa fa-user fa-fw
+group: System
+
+menu:
+  My favoriate:
+    icon: fa fa-heart fa-fw
+    link: User/myfav

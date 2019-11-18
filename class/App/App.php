@@ -7,6 +7,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
 use R\Psr7\Response;
 use R\Psr7\Stream;
+use Symfony\Component\Yaml\Yaml;
 
 class App extends \R\App
 {
@@ -15,6 +16,30 @@ class App extends \R\App
     {
         parent::__construct($root, $loader, $logger);
         Core\Model::$_db = $this->db;
+
+        //system config
+        $pi = $this->pathInfo();
+        $file = $pi["system_root"] . "/config.ini";
+        if (file_exists($file)) {
+            $c = parse_ini_file($file, true);
+            foreach ($c as $n => $v) {
+                foreach ($v as $a => $b) {
+                    if (!isset($this->config[$n][$a])) {
+                        $this->config[$n][$a] = $b;
+                    }
+                }
+            }
+        }
+        foreach (Config::Query() as $c) {
+            $this->config["user"][$c->name] = $c->value;
+        }
+
+        //user
+        if (!$_SESSION["app"]["user"]) {
+            $_SESSION["app"]["user"] = new User(2);
+        }
+        $this->user = $_SESSION["app"]["user"];
+        $this->user_id = $this->user->user_id;
     }
 
     public function run()
@@ -31,6 +56,17 @@ class App extends \R\App
 
         $request = $request->withAttribute("route", $route);
 
+        //----
+        $ps = explode("/", $route->path);
+        $ps = array_values(array_filter($ps, "strlen"));
+        foreach ($this->modules() as $module) {
+            if ($module->name == $ps[0]) {
+                $this->module = $module;
+                break;
+            }
+        }
+
+
         $class = $route->class;
         $page = new $class($this);
         if ($page) {
@@ -45,6 +81,8 @@ class App extends \R\App
                     $response = $response->withHeader("content-type", "application/json");
                     $response = $response->withBody(new Stream($e->getMessage()));
                 } else {
+                    echo $e->getMessage();
+                    die();
                     $this->alert->danger($e->getMessage());
 
                     if ($referer = $this->request->getHeader("Referer")[0]) {
@@ -123,5 +161,53 @@ class App extends \R\App
         $system_base = str_replace(DIRECTORY_SEPARATOR, "/", $system_base);
 
         return compact("composer_base", "composer_root", "document_root", "cms_root", "system_root", "system_base");
+    }
+
+    public function modules(): array
+    {
+        $modules = [];
+
+        $pi = $this->pathInfo();
+        $system_root = $pi["system_root"];
+        $page = "pages";
+
+        foreach (glob($system_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $m) {
+            $name = basename($m);
+            $config = [];
+            if (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "setting.yml")) {
+                $config = Yaml::parseFile($config_file);
+            }
+            $module = new Module($name, $config);
+            $modules[$name] = $module;
+        }
+
+        $cms_root = $pi["cms_root"];
+        foreach (glob($cms_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $m) {
+            $name = basename($m);
+            $config = [];
+            if (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "setting.yml")) {
+                $config = Yaml::parseFile($config_file);
+            } elseif (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "setting.ini")) {
+                $config = parse_ini_file($config_file, true);
+            }
+            if (!$module = $modules[$name]) {
+                $module = new Module($name, $config);
+            } else {
+                $module->loadConfig($config);
+            }
+        }
+
+        //sorting
+        usort($modules, function ($a, $b) {
+            return $a->sequence <=> $b->sequence;
+        });
+
+
+        return $modules;
+    }
+
+    public function translate(string $str): string
+    {
+        return $str;
     }
 }

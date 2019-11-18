@@ -22,7 +22,101 @@ class MasterPage extends \R\Page
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $app = $this->app;
 
+        $pi = $this->app->pathInfo();
+
+        $this->data["base"] = $pi["system_base"] . "/";
+
+
+        //group menu to structure
+        $g = function (&$gs, &$m) use (&$g) {
+            if (is_array($gs)) {
+                foreach ($gs as $k => &$v) {
+                    if (is_array($v)) {
+                        $g($v, $m);
+                    } else {
+                        $v[] = $m;
+                    }
+                }
+            }
+        };
+
+        $ms = [];
+        foreach ($this->app->modules() as $module) {
+            if ($module->hide)
+                continue;
+            if (is_array($module->group)) {
+                $gs = $module->group;
+                $g($gs, $module);
+                $ms = array_merge_recursive($ms, $gs);
+            } elseif ($module->group) {
+                $ms[$module->group][] = $module;
+            } else {
+                $ms[] = $module;
+            }
+        }
+        $path = $request->getUri()->getPath();
+        if ($path[0] == "/") $path = substr($path, 1);
+
+        $menu_gen = function ($ms) use (&$menu_gen, $app, $path, $group_icon) {
+            $sidebar_menu = [];
+            foreach ($ms as $modulegroup_name => $modules) {
+                if (is_array($modules)) {
+
+                    if (!sizeof($modules)) {
+                        continue;
+                    }
+
+                    $menu = [];
+                    $menu["label"] = $app->translate($modulegroup_name);
+                    $menu["link"] = "#";
+                    $menu["icon"] = $group_icon[$modulegroup_name] ? $group_icon[$modulegroup_name] : "fa fa-link fa-fw";
+                    $menu["keyword"] = $menu["label"] . " " . $modulegroup_name;
+                    $menu["active"] = false;
+                    $menu["submenu"] = $menu_gen($modules);
+                    foreach ($menu["submenu"] as $submenu) {
+                        if ($submenu["active"]) {
+                            $menu["active"] = true;
+                        }
+                    }
+                    if (!sizeof($menu["submenu"])) {
+                        continue;
+                    }
+
+                    $sidebar_menu[] = $menu;
+                } else {
+                    $module = $modules;
+                    $links = $module->getMenuLink($path);
+                    if (!sizeof($links)) {
+                        continue;
+                    }
+                    $menu = [];
+                    $menu["label"] = $module->translate($module->name);
+                    $menu["icon"] = $module->icon;
+                    $menu["keyword"] = $module->keyword();
+
+
+                    $menu["active"] = $app->module->name == $module->name;
+
+                    if (sizeof($links) > 1) {
+                        $menu["submenu"] = $links;
+                    } else {
+                        $menu["link"] = $links[0]["link"];
+                        $menu["target"] = $links[0]["target"];
+                    }
+                    $sidebar_menu[] = $menu;
+                }
+            }
+            return $sidebar_menu;
+        };
+
+        $this->data["sidebar_menu"] = $menu_gen($ms);
+
+
+
+
+        //   outp($this->data["sidebar_menu"]);
 
         $stream = new Stream($this->template->render($this->data));
 
