@@ -1,15 +1,17 @@
 <?php
+
 namespace App\UI;
 
 use App\Page;
 
-class Button extends \BS\Button
+class Button extends \P\HTMLButtonElement
 {
     private $page;
-    public function __construct(Page $page, $href=null)
+    public function __construct(Page $page, $href = null)
     {
-        parent::__construct(null, null, $href);
+        parent::__construct();
         $this->page = $page;
+        $this->classList->add("btn");
     }
 
     public function text($text)
@@ -26,6 +28,12 @@ class Button extends \BS\Button
         }
 
         return parent::__toString();
+    }
+
+    public function icon($icon): Button
+    {
+        $this->append(p("<i class='$icon'></i>"));
+        return $this;
     }
 
 

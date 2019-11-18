@@ -12,7 +12,7 @@ class Form extends HTMLFormElement
     private $back_button;
     private $reset_button;
     protected $page;
-    public $box;
+    public $card;
 
     public function __construct(Page $page)
     {
@@ -21,7 +21,7 @@ class Form extends HTMLFormElement
         $this->page = $page;
         $this->method = "post";
 
-        $this->box = new Box($page);
+        $this->box = new Card($page);
         $this->box->body;
         $this->box->classList->add("box-primary");
 

@@ -37,4 +37,12 @@ class Page extends \App\Page
             return $response;
         }
     }
+
+    public function createE($object = null): \App\UI\E
+    {
+        if (func_num_args() == 0) {
+            $object = $this->object();
+        }
+        return new \App\UI\E($object, $this);
+    }
 }

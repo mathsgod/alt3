@@ -8,16 +8,70 @@ use R\Psr7\Stream;
 
 class Page extends \R\Page
 {
-
     public $data = [];
     public function __construct(App $app)
     {
         parent::__construct($app);
     }
 
+    public function translate(string $str): string
+    {
+        return $str;
+    }
+
+    public function object()
+    {
+        if ($this->_object) {
+            return $this->_object;
+        }
+
+
+        $class = "\\" . $this->module()->class;
+
+        $id = $this->id();
+        if (class_exists($class, true)) {
+            try {
+                $this->_object = new $class($id);
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+
+        return $this->_object;
+    }
+
+    public function id()
+    {
+        $path = $this->request->getURI()->getPath();
+        foreach (explode("/", $path) as $q) {
+            if (is_numeric($q)) {
+                return $q;
+            }
+        }
+    }
+
+    public function module(): Module
+    {
+        $route = $this->request->getAttribute("route");
+        $ps = explode("/", $route->path);
+        $ps = array_values(array_filter($ps, "strlen"));
+
+        foreach ($this->app->modules() as $module) {
+            if ($module->name == $ps[0]) {
+                return $module;
+                break;
+            }
+        }
+    }
+
     protected function createCard(): UI\Card
     {
         return new UI\Card($this);
+    }
+
+    protected function createForm(): UI\Form
+    {
+        return new UI\Form($this);
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface

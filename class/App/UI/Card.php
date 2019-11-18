@@ -11,8 +11,8 @@ class CardClassTokenList extends \P\DOMTokenList
     {
         $values = $this->values();
         if ($this->values()) {
-            if (in_array($value, BOX::BOX_CLASS)) {
-                $this->value = implode(" ", array_diff($values, BOX::BOX_CLASS));
+            if (in_array($value, Card::CARD_CLASS)) {
+                $this->value = implode(" ", array_diff($values,Card::CARD_CLASS));
             }
         }
         parent::offsetSet($offset, $value);
@@ -21,7 +21,7 @@ class CardClassTokenList extends \P\DOMTokenList
 
 class Card extends HTMLDivElement
 {
-    const BOX_CLASS = ["box-default", "box-primary", "box-success", "box-info", "box-warning", "box-danger"];
+    const CARD_CLASS = ["card-default", "card-primary", "card-success", "card-info", "card-warning", "card-danger"];
 
     const ATTRIBUTES = [
         "dataUrl" => ["name" => "data-url"],
@@ -68,19 +68,19 @@ class Card extends HTMLDivElement
     public function __get($name)
     {
         if ($name == "header") {
-            $this->header = new BoxHeader($this->page);
+            $this->header = new CardHeader($this->page);
             $this->prependChild($this->header);
             return $this->header;
         }
 
         if ($name == "body") {
-            $this->body = new BoxBody($this->page);
+            $this->body = new CardBody($this->page);
             $this->appendChild($this->body);
             return $this->body;
         }
 
         if ($name == "footer") {
-            $this->footer = new BoxFooter($this->page);
+            $this->footer = new CardFooter($this->page);
             $this->appendChild($this->footer);
             return $this->footer;
         }
@@ -90,7 +90,7 @@ class Card extends HTMLDivElement
                 if (!$this->hasAttribute("class")) {
                     $this->setAttribute("class", "");
                 }
-                return new BoxClassTokenList($this->attributes->getNamedItem("class"));
+                return new CardClassTokenList($this->attributes->getNamedItem("class"));
                 break;
         }
         return parent::__get($name);

@@ -27,6 +27,10 @@ class User_ae extends ALT\Page
     {
         $obj = $this->object();
         $mv = $this->createE();
+        $mv->add("Username")->input("username");
+
+        $this->write($this->createForm($mv));
+        return;
 
         $c = $mv->add("Username");
         $user = $this->app->user;

@@ -1,8 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
+import VueRegisterElement from "vue-register-element/dist/main.js";
 
-Vue.config.productionTip = false
+import Card from "./Card.vue";
+import CardBody from "./CardBody.vue";
+import CardHeader from "./CardHeader.vue";
+import CardFooter from "./CardFooter.vue";
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+VueRegisterElement("card", Card);
+VueRegisterElement("card-body", CardBody);
+VueRegisterElement("card-header", CardHeader);
+VueRegisterElement("card-footer", CardFooter);

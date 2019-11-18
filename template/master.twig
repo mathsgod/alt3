@@ -22,6 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <script src="{{system_base}}/plugins/vue/vue.js"></script>
+    <script src="{{system_base}}/alt-component/dist/alt-component.umd.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini text-sm">
@@ -264,7 +265,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </p>
                                 </a>
                                 <ul v-if="menu.submenu" class="nav nav-treeview">
-                                    <li class="nav-item" v-for="sub in menu.submenu" is="nav-item" :menu="sub"></li>
+                                    <li class="nav-item" v-for="(sub,index) in menu.submenu" is="nav-item" :menu="sub" :key="index"></li>
                                 </ul>
                             </li>
                             `,

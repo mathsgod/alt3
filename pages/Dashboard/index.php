@@ -6,7 +6,10 @@ class Dashboard_index extends ALT\Page
   {
 
     $card = $this->createCard();
+    $card->body()->append("test");
     $this->write($card);
+
+    return;
 
     $this->write(
       <<<html
