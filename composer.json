@@ -32,6 +32,8 @@
         "twig/extensions": "^1.5",
         "fortawesome/font-awesome": "^5.11",
         "mathsgod/alt-app-core": "^1.1",
-        "symfony/yaml": "^3.4"
+        "symfony/yaml": "^3.4",
+        "mathsgod/html": "^1.0",
+        "mathsgod/p-query": "^2.0"
     }
 }

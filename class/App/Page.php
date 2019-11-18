@@ -15,6 +15,11 @@ class Page extends \R\Page
         parent::__construct($app);
     }
 
+    protected function createCard(): UI\Card
+    {
+        return new UI\Card($this);
+    }
+
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $route = $request->getAttribute("route");

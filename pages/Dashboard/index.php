@@ -2,10 +2,14 @@
 
 class Dashboard_index extends ALT\Page
 {
-    public function get()
-    {
-        $this->write(
-            <<<html
+  public function get()
+  {
+
+    $card = $this->createCard();
+    $this->write($card);
+
+    $this->write(
+      <<<html
         <div class="card">
         <div class="card-header">
           <h3 class="card-title">Default Card Example</h3>
@@ -28,6 +32,6 @@ class Dashboard_index extends ALT\Page
       </div>
       <!-- /.card -->    
 html
-        );
-    }
+    );
+  }
 }
