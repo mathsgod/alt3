@@ -7,7 +7,6 @@ class User_index extends ALT\Page
 
     public function get()
     {
-        return;
         $tab = $this->createTab();
 
         foreach (User::STATUS as $k => $v) {

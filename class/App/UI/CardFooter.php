@@ -12,6 +12,8 @@ class CardFooter extends HTMLDivElement
     {
         parent::__construct();
         $this->page = $page;
-        $this->setAttribute("is", "card-footer");
+
+        //$this->setAttribute("is", "card-footer");
+        $this->classList->add("card-footer");
     }
 }

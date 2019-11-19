@@ -167,11 +167,11 @@ class Col extends HTMLElement
         $p = new \P\InputCollection;
         foreach ($this->cell as $cell) {
             $input = p("input")->appendTo($cell);
-            $input->attr("is", "bs-input");
+            //$input->attr("is", "bs-input");
             $input->addClass("form-control");
             $input->attr("type", "password");
             $input->attr("name", $field);
-            $input->attr("data-field", $field);
+            //$input->attr("data-field", $field);
 
             if ($object = p($cell)->data("object")) {
                 $input->data("object", $object);
@@ -214,7 +214,7 @@ class Col extends HTMLElement
             try {
 
                 $input = p("input")->appendTo($cell);
-                $input->attr("is", "alt-input");
+                //                $input->attr("is", "alt-input");
                 $input->addClass("form-control");
                 $input->attr("name", $field);
                 $input->attr("data-field", $field);
@@ -466,7 +466,9 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
             try {
                 $input = p("input")->appendTo($cell);
-                $input->attr("is", "alt-email");
+                $input->attr("type", "email");
+                $input->addClass("form-control");
+                //                $input->attr("is", "alt-email");
                 $input->attr("name", $field);
                 $input->attr("data-field", $field);
 
@@ -699,11 +701,11 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
             try {
                 $div = p("input")->appendTo($cell);
-                $div->attr("is", "alt-date");
+                $div->addClass("form-control");
+                //$div->attr("is", "date");
+                $div->attr("type", "date");
                 $div->attr("name", $field);
-                $div->attr("data-field", $field);
                 $div->attr("autocomplete", "off");
-
 
                 if ($object = p($cell)->data("object")) {
                     $div->data("object", $object);

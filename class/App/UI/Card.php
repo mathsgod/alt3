@@ -12,7 +12,7 @@ class CardClassTokenList extends \P\DOMTokenList
         $values = $this->values();
         if ($this->values()) {
             if (in_array($value, Card::CARD_CLASS)) {
-                $this->value = implode(" ", array_diff($values,Card::CARD_CLASS));
+                $this->value = implode(" ", array_diff($values, Card::CARD_CLASS));
             }
         }
         parent::offsetSet($offset, $value);
@@ -40,7 +40,10 @@ class Card extends HTMLDivElement
         parent::__construct();
         $this->page = $page;
 
+        //$this->classList->add("card");
         $this->setAttribute("is", "card");
+        $this->setAttribute("primary", true);
+
 
         /*        $ui = \App\UI::_($this->dataUri);
         if ($ui->layout) {

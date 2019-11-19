@@ -210,4 +210,9 @@ class App extends \R\App
     {
         return $str;
     }
+
+    public function acl(string $path): bool
+    {
+        return true;
+    }
 }

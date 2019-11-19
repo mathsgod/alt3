@@ -15,8 +15,8 @@ class E extends HTMLDivElement
     public function __construct($object, \App\Page $page)
     {
         parent::__construct();
-        $this->setAttribute("is", "alt-e");
-        $this->classList[] = "form-horizontal";
+        //$this->setAttribute("is", "alt-e");
+        $this->classList->add("form-horizontal");
         $this->object = $object;
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;
@@ -79,7 +79,8 @@ class E extends HTMLDivElement
     public function add(string $label, $getter = null): Col
     {
         $form_group = new FormGroup();
-        p($form_group)->append("<label class='col-sm-2 control-label'>$label</label>");
+        $form_group->classList->add("row");
+        p($form_group)->append("<label class='col-sm-2 col-form-label'>$label</label>");
 
         $c2 = new Col("div");
         //$form_group->setAttribute("is","bs-form-group");

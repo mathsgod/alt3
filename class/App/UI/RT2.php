@@ -23,7 +23,7 @@ class RT2 extends Element
     {
         parent::__construct("div");
 
-        $this->setAttribute("is", "alt-rt2");
+        $this->setAttribute("is", "rt2");
         $this->response = new RTResponse();
 
         $this->_page = $page;

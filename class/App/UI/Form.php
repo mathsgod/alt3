@@ -21,24 +21,25 @@ class Form extends HTMLFormElement
         $this->page = $page;
         $this->method = "post";
 
-        $this->box = new Card($page);
-        $this->box->body;
-        $this->box->classList->add("box-primary");
+        $this->card = new Card($page);
+        $this->card->body;
 
         $this->submit_button = new Button($page);
         $this->submit_button->classList->add("btn-success");
         $this->submit_button->setAttribute("type", "submit");
         $this->submit_button->setAttribute("icon", "fa fa-check");
-        $this->submit_button->setAttribute("is", "alt-button");
+        //$this->submit_button->setAttribute("is", "alt-button");
         $this->submit_button->label("Submit");
 
-        $this->box->footer->append($this->submit_button);
+        $this->card->footer->append($this->submit_button);
+        $this->card->footer->append(" ");
 
         $this->reset_button = new Button($page);
         $this->reset_button->classList->add("btn-info");
         $this->reset_button->icon("fa fa-rotate-left")->label("Reset");
         $this->reset_button->setAttribute("type", "reset");
-        $this->box->footer->append($this->reset_button);
+        $this->card->footer->append($this->reset_button);
+        $this->card->footer->append(" ");
 
         $this->back_button = new Button($page);
         $this->back_button->classList->add("btn-warning");
@@ -50,12 +51,12 @@ class Form extends HTMLFormElement
             $this->back_button->setAttribute("onClick", 'javascript:history.back(-1)');
         }
 
-        $this->box->footer->append($this->back_button);
+        $this->card->footer->append($this->back_button);
         if ($_GET["fancybox"]) {
             $this->action($page->uri());
         }
 
-        $this->appendChild($this->box);
+        $this->appendChild($this->card);
 
         $this->show_back = true;
         $this->show_reset = false;
@@ -94,7 +95,7 @@ class Form extends HTMLFormElement
     public function addBody($body)
     {
 
-        $this->box->body()->append((string )$body);
+        $this->card->body()->append((string) $body);
         return $this;
     }
 
@@ -106,7 +107,7 @@ class Form extends HTMLFormElement
 
     public function box()
     {
-        return p($this->box);
+        return p($this->card);
     }
 
     public function addHidden($name, $value)
@@ -116,7 +117,8 @@ class Form extends HTMLFormElement
         return $input;
     }
 
-    public function attr($name,$value){
-        return p($this)->attr($name,$value);
+    public function attr($name, $value)
+    {
+        return p($this)->attr($name, $value);
     }
 }

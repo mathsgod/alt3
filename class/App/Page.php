@@ -5,6 +5,7 @@ namespace App;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use R\Psr7\Stream;
+use R\Psr7\JSONStream;
 
 class Page extends \R\Page
 {
@@ -64,19 +65,51 @@ class Page extends \R\Page
         }
     }
 
+    public function path()
+    {
+        $route = $this->request->getAttribute("route");
+        return substr($route->path, 1);
+    }
+
+    protected function createTab($prefix = null): UI\Tab
+    {
+        return new UI\Tab($this, $prefix);
+    }
+
+    protected function createRT2($objects, $module = null): UI\RT2
+    {
+        $rt = new UI\RT2(null, $this, $this->app->config);
+        $rt->ajax["url"] = (string) $objects[0]->request->getURI()->getPath() . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
+        $rt->ajax["url"] = substr($rt->ajax["url"], 1);
+
+
+        $rt->pageLength = 25;
+        return $rt;
+    }
+
     protected function createCard(): UI\Card
     {
         return new UI\Card($this);
     }
 
-    protected function createForm(): UI\Form
+    protected function createForm($content): UI\Form
     {
-        return new UI\Form($this);
+        $form = new UI\Form($this);
+        $form->card->body->append($content);
+        return $form;
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $route = $request->getAttribute("route");
+
+
+        if ($request->getQueryParams()["_rt"]) {
+            $rt = new UI\RTResponse();
+            $request = $request->withQueryParams(["rt" => $rt]);
+        }
+
+
         ob_start();
         $response = parent::__invoke($request, $response);
         $echo_content = ob_get_contents();
@@ -84,9 +117,20 @@ class Page extends \R\Page
 
         $content = "";
 
+        if ($request->getQueryParams()["_rt"]) {
+            return $response;
+        }
+
+
         foreach ($request->getHeader("Accept") as $accept) {
             list($media,) = explode(",", $accept);
             switch ($media) {
+                case "application/json":
+                    return $response
+                        ->withHeader("Content-Type", "application/json; charset=UTF-8")
+                        ->withBody(new JSONStream($this->object()));
+                    break;
+                case "*/*";
                 case "text/html":
 
                     $file = $route->file;
@@ -104,6 +148,7 @@ class Page extends \R\Page
                         $content .= $echo_content;
                         $content .= (string) $response;
                     }
+                    break;
             }
         }
 

@@ -1,13 +1,15 @@
 <?php
 
+use App\UI\RTResponse;
 use App\User;
 
-class User_list extends ALT\Page
+class User_list extends App\Page
 {
     public function get()
     {
-        // outp(App\User::find());
 
+
+        // outp(App\User::find());
 
         $rt = $this->createRT2([$this, "ds"]);
 
@@ -17,7 +19,7 @@ class User_list extends ALT\Page
         $rt->addDel();
 
         $rt->add("Username", "username")->ss();
-        $rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::find());
+        //$rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::Query());
         /*function ($obj) {
             return $obj->UserGroup()->implode(",");
         })->searchOption(App\UserGroup::find(), null, "usergroup_id")->searchCallback(function ($v) {
@@ -30,8 +32,8 @@ class User_list extends ALT\Page
         $rt->add("Status", "status")->sort()->searchOption(User::STATUS);
         //        $rt->add("Status", "Status()")->index("status")->sort()->searchOption(User::$_Status);
         // $rt->add("Expiry date", "expiry_date")->sort()->searchDateRange();
-        $rt->add("Expiry date", "expiry_date")->sort()->searchDate();
-        $rt->add("Join date", "join_date")->sort()->searchDate();
+        //$rt->add("Expiry date", "expiry_date")->sort()->searchDate();
+        //$rt->add("Join date", "join_date")->sort()->searchDate();
         $rt->add("Language", "language")->sort();
         $rt->add("Skin", "skin")->sort(); //->noHide();
 
@@ -49,8 +51,13 @@ class User_list extends ALT\Page
         $this->write($rt);
     }
 
-    public function ds($rt, $t)
+    public function ds(RTResponse $rt, $t): RTResponse
     {
+        $rt->source = App\User::Query();
+
+        
+        return $rt;
+
         $rt->columns = [
             "status" => "Status()",
             "isonline" => [
@@ -63,7 +70,7 @@ class User_list extends ALT\Page
         ];
 
 
-        $rt->key("user_id");
+        //        $rt->key("user_id");
         $rt->add("usergroup_id", function ($obj) {
             return $obj->UserGroup()->implode(",");
         })->searchCallback(function ($v) {

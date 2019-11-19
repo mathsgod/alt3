@@ -27,21 +27,14 @@ class User_ae extends ALT\Page
     {
         $obj = $this->object();
         $mv = $this->createE();
-        $mv->add("Username")->input("username");
-
-        $this->write($this->createForm($mv));
-        return;
-
-        $c = $mv->add("Username");
         $user = $this->app->user;
-        if ($user->isAdmin() || $user->isPowerUser() || !$obj->id()) {
+        if ($user->isAdmin() || $user->isPowerUser() || !$obj->user_id) {
+            $c = $mv->add("Username");
             $c->input("username")->required();
-        } else {
-            $c->text("username");
         }
 
         $password = $mv->add("Password")->password("password")->minlength($this->app->config["user"]["password-length"]);
-        if (!$obj->id()) {
+        if (!$obj->user_id) {
             $password->required();
         }
 
@@ -58,7 +51,7 @@ class User_ae extends ALT\Page
         $r->input("addr3");
 
         $r = $mv->add("Join date");
-        if ($user->isAdmin() || $user->isPowerUser() || !$obj->id()) {
+        if ($user->isAdmin() || $user->isPowerUser() || !$obj->user_id) {
             $r->date("join_date")->required(true);
         } else {
             $r->date("join_date");
@@ -71,7 +64,7 @@ class User_ae extends ALT\Page
             }
         }
 
-        if (($user->isAdmin() || $user->isPowerUser()) && !$obj->id()) {
+        if (($user->isAdmin() || $user->isPowerUser()) && !$obj->user_id) {
             $mv->addHr();
             $u = UserGroup::_("Users");
 

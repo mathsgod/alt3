@@ -1,11 +1,10 @@
 <?php
+
 namespace App\UI;
 
 use App\Page;
 
-use P\HTMLDivElement;
-
-class Tab extends HTMLDivElement
+class Tab extends Card
 {
     public $navs;
     public $content;
@@ -13,27 +12,27 @@ class Tab extends HTMLDivElement
     public static $_MyTab = 0;
     protected $page;
 
-
     public function __construct(Page $page, $prefix)
     {
-        parent::__construct();
-
-        //$this->attributes["is"] = "alt-tab";
-        $this->page = $page;
-        $this->classList->add("nav-tabs-custom");
+        parent::__construct($page);
+        $this->classList->add("card-outline card-outline-tabs");
 
         $this->navs = $this->ownerDocument->createElement("ul");
-        $this->navs->classList[] = "nav";
-        $this->navs->classList[] = "nav-tabs";
-        $this->append($this->navs);
+        $this->navs->classList->add("nav");
+        $this->navs->classList->add("nav-tabs");
+
+        $this->header->append($this->navs);
+        $this->header->classList->add("p-0 border-bottom-0");
+
 
         $this->content =  $this->ownerDocument->createElement("div");
         $this->content->classList[] = "tab-content";
-        $this->append($this->content);
+        $this->body->append($this->content);
+        $this->body->classList->add("p-1 m-0");
 
         self::$_MyTab++;
         $module = $page->module();
-        $this->setAttribute("prefix",$prefix);
+        $this->setAttribute("prefix", $prefix);
 
         if ($module) {
             $this->setAttribute("data-cookie", $page->path() . "/$prefix" . self::$_MyTab);
@@ -77,7 +76,7 @@ class Tab extends HTMLDivElement
             $href .= "?t=$t";
         }
         $url = dirname($this->page->path()) . "/" . $uri;
-        if (!\App\ACL::Allow($url)) {
+        if (!$this->page->app->acl($url)) {
             return;
         }
         $ti = new TabItem();
@@ -85,8 +84,10 @@ class Tab extends HTMLDivElement
         //$li = p("li");
 
         $a = p("a")->attr("href", $href)->text($label)->appendTo($ti->li);
+        $a->addClass("nav-link");
 
-        $prefix=$this->getAttribute("prefix");
+
+        $prefix = $this->getAttribute("prefix");
         $id = "tab-{$prefix}{$tab_id}";
         $a->attr("data-target", "#$id");
         $a->attr("data-toggle", "tabajax");
