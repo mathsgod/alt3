@@ -55,9 +55,6 @@ class User_list extends App\Page
     {
         $rt->source = App\User::Query();
 
-        
-        return $rt;
-
         $rt->columns = [
             "status" => "Status()",
             "isonline" => [
@@ -79,7 +76,7 @@ class User_list extends App\Page
         //$rt->add("isonline", "isOnline()")->format("tick");
         //$rt->add("username", "username")->alink("v");
 
-        if ($t >= 0) $w[] = ["status=:status", ["status" => $t]];
+        if ($t >= 0) $w[] = ["status=:status1", ["status1" => $t]];
 
         $rt->source = App\User::Query()->where($w);
 

@@ -1,4 +1,5 @@
 <?
+
 namespace App\UI;
 
 use \Box\Spout\Writer\WriterFactory;
@@ -203,22 +204,22 @@ class RTResponse implements JsonSerializable
                         if ($col->type == "sub-row") {
                             $d[$c["name"]] = ["url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
                         } elseif ($col->type == "delete") {
-                            if ($content = (string)$col->getData($obj, $k)) {
-                                $d[$c["name"]] = ["type" => $col->type, "content" => (string)$content];
+                            if ($content = (string) $col->getData($obj, $k)) {
+                                $d[$c["name"]] = ["type" => $col->type, "content" => (string) $content];
                             } else {
                                 $d[$c["name"]] = null;
                             }
                         } elseif ($col->type != "text") {
-                            $d[$c["name"]] = ["type" => $col->type, "content" => (string)$col->getData($obj, $k)];
+                            $d[$c["name"]] = ["type" => $col->type, "content" => (string) $col->getData($obj, $k)];
                         } elseif ($col->type == "html") {
-                            $d[$c["name"]] = ["type" => "html", "content" => (string)$col->getData($obj, $k)];
+                            $d[$c["name"]] = ["type" => "html", "content" => (string) $col->getData($obj, $k)];
                         } else {
                             $v = $col->getData($obj, $k);
 
                             if (is_array($v)) {
                                 $d[$c["name"]] = $v;
                             } else {
-                                $d[$c["name"]] = (string)$v;
+                                $d[$c["name"]] = (string) $v;
                             }
                         }
                     } elseif (array_key_exists($c["name"], $object_vars)) {
@@ -299,8 +300,8 @@ class RTResponse implements JsonSerializable
                     $name = ":" . $c["name"];
                     $source->where($c["name"] . " like $name", [$name => "%$value%"]);
                 } elseif ($c["searchMethod"] == "equal") {
-                    $name = ":" . $c["name"];
-                    $source->where($c["name"] . " = $name", [$name => $value]);
+                    $source->filter([$c["name"] => $value]);
+             
                 } elseif ($c["searchMethod"] == "date") {
 
                     if ($value["from"] == $value["to"]) {

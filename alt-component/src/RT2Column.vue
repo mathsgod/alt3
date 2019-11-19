@@ -9,10 +9,32 @@
         sorting_asc:(orderDir=='asc')
     }"
   >
-    <input v-if="type=='checkbox'" type="checkbox" is="icheck" v-on:change="checkboxChange">
+    <input v-if="type=='checkbox'" type="checkbox" is="icheck" @change="checkboxChange" />
     <div v-else v-text="title"></div>
   </th>
 </template>
+<style scoped>
+.unselectable {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+.sortable {
+  cursor: pointer;
+  background: url(./assets/images/sort_both.png) no-repeat center right;
+}
+
+.sorting_desc {
+  background: url(./assets/images/sort_desc.png) no-repeat center right;
+}
+
+.sorting_asc {
+  background: url(./assets/images/sort_asc.png) no-repeat center right;
+}
+
+</style>
 <script>
 export default {
   name: "rt2-column",
@@ -34,7 +56,6 @@ export default {
   },
   data() {
     return {
-      hide: false,
       local: {
         orderDir: this.orderDir
       }
@@ -42,7 +63,7 @@ export default {
   },
   methods: {
     checkboxChange(e) {
-      this.$emit("check-all",e.target.checked);
+      this.$emit("check-all", e.target.checked);
     },
     click() {
       if (!this.orderable) return;
