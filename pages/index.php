@@ -12,8 +12,12 @@ class _index extends R\Page
 
         $pi = $this->app->pathInfo();
 
-        $data = $pi;
 
+        $data = $pi;
+        $data["app"] = $this->app;
+
+
+        
         $this->write($twig->render($data));
         //print_r($this->app->loader);
 

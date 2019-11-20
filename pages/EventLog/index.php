@@ -6,8 +6,7 @@ class EventLog_index extends ALT\Page
 {
 	public function get()
 	{
-		$nav = $this->navbar();
-		$nav->addButton("Truncate", "EventLog/truncate")->addClass("confirm");
+		$this->navbar->addButton("Truncate", "EventLog/truncate")->addClass("confirm");
 
 		$mtb = $this->createTab();
 		$mtb->add("All event log", "list");

@@ -6,7 +6,7 @@ table.rt > thead button.multiselect {
 }
 </style>
 <template>
-  <card class="p-1 m-0" :loading="loading">
+  <card class="p-0 m-0" :loading="loading">
     <card-body v-if="buttons.length>0">
       <button
         v-for="(button,index) in buttons"
@@ -16,7 +16,7 @@ table.rt > thead button.multiselect {
         :class="button.class"
       ></button>
     </card-body>
-    <card-body class="p-1 m-0">
+    <card-body class="p-0 m-0">
       <div class="table-responsive">
         <table
           is="rt2-table"
@@ -33,7 +33,7 @@ table.rt > thead button.multiselect {
         ></table>
       </div>
     </card-body>
-    <card-footer class="p-1 m-0 d-flex">
+    <card-footer class="p-0 m-0 d-flex">
       <div
         is="rt-pagination"
         :page="page"
@@ -73,13 +73,13 @@ table.rt > thead button.multiselect {
 
       <div class="dropup">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span class="icon glyphicon glyphicon-th-list"></span>
+          <i class="fas fa-fw fa-list"></i>
         </button>
         <ul class="dropdown-menu" ref="column_menu">
           <li v-for="(column,key) in columnsHasTitle" :key="key">
             <a
               href="#"
-              class="small"
+              class="dropdown-item"
               data-value="option1"
               tabindex="-1"
               @click.prevent="column.toggleVisible()"

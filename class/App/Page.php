@@ -174,4 +174,70 @@ class Page extends \R\Page
 
         return $response->withBody(new Stream($content));
     }
+
+    public function post()
+    {
+        $obj = $this->object();
+        $id = $obj->id();
+        $data = $this->request->getParsedBody();
+        $params = $this->request->getQueryParams();
+
+        if (isset($data["_pk"])) {
+            $class = "\\" . $this->module()->class;
+            $obj = new $class($data["_pk"]);
+            $name = $data["name"];
+            $value = $data["value"];
+            $obj->$name = $value;
+        } elseif (isset($params["xeditable"])) {
+            $name = $data["name"];
+            $value = $data["value"];
+            $obj->$name = $value;
+        } else {
+            $obj->bind($data);
+
+            if ($files = $this->request->getUploadedFiles()) {
+                foreach ($files as $name => $file) {
+                    $obj->$name = (string) $file->getStream();
+                }
+            }
+        }
+
+
+        $obj->save();
+        if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
+            return ["code" => 200];
+        } else {
+
+            $msg = $this->module()->name . " ";
+            if (method_exists($obj, '__toString')) {
+                $msg .= (string) $obj . " ";
+            }
+            $msg .= $id ? "updated" : "created";
+            $this->alert->success("Success", $msg);
+            $this->redirect();
+        }
+    }
+
+    public function redirect(string $uri = null): ResponseInterface
+    {
+        if ($uri) {
+            $location = $this->request->getUri()->getBasePath() . "/" . $uri;
+            $this->response = $this->response->withHeader("Location", $location);
+            return $this->response;
+        }
+
+        if ($_GET["_referer"]) {
+            $this->response = $this->response->withHeader("Location", $_GET["_referer"]);
+            return $this->response;
+        }
+
+        if ($referer = $this->request->getHeader("Referer")[0]) {
+            if ($url = $_SESSION["app"]["referer"][$referer]) {
+                $this->response = $this->response->withHeader("Location", $url);
+                return;
+            }
+            $this->response = $this->response->withHeader("Location", $referer);
+            return $this->response;
+        }
+    }
 }

@@ -1,4 +1,8 @@
 <?
 
-class Model extends App\Core\Model
-{ }
+namespace App;
+
+class Model extends Core\Model
+{
+    use ModelTrait;
+}

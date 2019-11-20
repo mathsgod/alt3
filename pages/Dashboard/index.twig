@@ -1,0 +1,26 @@
+<card primary>
+    <card-body class="p-0">
+        <div id="calendar"></div>
+    </card-body>
+</card>
+
+<link rel="stylesheet" href="vendor/mathsgod/hl-weather/css/weather-icons.min.css" />
+
+
+{% verbatim %}
+<script>
+    $(function () {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['bootstrap', 'interaction', 'dayGrid', 'timeGrid'],
+            eventSources: [
+                'Dashboard/holiday',
+                'Dashboard/weather'
+            ]
+        });
+
+        calendar.render();
+    });
+</script>
+{% endverbatim %}

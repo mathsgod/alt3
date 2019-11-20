@@ -11,6 +11,6 @@ use Monolog\Handler\StreamHandler;
 $log = new Logger('App');
 $log->pushHandler(new StreamHandler(__DIR__ . '/logs/' . date("Y-m-d") . ".log", Logger::DEBUG));*/
 
-
+session_start();
 $app = new App\App(__DIR__);
 $app->run();

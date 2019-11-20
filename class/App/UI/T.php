@@ -93,4 +93,9 @@ class T extends Card
             return "<button class='btn btn-xs btn-primary table-childrow-btn table-childrow-close' data-url='$url' data-target=''><i class='fa fa-chevron-up'></i></button>";
         });
     }
+
+    public function header(string $title)
+    {
+        $this->card->header->title = $title;
+    }
 }

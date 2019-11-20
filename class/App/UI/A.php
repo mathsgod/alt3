@@ -9,4 +9,10 @@ class A extends \P\HTMLAnchorElement
         parent::__construct();
         $this->classList->add("btn");
     }
+
+    public function addClass(string $class): self
+    {
+        $this->classList->add($class);
+        return $this;
+    }
 }

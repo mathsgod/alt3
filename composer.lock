@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77e9666ed2e8cb091a9b7606a39f85f6",
+    "content-hash": "a400355f6b77ba0bf41e804256532702",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -263,6 +263,76 @@
                 }
             ],
             "time": "2019-01-11T04:48:34+00:00"
+        },
+        {
+            "name": "mathsgod/hl-holiday",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/hl-holiday.git",
+                "reference": "dc6fc401124fe469d610af48b5c325a70e5923fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/hl-holiday/mathsgod-hl-holiday-1.2.3-f887cd.zip",
+                "reference": "dc6fc401124fe469d610af48b5c325a70e5923fb",
+                "shasum": "6dc8a50036e28c7a4cde3fc17b8fabaa7580aa9c"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                },
+                "classmap": [
+                    "src/ICal.php"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "raymond@hostlink.com.hk"
+                }
+            ],
+            "description": "2012 - 2020 Hong Kong holiday",
+            "time": "2019-05-21T06:56:37+00:00"
+        },
+        {
+            "name": "mathsgod/hl-weather",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/hl-weather.git",
+                "reference": "81ca42051aa67c66a342c7db1fee5cf91ebc14a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/hl-weather/mathsgod-hl-weather-2.0.1-df0c2f.zip",
+                "reference": "81ca42051aa67c66a342c7db1fee5cf91ebc14a6",
+                "shasum": "5b55f5c0c98fe6a114ee61d60c9c52fb551f649c"
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "HL\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "raymond@hostlink.com.hk"
+                }
+            ],
+            "description": "Hong Kong weather forecast",
+            "time": "2019-07-22T02:48:06+00:00"
         },
         {
             "name": "mathsgod/html",

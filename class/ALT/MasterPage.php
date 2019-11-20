@@ -13,7 +13,7 @@ class MasterPage extends \R\Page
     public $data = [];
     private $template;
 
-    public function __construct($app)
+    public function __construct(\App\App $app)
     {
         $this->app = $app;
         $this->template = $app->twig("template/master.twig");
@@ -113,17 +113,11 @@ class MasterPage extends \R\Page
         };
 
         $this->data["sidebar_menu"] = $menu_gen($ms);
-
-
         $this->data["alerts"] = $this->app->flushMessage();
-
-
-        //   outp($this->data["sidebar_menu"]);
 
         $stream = new Stream($this->template->render($this->data));
 
         return $response->withBody($stream);
-        return $response;
     }
 
 

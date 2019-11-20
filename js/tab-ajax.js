@@ -26,7 +26,7 @@ $(function () {
 
 
             if (!timer) {
-                $(targ).html('<div class="overlay"><i class="fa fa-spinner fa-spin"></i></div>');
+                $(targ).html('<div class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin"></i></div>');
             }
 
             that._current_xhr = $.get(loadurl, function (data) {

@@ -33,12 +33,17 @@ class CardHeader extends HTMLDivElement
     public function __set($name, $value)
     {
         if ($name == "title") {
-            $template = p("template");
+            $template = p("<template></template>");
             $template->text($value);
-            $template->attr("#title", true);
-            $this->prepend($template);
+            $template->attr("v-slot:title", true);
+            $this->prepend($template[0]);
             return;
         }
         parent::__set($name, $value);
+    }
+
+    public function __debugInfo()
+    {
+        return ["tools" => "a"];
     }
 }

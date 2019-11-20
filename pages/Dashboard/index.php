@@ -5,6 +5,7 @@ class Dashboard_index extends ALT\Page
   public function get()
   {
 
+    return;
     $card = $this->createCard();
     $card->body()->append("test");
     $this->write($card);

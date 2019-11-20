@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Composer\Autoload\ClassLoader;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
@@ -81,8 +82,6 @@ class App extends \R\App
                     $response = $response->withHeader("content-type", "application/json");
                     $response = $response->withBody(new Stream($e->getMessage()));
                 } else {
-                    echo $e->getMessage();
-                    die();
                     $this->alert->danger($e->getMessage());
 
                     if ($referer = $this->request->getHeader("Referer")[0]) {
@@ -114,6 +113,58 @@ class App extends \R\App
         return $msg ?? [];
     }
 
+    public function login(string $username, string $password, $code = null): bool
+    {
+        //check AuthLock
+        if ($this->config["user"]["auth-lockout"]) {
+            if (AuthLock::IsLock()) {
+                throw new \Exception("IP locked 180 seconds", 403);
+            }
+        }
+
+        try {
+            $user = User::Login($username, $password);
+        } catch (Exception $e) {
+            AuthLock::Add();
+            throw new Exception("Login error");
+        }
+
+        if ($this->config["user"]["2-step verification"]) {
+            $need_check = true;
+            if ($setting = $user->setting()) {
+                if (in_array($_SERVER["REMOTE_ADDR"], $setting["2-step_ip_white_list"])) {
+                    $need_check = false;
+                }
+            }
+
+            if ($need_check && !$this->IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
+                if (($code == "" || !$user->checkCode($code)) && $user->secret != "") {
+                    throw new \Exception("2-step verification", 403);
+                }
+            }
+        }
+
+        $_SESSION["app"]["user_id"] = $user->user_id;
+
+        $_SESSION["app"]["user"] = $user;
+
+        $_SESSION["app"]["login"] = true;
+
+        $user->createUserLog("SUCCESS");
+
+        $user->online();
+
+        AuthLock::Clear();
+
+        $this->user = $user;
+
+        return true;
+    }
+
+    public function logined(): bool
+    {
+        return $_SESSION["app"]["login"];
+    }
 
     public function twig(string $file)
     {

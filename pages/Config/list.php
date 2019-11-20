@@ -1,4 +1,5 @@
 <?php
+
 use App\Config;
 
 class Config_list extends App\Page
@@ -32,7 +33,6 @@ class Config_list extends App\Page
             }
             $t->header($category);
             $this->write($t);
-
         }
     }
 }

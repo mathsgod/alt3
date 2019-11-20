@@ -11,6 +11,7 @@ class Page extends \App\Page
     public $navbar = null;
     public $callout;
     protected $header;
+    public $master;
 
     public function __construct(\App\App $app)
     {
@@ -31,28 +32,24 @@ class Page extends \App\Page
 
         try {
             $response = parent::__invoke($request, $response);
-            if ($this->master) {
-                $this->master->data["content"] .= (string) $response;
-
-                if ($this->navbar->hasButton()) {
-                    $this->master->data["navbar"] = $this->navbar;
-                }
-            }
         } catch (Exception $e) {
+            $this->alert->danger("Error", $e->getMessage());
             throw $e;
         }
 
-        if ($request->isAccept("text/html") && $request->getMethod() == "get") {
-            if ($this->master) {
-                $this->master->data["callouts"] = $this->callout;
-                $this->master->data["header"] = $this->header;
-                $this->master->data["module"] = $this->module();
+        if ($this->master) {
+            $this->master->data["callouts"] = $this->callout;
+            $this->master->data["header"] = $this->header;
+            $this->master->data["module"] = $this->module();
 
-                return $this->master->__invoke($request, $response);
+            $this->master->data["content"] .= (string) $response;
+            if ($this->navbar->hasButton()) {
+                $this->master->data["navbar"] = $this->navbar;
             }
-        } else {
-            return $response;
+
+            return $this->master->__invoke($request, $response);
         }
+        return $response;
     }
 
     public function createE($object = null): \App\UI\E
