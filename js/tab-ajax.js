@@ -2,9 +2,8 @@
 //Created by: Raymond Chong
 $(function () {
     function MyTab(o) {
-        this._current_xhr;
-        this._tab_timer;
-
+        this._current_xhr = null;
+        this._tab_timer = null;
 
         var that = this;
 
@@ -62,10 +61,6 @@ $(function () {
 
         });
 
-    }
-
-    MyTab.prototype.test = function () {
-        return "test";
     }
 
 

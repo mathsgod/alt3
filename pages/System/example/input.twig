@@ -1,0 +1,113 @@
+<box>
+    <box-body>
+        Main
+        <div id='main-div'></div>
+    </box-body>
+</box>
+
+
+<div id="child-div">
+
+    <div v-for="c in customers">
+        <input is="alt-input" required v-model="c.name">
+    </div>
+
+    <button @click="addClick">add</button>
+</div>
+
+<script>
+        var vm = new Vue({
+            el: "#child-div",
+            data: {
+                customers: []
+            },
+            mounted() {
+                setTimeout(() => {
+                    document.getElementById("main-div").append(this.$el);
+                });
+
+            }, methods: {
+                addClick() {
+
+                    this.customers.push({});
+                }
+            }
+        });
+</script>
+
+
+
+
+<hr />
+<hr />
+<hr />
+
+
+<div id="div1">
+
+    <alt-e>
+        <icheck @input="input2"></icheck>
+        <br />
+        <br />
+        <input is="alt-input" @input="input1" @change="change1" />
+        <br />
+        <alt-date @input="input3" value="2010-01-01"></alt-date>
+        <br />
+        <datepicker @input="input4" @change="change4" value="2010-01-01"></datepicker>
+
+    </alt-e>
+
+    <hr />
+
+    <alt-form class="form-horizontal">
+        <div class="form-group">
+            <label for="a1" class="col-sm-2 control-label">Label</label>
+            <div class="col-sm-10">
+                <input is="alt-input" type="text" required id="a1" />
+            </div>
+        </div>
+
+        <alt-button class="btn btn-primary btn-xs">Submit</alt-button>
+    </alt-form>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    new Vue({
+        el: "#div1",
+        methods: {
+            change4() {
+                console.log("change");
+            },
+            input4() {
+                console.log("input4");
+            },
+            input1() {
+
+            },
+            change1() {
+                console.log("change1");
+            },
+            input2() {
+                console.log("input2");
+            },
+            input3() {
+                console.log("input3");
+            }
+        }
+    });
+
+    function onclick1() {
+        alert("onclick1");
+    }
+
+</script>

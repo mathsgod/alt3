@@ -1,0 +1,16 @@
+<div id="my-app">
+    <div>
+
+        <div is="rt-alt2"></div>
+    </div>
+</div>
+<script src="https://unpkg.com/vue"></script> 
+<script src="https://unpkg.com/http-vue-loader"></script> 
+<script type="text/javascript">
+    new Vue({
+        el: '#my-app',
+        components: {
+            'rt-alt2': httpVueLoader('alt-component/src/RT2.vue'),
+        }
+    });
+</script>

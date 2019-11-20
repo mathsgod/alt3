@@ -1,0 +1,93 @@
+{% verbatim %}
+
+
+<div id="div1">
+	<div class="box box-primary">
+		<div class="box-body table-responsive">
+			<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<td></td>
+						<td v-for="ug in usergroups" v-text="ug.name"></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="ul in uls">
+						<td v-text="ul.name"></td>
+						<td v-for="ug in usergroups">
+							<icheck :value="isUserGroup(ul,ug)" @input="onClickUserGroup(ul,ug,$event)"></icheck>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+	</div>
+</div>
+
+
+<script>
+	var vm = new Vue({
+		el: "#div1",
+		data: {
+			usergroups: [],
+			uls: []
+		}, created() {
+			this.$http.get("UserGroup/ae_user/data").then(resp => {
+				return resp.data;
+			}).then(resp => {
+				console.log(resp);
+				this.usergroups = resp.usergroups;
+				this.uls = resp.uls;
+
+			});
+		}, methods: {
+			isUserGroup(user, usergroup) {
+				if (user.usergroup_id.indexOf(usergroup.usergroup_id) >= 0) {
+					return true;
+				}
+				return false;
+			}, onClickUserGroup(user, usergroup, e) {
+				if (e) {
+
+					this.$gql.mutation("api", {
+						UserGroup: {
+							__args: {
+								usergroup_id: usergroup.usergroup_id
+							},
+							addUser: {
+								__args: {
+									user_id: user.user_id
+								}
+							}
+						}
+					}).then(resp => {
+						if (resp.data.error) {
+							alert(resp.data.error.message);
+						}
+					});
+				} else {
+					this.$gql.mutation("api", {
+						UserGroup: {
+							__args: {
+								usergroup_id: usergroup.usergroup_id
+							},
+							removeUser: {
+								__args: {
+									user_id: user.user_id
+								}
+							}
+						}
+					}).then(resp => {
+						if (resp.data.error) {
+							alert(resp.data.error.message);
+						}
+					});
+				}
+
+			}
+		}
+	})
+</script>
+{% endverbatim %}

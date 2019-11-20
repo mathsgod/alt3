@@ -1,0 +1,161 @@
+<div id="div1">
+    <alt-box>
+        <alt-box-body>
+            <div class="form-group">
+                <label>Module</label>
+                <select class="form-control" v-model="module" @change="changeModule">
+                    <option></option>
+                    <option v-for="m in modules" v-text="m.class"></option>
+                </select>
+            </div>
+
+            <hr/>
+
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Action</th>
+                        <th>Name</th>
+                        <th v-for="language in languages" v-text="language"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <button @click="addNew" class="btn btn-xs btn-success">
+                                <i class="fa fa-plus fa-fw"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control input-sm" v-model="newRecord.action" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control input-sm" v-model="newRecord.name" />
+                        </td>
+                        <td v-for="(language,l) in languages">
+                            <input type="text" class="form-control input-sm" v-model="newRecord.value[l]" />
+                        </td>
+                    </tr>
+
+                    <tr v-for="d in data">
+                        <td>
+                            <div v-if="editRecord!=d">
+                                <button @click="removeData(d)" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-times fa-fw"></i>
+                                </button>
+                                <button @click="editData(d)" class="btn btn-xs btn-warning">
+                                    <i class="fa fa-pencil-alt fa-fw"></i>
+                                </button>
+                            </div>
+                            <div v-else>
+                                <button @click="updateData(editRecord)" class="btn btn-xs btn-success">
+                                    <i class="fa fa-check fa-fw"></i>
+                                </button>
+                                <button @click="editRecord=null" class="btn btn-xs btn-warning">
+                                    <i class="fa fa-undo-alt fa-fw"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <div v-if="editRecord==d">
+                                <input type="text" class="form-control input-sm" v-model="editRecord.action" />
+                            </div>
+                            <div v-else v-text="d.action">
+
+                            </div>
+                        </td>
+                        <td>
+                            <div v-if="editRecord==d">
+                                <input type="text" class="form-control input-sm" v-model="editRecord.name" />
+                            </div>
+                            <div v-else v-text="d.name">
+
+                            </div>
+                        </td>
+                        <td v-for="(language,l) in languages">
+                            <div v-if="editRecord==d">
+                                <input type="text" class="form-control input-sm" v-model="editRecord.value[l]" />
+                            </div>
+                            <div v-else v-text="d.value[l]">
+
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </alt-box-body>
+    </alt-box>
+
+
+</div>
+
+<script>
+    new Vue({
+        el: "#div1",
+        data: {
+            module: null,
+            modules: [],
+            languages: [],
+            newRecord: {
+                value: {}
+            },
+            data: [],
+            editRecord: null
+        }, mounted() {
+            this.$http.get("Translate/all/modules").then(resp => {
+                this.modules = resp.body.modules;
+                this.languages = resp.body.languages;
+
+                this.getData();
+            });
+        }, methods: {
+            updateData(d) {
+                d.module = this.module;
+                this.$http.post("Translate/all/update", d).then(resp => {
+                    this.getData();
+                });
+            },
+            editData(d) {
+                this.editRecord = d;
+            },
+            removeData(d) {
+                d.module = this.module;
+                this.$http.get("Translate/all/removeData", {
+                    params: {
+                        data: d
+                    }
+                }).then(resp => {
+                    this.getData();
+                });
+
+            },
+            getData() {
+                this.$http.get("Translate/all/getData", {
+                    params: {
+                        module: this.module
+                    }
+                }).then(resp => {
+                    this.data = resp.body.data;
+
+                });
+            },
+            addNew() {
+                this.newRecord.module = this.module
+                this.$http.post("Translate/all", this.newRecord).then(resp => {
+                    this.newRecord = {
+                        value: {}
+                    };
+                    this.getData();
+                });
+            },
+            changeModule() {
+                this.getData();
+            }
+        }
+
+
+    });
+</script>

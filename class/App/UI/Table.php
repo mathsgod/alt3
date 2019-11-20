@@ -40,7 +40,8 @@ class Table extends HTMLTableElement
         $thead = $this->createTHead();
         $th = p($column)->appendTo($thead);
 
-        $th->text($this->page->translate($label));
+        //$th->text($this->page->translate($label));
+        $th->text($label);
         $column->cell = new \P\Query;
         $i = 0;
 
@@ -98,9 +99,9 @@ class Table extends HTMLTableElement
                 $fn = $form_name . "[u]";
 
             if ($node->hasAttribute("multiple")) {
-                $node->setAttribute("name","{$fn}[$id][$field][]");
+                $node->setAttribute("name", "{$fn}[$id][$field][]");
             } else {
-                $node->setAttribute("name","{$fn}[$id][$field]");
+                $node->setAttribute("name", "{$fn}[$id][$field]");
             }
         };
 
@@ -120,7 +121,7 @@ class Table extends HTMLTableElement
 
         foreach ($column->cell() as $c) {
             $obj = p($c)->data("object");
-            if ($obj instanceof \App\Model) {
+            if ($obj instanceof \App\Core\Model) {
                 if ($obj->canRead()) {
                     $btn = html("a")->class("btn btn-xs btn-info")->href($obj->uri('v'))->html("<i class='fa fa-fw fa-search'></i>");
                     p($c)->html($btn);
@@ -229,6 +230,6 @@ if(checked){
                 p($o)->wrapInner("<div class='form-group no-margin'></div>");
             }
         });
-        return (string )$o;
+        return (string) $o;
     }
 }

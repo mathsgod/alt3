@@ -1,0 +1,33 @@
+<div id="div1" v-html="content"></div>
+
+<script>
+    var vm = new Vue({
+        el: "#div1",
+        data: {
+            content: "Loading..."
+        },
+        created() {
+            this.loadData();
+            setInterval(this.loadData, 5000);
+        }, methods: {
+            loadData() {
+                this.$http.get("System/db_process/data").then(resp => {
+                    this.content = resp.body;
+                });
+            }, killProcess(id) {
+                this.$http.get("System/db_process/kill", {
+                    params: {
+                        process_id: id
+                    }
+                }).then(resp => {
+                    this.loadData();
+                });
+            }
+        }
+    });
+
+    function onClickKill(el) {
+        var id = el.dataset.value;
+        vm.killProcess(id);
+    }
+</script>

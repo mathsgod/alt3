@@ -275,45 +275,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
-
-                {% verbatim %}
-                <script>
-                    Vue.component("nav-item", {
-                        template: `
-                            <li class="has-treeview" :class="{'menu-open':menu.active}">
-                                <a :href="menu.link" class="nav-link" :class="{active:isActive}">
-                                    <i class="nav-icon" :class="menu.icon"></i>
-                                    <p>
-                                        {{menu.label}}
-                                        <i v-if="menu.submenu" class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul v-if="menu.submenu" class="nav nav-treeview">
-                                    <li class="nav-item" v-for="(sub,index) in menu.submenu" is="nav-item" :menu="sub" :key="index"></li>
-                                </ul>
-                            </li>
-                            `,
-                        props: {
-                            menu: Object
-                        }, mounted() {
-
-                        }, computed: {
-                            isActive() {
-                                if (this.menu.submenu) {
-                                    return false;
-                                }
-                                return this.menu.active;
-                            }
-
-                        }
-                    });
-
-                    var v = new Vue({
-                        el: "#nav-sidebar"
-                    });
-                </script>
-
-                {% endverbatim %}
             </div>
             <!-- /.sidebar -->
         </aside>
@@ -325,12 +286,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">Starter Page</h1>
+                            <h1 class="m-0 text-dark">{{header.title}}</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Starter Page</li>
+                                <li class="breadcrumb-item active"><a href="{{module.name}}">{{module.name}}</a></li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -341,6 +302,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
+                    {% for alert in alerts %}
+                    <div class="alert alert-{{alert.type}} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="{{alert.icon}}"></i> {{alert.message}}</h5>
+                        {{alert.description}}
+                    </div>
+                    {% endfor %}
+
+                    {% for callout in callouts %}
+                    <div class="callout callout-{{callout.type}}">
+                        <h5>{{callout.title}}</h5>
+                        {% if callout.description %}
+                        <p>{{callout.description}}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    {{navbar|raw}}
+
                     {{content|raw}}
                 </div><!-- /.container-fluid -->
             </div>
@@ -370,6 +350,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- ./wrapper -->
 
+    <script src="{{system_base}}/js/sidebar.js"></script>
 </body>
 
 </html>

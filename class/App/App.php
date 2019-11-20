@@ -11,25 +11,23 @@ use Symfony\Component\Yaml\Yaml;
 
 class App extends \R\App
 {
+    public $config = [];
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
+        //check config file
+        if (!file_exists($root . "/config.ini")) {
+            throw new Exception("config.ini not found");
+        }
+
         parent::__construct($root, $loader, $logger);
         Core\Model::$_db = $this->db;
 
         //system config
         $pi = $this->pathInfo();
         $file = $pi["system_root"] . "/config.ini";
-        if (file_exists($file)) {
-            $c = parse_ini_file($file, true);
-            foreach ($c as $n => $v) {
-                foreach ($v as $a => $b) {
-                    if (!isset($this->config[$n][$a])) {
-                        $this->config[$n][$a] = $b;
-                    }
-                }
-            }
-        }
+        $this->config = parse_ini_file($file, true);
+
         foreach (Config::Query() as $c) {
             $this->config["user"][$c->name] = $c->value;
         }
@@ -44,6 +42,8 @@ class App extends \R\App
 
     public function run()
     {
+        $this->alert = new Alert();
+
         $request = $this->request;
         $router = new \R\Router();
 
@@ -106,6 +106,14 @@ class App extends \R\App
             //$this->redirect("/");
         }
     }
+
+    public function flushMessage(): array
+    {
+        $msg = $_SESSION["app"]["message"];
+        $_SESSION["app"]["message"] = [];
+        return $msg ?? [];
+    }
+
 
     public function twig(string $file)
     {

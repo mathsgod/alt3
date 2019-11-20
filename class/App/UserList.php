@@ -4,6 +4,8 @@ namespace App;
 
 class UserList extends Core\UserList
 {
+    use ModelTrait;
+
     public function canDelete()
     {
         if ($this->usergroup_id == 1) {

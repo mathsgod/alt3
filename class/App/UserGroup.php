@@ -4,6 +4,8 @@ namespace App;
 
 class UserGroup extends Core\UserGroup
 {
+    use ModelTrait;
+
     public function User()
     {
         return $this->UserList()->map(function ($o) {

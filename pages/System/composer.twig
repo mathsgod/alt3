@@ -1,0 +1,175 @@
+{% verbatim %}
+<div id="_div1">
+
+	<alt-box class="box-primary">
+		<alt-box-header>
+			Composer
+			<button class="btn btn-xs btn-primary" @click="run('update mathsgod/alt')">update mathsgod/alt</button>
+			<button class="btn btn-xs btn-primary" @click="changeOwner">Change owner</button>
+			<button class="btn btn-xs btn-primary" @click="addRaymondRepo">Add Raymond repo</button>
+			<button class="btn btn-xs btn-primary" @click="updateComposer">Update composer</button>
+		</alt-box-header>
+		<alt-box-body>
+			<input type="text" v-model="cmd" placeholder="update mathsgod/alt" @keyup.enter="runComposer" class="form-control">
+			<div v-html="composer_output" style="white-space:pre;overflow:auto">
+
+			</div>
+		</alt-box-body>
+	</alt-box>
+
+	<div class="row">
+		<div class="col-md-9">
+			<alt-box class="box-primary" ref="packageBox1">
+				<alt-box-header>
+					Installed packages
+				</alt-box-header>
+				<alt-box-body class="table-responsive">
+					<table class="table table-condensed table-hover" data-searching="true">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Version</th>
+								<th>Update</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="p in installedPackages" v-if="p.version">
+								<td v-text="p.name"></td>
+								<td v-text="p.description"></td>
+								<td v-text="p.version"></td>
+								<td>
+									<button @click="updatePackage(p.name)" class="btn btn-xs btn-primary">
+										<i class="fa fa-fw fa-cloud-download-alt"></i>
+									</button>
+								</td>
+								<td>
+									<button @click="removePackage(p.name)" class="btn btn-xs btn-danger">
+										<i class="fa fa-fw fa-times"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</alt-box-body>
+			</alt-box>
+		</div>
+
+		<div class="col-md-3">
+			<alt-box class="box-primary" ref="packageBox2">
+				<alt-box-header>
+					New packages
+				</alt-box-header>
+				<alt-box-body class="table-responsive">
+					<table class="table table-condensed table-hover">
+						<tr>
+							<th>Name</th>
+							<th></th>
+						</tr>
+						<tr v-for="p in installedPackages" v-if="!p.version">
+							<td v-text="p.name"></td>
+							<td>
+								<button v-if="!p.version" class="btn btn-xs btn-success" @click="requirePackage(p.name)">
+									<i class="fa fa-fw fa-download"></i>
+								</button>
+							</td>
+						</tr>
+					</table>
+				</alt-box-body>
+			</alt-box>
+
+		</div>
+	</div>
+
+</div>
+
+<script>
+
+	var vm = new Vue({
+		el: "#_div1",
+		data: {
+			cmd: "",
+			composer_output: "",
+			installedPackages: []
+		},
+		mounted() {
+			this.reloadPackages();
+		}, methods: {
+			updateComposer() {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/updateComposer").then(resp => {
+					this.composer_output = "";
+				});
+			},
+			addRaymondRepo() {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/addRaymondRepo").then(resp => {
+					this.composer_output = "";
+				});
+			},
+			changeOwner() {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/changeOwner").then(resp => {
+					this.composer_output = "";
+				});
+			},
+			reloadPackages() {
+				this.$refs.packageBox1.showLoading();
+				this.$refs.packageBox2.showLoading();
+				this.$http.get("System/composer/installedPackages").then(resp => {
+					this.installedPackages = resp.body;
+					this.$refs.packageBox1.hideLoading();
+					this.$refs.packageBox2.hideLoading();
+				});
+			},
+			removePackage(package) {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: "remove " + package
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+					this.reloadPackages();
+				});
+			}, updatePackage(package) {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: "update " + package
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+					this.reloadPackages();
+				});
+
+			}, requirePackage(package) {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: "require " + package
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+					this.reloadPackages();
+				});
+			},
+			run(cmd) {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: cmd
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+				});
+			},
+			runComposer() {
+				this.composer_output = "loading...";
+				this.$http.post("System/composer/run", {
+					cmd: this.cmd
+				}).then(resp => {
+					this.cmd = "";
+					this.composer_output = resp.body.output;
+				});
+			}
+		}
+	});
+</script> {% endverbatim %}

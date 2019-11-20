@@ -1,20 +1,23 @@
 <?php
+
 namespace App\UI;
 
-class T extends Box
+class T extends Card
 {
     public $objects;
     public $table;
 
-    public function __construct($objects, \App\Page $route)
+    public function __construct($objects, \App\Page $page)
     {
-        parent::__construct($route);
+        parent::__construct($page);
         $this->objects = $objects;
-        $this->body->classList->add("no-padding");
+        $this->setAttribute("primary", true);
+
+        $this->body->classList->add("p-0");
         $this->body->classList->add('table-responsive');
         $this->classList->add("box-primary");
-        $this->table = new Table($objects, $route);
-        $this->table->classList->add("table-condensed");
+        $this->table = new Table($objects, $page);
+        $this->table->classList->add("table-sm");
         $this->table->classList->add("table-hover");
         $this->body->append($this->table);
     }
@@ -51,7 +54,7 @@ class T extends Box
 
     public function setCreate(string $uri)
     {
-        return $this->header->addButton(null,$uri)->icon("fa fa-fw fa-plus")->addClass("btn-primary");
+        return $this->header->addButton(null, $uri)->icon("fa fa-fw fa-plus")->addClass("btn-primary");
     }
 
     public function formCreate($options, $default = null)

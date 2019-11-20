@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8b92171776f6668e62d300dd6a0cc63",
+    "content-hash": "77e9666ed2e8cb091a9b7606a39f85f6",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -116,6 +116,57 @@
             "time": "2019-09-23T18:57:22+00:00"
         },
         {
+            "name": "guzzlehttp/promises",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle promises library",
+            "keywords": [
+                "promise"
+            ],
+            "time": "2016-12-20T10:07:11+00:00"
+        },
+        {
             "name": "mathsgod/alt-app-core",
             "version": "1.1.0",
             "source": {
@@ -179,6 +230,39 @@
             ],
             "description": "Data structure",
             "time": "2019-06-20T04:53:46+00:00"
+        },
+        {
+            "name": "mathsgod/graphql-php-directive-resolvers",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mathsgod/graphql-php-directive-resolvers.git",
+                "reference": "4f4fd48f30f9a2ecf3a61e0f6ca1e98854c871a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mathsgod/graphql-php-directive-resolvers/zipball/4f4fd48f30f9a2ecf3a61e0f6ca1e98854c871a0",
+                "reference": "4f4fd48f30f9a2ecf3a61e0f6ca1e98854c871a0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/promises": "^1.3",
+                "webonyx/graphql-php": "^0.12.6"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/function/function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "mathsgod@yahoo.com"
+                }
+            ],
+            "time": "2019-01-11T04:48:34+00:00"
         },
         {
             "name": "mathsgod/html",
@@ -341,6 +425,40 @@
             ],
             "description": "raymond framework db",
             "time": "2019-11-01T10:07:25+00:00"
+        },
+        {
+            "name": "mathsgod/r-graphql",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-graphql.git",
+                "reference": "a7847951723d8e313dcc1463ea0becc5c6e0b350"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-graphql/mathsgod-r-graphql-1.3.1-48cc9f.zip",
+                "reference": "a7847951723d8e313dcc1463ea0becc5c6e0b350",
+                "shasum": "2543f1d1bdfa68435fea8495cb59aea2bbb99bea"
+            },
+            "require": {
+                "guzzlehttp/promises": "^1.3",
+                "mathsgod/graphql-php-directive-resolvers": "^1.0",
+                "webonyx/graphql-php": "^0.12.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "R\\GraphQL\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "raymond@hostlink.com.hk"
+                }
+            ],
+            "description": "GraphQL for php",
+            "time": "2019-11-01T09:34:08+00:00"
         },
         {
             "name": "mathsgod/r-psr7",
@@ -891,6 +1009,51 @@
                 "templating"
             ],
             "time": "2019-11-11T16:52:09+00:00"
+        },
+        {
+            "name": "webonyx/graphql-php",
+            "version": "v0.12.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webonyx/graphql-php.git",
+                "reference": "4c545e5ec4fc37f6eb36c19f5a0e7feaf5979c95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/4c545e5ec4fc37f6eb36c19f5a0e7feaf5979c95",
+                "reference": "4c545e5ec4fc37f6eb36c19f5a0e7feaf5979c95",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "psr/http-message": "^1.0",
+                "react/promise": "2.*"
+            },
+            "suggest": {
+                "psr/http-message": "To use standard GraphQL server",
+                "react/promise": "To leverage async resolving on React PHP platform"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP port of GraphQL reference implementation",
+            "homepage": "https://github.com/webonyx/graphql-php",
+            "keywords": [
+                "api",
+                "graphql"
+            ],
+            "time": "2018-09-02T14:59:54+00:00"
         }
     ],
     "packages-dev": [],

@@ -1,0 +1,462 @@
+<div class="row" id="div1">
+    <div class="col-md-2">
+
+        <div class="box box-primary">
+            <div class="box-body no-padding">
+                {{tree|raw}}
+            </div>
+        </div>
+
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Height</label>
+                    <input class="form-control input-sm" type="input" v-model="edit_height" />
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-md-10">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="active" href="#tab-1" data-toggle="tab">Page</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tab-2" data-toggle="tab">Global</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-1">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table class="table table-condensed table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Source</th>
+                                        <th v-for="lang in langs" v-text="lang">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="file">
+                                        <td>
+                                            <button @click.prevent="onClickTranAll" class="btn btn-xs btn-primary">Translate all</button>
+                                        </td>
+                                        <td v-for="lang in langs">
+                                            <button @click.prevent="copyFromSource(lang)" class="btn btn-xs btn-primary">Copy from source</button>
+                                            <button @click.prevent="onClickTranSource(lang)" class="btn btn-xs btn-primary">Tran from Source</button>
+                                            <button @click.prevent="tranSrcIfEmpty(lang)" class="btn btn-xs btn-primary">Translate data if value is empty</button>
+
+                                            <button v-if="lang=='zh_CN'" @click.prevent="onClickAllT2S()" class="btn btn-xs btn-primary">T2S</button>
+                                            <button v-if="lang=='en_US'" @click.prevent="onClickAllT2E()" class="btn btn-xs btn-primary">T2E</button>
+                                            <button v-if="lang=='zh_HK'" @click.prevent="onClickAllE2T()" class="btn btn-xs btn-primary">E2T</button>
+                                            <button @click="saveTran(lang)" class="btn btn-xs btn-success">
+                                                <i class="fa fa-save"></i> Save</button>
+                                        </td>
+                                    </tr>
+                                    <tr v-for="d in renderData">
+
+                                        <td v-if="d.edit" :colspan="langs.length + 1">
+                                            <button @click="copyFromSourceSingle(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="far fa-fw fa-copy"></i> Copy from source</button>
+                                            <button @click="onClickTran(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> Translate from source</button>
+                                            <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(selected_data)" class="btn btn-xs btn-success">T2S</button>
+                                            <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> T2E</button>
+                                            <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> E2T</button>
+                                            <button class="btn btn-xs btn-success" @click.prevent="selected_data = null"><i class="fa fa-check"></i></button>
+                                            <textarea v-model="selected_data.msgstr[selected_lang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="selected_lang"></textarea>
+                                        </td>
+
+                                        <td v-if="!d.edit" style="width:100px" v-text="d.msgid"></td>
+
+                                        <td style="cursor:pointer;" v-if="!d.edit" v-for="lang in langs" @click="clickData(d,lang)" :class="{active: ((selected_data==d) && (lang==selected_lang)) }">
+                                            <div style="text-overflow:ellipsis;overflow-y:auto;max-height:100px" v-text="d.msgstr[lang]">
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer" v-if="file">
+                            <button @click.prevent="saveTran()" class="btn btn-success">Save all</button>
+                            <button @click.prevent="loadGlobalToSingle()" class="btn btn-success">Load global</button>
+                        </div>
+                    </div>
+
+
+                    <div class="box box-primary" v-if="unuse">
+                        <div class="box-header">
+                            <div class="box-title">
+                                Unuse
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-condensed table-hover" v-for="lang in langs">
+                                <thead>
+                                    <tr>
+                                        <th v-text="lang"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="d in unuse[lang]">
+                                        <td>
+                                            <table class="table table-condensed table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>msgid</th>
+                                                        <th>msgstr</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(msgid,i) in d.msgid">
+                                                        <td v-text="msgid"></td>
+                                                        <td v-text="d.msgstr[i]"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                {% verbatim %}
+
+
+                <div class="tab-pane" id="tab-2">
+                    <div id="global-tab">
+
+                        <table class="table table-condensed table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Source</th>
+                                    <th v-for="lang in langs" v-text="lang"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="entry in globalRenderData">
+                                    <td v-if="!entry.edit">
+                                        <button class="btn btn-xs btn-danger" @click="removeGlobal(entry)"><i class="fa fa-times fa-fw"></i></button>
+                                    </td>
+                                    <td v-if="!entry.edit" @click="clickGlobal(entry)">
+                                        {{entry.name}}
+                                    </td>
+                                    <td v-if="!entry.edit" v-for="lang in langs" @click="clickGlobal(entry,lang)">
+                                        {{entry.value[lang]}}
+                                    </td>
+
+                                    <td v-if="entry.edit" :colspan="langs.length + 2">
+                                        <button class="btn btn-xs btn-success" @click.prevent="globalSelected = null"><i class="fa fa-check"></i></button>
+                                        <textarea v-if="globalSelectedLang" v-model="globalSelected.value[globalSelectedLang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="globalSelectedLang"></textarea>
+                                        <textarea v-if="!globalSelectedLang" v-model="globalSelected.name" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="globalSelectedLang"></textarea>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <textarea v-model="globalNew" class="form-control"></textarea>
+                                        <button class="btn btn-xs btn-success" @click="addGlobal()"><i class="fa fa-plus fa-fw"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <button class="btn btn-success" @click="onSaveGlobal">Save all</button>
+                            <button class="btn btn-success" @click="onApplyGlobal">Apply to all</button>
+                        </div>
+                    </div>
+                </div>
+
+                {% endverbatim %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% verbatim %}
+
+<script>
+    var vm = new Vue({
+        el: "#div1",
+        data: {
+            edit_height: 300,
+            file: null,
+            langs: [],
+            data: [],
+            unuse: null,
+            selected_data: null,
+            selected_lang: null,
+            globalEntries: [],
+            globalNew: "",
+            globalSelected: null,
+            globalSelectedLang: null,
+        }, created() {
+            this.$http.get("System/front_translate_twig/getLang").then((resp) => {
+                this.langs = resp.body;
+            });
+
+            this.$http.get("System/front_translate_twig/globalData").then(resp => {
+                console.log(resp.body);
+                this.globalEntries = resp.body.entries;
+            });
+
+        }, computed: {
+
+            globalRenderData() {
+                var ds = [];
+                this.globalEntries.forEach((d) => {
+                    ds.push(d);
+                    if (this.globalSelected == d) {
+                        var a = JSON.parse(JSON.stringify(d));
+                        a.edit = true;
+                        ds.push(a);
+                    }
+                });
+                return ds;
+            },
+            renderData() {
+                var ds = [];
+                this.data.forEach((d) => {
+                    ds.push(d);
+                    if (this.selected_data == d) {
+                        var a = JSON.parse(JSON.stringify(d));
+                        a.edit = true;
+                        ds.push(a);
+                    }
+                });
+                return ds;
+            }
+        }, methods: {
+            copyFromSourceSingle(d, lang) {
+                d.msgstr[lang] = d.msgid;
+            },
+            loadGlobalToSingle() {
+                if (confirm("Are you sure load global data to current translate?")) {
+                    this.$http.get("System/front_translate_twig/globalData").then(resp => {
+                        var entries = resp.data.entries;
+
+                        entries.forEach(entry => {
+
+                            var d = this.data.find(d => {
+                                return d.msgid == entry.name
+                            });
+
+                            if (d) {
+                                d.msgstr = entry.value;
+                            }
+
+                        });
+
+                    });
+
+                }
+            },
+            onApplyGlobal() {
+                if (confirm("Are you sure apply global data to all translate?")) {
+                    this.$http.get("System/front_translate_twig/applyGlobal").then(resp => {
+                        if (resp.data.error) {
+                            alert(resp.data.error.message);
+                        } else {
+                            alert("done");
+                        }
+
+                    });
+                }
+            },
+            removeGlobal(entry) {
+                var data = [];
+                this.globalEntries.forEach(d => {
+                    if (d != entry) {
+                        data.push(d);
+                    }
+                });
+                this.globalEntries = data;
+            },
+            onSaveGlobal() {
+                if (confirm("Are you sure update global data?")) {
+                    this.$http.post("System/front_translate_twig/upldateGlobal", {
+                        data: this.globalEntries
+                    }).then(resp => {
+
+                    });
+                }
+            },
+            clickGlobal(entry, lang) {
+                this.globalSelectedLang = lang;
+                this.globalSelected = entry;
+            },
+            reloadGlobal() {
+                this.$http.get("System/front_translate_twig/globalData").then(resp => {
+                    this.globalEntries = resp.body.entries;
+                });
+            },
+            addGlobal() {
+                if (!this.globalNew) {
+                    return;
+                }
+
+                var entry = {
+                    name: this.globalNew,
+                    value: {}
+                };
+
+                this.langs.forEach(l => {
+                    entry.value[l] = "";
+                });
+
+                this.globalEntries.push(entry);
+
+                this.globalNew = "";
+            },
+            copyFromSource(lang) {
+                this.data.forEach((d) => {
+                    d.msgstr[lang] = d.msgid;
+                });
+            },
+            onClickAllE2T() {
+                this.data.forEach(this.onClickE2T);
+            },
+            onClickAllT2E() {
+                this.data.forEach(this.onClickT2E);
+            },
+            onClickAllT2S() {
+                this.data.forEach(this.onClickT2S);
+            },
+            onClickT2E(d) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: "zh-TW",
+                    to: "en",
+                    text: d.msgstr.zh_HK
+                }).then(function (r) {
+                    d.msgstr.en_US = r.data.text;
+                });
+            },
+            onClickT2S(d) {
+                this.$http.post("System/front_translate_twig/t2s", {
+                    str: d.msgstr.zh_HK
+                }).then(function (r) {
+                    d.msgstr.zh_CN = r.data.text;
+                });
+            },
+            onClickE2T(d) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: "en",
+                    to: "zh-TW",
+                    text: d.msgstr.en_US,
+                }).then(function (r) {
+                    d.msgstr.zh_HK = r.data.text;
+                });
+            },
+            onClickTranLang(from, to) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: from,
+                    to: "zh-TW",
+                    text: d.msgstr.en_US,
+                }).then(function (r) {
+                    d.msgstr.zh_HK = r.data.text;
+                });
+            },
+            onClickTranAll() {
+                this.langs.forEach((lang) => {
+                    this.data.forEach((d) => {
+                        this.$http.post("System/front_translate_twig/googleTranslate", {
+                            from: 'auto',
+                            to: lang,
+                            text: d.msgid,
+                        }).then(function (r) {
+                            d.msgstr[lang] = r.data.text;
+                        });
+
+                    });
+                });
+            },
+            saveTran(lang) {
+                if (confirm("Save?")) {
+                    this.$http.post("System/front_translate_twig", {
+                        file: this.file,
+                        data: this.data,
+                        lang: this.lang
+                    }).then(function (data) {
+                        this.selected_data = null;
+                    });
+                }
+
+            },
+            onClickSave() {
+
+            },
+            selectFile(file) {
+                this.file = file;
+                this.$http.get("System/front_translate_twig/getTran", {
+                    params: {
+                        file: file
+                    }
+                }).then(function (resp) {
+                    //console.log(resp);
+                    this.data = resp.body.data;
+                    this.unuse = resp.body.unuse;
+
+                });
+            }, clickData(d, lang) {
+                this.selected_data = d;
+                this.selected_lang = lang;
+            }, onClickTranSource(lang) {
+                if (confirm("Are you sure want to translation from source to " + lang)) {
+                    this.data.forEach((d) => {
+                        this.$http.post("System/front_translate_twig/googleTranslate", {
+                            from: 'auto',
+                            to: lang,
+                            text: d.msgid,
+                        }).then((resp) => {
+                            d.msgstr[lang] = resp.data.text;
+                        });
+                    });
+                }
+            }, tranSrcIfEmpty(lang) {
+                if (confirm("Are you sure want to translation from source to " + lang)) {
+                    this.data.forEach((d) => {
+                        if (d.msgstr[lang] == null || d.msgstr[lang].length == 0) {
+                            this.$http.post("System/front_translate_twig/googleTranslate", {
+                                from: 'auto',
+                                to: lang,
+                                text: d.msgid,
+                            }).then((resp) => {
+                                d.msgstr[lang] = resp.data.text;
+                            });
+                        }
+                    });
+                }
+            }, onClickTran(d, lang) {
+                this.$http.post("System/front_translate_twig/googleTranslate", {
+                    from: 'auto',
+                    to: lang,
+                    text: d.msgid,
+                }).then(function (r) {
+                    d.msgstr[lang] = r.data.text;
+                });
+            }
+        }
+
+    });
+
+    function onClickFile(file) {
+        vm.selectFile(file);
+    }
+
+</script> {% endverbatim %}

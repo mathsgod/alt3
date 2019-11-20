@@ -5,7 +5,7 @@ namespace App\UI;
 use \My\Func;
 use App\Page;
 
-class V extends Box
+class V extends Card
 {
     public $columns = [];
     public $tableClass = [];
@@ -19,8 +19,9 @@ class V extends Box
     {
         parent::__construct($page);
         $this->object = $object;
-        $this->tableClass = "table-condensed";
-        $this->body->classList->add('no-padding');
+        $this->setAttribute("info", true);
+        $this->tableClass = "table-sm";
+        $this->body->classList->add('p-0');
         $this->classList->add("no-border");
         $this->container = $this->body();
 
@@ -110,14 +111,17 @@ class V extends Box
         $tbody = $this->table->find("tbody");
 
         $tr = new Col("tr");
+        $tr->classList->add("d-flex");
+
         p($tr)->appendTo($tbody);
-        $th = p("th")->addClass("bg-primary")->append($label);
+        $th = p("th")->addClass("bg-info text-nowrap overflow-hidden")->append($label);
         $th->appendTo($tr);
 
         $col = $this->column_ratio[0];
-        $th->addClass("col-xs-{$col} col-md-{$col} col-lg-{$col}");
+        $th->addClass("col-3 col-md-2");
 
         $cell = p("td");
+        $cell->addClass("col");
         $cell->data("object", $this->object);
         $tr->cell[] = $cell[0];
         if ($getter instanceof \Closure) {

@@ -5,3 +5,7 @@ input.form-control:required{
     background-position: center right calc(.375em + .1875rem);
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
 }
+
+.text-sm .btn {
+    font-size: .75rem!important;
+}

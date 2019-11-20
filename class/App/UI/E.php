@@ -95,7 +95,7 @@ class E extends HTMLDivElement
 
         if ($getter) {
             $static = p("p");
-            $static->addClass("form-control-static");
+            $static->addClass("col-form-label");
             if ($getter instanceof \Closure) {
                 $static->html($getter($this->object));
             } else {
@@ -112,7 +112,7 @@ class E extends HTMLDivElement
 
         $c2->callback = function ($object, $node) {
             if ($node->tagName == "a") {
-                p($node)->wrap(p("p")->addClass("form-control-static"));
+                p($node)->wrap(p("p")->addClass("col-form-label"));
             }
         };
 

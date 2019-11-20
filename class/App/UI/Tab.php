@@ -16,6 +16,7 @@ class Tab extends Card
     {
         parent::__construct($page);
         $this->classList->add("card-outline card-outline-tabs");
+        $this->setAttribute("primary", true);
 
         $this->navs = $this->ownerDocument->createElement("ul");
         $this->navs->classList->add("nav");

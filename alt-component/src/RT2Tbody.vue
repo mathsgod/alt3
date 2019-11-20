@@ -116,9 +116,13 @@ export default {
         this.subRow[index] = false;
       } else {
         this.subRow[index] = true;
+
         Vue.http
           .get(content.url, {
-            params: content.params
+            params: content.params,
+            headers: {
+              Accept: "text/html"
+            }
           })
           .then(resp => {
             this.subRowContent[index] = resp.body;

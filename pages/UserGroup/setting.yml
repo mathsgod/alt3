@@ -1,0 +1,9 @@
+class: App\UserGroup
+icon: fa fa-users fa-fw
+group: System
+show_create: 1
+
+menu:
+  Update all user:
+    link: UserGroup/ae_user
+    icon: fa fa-pencil-alt fa-fw

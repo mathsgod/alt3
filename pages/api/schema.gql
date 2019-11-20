@@ -1,0 +1,33 @@
+type Mutation{
+    me:Me
+    login(username:String!,password:String!,code:String):Me
+    UserGroup(usergroup_id:Int!):UserGroup
+}
+
+type Query{
+    me:Me
+    credentialRequestOptions(username:String!):String
+    loginWebAuthn(username:String!,assertion:String!):Boolean
+    UserGroup(usergroup_id:Int!):UserGroup
+    UserGroups:[UserGroup]
+    forgotPassword(username:String!,email:String!):Boolean
+    
+}
+
+type Me{
+    user_id:Int
+    username:String
+    first_name:String
+    last_name:String
+    group:[UserGroup]
+    credentialCreationOptions:String
+    registrationWebAuthn(attestion:String!):Boolean
+    jwt:String
+}
+
+type UserGroup{
+    name:String
+    addUser(user_id:Int!):Boolean
+    removeUser(user_id:Int!):Boolean
+}
+

@@ -10,9 +10,11 @@ use R\Psr7\JSONStream;
 class Page extends \R\Page
 {
     public $data = [];
+    protected $alert;
     public function __construct(App $app)
     {
         parent::__construct($app);
+        $this->alert = $app->alert;
     }
 
     public function translate(string $str): string
@@ -97,6 +99,24 @@ class Page extends \R\Page
         $form = new UI\Form($this);
         $form->card->body->append($content);
         return $form;
+    }
+
+    public function createV($object = null): UI\V
+    {
+        if (!$object) {
+            $object = $this->object();
+        }
+        return new UI\V($object, $this);
+    }
+
+    public function createT($objects): UI\T
+    {
+        return new UI\T($objects, $this);
+    }
+
+    public function createTable($objects): UI\Table
+    {
+        return new UI\Table($objects, $this);
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface

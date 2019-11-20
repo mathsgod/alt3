@@ -1,0 +1,43 @@
+class: App\System
+group: System
+icon: fa fa-desktop fa-fw
+
+menu:
+  Update: 
+    link: System/update
+    icon: fa fa-arrow-up fa-fw
+  Front translate: 
+    link: System/front_translate_twig
+    icon: fa fa-language fa-fw
+  Composer: 
+    link: System/composer
+    icon: fa fa-cogs fa-fw
+  DB check: 
+    link: System/db_check
+    icon: fa fa-check-circle fa-fw
+  Export: 
+    link: System/export
+    icon: fa fa-download fa-fw
+  PHPUnit test:
+    link: System/phpunit
+    icon: fa fa-list-alt fa-fw
+  DB:
+    link: System/db
+    icon: fa fa-database fa-fw
+  GQL generator:
+    link: System/gql/generate
+    icon: fa fa-file fa-fw
+  htpasswd generator:
+    link: System/htpasswd
+    icon: fa fa-key fa-fw
+  shell:
+    link: System/shell
+    icon: fa fa-keyboard fa-fw
+  TLS check:
+    link: System/tlscheck
+    icon: fa fa-lock fa-fw
+  PDO log:
+    link: System/pdo
+    icon: fa fa-list-alt fa-fw
+
+  

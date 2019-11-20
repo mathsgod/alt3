@@ -1,0 +1,22 @@
+<script src="composer/vendor/kevinchappell/form-builder/dist/form-builder.min.js"></script>
+{{form1|raw}}
+<div id="fb-editor"></div>
+
+<script>
+    $(function ($) {
+        var editor = document.getElementById('fb-editor');
+        var fb = $(editor).formBuilder();
+
+        fb.promise.then(fb => {
+            $(editor).find(".save-template").on("click", function () {
+                //console.log(fb.formData);
+                $.post("System/formbuilder",{
+                    name:$("input[name='name']").val(),
+                    content:fb.formData
+                }).success(function(){
+
+                });
+            });
+        });
+    });
+</script>

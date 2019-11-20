@@ -1,0 +1,31 @@
+<div id="div1">
+	<alt-box class="box-primary" ref="box1">
+		<alt-box-header>PHP Unit test</alt-box-header>
+		<alt-box-body>
+			<div v-text="content" style="white-space:pre">
+
+			</div>
+		</alt-box-body>
+		<alt-box-footer>
+			<button class="btn btn-primary" @click="run">Run</button>
+		</alt-box-footer>
+	</alt-box>
+</div>
+<script>
+
+	new Vue({
+		el: "#div1",
+		data: {
+			content: ""
+		},
+		methods: {
+			run() {
+				this.$refs.box1.showLoading();
+				this.$http.get("System/phpunit/run").then(resp => {
+					this.$refs.box1.hideLoading();
+					this.content=resp.body.content;
+				});
+			}
+		}
+	});
+</script>

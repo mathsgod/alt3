@@ -100,6 +100,7 @@ class MasterPage extends \R\Page
                     $menu["active"] = $app->module->name == $module->name;
 
                     if (sizeof($links) > 1) {
+                        $menu["link"] = "#";
                         $menu["submenu"] = $links;
                     } else {
                         $menu["link"] = $links[0]["link"];
@@ -114,6 +115,7 @@ class MasterPage extends \R\Page
         $this->data["sidebar_menu"] = $menu_gen($ms);
 
 
+        $this->data["alerts"] = $this->app->flushMessage();
 
 
         //   outp($this->data["sidebar_menu"]);

@@ -46,7 +46,7 @@
       <button
         class="btn btn-xs btn-default"
         v-else-if="type=='sub-row'"
-        v-on:click="toggleSubRow()"
+        @click="toggleSubRow()"
       >
         <i v-show="showSubRow" class="fa fa-fw fa-minus"></i>
         <i v-show="!showSubRow" class="fa fa-fw fa-plus"></i>
@@ -55,6 +55,12 @@
   </td>
 </template>
 
+<style scoped>
+td {
+  white-space: nowrap;
+  padding: 1px 2px 1px 2px !important;
+}
+</style>
 <script>
 export default {
   name: "rt2-cell",

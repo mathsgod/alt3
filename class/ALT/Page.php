@@ -8,22 +8,35 @@ use Exception;
 
 class Page extends \App\Page
 {
+    public $navbar = null;
+    public $callout;
+    protected $header;
+
     public function __construct(\App\App $app)
     {
         parent::__construct($app);
+        $this->navbar = new Navbar($this);
+        $this->callout = new Callout();
+        $this->header = new PageHeader;
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $this->request = $request;
 
         if ($request->isAccept("text/html") && $request->getMethod() == "get") {
             $this->master = new MasterPage($this->app);
+            $this->header->title = $this->module()->name;
         }
 
         try {
             $response = parent::__invoke($request, $response);
             if ($this->master) {
                 $this->master->data["content"] .= (string) $response;
+
+                if ($this->navbar->hasButton()) {
+                    $this->master->data["navbar"] = $this->navbar;
+                }
             }
         } catch (Exception $e) {
             throw $e;
@@ -31,6 +44,10 @@ class Page extends \App\Page
 
         if ($request->isAccept("text/html") && $request->getMethod() == "get") {
             if ($this->master) {
+                $this->master->data["callouts"] = $this->callout;
+                $this->master->data["header"] = $this->header;
+                $this->master->data["module"] = $this->module();
+
                 return $this->master->__invoke($request, $response);
             }
         } else {
@@ -44,5 +61,33 @@ class Page extends \App\Page
             $object = $this->object();
         }
         return new \App\UI\E($object, $this);
+    }
+
+    public function createGrid(array $sizes = [1]): Grid
+    {
+        $route = $this->request->getAttribute("route");
+        $action = $route->action;
+
+        $grid = new Grid();
+        $uri = $this->module()->name . "/" . $action . "/grid[" . $grid->attr('grid-num') . "]";
+        $grid->attr("data-uri", $uri);
+        // load layout
+        //$ui = \App\UI::_($uri);
+        //if ($ui->layout) {
+        //  $grid->layout = json_decode($ui->layout, true);
+        //}
+
+        foreach ($sizes as $s) {
+            $row = $grid->addRow();
+            foreach (range(1, $s) as $a) {
+                $col = floor(12 / $s);
+                $section = p("section");
+                $section->attr("is", "alt-grid-section");
+                $section->addClass("col-md-$col ui-sortable connectedSortable");
+                $row->append($section);
+            }
+        }
+
+        return $grid;
     }
 }

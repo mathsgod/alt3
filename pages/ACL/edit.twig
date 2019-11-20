@@ -1,0 +1,224 @@
+<div id="div1">
+    <div is="box">
+        <div is="box-body">
+            <div class="form-horizontal clearfix">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Module</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" v-model="module">
+                            <option></option>
+                            <option v-for="m in modules" :value="m" v-text="m.class"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">User group</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" v-model="usergroup" @change="changeUserGroup">
+                            <option v-for="ug in usergroups" :value="ug" v-text="ug.name"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">User</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" v-model="user" @change="changeUser">
+                            <option v-for="u in users" :value="u" v-text="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table table-condensed" v-if="data.action">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Allow</th>
+                        <th>Deny</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="a in data.action">
+                        <td v-text="a.action"></td>
+                        <td>
+                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
+                        </td>
+                        <td>
+                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <table class="table table-condensed" v-if="data.path">
+                <thead>
+                    <tr>
+                        <th>Path</th>
+                        <th>Allow</th>
+                        <th>Deny</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="a in data.path">
+                        <td v-text="a.path"></td>
+                        <td>
+                            <icheck v-model="a.allow" @input="actionChecked(a)"></icheck>
+                        </td>
+                        <td>
+                            <icheck v-model="a.deny" @input="actionChecked(a)"></icheck>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-condensed" v-if="allowAddCustom()">
+                <thead>
+                    <tr>
+                        <th><button class="btn btn-xs btn-primary" @click="custom={allow:1,deny:0}"><i class="fa fa-fw fa-plus"></i></button></th>
+                        <th>Path</th>
+                        <th>Allow</th>
+                        <th>Deny</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-if="custom">
+                        <td><button @click.prevent="onSaveCustom" class="btn btn-xs btn-success"><i class="fa fa-fw fa-check"></i></button>
+                            <button @click.prevent="custom=null" class="btn btn-xs btn-warning"><i class="fa fa-fw fa-undo"></i></button></td>
+                        <td><input type="text" class="form-control input-sm" v-model="custom.path" /></td>
+                        <td>
+                            <icheck v-model="custom.allow" value="1">
+                        </td>
+                        <td>
+                            <icheck v-model="custom.deny" value="1">
+                        </td>
+
+                    </tr>
+                    <tr v-for="a in data.custom">
+                        <td><button @click.prevent="delAction(a)" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-times"></i></button></td>
+                        <td v-text="a.path"></td>
+                        <td>
+                            <icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck>
+                        </td>
+                        <td>
+                            <icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: "#div1",
+        data: {
+            custom: null,
+            module: null,
+            modules: [],
+            usergroups: [],
+            users: [],
+            usergroup: null,
+            user: null,
+            data: []
+        },
+        created() {
+            this.$http.get(window.location + "/data").then(resp => {
+                this.modules = resp.data.module;
+                this.usergroups = resp.data.usergroup;
+                this.users = resp.data.user;
+            });
+        }, watch: {
+            module() {
+                this.getValue();
+            }
+        }, methods: {
+            allowAddCustom() {
+                if (this.user) return true;
+                if (this.usergroup) return true;
+
+                return false;
+
+            },
+            actionChecked(a) {
+                let p = {};
+                if (this.module) {
+                    p.module = this.module.name;
+                }
+
+                if (this.usergroup) {
+                    p.usergroup_id = this.usergroup.usergroup_id
+                }
+
+                if (this.user) {
+                    p.user_id = this.user.user_id;
+                }
+
+                p.value = a;
+                return this.$http.post(window.location.toString(), p);
+            },
+            getValue() {
+                let p = {};
+                if (this.module) {
+                    p.module = this.module.name;
+                }
+
+                if (this.usergroup) {
+                    p.usergroup_id = this.usergroup.usergroup_id
+                }
+
+                if (this.user) {
+                    p.user_id = this.user.user_id;
+                }
+
+                this.$http.get(window.location + "/getValue", {
+                    params: p
+                }).then(resp => {
+                    this.data = resp.data;
+                });
+
+            }, changeUserGroup() {
+                this.user = null;
+                this.getValue();
+            }, changeUser() {
+                this.usergroup = null;
+                this.getValue();
+            }, onSaveCustom() {
+                this.actionChecked(this.custom).then(resp => {
+                    this.custom = null;
+                    this.getValue();
+                });
+
+            }, delAction(a) {
+                let p = {};
+                if (this.module) {
+                    p.module = this.module.name;
+                }
+
+                if (this.usergroup) {
+                    p.usergroup_id = this.usergroup.usergroup_id
+                }
+
+                if (this.user) {
+                    p.user_id = this.user.user_id;
+                }
+
+                p.value = a;
+
+                this.$http.post(window.location + "/delACL", p).then(resp => {
+                    this.getValue();
+                });
+            }
+
+        }
+
+    });
+</script>

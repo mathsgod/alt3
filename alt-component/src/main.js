@@ -13,3 +13,6 @@ VueRegisterElement("card-footer", CardFooter);
 
 import RT2 from "./RT2.vue";
 VueRegisterElement("rt2", RT2);
+
+import Table from "./Table";
+VueRegisterElement("alt-table", Table);

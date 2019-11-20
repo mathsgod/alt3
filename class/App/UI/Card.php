@@ -42,7 +42,6 @@ class Card extends HTMLDivElement
 
         //$this->classList->add("card");
         $this->setAttribute("is", "card");
-        $this->setAttribute("primary", true);
 
 
         /*        $ui = \App\UI::_($this->dataUri);
