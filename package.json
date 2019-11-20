@@ -1,0 +1,27 @@
+{
+  "name": "alt",
+  "version": "3.0.0",
+  "description": "Raymond framework",
+  "main": "src/index.js",
+  "dependencies": {
+    "webpack": "^4.41.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-loader": "^8.0.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathsgod/alt3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mathsgod/alt3/issues"
+  },
+  "homepage": "https://github.com/mathsgod/alt3#readme"
+}
