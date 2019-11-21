@@ -4,6 +4,7 @@ namespace App;
 
 trait ModelTrait
 {
+    public static $_app;
     public function canRead()
     {
         return true;

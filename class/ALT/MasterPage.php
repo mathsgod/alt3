@@ -114,6 +114,7 @@ class MasterPage extends \R\Page
 
         $this->data["sidebar_menu"] = $menu_gen($ms);
         $this->data["alerts"] = $this->app->flushMessage();
+        $this->data["app"] = $this->app;
 
         $stream = new Stream($this->template->render($this->data));
 

@@ -1,34 +1,81 @@
 <template>
-    <td>
-        <input v-if="searchable && searchType=='text'" type="text" class="form-control form-control-sm search" v-model="search" @keyup.enter="doSearch()" />
-        <input v-if="searchable && searchType=='equal'" type="text" class="form-control form-control-sm search" v-model="search" @keyup.enter="doSearch()" />
-        <input v-if="searchable && searchType=='date'" class="form-control form-control-sm search" value="" ref="search"/>
+  <td>
+    <input
+      v-if="searchable && searchType=='text'"
+      type="text"
+      class="form-control form-control-sm search"
+      v-model="search"
+      @keyup.enter="doSearch()"
+    />
+    <input
+      v-if="searchable && searchType=='equal'"
+      type="text"
+      class="form-control form-control-sm search"
+      v-model="search"
+      @keyup.enter="doSearch()"
+    />
+    <input
+      v-if="searchable && searchType=='date'"
+      class="form-control form-control-sm search"
+      value
+      ref="search"
+    />
 
-        <select v-if="searchable && searchType=='select' && !searchOptGroup" class="form-control form-control-sm search" ref="search" v-model="search" v-on:change="doSearch()">
-            <option></option>
-            <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
-        </select>
+    <select
+      v-if="searchable && searchType=='select' && !searchOptGroup"
+      class="form-control form-control-sm search"
+      ref="search"
+      v-model="search"
+      v-on:change="doSearch()"
+    >
+      <option></option>
+      <option v-for="(o,key) in searchOption" v-bind:value="o.value" v-text="o.label" :key="key"></option>
+    </select>
 
-        <select v-if="searchable && searchType=='select' && searchOptGroup" class="form-control form-control-sm search" ref="search" v-model="search" v-on:change="doSearch()">
-            <option></option>
-            <optgroup v-for="(label,group) in searchOptGroup" v-bind:label="label">
-                <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label" v-if="o.group==group"></option>
-            </optgroup>
+    <select
+      v-if="searchable && searchType=='select' && searchOptGroup"
+      class="form-control form-control-sm search"
+      ref="search"
+      v-model="search"
+      v-on:change="doSearch()"
+    >
+      <option></option>
+      <optgroup v-for="(label,group) in searchOptGroup" v-bind:label="label">
+        <option
+          v-for="(o,key) in searchOption"
+          v-bind:value="o.value"
+          v-text="o.label"
+          v-if="o.group==group"
+          :key="key"
+        ></option>
+      </optgroup>
+    </select>
 
-        </select>
+    <select
+      v-if="searchable && searchType=='multiselect'"
+      v-bind:multiple="searchMultiple"
+      class="form-control form-control-sm search"
+      ref="search"
+    >
+      <option v-if="!searchMultiple" value>None selected</option>
 
-        <select v-if="searchable && searchType=='multiselect'" v-bind:multiple="searchMultiple" class="form-control form-control-sm search" ref="search">
-            <option v-if="!searchMultiple" value="">None selected</option>
-            
-            <option v-if="!searchOptGroup" v-for="o in searchOption" v-bind:value="o.value" v-text="o.label"></option>
-            
-            <optgroup v-if="searchOptGroup" v-for="(label,group) in searchOptGroup" v-bind:label="label">
-                <option v-for="o in searchOption" v-bind:value="o.value" v-text="o.label" v-if="o.group==group"></option>
-            </optgroup>
-    
-        </select>
+      <option
+        v-if="!searchOptGroup"
+        v-for="o in searchOption"
+        v-bind:value="o.value"
+        v-text="o.label"
+      ></option>
 
-    </td>
+      <optgroup v-if="searchOptGroup" v-for="(label,group) in searchOptGroup" v-bind:label="label">
+        <option
+          v-for="o in searchOption"
+          v-bind:value="o.value"
+          v-text="o.label"
+          v-if="o.group==group"
+        ></option>
+      </optgroup>
+    </select>
+  </td>
 </template>
 <script>
 export default {

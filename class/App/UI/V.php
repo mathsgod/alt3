@@ -19,10 +19,8 @@ class V extends Card
     {
         parent::__construct($page);
         $this->object = $object;
-        $this->setAttribute("info", true);
         $this->tableClass = "table-sm";
         $this->body->classList->add('p-0');
-        $this->classList->add("no-border");
         $this->container = $this->body();
 
         $this->addTable();
@@ -86,7 +84,7 @@ class V extends Card
         $this->table->append(p("tbody"));
     }
 
-    public function addTable()
+    public function addTable(): \P\Query
     {
 
         $this->table = p("table")->addClass("table")->appendTo($this->container);
@@ -139,8 +137,8 @@ class V extends Card
     public function __get($name)
     {
         if ($name == "header") {
-            $this->classList->remove('no-border');
-            $this->classList->add('box-primary');
+            $this->setAttribute("info", true);
+            $this->setAttribute("outline", true);
         }
         return parent::__get($name);
     }

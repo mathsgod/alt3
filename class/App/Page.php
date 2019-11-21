@@ -123,6 +123,11 @@ class Page extends \R\Page
     {
         $route = $request->getAttribute("route");
 
+        $path = substr($route->path, 1);
+        if (!$this->app->acl($path)) {
+            return $this->app->accessDeny($request);
+        }
+
 
         if ($request->getQueryParams()["_rt"]) {
             $rt = new UI\RTResponse();

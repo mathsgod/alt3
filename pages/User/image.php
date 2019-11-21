@@ -6,9 +6,6 @@ class User_image extends R\Page
         $info = $this->app->pathInfo();
 
 
-        $basepath = $this->app->basePath();
-
-
         $base = $info["system_base"];
 
         if ($dummy) {
@@ -29,7 +26,7 @@ class User_image extends R\Page
 
         //$this->setHeader("Content-Type","application/jpeg");
         if (file_exists($f = $info["system_root"] . "/data/{$user->username}/profile.image")) {
-            header("location: {$basepath}data/{$user->username}/profile.image");
+            header("location: {$base}/data/{$user->username}/profile.image");
         } else {
 
             header("location: {$base}/images/user.png");

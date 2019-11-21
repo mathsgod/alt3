@@ -22,7 +22,8 @@ class App extends \R\App
         }
 
         parent::__construct($root, $loader, $logger);
-        Core\Model::$_db = $this->db;
+        Model::$_db = $this->db;
+        Model::$_app = $this;
 
         //system config
         $pi = $this->pathInfo();
@@ -163,7 +164,7 @@ class App extends \R\App
 
     public function logined(): bool
     {
-        return $_SESSION["app"]["login"];
+        return (bool) $_SESSION["app"]["login"];
     }
 
     public function twig(string $file)
@@ -272,6 +273,96 @@ class App extends \R\App
 
     public function acl(string $path): bool
     {
-        return true;
+        $user = $this->user;
+        $raw_path = $path;
+        $p = parse_url($path);
+        $path = $p["path"];
+
+        if ($p["scheme"]) { //external
+            return true;
+        }
+
+        if ($path[0] == "/") { //absolute path
+
+            $result = $user->isAdmin();
+
+            $ugs = $user->UserGroup();
+
+            $w = [];
+            $w[] = ["path=?", $path];
+
+            $u = [];
+            $u[] = "user_id=" . $user->user_id;
+
+            foreach ($ugs as $ug) {
+                $u[] = "usergroup_id=$ug->usergroup_id";
+            }
+
+            $w[] = implode(" or ", $u);
+            foreach (ACL::Find($w) as $acl) {
+                $v = $acl->value();
+                if ($v == "deny") {
+                    return false;
+                }
+                if ($v == "allow") {
+                    $result = true;
+                }
+            }
+
+            return $result;
+        }
+        return ACL::Allow($path);
+    }
+
+    public function createMail()
+    {
+        $mail = new Mail(true);
+        $smtp = $this->config["user"]["smtp"];
+
+        if ($smtp && $smtp->value) {
+            $this->IsSMTP();
+            $this->Host = (string) $smtp;
+            $this->SMTPAuth = true;
+            $this->Username = $this->config["user"]["smtp-username"];
+            $this->Password = $this->config["user"]["smtp-password"];
+        }
+
+        return $mail;
+    }
+
+    public function accessDeny(Rquest $request): Response
+    {
+        $uri = $request->getUri()->getPath();
+        $uri = substr($uri, 1);
+        if ($q = $request->getUri()->getQuery()) {
+            $uri .= "?" . $q;
+        }
+
+        $base = $request->getUri()->getBasePath();
+        if ($this->logined()) {
+
+            if ($request->getHeader("accept")[0] == "application/json") {
+                $response = new Response(200);
+                $msg = [];
+                $msg["error"]["message"] = "access deny";
+                $msg["error"]["code"] = 403;
+                $response = $response->withHeader("content-type", "application/json");
+                $response = $response->withBody(new Stream(json_encode($msg)));
+            } else {
+                $q = http_build_query(["q" => $uri]);
+                $response = new Response(403);
+                $response = $response->withHeader("location", $base . "/access_deny?" . $q);
+            }
+        } else {
+            $response = new Response(403);
+            $response = $response->withHeader("location", $base . "/#" . $uri);
+        }
+
+        return $response;
+    }
+
+    public function version(): string
+    {
+        return "6.0.0";
     }
 }

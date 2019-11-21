@@ -2,6 +2,7 @@ type Mutation{
     me:Me
     login(username:String!,password:String!,code:String):Me
     UserGroup(usergroup_id:Int!):UserGroup
+    forgotPassword(username:String!,email:String!):Boolean
 }
 
 type Query{
@@ -10,7 +11,6 @@ type Query{
     loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
     UserGroups:[UserGroup]
-    forgotPassword(username:String!,email:String!):Boolean
     
 }
 

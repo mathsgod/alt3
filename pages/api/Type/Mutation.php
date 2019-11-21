@@ -3,6 +3,7 @@
 namespace Type;
 
 use GraphQL\Error\Error;
+use App\User;
 
 class Mutation
 {
@@ -26,5 +27,23 @@ class Mutation
     {
 
         return new \App\UserGroup($args["usergroup_id"]);
+    }
+
+    public function forgotPassword($root, $args, $app): bool
+    {
+        $user = User::Query([
+            "username" => $args["username"],
+            "email" => $args["email"],
+            "status" => 0
+        ])->first();
+
+        if ($user) {
+            try {
+                $user->sendPassword($app);
+            } catch (Exception $e) {
+                throw new Error($e->getMessage());
+            }
+        }
+        return true;
     }
 }

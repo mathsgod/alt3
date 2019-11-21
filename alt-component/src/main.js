@@ -16,3 +16,6 @@ VueRegisterElement("rt2", RT2);
 
 import Table from "./Table";
 VueRegisterElement("alt-table", Table);
+
+import daterangepicker from "./daterangepicker";
+VueRegisterElement("daterangepicker", daterangepicker);

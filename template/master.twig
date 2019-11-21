@@ -23,6 +23,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <link rel="stylesheet" href="{{system_base}}/css/main.css">
 
+    <!-- OverlayScrollbars -->
+    <link rel="stylesheet" href="{{system_base}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
     <!-- fullCalendar -->
     <link rel="stylesheet" href="{{system_base}}/plugins/fullcalendar/main.min.css">
@@ -43,19 +45,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{system_base}}/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="{{system_base}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="{{system_base}}/adminlte/dist/js/adminlte.min.js"></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
 
     <script src="{{system_base}}/plugins/moment/moment-with-locales.min.js"></script>
 
+    <!-- Fullcalendar -->
     <script src="{{system_base}}/plugins/fullcalendar/main.min.js"></script>
     <script src="{{system_base}}/plugins/fullcalendar-daygrid/main.min.js"></script>
     <script src="{{system_base}}/plugins/fullcalendar-timegrid/main.min.js"></script>
     <script src="{{system_base}}/plugins/fullcalendar-interaction/main.min.js"></script>
     <script src="{{system_base}}/plugins/fullcalendar-bootstrap/main.min.js"></script>
+
+    <!-- daterangepicker.com -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script src="{{system_base}}/js/default.js"></script>
     <script src="{{system_base}}/js/tab-ajax.js"></script>
@@ -63,7 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </head>
 
-<body class="hold-transition sidebar-mini text-sm">
+<body class="hold-transition sidebar-mini  text-sm layout-fixed layout-footer-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -190,25 +196,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="{{system_base}}/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            {% if app.config.user.logo %}
+            <a href="#" class="brand-link">
+                <img src="{{app.config.user.logo}}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">{{app.config.user.company}}</span>
             </a>
+            {% else %}
+            <a href="#" class="brand-link text-center">
+                <h4 class="brand-text font-weight-light m-0">{{app.config.user.company}}</h4>
+            </a>
+            {% endif %}
+
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{system_base}}/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="User/image" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">{{app.user.first_name}} {{app.user.last_name}}</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column" data-widget="treeview" role="menu" data-accordion="false" id="nav-sidebar">
+                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false" id="nav-sidebar">
 
 
                         {% for menu in sidebar_menu %}
@@ -345,10 +358,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
+            {# 
             <div class="p-3">
                 <h5>Title</h5>
                 <p>Sidebar content</p>
             </div>
+            #}
         </aside>
         <!-- /.control-sidebar -->
 
@@ -356,15 +371,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+                {{app.version}}
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; {{app.config.user['copyright-year']}} <a href="{{app.config.user['copyright-url']}}" target="_blank">{{app.config.user['copyright-name']}}</a>.</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->
 
     <script src="{{system_base}}/js/sidebar.js"></script>
+    <script src="{{system_base}}/js/control-sidebar.js"></script>
+
+    <!-- overlayScrollbars -->
+    <script src="{{system_base}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="{{system_base}}/adminlte/dist/js/adminlte.min.js"></script>
+
 </body>
 
 </html>

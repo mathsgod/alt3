@@ -13,21 +13,7 @@ class Query
         return $context->user;
     }
 
-    public function forgotPassword($root, $args, $context)
-    {
-        $w[] = ["username=?", $args["username"]];
-        $w[] = ["email=?", $args["email"]];
-        $w[] = "status=0";
-        if ($user = \App\User::first($w)) {
-            try {
-                $user->sendPassword();
-            } catch (Exception $e) {
-                throw new Error($e->getMessage());
-            }
-        }
-        return true;
-    }
-
+ 
     public function credentialRequestOptions($root, $args, $context)
     {
         if (!$user = \App\User::_($args["username"])) {

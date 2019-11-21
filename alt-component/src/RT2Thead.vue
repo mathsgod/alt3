@@ -24,6 +24,11 @@
     </tr>
   </thead>
 </template>
+<style scoped>
+td {
+  padding: 1px 2px 1px 2px !important;
+}
+</style>
 <script>
 import AltColumnSearch from "./ColumnSearch";
 import Rt2Column from "./RT2Column";

@@ -143,7 +143,7 @@ var vm = new Vue({
 
                             var form = bb.find("form")[0];
                             if (!form.checkValidity()) return;
-                            var resp = await self.$gql.query("api", {
+                            var resp = await self.$gql.mutation("api", {
                                 forgotPassword: {
                                     __args: {
                                         username: form.username.value,

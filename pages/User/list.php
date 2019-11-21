@@ -60,9 +60,6 @@ class User_list extends App\Page
             "isonline" => [
                 "content" => "isOnline()",
                 "format" => "tick"
-            ], "username" => [
-                "content" => "username",
-                "alink" => "v"
             ]
         ];
 

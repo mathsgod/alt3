@@ -16,6 +16,7 @@ class api_index extends R\Page
 
         $query = $input['query'];
         $variableValues = $input['variables'];
+        $schema->debug = true;
 
         return $schema->executeQuery($query, $variableValues);
     }

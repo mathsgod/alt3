@@ -12,7 +12,7 @@ class User_v extends ALT\GridPage
 		//		$this->navbar()->addLayoutReset();
 
 		$mv = $this->createV();
-		//$mv->header->title = "Information";
+		$mv->header->title = "Information";
 		$mv->add("Username", "username");
 		$mv->add("First name", "first_name");
 		$mv->add("Last name", "last_name");

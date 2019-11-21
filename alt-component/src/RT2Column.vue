@@ -1,7 +1,7 @@
 <template>
   <th
     v-on:click="click"
-    class="unselectable"
+    class="unselectable text-nowrap"
     v-bind:style="getStyle()"
     v-bind:class="{
         sortable:orderable,
@@ -14,6 +14,10 @@
   </th>
 </template>
 <style scoped>
+th {
+  padding: 1px 2px 1px 2px !important;
+}
+
 .unselectable {
   user-select: none;
   -moz-user-select: none;
@@ -33,7 +37,6 @@
 .sorting_asc {
   background: url(./assets/images/sort_asc.png) no-repeat center right;
 }
-
 </style>
 <script>
 export default {

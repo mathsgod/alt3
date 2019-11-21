@@ -33,7 +33,7 @@ class User extends Core\User
         $this->update(["last_online" => date("Y-m-d H:i:s")]);
     }
 
-    public function isOnline()
+    public function isOnline(): bool
     {
         $time = strtotime($this->last_online);
 
@@ -41,5 +41,27 @@ class User extends Core\User
             return false;
         }
         return true;
+    }
+
+    public function sendPassword(App $app): string
+    {
+        $password = Util::GeneratePassword();
+        $e_pwd = password_hash($password, PASSWORD_DEFAULT);
+
+        $ret = $this->update(["password" => $e_pwd]);
+
+
+        $content = $app->config["user"]["forget pwd email/content"];
+        $content = str_replace("{username}", $this->username, $content);
+        $content = str_replace("{password}", $password, $content);
+
+        // Send Mail
+        $mm = $app->createMail();
+        $mm->Subject = $app->config["user"]["forget pwd email/subject"];
+        $mm->msgHTML($content);
+        $mm->setFrom("admin@" . $app->config["user"]["domain"]);
+        $mm->addAddress($this->email);
+        $mm->Send();
+        return $password;
     }
 }
