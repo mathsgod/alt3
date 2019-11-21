@@ -10,7 +10,8 @@
   "dependencies": {
     "core-js": "^3.3.2",
     "vue": "^2.6.10",
-    "vue-register-element": "git+https://github.com/mathsgod/VueRegisterElement.git"
+    "vue-register-element": "git+https://github.com/mathsgod/VueRegisterElement.git",
+    "vue-select2": "git+https://github.com/mathsgod/vue-select2.git"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",

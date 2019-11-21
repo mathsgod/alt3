@@ -15,4 +15,9 @@ class A extends \P\HTMLAnchorElement
         $this->classList->add($class);
         return $this;
     }
+    public function icon(string $icon): self
+    {
+        $this->prepend(p("<i class='$icon'></i>")[0]);
+        return $this;
+    }
 }

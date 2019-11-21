@@ -4,6 +4,8 @@ namespace App;
 
 class Module
 {
+    public static $_app;
+    
     public $group;
     public $icon = "far fa-circle nav-icon";
     public $class;
@@ -49,6 +51,33 @@ class Module
         return $this->class;
     }
 
+    public function getAction()
+    {
+        $app = self::$_app;
+
+        $page = $app->config["system"]["page"];
+        if (!$page) {
+            $page = "pages";
+        }
+
+        $pi = $app->pathInfo();
+
+        $name = $this->name;
+        if (file_exists($file = $pi["cms_root"] . "/pages/" . $name)) {
+            foreach (glob($file . "/*.php") as $p) {
+                $pi = pathinfo($p);
+                $action[] = $pi;
+            }
+        }
+        if (file_exists($file = $pi["system_root"] . "/pages/" . $name)) {
+            foreach (glob($file . "/*.php") as $p) {
+                $pi = pathinfo($p);
+                $action[] = $pi;
+            }
+        }
+
+        return $action;
+    }
 
     /*
     public static function ByPath($path)

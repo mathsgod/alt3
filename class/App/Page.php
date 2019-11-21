@@ -151,9 +151,7 @@ class Page extends \R\Page
             list($media,) = explode(",", $accept);
             switch ($media) {
                 case "application/json":
-                    return $response
-                        ->withHeader("Content-Type", "application/json; charset=UTF-8")
-                        ->withBody(new JSONStream($this->object()));
+                    return $response->withHeader("Content-Type", "application/json; charset=UTF-8");
                     break;
                 case "*/*";
                 case "text/html":

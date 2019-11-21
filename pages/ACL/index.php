@@ -14,5 +14,3 @@ class ACL_index extends ALT\Page
         $this->write($tab);
     }
 }
-
-?>

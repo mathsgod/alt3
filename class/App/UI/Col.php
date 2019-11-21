@@ -695,15 +695,15 @@ class Col extends HTMLElement
         return $this->input($index)->addClass("cp");
     }
 
-    public function date($field)
+    public function date($field): InputCollection
     {
-        $p = new \P\InputCollection;
+        $p = new InputCollection;
         foreach ($this->cell as $cell) {
             try {
                 $div = p("input")->appendTo($cell);
                 $div->addClass("form-control");
-                //$div->attr("is", "date");
-                $div->attr("type", "date");
+                $div->attr("is", "date");
+                $div->attr("type", "text");
                 $div->attr("name", $field);
                 $div->attr("autocomplete", "off");
 
@@ -935,11 +935,14 @@ class Col extends HTMLElement
         $p = new \P\SelectCollection();
 
         foreach ($this->cell as $cell) {
+            $cell->classList->add("select2-primary");
             $select = p("select")->appendTo($cell);
             $select->addClass("form-control");
             $select->attr("is", "select2");
             $select->attr("data-field", $field);
             $select->attr("name", $field);
+
+            //$select->attr(":option", json_encode(["theme" => "bootstrap4"]));
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);

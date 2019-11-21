@@ -1,4 +1,5 @@
 <?
+
 use App\ACL;
 use App\Module;
 
@@ -105,15 +106,12 @@ class ACL_edit extends ALT\Page
         }
 
         return ["code" => 200];
-
-
-
     }
 
     public function data()
     {
 
-        $ms = $this->app->getModule();
+        $ms = $this->app->modules();
         usort($ms, function ($a, $b) {
             return $a->class > $b->class;
         });
@@ -128,7 +126,7 @@ class ACL_edit extends ALT\Page
     public function getValue($module, $usergroup_id, $user_id)
     {
 
-        $module = Module::_($module);
+        $module = $this->app->module($module);
 
         if (!$usergroup_id && !$user_id) {
             return [];
@@ -136,7 +134,7 @@ class ACL_edit extends ALT\Page
 
         if ($module) {
             $ds = [];
-            foreach (ACL::$_ACTION as $action) {
+            foreach (ACL::ACTION as $action) {
                 $d = [];
                 $d["action"] = $action;
 
@@ -203,10 +201,8 @@ class ACL_edit extends ALT\Page
                 $d["deny"] = $count ? 1 : 0;
 
                 $ds[] = $d;
-
             }
             $dds["path"] = $ds;
-
         }
 
         $acls = $this->getACL([
@@ -257,7 +253,6 @@ class ACL_edit extends ALT\Page
 
 
         return $dds;
-
     }
 
     public function getACL($s)
@@ -296,5 +291,4 @@ class ACL_edit extends ALT\Page
 
         return ACL::Find($w);
     }
-
 }

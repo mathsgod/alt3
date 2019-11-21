@@ -69,7 +69,7 @@ class User_ae extends ALT\Page
             $u = UserGroup::_("Users");
 
             $ugs = UserGroup::find()->filter(function ($o) {
-                if ($o->name == "Administrators" && !App::User()->isAdmin()) return false;
+                if ($o->name == "Administrators" && !$this->app->user->isAdmin()) return false;
                 return true;
             });
 

@@ -25,6 +25,7 @@ class App extends \R\App
         parent::__construct($root, $loader, $logger);
         Model::$_db = $this->db;
         Model::$_app = $this;
+        Module::$_app = $this;
 
         //system config
         $pi = $this->pathInfo();
@@ -222,6 +223,17 @@ class App extends \R\App
         $system_base = str_replace(DIRECTORY_SEPARATOR, "/", $system_base);
 
         return compact("composer_base", "composer_root", "document_root", "cms_root", "system_root", "system_base");
+    }
+
+    public function module(string $name)
+    {
+        $ms = $this->modules();
+
+        foreach ($ms as $m) {
+            if ($m->name == $name) {
+                return $m;
+            }
+        }
     }
 
     public function modules(): array

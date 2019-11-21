@@ -87,4 +87,9 @@ class Page extends \App\Page
 
         return $grid;
     }
+
+    public function navbar(): Navbar
+    {
+        return $this->navbar;
+    }
 }

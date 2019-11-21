@@ -5,6 +5,8 @@ namespace App;
 class ACL extends Model
 {
     const ACTION = ["FC", "C", "R", "U", "D"];
+    const TYPE = ["Normal", "Regexp"];
+    const SPECIAL_USER = [1 => "CREATOR OWNER", 2 => "CREATOR GROUP", 3 => "EVERYONE"];
 
     public static $_ACTION = ["FC", "C", "R", "U", "D"];
     public static $_SPECIAL_USER = array(1 => "CREATOR OWNER", 2 => "CREATOR GROUP", 3 => "EVERYONE");
