@@ -164,6 +164,7 @@ class Page extends \R\Page
                         $this->template = $this->app->twig($template_file);
 
                         $data = $this->data;
+                        $data["app"] = $this->app;
                         $content .= (string) $response;
                         $content .= $echo_content;
                         $content .= $this->template->render($data);

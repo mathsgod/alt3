@@ -6,6 +6,7 @@ use Exception;
 use Composer\Autoload\ClassLoader;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 use Symfony\Component\Yaml\Yaml;
@@ -330,7 +331,7 @@ class App extends \R\App
         return $mail;
     }
 
-    public function accessDeny(Rquest $request): Response
+    public function accessDeny(RequestInterface $request): ResponseInterface
     {
         $uri = $request->getUri()->getPath();
         $uri = substr($uri, 1);
@@ -363,6 +364,29 @@ class App extends \R\App
 
     public function version(): string
     {
-        return "6.0.0";
+        if ($_SESSION["app"]["version"])
+            return $_SESSION["app"]["version"];
+        $composer = new Composer($this);
+        $package = $composer->package("mathsgod/alt");
+
+        $_SESSION["app"]["version"] = $package->version ?? "6.0.0";
+        return $_SESSION["app"]["version"];
+    }
+
+
+    public function savePlace()
+    {
+        $uri = $this->request->getURI();
+        $path = $uri->getPath();
+
+        if ($path[0] == "/") {
+            $path = substr($path, 1);
+        }
+
+        if ($query = $uri->getQuery()) {
+            $_SESSION["app"]["redirect"] = $path . "?" . $query;
+        } else {
+            $_SESSION["app"]["redirect"] = $path;
+        }
     }
 }

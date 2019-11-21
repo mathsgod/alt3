@@ -1,42 +1,33 @@
 <div class="row">
     <div class="col-md-3" id="div1">
 
-        <!-- Profile Image -->
-        <div class="box box-primary">
-            <div class="box-body box-profile">
-                <a href='javascript:void(0)' onClick="$('#profile_image').trigger('click')">
-                    <img class="profile-user-img img-responsive img-circle" src="User/image" alt="User profile picture" style="max-height:100px">
-                </a>
-                <h3 class="profile-username text-center">{{name}}</h3>
-                <p class="text-muted text-center">{{usergroup}}</p>
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="User/image" alt="User profile picture">
+                </div>
 
-                {{description|raw}}
+                <h3 class="profile-username text-center">{{app.user.first_name}} {{app.user.last_name}}</h3>
 
+                <p class="text-muted text-center">{{usergroup|join(',',' and ')}}</p>
+
+                <a class="btn btn-primary btn-block" href="User/{{app.user.user_id}}/reset_password">Reset passsword</a>
+                <a class="btn btn-primary btn-block" href="User/{{app.user.user_id}}/2step">2 step verfication</a>
+                <a class="btn btn-primary btn-block" href="User/{{app.user.user_id}}/2step_whitelist">2 step verfication ip white list</a>
+                <button class="btn btn-primary btn-block" @click="createWebAuthn">Web Authentication</button>
             </div>
-            <!-- /.box-body -->
-
-            <div class="box-footer">
-                <a class="btn btn-primary btn-xs" href="User/{{user_id}}/reset_password" data-i18n="app.Reset password">Reset passsword</a>
-                <a class="btn btn-primary btn-xs" href="User/{{user_id}}/2step">2 step verfication</a>
-                <a class="btn btn-primary btn-xs" href="User/{{user_id}}/2step_whitelist">2 step verfication ip white list</a>
-                <button class="btn btn-primary btn-xs" @click="createWebAuthn">Web Authentication</button>
-            </div>
+            <!-- /.card-body -->
         </div>
-        <!-- /.box -->
-
-
     </div>
 
-    <div class="col-md-9">
-
-        {{user_update_box|raw}} {{userlog|raw}} {{eventlog|raw}}
-
+    <div class="col">
+        {{user_update_box|raw}}
+        {{userlog|raw}}
+        {{eventlog|raw}}
     </div>
+
+
 </div>
-
-<form id="form1" action="" method="post" enctype="multipart/form-data">
-    <input type='file' name='file' id='profile_image' onchange="$('#form1').submit()" class="hide">
-</form>
 
 <script>
     var vm = new Vue({

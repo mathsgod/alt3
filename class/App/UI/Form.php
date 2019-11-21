@@ -22,12 +22,15 @@ class Form extends HTMLFormElement
         $this->method = "post";
 
         $this->card = new Card($page);
+        $this->card->setAttribute("primary", true);
+        $this->card->setAttribute("outline", true);
         $this->card->body;
 
         $this->submit_button = new Button($page);
         $this->submit_button->classList->add("btn-success");
         $this->submit_button->setAttribute("type", "submit");
-        $this->submit_button->setAttribute("icon", "fa fa-check");
+        $this->submit_button->icon("fa fa-fw fa-check");
+        //$this->submit_button->setAttribute("icon", "fa fa-check");
         //$this->submit_button->setAttribute("is", "alt-button");
         $this->submit_button->label("Submit");
 
@@ -36,6 +39,7 @@ class Form extends HTMLFormElement
 
         $this->reset_button = new Button($page);
         $this->reset_button->classList->add("btn-info");
+        $this->reset_button->classList->add("d-none");
         $this->reset_button->icon("fa fa-rotate-left")->label("Reset");
         $this->reset_button->setAttribute("type", "reset");
         $this->card->footer->append($this->reset_button);

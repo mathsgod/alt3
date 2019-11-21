@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="robots" content="noindex, nofollow">
     <base href="{{base}}" />
 
-    <title>AdminLTE 3 | Starter</title>
+    <title>{{app.config.user.company}}</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{composer_base}}/fortawesome/font-awesome/css/all.min.css">
@@ -32,6 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{system_base}}/plugins/fullcalendar-daygrid/main.min.css">
     <link rel="stylesheet" href="{{system_base}}/plugins/fullcalendar-timegrid/main.min.css">
     <link rel="stylesheet" href="{{system_base}}/plugins/fullcalendar-bootstrap/main.min.css">
+
+    <!-- fancybox -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css">
+
 
     <script src="{{system_base}}/plugins/vue/vue.js"></script>
     <script src="{{system_base}}/plugins/vue/vue-resource.min.js"></script>
@@ -63,7 +67,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    <script src="{{system_base}}/js/default.js"></script>
+    <script src="{{system_base}}/js/default.js" defer></script>
     <script src="{{system_base}}/js/tab-ajax.js"></script>
 
 
@@ -79,13 +83,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
+                {#
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
+                #}
             </ul>
+            {#
 
             <!-- SEARCH FORM -->
             <form class="form-inline ml-3">
@@ -99,6 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </form>
 
+            #}
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
@@ -216,7 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="User/image" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{app.user.first_name}} {{app.user.last_name}}</a>
+                        <a href="User/profile" class="d-block">{{app.user.first_name}} {{app.user.last_name}}</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -387,6 +395,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- AdminLTE App -->
     <script src="{{system_base}}/adminlte/dist/js/adminlte.min.js"></script>
+
+    <!-- Bootbox -->
+    <script src="{{system_base}}/plugins/bootbox/bootbox.all.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    
+    
 
 </body>
 

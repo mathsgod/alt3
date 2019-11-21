@@ -1,4 +1,5 @@
 <?php
+
 use R\WebAuthn;
 
 class User_profile extends ALT\Page
@@ -35,29 +36,12 @@ class User_profile extends ALT\Page
 
     public function get()
     {
-        $this->app->savePlace();
-        $this->header("User profile");
-        $user = $this->app->user;
-        $tpl = $this;
-        $tpl->assign("user_id", $user->user_id);
-        $tpl->assign("name", $user);
-        $tpl->assign("usergroup", \App::User()->UserGroup()->implode(","));
-
-        $desc = new App\BS\Description($this);
-        $desc->classList->remove("dl-horizontal");
-        $desc->add("Username", $user->username);
-        $desc->add("First name", $user->first_name);
-        $desc->add("Last name", $user->last_name);
-        $desc->add("Email", $user->email);
-        $desc->add("Phone", $user->phone);
-
-        $desc->add("Status", $user->Status());
-
-        $tpl->assign("description", $desc);
-
-        $tpl->assign("user_update_box", $this->getUpdateBox());
-        $tpl->assign("userlog", $this->getUserLogBox());
-        $tpl->assign("eventlog", $this->getUserActionBox());
+        $this->data["usergroup"] = $this->app->user->UserGroup()->map(function ($ug) {
+            return (string) $ug;
+        });
+        $this->data["user_update_box"] = $this->getUpdateBox();
+        $this->data["userlog"] = $this->getUserLogBox();
+        $this->data["eventlog"] = $this->getUserActionBox();
     }
 
     public function getUpdateBox()

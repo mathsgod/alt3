@@ -12,6 +12,7 @@ class T extends Card
         parent::__construct($page);
         $this->objects = $objects;
         $this->setAttribute("primary", true);
+        $this->setAttribute("outline", true);
 
         $this->body->classList->add("p-0");
         $this->body->classList->add('table-responsive');

@@ -29,12 +29,3 @@ class User_reset_password extends ALT\Page
         $this->write($f);
     }
 }
-
-?>
-<script>
-$(function(){
-	$("[name='password2']").rules("add",{
-		equalTo: "#password"
-	});
-});
-</script>

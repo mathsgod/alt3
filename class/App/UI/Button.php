@@ -30,9 +30,9 @@ class Button extends \P\HTMLButtonElement
         return parent::__toString();
     }
 
-    public function icon($icon): Button
+    public function icon(string $icon): Button
     {
-        $this->append(p("<i class='$icon'></i>"));
+        $this->prepend(p("<i class='$icon'></i>")[0]);
         return $this;
     }
 
