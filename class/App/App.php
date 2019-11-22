@@ -14,6 +14,9 @@ use Symfony\Component\Yaml\Yaml;
 class App extends \R\App
 {
     public $config = [];
+    public $user;
+    public $user_id;
+    public $locale = "zh-hk";
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
@@ -236,8 +239,14 @@ class App extends \R\App
         }
     }
 
+    private $_modules = null;
     public function modules(): array
     {
+        if ($this->_modules) {
+            return $this->_modules;
+        }
+
+
         $modules = [];
 
         $pi = $this->pathInfo();
@@ -276,6 +285,7 @@ class App extends \R\App
         });
 
 
+        $this->_modules = $modules;
         return $modules;
     }
 

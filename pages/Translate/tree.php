@@ -7,7 +7,7 @@ class Translate_tree extends App\Page
 
 		$t = new My\TreeView();
 
-		foreach ($this->app->getModule() as $module) {
+		foreach ($this->app->modules() as $module) {
 			$folder = $t->addFolder($module);
 			foreach ($this->app->config["language"] as $lang => $language) {
 				$f1 = $folder->addFolder($language);
@@ -16,7 +16,6 @@ class Translate_tree extends App\Page
 					$f1->addFile($k . " → " . $v);
 				}
 			}
-
 		}
 
 		$this->write($t);

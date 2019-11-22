@@ -1,4 +1,5 @@
 <?php
+
 use App\Translate;
 
 class Translate_all extends ALT\Page
@@ -62,7 +63,7 @@ class Translate_all extends ALT\Page
     public function modules()
     {
         return [
-            "modules" => $this->app->getModule(),
+            "modules" => $this->app->modules(),
             "languages" => $this->app->config["language"]
         ];
     }
