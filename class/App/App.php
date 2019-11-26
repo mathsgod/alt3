@@ -17,6 +17,7 @@ class App extends \R\App
     public $user;
     public $user_id;
     public $locale = "zh-hk";
+    public $plugins = [];
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
@@ -58,10 +59,12 @@ class App extends \R\App
             return new Route($request, $this);
         });
 
-
         $route = $router->getRoute($this->request, $this->loader);
 
         $request = $request->withAttribute("route", $route);
+
+
+        $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
         //----
         $ps = explode("/", $route->path);

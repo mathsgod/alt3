@@ -22,9 +22,9 @@ class MailLog_list extends App\Page
         $this->write($rt);
     }
 
-    public function content($id)
+    public function content($maillog_id)
     {
-        $o = new App\MailLog($id);
+        $o = new App\MailLog($maillog_id);
         $src = $o->uri("body");
 
         $this->write("<iframe width='100%' src='$src'></iframe>");

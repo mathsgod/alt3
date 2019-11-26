@@ -68,10 +68,10 @@ class Col extends HTMLElement
         $p = p();
 
         foreach ($this->cell as $cell) {
-            $e = p("textarea");
+            $e = p("div");
             $e->css("height", "400px");
+            $e->css("display", "none");
 
-            //$e->attr("ace", true);
             $e->attr("is", "ace");
             $e->attr('data-field', $field);
             $e->attr('name', $field);

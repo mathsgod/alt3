@@ -19,8 +19,6 @@ class Config_ae extends ALT\Page
 		} else {
 			$mv->add("Value")->input("value");
 		}
-
-
 		$f = $this->createForm($mv);
 		if ($type) {
 			$f->addHidden("type", $type);
@@ -28,5 +26,4 @@ class Config_ae extends ALT\Page
 
 		$this->write($f);
 	}
-
 }

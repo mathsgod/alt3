@@ -7,6 +7,7 @@ type Mutation{
     UserGroup(usergroup_id:Int!):UserGroup
     forgotPassword(username:String!,email:String!):Boolean
     updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Users,Administrators])
+    resetPassword(new_password:String!):Boolean @hasRole(role:[Users,Administrators])
 }
 
 type Query{

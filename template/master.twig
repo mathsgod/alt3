@@ -36,10 +36,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- fancybox -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css">
 
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{system_base}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
     <!-- VUE-->
     <script src="{{system_base}}/plugins/vue/vue.js"></script>
     <script src="{{system_base}}/plugins/vue/vue-resource.min.js"></script>
+    <script src="{{system_base}}/js/vue-gql.js"></script>
 
     <link rel="stylesheet" href="{{system_base}}/alt-component/dist/alt-component.css">
     <script src="{{system_base}}/alt-component/dist/alt-component.umd.min.js"></script>
@@ -64,7 +67,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- iCheck -->
     <link rel="stylesheet" href="{{system_base}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
 
     <script src="{{system_base}}/plugins/moment/moment-with-locales.min.js"></script>
@@ -82,8 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="{{system_base}}/js/default.js" defer></script>
     <script src="{{system_base}}/js/tab-ajax.js"></script>
-
-
+    
 </head>
 
 <body class="hold-transition sidebar-mini  text-sm layout-fixed layout-footer-fixed">
@@ -421,7 +423,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
+    <!-- Vue dialog -->
+    <script src="{{system_base}}/src/vue.dialog.js"></script>
 
+    <!-- SweetAlert2 -->
+    <script src="{{system_base}}/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+    {% for plugin in plugins %}
+    {% for js in plugin.setting.js %}
+    <script src="{{plugin.base}}/{{js}}"></script>
+    {% endfor %}
+    {% endfor %}
 
 </body>
 

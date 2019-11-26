@@ -25,3 +25,6 @@ VueRegisterElement("date", date);
 
 import select2 from 'vue-select2/src/Select2';
 VueRegisterElement("select2", select2);
+
+import ace from "./Ace";
+VueRegisterElement("ace", ace);

@@ -168,17 +168,17 @@
         },
         {
             "name": "mathsgod/alt-app-core",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/alt-app-core.git",
-                "reference": "28022effbd73557d82ff064f38efcd8860d2f57a"
+                "reference": "c9f855e35160ed5cf861a355556546a7d2316f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/alt-app-core/mathsgod-alt-app-core-1.1.0-222a33.zip",
-                "reference": "28022effbd73557d82ff064f38efcd8860d2f57a",
-                "shasum": "dc47fc3c4344778a89c7415c2d59be9f8fff7ea6"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/alt-app-core/mathsgod-alt-app-core-1.2.0-22ad75.zip",
+                "reference": "c9f855e35160ed5cf861a355556546a7d2316f0d",
+                "shasum": "bfba7032a29a4919a4f76756d84b2417bd156afc"
             },
             "require": {
                 "mathsgod/r-db": "^3.0",
@@ -200,7 +200,7 @@
                     "email": "mathsgod@yahoo.com"
                 }
             ],
-            "time": "2019-11-07T02:58:03+00:00"
+            "time": "2019-11-26T06:46:56+00:00"
         },
         {
             "name": "mathsgod/data-structure",

@@ -34,7 +34,6 @@ class Page extends \App\Page
             $response = parent::__invoke($request, $response);
         } catch (Exception $e) {
             $this->alert->danger("Error", $e->getMessage());
-            throw $e;
         }
 
         if ($this->master) {
@@ -47,6 +46,8 @@ class Page extends \App\Page
                 $this->master->data["navbar"] = $this->navbar;
             }
 
+            $this->master->data["plugins"] = array_values($this->plugins);
+        
             return $this->master->__invoke($request, $response);
         }
         return $response;

@@ -6,6 +6,7 @@ class Dashboard_test extends ALT\Page
 {
     public function get()
     {
+        throw new Exception("hello");
 
         return;
         $card = $this->createCard();

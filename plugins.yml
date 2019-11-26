@@ -1,0 +1,189 @@
+DataTables:
+  js: ['datatables.min.js']
+  css: ['datatables.min.css']
+  
+Sortable:
+  js: ['Sortable.min.js']
+
+ace:
+  js: ['src-min/ace.js','src-min/mode-javascript.js','src-min/mode-css.js','src-min/mode-html.js','src-min/mode-json.js']
+
+bootstrap-select/bootstrap-select:
+  js: ['dist/js/bootstrap-select.min.js']
+  css: ['dist/css/bootstrap-select.min.css']
+
+fullcalendar/fullcalendar:
+  css: ['dist/fullcalendar.min.css']
+  js: ['dist/fullcalendar.min.js','gcal.min.js']
+
+components/jquery:
+  js: ['jquery.min.js']
+
+twbs/bootstrap:
+  js: ['dist/js/bootstrap.min.js']
+  css: ['dist/css/bootstrap.min.css']
+
+ckeditor/ckeditor:
+  js: ['ckeditor.js','lang/{language}.js']
+
+vue:
+  js: ['vue.min.js','vue-resource.min.js',"vue-local-storage.min.js"]
+
+bootstrap-iconpicker:
+  js: ['js/bootstrap-iconpicker-iconset-all.min.js','js/bootstrap-iconpicker.min.js']
+  css: ['css/bootstrap-iconpicker.min.css']
+
+fontawesome-iconpicker:
+  css: ['css/fontawesome-iconpicker.min.css']
+  js: ['js/fontawesome-iconpicker.min.js']
+
+components/bootstrap-3-typeahead:
+  js: ['bootstrap3-typeahead.min.js']
+
+json-viewer:
+  js: ['jquery.json-viewer.js']
+  css: ['query.json-viewer.css']
+
+robinherbots/jquery.inputmask:
+  js: ['dist/min/jquery.inputmask.bundle.min.js','dist/inputmask/bindings/inputmask.binding.js']
+
+jquery:
+  js: ['jquery.min.js']
+
+jquery-ui:
+  js: ['jquery-ui.min.js']
+  css: ['jquery-ui.min.css']
+
+multiselect:
+  js: ['js/ui.multiselect.js']
+  css: ['css/ui.multiselect.css']
+
+datatables/datatables:
+  js: ['media/js/jquery.dataTables.min.js','media/js/dataTables.bootstrap.min.js']
+  css: ['media/css/dataTables.bootstrap.min.css']
+
+fastclick:
+  js: ['fastclick.min.js']
+
+slimScroll:
+  js: ['jquery.slimscroll.min.js']
+
+bootstrap-wysihtml5:
+  css: ['bootstrap3-wysihtml5.min.css']
+  js: ['bootstrap3-wysihtml5.all.min.js']
+
+timepicker:
+  css: ['bootstrap-timepicker.min.css']
+  js: ['bootstrap-timepicker.min.js']
+
+select2:
+  css: ['css/select2.min.css']
+  js: ['js/select2.full.min.js']
+
+components/bootstrap-datepicker:
+  js: ['js/bootstrap-datepicker.js','js/locales/bootstrap-datepicker.{language}.js']
+  css: ['dist/css/bootstrap-datepicker.css']
+
+bootstrap3-editable:
+  js: ['js/bootstrap-editable.min.js']
+  css: ['css/bootstrap-editable.css']
+
+raphael:
+  js: ['raphael-min.js']
+
+morris:
+  require: ['raphael']
+  js: ['morris.min.js']
+  css: ['morris.css']
+
+webcomponentsjs:
+  js: ['webcomponents.min.js']
+
+polymer:
+  require: ['webcomponentsjs']
+  import: ['polymer.html']
+
+pnotify:
+  js: ['dist/pnotify.js','dist/pnotify.mobile.js','dist/pnotify.nonblock.js']
+  css: ['dist/pnotify.css']
+
+touchPoint:
+  js: ['touchpoint.min.js']
+
+vakata/jstree:
+  js: ['dist/jstree.min.js']
+  css: ['dist/themes/default/style.min.css']
+
+jstree:
+  js: ['dist/jstree.min.js']
+  css: ['dist/themes/default/style.min.css']
+
+codemirror:
+  css: ['lib/codemirror.css']
+  js: ['lib/codemirror.js','addon/edit/matchbrackets.js','mode/htmlmixed/htmlmixed.js', 
+    'mode/xml/xml.js','mode/javascript/javascript.js','mode/css/css.js','mode/clike/clike.js',
+    'mode/php/php.js','addon/comment/continuecomment.js','addon/comment/comment.js']
+
+daterangepicker:
+  css: ['daterangepicker.css']
+  js: ['daterangepicker.js']
+
+markdown:
+  js: ['js/bootstrap-markdown.js','plugin/marked.min.js','plugin/to-markdown.js']
+  css: ['css/bootstrap-markdown.min.css']
+
+bootstrap-colorpicker:
+  js: ['js/bootstrap-colorpicker.min.js']
+  css: ['css/bootstrap-colorpicker.min.css']
+
+tcpdf:
+  php: ['tcpdf.php']
+
+ckeditor:
+  js: ['ckeditor.js']
+  js: ['lang/{language}.js']
+
+hostlink/fancybox:
+  js: ['dist/jquery.fancybox.min.js']
+  css: ['dist/jquery.fancybox.min.css']
+
+PHPExcel:
+  php: ['Classes/PHPExcel.php','Classes/PHPExcel/IOFactory.php']
+
+less.php:
+  php: ['Less.php']
+
+i18next:
+  js: ['i18next.min.js']
+
+components/bootstrap-datetimepicker:
+  css: ['build/css/bootstrap-datetimepicker.min.css']
+  js: ['build/js/bootstrap-datetimepicker.min.js']
+
+jquery-validation:
+  js: ['dist/jquery.validate.min.js','dist/additional-methods.min.js','dist/localization/messages_{language}.min.js']
+
+purl:
+  js: ['purl.js']
+
+driftyco/ionicons:
+  css: ['css/ionicons.min.css']
+
+angular:
+  js: ['angular.min.js','angular-sanitize.min.js']
+
+iCheck:
+  js: ['icheck.min.js']
+  css: ['all.css']
+
+t2s:
+  js: ['jquery.s2t.js']
+
+awesome-bootstrap-checkbox:
+  css: ['awesome-bootstrap-checkbox.css']
+
+chartjs:
+  js: ['Chart.min.js']
+
+nnnick/chartjs:
+  js: ['dist/Chart.min.js']

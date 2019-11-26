@@ -7,6 +7,14 @@ use App\User;
 
 class Mutation
 {
+    public function resetPassword($root, $args, $app): bool
+    {
+        $user = $app->user;
+        $user->password = password_hash($args["new_password"], PASSWORD_DEFAULT);
+        $user->save();
+        return true;
+    }
+
     public function updateMyInfo($root, $args, $app)
     {
         $user = $app->user;

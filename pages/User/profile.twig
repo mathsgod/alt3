@@ -11,7 +11,7 @@
 
                 <p class="text-muted text-center">{{usergroup|join(',',' and ')}}</p>
 
-                <a class="btn btn-primary btn-block" href="User/reset_password">Reset passsword</a>
+                <button class="btn btn-primary btn-block" @click="onResetPassword">Reset passsword</button>
                 <a class="btn btn-primary btn-block" href="User/2step">2 step verfication</a>
                 <a class="btn btn-primary btn-block" href="User/2step_whitelist">2 step verfication ip white list</a>
                 <button class="btn btn-primary btn-block" @click="createWebAuthn">Web Authentication</button>
@@ -27,84 +27,84 @@
     </div>
 </div>
 
-<template id="t1">
-    <form>
-        testing
-        <span v-text="a"></span>
-        <button @click.prevent="onClick">add</button>
-    </form>
+<template id="reset-password">
+    <div>
+        <form ref="form1">
+            <div class="form-group">
+                <label class="col-form-label">New password</label>
+                <input class="form-control" type="password" id="p1" required v-model="password" />
+            </div>
+            <div class="form-group">
+                <label class="col-form-label">Retype password</label>
+                <input class="form-control" type="password" id="p2" required />
+            </div>
+        </form>
+
+    </div>
 </template>
+
 <script>
-    class VueDialog {
-        constructor(options = {}) {
-            this.options = options;
-            this.vm = "";
-        }
 
-        open() {
-            var id = "_bootbox-" + new Date().getTime();
+    var resetPasswordDialog;
+    document.addEventListener("DOMContentLoaded", () => {
+        resetPasswordDialog = new VueDialog({
+            el: document.getElementById("reset-password"),
+            title: "Reset password",
+            init() {
+                $(this.$refs.form1).validate();
 
-            this.options.buttons.submit.callback.bind(this.vm);
+                $("#p2").rules("add", {
+                    equalTo: "#p1"
+                });
+            },
+            data() {
+                return {
+                    password: ""
+                };
+            }, buttons: {
+                submit: {
+                    label: "Submit",
+                    className: "btn btn-success",
+                    async callback(v) {
+                        if (!$(this.$refs.form1).valid()) {
+                            return false;
+                        }
 
+                        var resp = await this.$gql.mutation("api", {
+                            resetPassword: {
+                                __args: {
+                                    new_password: this.password
+                                }
+                            }
+                        });
+                        resp = resp.data;
+                        if (resp.error) {
+                            Swal.fire({
+                                type: 'error',
+                                position: 'top-end',
+                                toast: true,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                title: resp.error.message
+                            });
 
-            let div = document.createElement("div");
-            div.id = id;
-            div.innerHTML = this.options.el.innerHTML;
+                            return;
+                        }
+                        if (resp.data.resetPassword) {
+                            Swal.fire({
+                                type: "success",
+                                title: "Password updated",
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+                        }
 
-            var opt = Object.assign({}, { ...this.options, ...{ el: div } });
-            this.vm = new Vue(opt);
-
-            this.box = bootbox.dialog({
-                message: "<div></div>",
-                centerVertical: true,
-                buttons: {
-                    submit: {
-                        label: this.options.buttons.submit.label,
-                        callback: this.options.buttons.submit.callback.bind(this.vm)
                     }
-                },
-                show: false
-
-            });
-
-            this.box.on("shown.bs.modal", () => {
-                this.box.find(".bootbox-body").append(this.vm.box);
-            });
-
-            this.box.init(() => {
-                this.box.modal("show");
-            });
-
-
-        }
-
-        close() {
-            this.box.modal('hide');
-        }
-    }
-
-    var vd = new VueDialog({
-        el: document.getElementById("t1"),
-        data() {
-            return {
-                a: 1
-            }
-        }, methods: {
-            onClick() {
-                this.a++;
-
-            }
-        }, buttons: {
-            submit: {
-                label: "Submit",
-                callback() {
-                    console.log(this);
-                    alert(this.a);
-                    alert("callback");
                 }
             }
-        }
+        });
     });
+
 
 
 </script>
@@ -114,6 +114,9 @@
     var vm = new Vue({
         el: "#div1",
         methods: {
+            onResetPassword() {
+                resetPasswordDialog.open();
+            },
             createWebAuthn() {
                 this.$gql.query("api", {
                     me: {

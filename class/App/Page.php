@@ -119,10 +119,44 @@ class Page extends \R\Page
         return new UI\Table($objects, $this);
     }
 
-    public function del()
+    public function delete()
     {
         $obj = $this->object();
-        $obj->delete();
+        if ($obj->canDelete()) {
+            $obj->delete();
+        }
+    }
+
+    protected $plugins = [];
+    public function addLib(string $library)
+    {
+        $name = $library;
+        if ($this->plugins[$name]) {
+            return $this->plugins[$name];
+        }
+        $p = new Plugin($name, $this->app);
+
+        foreach ($p->setting["require"] as $require) {
+            $this->addLib($require);
+        }
+
+        foreach ($p->setting["php"] as $php) {
+            include_once($p->base . "/" . $php);
+        }
+
+        $this->plugins[$name] = $p;
+        if ($name == "ckeditor") {
+            $path = $this->app->config["user"]["roxy_fileman_path"];
+            $path = str_replace("{username}", $this->app->user->username, $path);
+            $_SESSION["roxy_fileman_path"] = $path;
+
+            $pi = $this->app->pathinfo();
+            $path = $pi["system_root"] . $path;
+            mkdir($path);
+        }
+
+
+        return $p;
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
