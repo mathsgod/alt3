@@ -1,8 +1,12 @@
+directive @hasRole on FIELD_DEFINITION
+scalar JSON
+
 type Mutation{
     me:Me
     login(username:String!,password:String!,code:String):Me
     UserGroup(usergroup_id:Int!):UserGroup
     forgotPassword(username:String!,email:String!):Boolean
+    updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Users,Administrators])
 }
 
 type Query{

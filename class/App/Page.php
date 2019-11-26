@@ -119,6 +119,12 @@ class Page extends \R\Page
         return new UI\Table($objects, $this);
     }
 
+    public function del()
+    {
+        $obj = $this->object();
+        $obj->delete();
+    }
+
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $route = $request->getAttribute("route");
@@ -145,7 +151,6 @@ class Page extends \R\Page
         if ($request->getQueryParams()["_rt"]) {
             return $response;
         }
-
 
         foreach ($request->getHeader("Accept") as $accept) {
             list($media,) = explode(",", $accept);

@@ -11,9 +11,9 @@
 
                 <p class="text-muted text-center">{{usergroup|join(',',' and ')}}</p>
 
-                <a class="btn btn-primary btn-block" href="User/{{app.user.user_id}}/reset_password">Reset passsword</a>
-                <a class="btn btn-primary btn-block" href="User/{{app.user.user_id}}/2step">2 step verfication</a>
-                <a class="btn btn-primary btn-block" href="User/{{app.user.user_id}}/2step_whitelist">2 step verfication ip white list</a>
+                <a class="btn btn-primary btn-block" href="User/reset_password">Reset passsword</a>
+                <a class="btn btn-primary btn-block" href="User/2step">2 step verfication</a>
+                <a class="btn btn-primary btn-block" href="User/2step_whitelist">2 step verfication ip white list</a>
                 <button class="btn btn-primary btn-block" @click="createWebAuthn">Web Authentication</button>
             </div>
             <!-- /.card-body -->
@@ -25,9 +25,90 @@
         {{userlog|raw}}
         {{eventlog|raw}}
     </div>
-
-
 </div>
+
+<template id="t1">
+    <form>
+        testing
+        <span v-text="a"></span>
+        <button @click.prevent="onClick">add</button>
+    </form>
+</template>
+<script>
+    class VueDialog {
+        constructor(options = {}) {
+            this.options = options;
+            this.vm = "";
+        }
+
+        open() {
+            var id = "_bootbox-" + new Date().getTime();
+
+            this.options.buttons.submit.callback.bind(this.vm);
+
+
+            let div = document.createElement("div");
+            div.id = id;
+            div.innerHTML = this.options.el.innerHTML;
+
+            var opt = Object.assign({}, { ...this.options, ...{ el: div } });
+            this.vm = new Vue(opt);
+
+            this.box = bootbox.dialog({
+                message: "<div></div>",
+                centerVertical: true,
+                buttons: {
+                    submit: {
+                        label: this.options.buttons.submit.label,
+                        callback: this.options.buttons.submit.callback.bind(this.vm)
+                    }
+                },
+                show: false
+
+            });
+
+            this.box.on("shown.bs.modal", () => {
+                this.box.find(".bootbox-body").append(this.vm.box);
+            });
+
+            this.box.init(() => {
+                this.box.modal("show");
+            });
+
+
+        }
+
+        close() {
+            this.box.modal('hide');
+        }
+    }
+
+    var vd = new VueDialog({
+        el: document.getElementById("t1"),
+        data() {
+            return {
+                a: 1
+            }
+        }, methods: {
+            onClick() {
+                this.a++;
+
+            }
+        }, buttons: {
+            submit: {
+                label: "Submit",
+                callback() {
+                    console.log(this);
+                    alert(this.a);
+                    alert("callback");
+                }
+            }
+        }
+    });
+
+
+</script>
+
 
 <script>
     var vm = new Vue({

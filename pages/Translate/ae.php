@@ -18,21 +18,21 @@ class Translate_ae extends ALT\Page
             $t->language = $k;
             $t->save();
         }
-        App::Redirect();
+        $this->redirect();
     }
 
     public function get()
     {
         $obj = $this->object();
 
-        $e = My::E($obj);
+        $e = $this->createE($obj);
         $e->add("Module")->input("module");
         $e->add("Action")->input("action");
         $e->add("Name")->input("name")->required();
 
         $e->addHr();
         foreach ($this->app->config["language"] as $k => $v) {
-            $e->add($v)->input()->attr("name", $k)->val((string)$obj->get($k));
+            $e->add($v)->input()->attr("name", $k)->val((string) $obj->get($k));
         }
 
         $this->write($this->createForm($e)->action(''));

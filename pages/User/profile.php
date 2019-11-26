@@ -14,9 +14,9 @@ class User_profile extends ALT\Page
             $u = $this->app->user;
             $u->bind($_POST);
             $u->save();
-            App::Msg("User information updated");
+            $this->alert->success("User information updated");
         }
-        App::Redirect("User/profile");
+        $this->redirect("User/profile");
     }
 
     public function postFido2()

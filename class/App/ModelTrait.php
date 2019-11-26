@@ -14,6 +14,11 @@ trait ModelTrait
         return true;
     }
 
+    public function canDelete()
+    {
+        return true;
+    }
+
     public function id()
     {
         $key = $this->_key();

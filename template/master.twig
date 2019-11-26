@@ -96,10 +96,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
+
                 {#
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
-                </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
                 </li>
@@ -122,6 +120,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             #}
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="logout" class="nav-link">
+                        <i class="fa fa-fw fa-sign-out-alt"></i>
+                    </a>
+                </li>
+
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -353,7 +357,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% for alert in alerts %}
                     <div class="alert alert-{{alert.type}} alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h5><i class="{{alert.icon}}"></i> {{alert.message}}</h5>
+                        <h5 class="
+                        {% if not alert.description %}
+                            mb-0
+                        {% endif %}"><i class="{{alert.icon}}"></i> {{alert.message}}</h5>
                         {{alert.description}}
                     </div>
                     {% endfor %}

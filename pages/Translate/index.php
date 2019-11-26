@@ -9,7 +9,7 @@ class Translate_index extends ALT\Page
 
         $tab = $this->createTab();
         $tab->add("All Translate", "list");
-        $tab->add("Translate tree", "tree");
+        //$tab->add("Translate tree", "tree");
         $this->write($tab);
     }
 }

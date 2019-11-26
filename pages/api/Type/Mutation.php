@@ -7,6 +7,14 @@ use App\User;
 
 class Mutation
 {
+    public function updateMyInfo($root, $args, $app)
+    {
+        $user = $app->user;
+        $user->bind($args);
+        $user->save();
+        return $app;
+    }
+
     public function login($root, $args, $app)
     {
         try {

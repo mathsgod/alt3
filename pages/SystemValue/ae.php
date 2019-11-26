@@ -16,18 +16,18 @@ class SystemValue_ae extends ALT\Page
             $obj->value = $val;
             $obj->save();
         }
-        $this->_redirect();
+        $this->redirect();
     }
 
     public function get()
     {
-        $this->addLib("ace");
+        //$this->addLib("ace");
         $obj = $this->object();
 
         $data = [];
         $data["name"] = $obj->name;
         foreach ($this->app->config["language"] as $v => $l) {
-            $data["value[$v]"] = (string)SystemValue::_($obj->name, $v);
+            $data["value[$v]"] = (string) SystemValue::_($obj->name, $v);
         }
 
         $mv = $this->createE($data);
@@ -35,8 +35,7 @@ class SystemValue_ae extends ALT\Page
 
 
         foreach ($this->app->config["language"] as $v => $l) {
-            $mv->add("Value " . $l)->textarea("value[$v]")->attr("is", "ace");
-
+            $mv->add("Value " . $l)->textarea("value[$v]"); //->attr("is", "ace");
         }
 
 

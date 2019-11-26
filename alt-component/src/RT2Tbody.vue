@@ -35,7 +35,7 @@
       </tr>
 
       <tr v-show="subRow[index]" :key="'subrow'+index">
-        <td v-html="subRowContent[index]" :colspan="visibleColumns.length"></td>
+        <td v-html="subRowContent[index]" :colspan="visibleColumns.length" class="p-1"></td>
       </tr>
     </template>
   </tbody>

@@ -46,26 +46,9 @@ var vm = new Vue({
             }
         }
     }, mounted() {
-
-        return;
-        $(this.$refs.rememberMe).iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-
-        $(this.$refs.rememberMe).on("ifChecked", () => {
-            localStorage.set("app.remember_me", true);
-        });
-
-        $(this.$refs.rememberMe).on("ifUnchecked", () => {
-            localStorage.set("app.remember_me", false);
-        });
-
-        if (this.$localStorage.get("app.remember_me") == "true") {
-            this.username = this.$localStorage.get("app.username");
-            $(this.$refs.rememberMe).iCheck('check');
-            $(this.$refs.rememberMe).iCheck('update');
+        if (localStorage.getItem("app.username")) {
+            this.username = localStorage.getItem("app.username");
+            this.$refs.remember.checked = true;
         }
     },
     methods: {
@@ -107,6 +90,8 @@ var vm = new Vue({
             if (resp.data.login) {
                 if (this.$refs.remember.checked) {
                     localStorage.setItem("app.username", username);
+                } else {
+                    localStorage.removeItem("app.username");
                 }
 
                 let redirect = window.self.location.hash;
