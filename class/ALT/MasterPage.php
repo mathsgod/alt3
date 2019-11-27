@@ -116,6 +116,29 @@ class MasterPage extends \R\Page
         $this->data["alerts"] = $this->app->flushMessage();
         $this->data["app"] = $this->app;
 
+        // my fav
+
+        $this->data["favs"] = [];
+        $favs = \App\UI::Query([
+            "user_id" => $this->app->user->user_id,
+            "uri" => 'fav'
+        ]);
+
+        /*        $ui = $ui->usort(function ($a, $b) {
+            if ($a->content()["sequence"] > $b->content()["sequence"]) {
+                return 1;
+            } elseif ($a->content()["sequence"] < $b->content()["sequence"]) {
+                return -1;
+            }
+            return 0;
+        });
+        outp($ui);
+        die();*/
+        foreach ($favs as $ui) {
+            $content = json_decode($ui->layout, true);
+            $this->data["favs"][] = $content;
+        }
+
         $stream = new Stream($this->template->render($this->data));
 
         return $response->withBody($stream);

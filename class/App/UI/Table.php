@@ -141,7 +141,7 @@ class Table extends HTMLTableElement
             $obj = p($c)->data("object");
             if ($obj instanceof \App\Model) {
                 if ($obj->canDelete()) {
-                    $btn = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri('del'))->html("<i class='fa fa-fw fa-times'></i>");
+                    $btn = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri('delete'))->html("<i class='fa fa-fw fa-times'></i>");
                     p($c)->html($btn);
                 }
             }

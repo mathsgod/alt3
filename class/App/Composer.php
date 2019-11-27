@@ -15,7 +15,7 @@ class Composer
         return json_decode(file_get_contents($this->path() . "/auth.json"), true);
     }
 
-    public function installed()
+    public function installed(): array
     {
         $ret = self::exec("show -f json");
         $ret = json_decode($ret, true);
@@ -26,7 +26,7 @@ class Composer
             $ret = self::exec("show -f json");
             $ret = json_decode($ret, true);
         }
-        return $ret["installed"];
+        return $ret["installed"] ?? [];
     }
 
     public function show()
@@ -53,7 +53,7 @@ class Composer
     public function getPHP()
     {
         $v = PHP_VERSION_ID;
-        $v = (string)intval($v / 100);
+        $v = (string) intval($v / 100);
         $v = $v[0] . intval(substr($v, 1));
 
         $php = "php$v";
@@ -63,7 +63,7 @@ class Composer
         return "php";
     }
 
-    public function exec($command)
+    public function exec(string $command): string
     {
         $cwd = getcwd();
 
@@ -109,16 +109,16 @@ class Composer
         return $suggest;
     }
 
-    public function suggests()
+    public function suggests(): array
     {
         $suggest = $this->exec("suggests");
         $suggest = explode("\n", $suggest);
         array_walk($suggest, "trim");
         $suggest = array_filter($suggest, "strlen");
-        return $suggest;
+        return $suggest ?? [];
     }
 
-    public function info($checkupdate = false)
+    public function info(bool $checkupdate = false): array
     {
         if ($checkupdate) {
             $info = $this->exec("show -l --format=json");
@@ -126,7 +126,7 @@ class Composer
             $info = $this->exec("show --format=json");
         }
 
-        return json_decode($info, true)["installed"];
+        return json_decode($info, true)["installed"] ?? [];
     }
 
     public function config()

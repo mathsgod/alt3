@@ -1,0 +1,8 @@
+class: App\Config
+icon: fa fa-cog fa-fw
+show_create: true
+show_list: true
+group: System
+
+menu:
+  Add JSON: Config/ae?type=json

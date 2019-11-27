@@ -2,6 +2,7 @@ module.exports = {
     mode: "production",
     entry: {
         index: "./src/index.js",
+        confirm: "./src/confirm.js"
         //login: "./src/login.js",
         //layout: "./src/layout.js"
     },

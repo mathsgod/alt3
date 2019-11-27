@@ -97,7 +97,7 @@ class Page extends \R\Page
     protected function createForm($content): UI\Form
     {
         $form = new UI\Form($this);
-        $form->card->body->append($content);
+        p($form->card->body)->append($content);
         return $form;
     }
 
@@ -124,6 +124,13 @@ class Page extends \R\Page
         $obj = $this->object();
         if ($obj->canDelete()) {
             $obj->delete();
+        }
+
+        if ($this->request->isAccept("application/json")) {
+            return ["code" => 200];
+        } else {
+            $this->alert->success($this->module()->name . " deleted");
+            $this->redirect();
         }
     }
 
@@ -174,6 +181,13 @@ class Page extends \R\Page
             $request = $request->withQueryParams(["rt" => $rt]);
         }
 
+        if ($request->isAccept("text/html") && $request->getMethod() == "get") {
+            $file = $route->file;
+            $pi = pathinfo($file);
+            if (file_exists($template_file = $pi["dirname"] . "/" . $pi["filename"] . ".twig")) {
+                $this->template = $this->app->twig($template_file);
+            }
+        }
 
         ob_start();
         $response = parent::__invoke($request, $response);
@@ -192,14 +206,9 @@ class Page extends \R\Page
                 case "application/json":
                     return $response->withHeader("Content-Type", "application/json; charset=UTF-8");
                     break;
-                case "*/*";
+                case "*/*":
                 case "text/html":
-
-                    $file = $route->file;
-                    $pi = pathinfo($file);
-                    if (file_exists($template_file = $pi["dirname"] . "/" . $pi["filename"] . ".twig")) {
-                        $this->template = $this->app->twig($template_file);
-
+                    if ($this->template) {
                         $data = $this->data;
                         $data["app"] = $this->app;
                         $content .= (string) $response;
@@ -211,6 +220,11 @@ class Page extends \R\Page
                         $content .= $echo_content;
                         $content .= (string) $response;
                     }
+
+                    if ($request->getMethod() == "get") {
+                        $content .= $request->getAttribute("included_content");
+                    }
+
                     break;
             }
         }

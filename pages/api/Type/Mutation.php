@@ -7,6 +7,16 @@ use App\User;
 
 class Mutation
 {
+    public function updateFavoriteSequence($root, $args, $app): bool
+    {
+        foreach ($args["id"] as $i => $id) {
+            $ui = new \App\UI($id);
+            $ui->sequence = $i;
+            $ui->save();
+        }
+        return true;
+    }
+
     public function resetPassword($root, $args, $app): bool
     {
         $user = $app->user;

@@ -6,8 +6,9 @@ type Mutation{
     login(username:String!,password:String!,code:String):Me
     UserGroup(usergroup_id:Int!):UserGroup
     forgotPassword(username:String!,email:String!):Boolean
-    updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Users,Administrators])
-    resetPassword(new_password:String!):Boolean @hasRole(role:[Users,Administrators])
+    updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Administrators,Users])
+    resetPassword(new_password:String!):Boolean @hasRole(role:[Administrators,Users])
+    updateFavoriteSequence(id:[Int!]!):Boolean @hasRole(role:[Administrators,Users])
 }
 
 type Query{

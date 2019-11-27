@@ -1,0 +1,6 @@
+class: App\ACL
+show_create: false
+show_list: true
+log: false
+icon: fa fa-lock fa-fw
+group: System

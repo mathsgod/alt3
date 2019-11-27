@@ -1,6 +1,6 @@
 <template>
   <div :class="c">
-    <div class="overlay" v-if="loading">
+    <div class="overlay" v-if="myLoading">
       <i class="fas fa-2x fa-sync-alt fa-spin"></i>
     </div>
     <slot></slot>
@@ -21,8 +21,15 @@ export default {
     outline: Boolean,
     loading: Boolean
   },
-  mounted() {
-    //console.log("card");
+  data() {
+    return {
+      myLoading: this.loading
+    };
+  },
+  watch: {
+    loading(value) {
+      this.myLoading = value;
+    }
   },
   computed: {
     c() {
@@ -49,6 +56,14 @@ export default {
       }
 
       return c;
+    }
+  },
+  methods: {
+    showLoading() {
+      this.myLoading = true;
+    },
+    hideLoading() {
+      this.myLoading = false;
     }
   }
 };

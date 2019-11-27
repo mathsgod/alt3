@@ -4,7 +4,6 @@ namespace App\UI;
 
 use P\HTMLDivElement;
 use App\Page;
-use BS\Button;
 
 class CardHeader extends HTMLDivElement
 {
@@ -17,8 +16,8 @@ class CardHeader extends HTMLDivElement
         $this->page = $page;
         $this->setAttribute("is", "card-header");
 
-        $this->tools = new BoxTools($page);
-        $this->append($this->tools);
+        //$this->tools = new BoxTools($page);
+        //$this->append($this->tools);
     }
 
     public function addButton($label, $uri)

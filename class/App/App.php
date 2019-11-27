@@ -59,7 +59,10 @@ class App extends \R\App
             return new Route($request, $this);
         });
 
+        ob_start();
         $route = $router->getRoute($this->request, $this->loader);
+        $request = $request->withAttribute("included_content", ob_get_contents());
+        ob_end_clean();
 
         $request = $request->withAttribute("route", $route);
 
@@ -101,7 +104,6 @@ class App extends \R\App
                 }
             }
 
-
             foreach ($response->getHeaders() as $name => $values) {
                 header($name . ": " . implode(", ", $values));
             }
@@ -122,7 +124,24 @@ class App extends \R\App
         return $msg ?? [];
     }
 
-    public function login(string $username, string $password, $code = null): bool
+    public function page(string $path)
+    {
+        $uri = $this->request->getUri()->withPath($path);
+        $request = $this->request->withUri($uri);
+
+        $router = new \R\Router();
+        $route = $router->getRoute($request, $this->loader);
+
+        $request = $request
+            ->withAttribute("action", $route->action)
+            ->withAttribute("route", $route);
+
+        $class = $route->class;
+        $page = new $class($this);
+        return $page;
+    }
+
+    public function login(string $username, string $password, string $code = null): bool
     {
         //check AuthLock
         if ($this->config["user"]["auth-lockout"]) {
@@ -166,6 +185,7 @@ class App extends \R\App
         AuthLock::Clear();
 
         $this->user = $user;
+        $this->user_id = $user->user_id;
 
         return true;
     }
@@ -214,10 +234,10 @@ class App extends \R\App
         $cms = dirname($server["PHP_SELF"]);
         $cms_root = $document_root . $cms;
 
-        if (file_exists($document_root . "/vendor")) {
-            $composer_root = $document_root . "/vendor";
-        } else if (file_exists($cms_root . "/vendor")) {
-            $composer_root = $cms_root . "/vendor";
+        if (file_exists($document_root . "/composer.json")) {
+            $composer_root = $document_root;
+        } else if (file_exists($cms_root . "/composer.json")) {
+            $composer_root = $cms_root;
         }
 
 

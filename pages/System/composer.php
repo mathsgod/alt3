@@ -1,4 +1,5 @@
 <?php
+
 use App\Composer;
 
 class System_composer extends ALT\Page
@@ -47,28 +48,18 @@ EOL;
         $this->write("<pre>" . json_encode($composer->config(), 255) . "</pre>");
     }
 
-    public function info($checkupdate = false)
+    public function info()
     {
-
         $composer = new Composer($this->app);
-        $package = $composer->info($checkupdate);
-
-        $installed = array_map(function ($o) {
-            return $o["name"];
-        }, $package);
-
-        $pre_define = $composer->suggests();
-        foreach ($pre_define as $k) {
-            if (!in_array($k, $installed)) {
-                $package[] = ["name" => $k];
-            }
-        }
-
-        return $package;
+        return [
+            "installed" => $composer->installed(),
+            "suggests" => $composer->suggests()
+        ];
     }
 
     public function installedPackages()
     {
-        return $this->info();
+        $composer = new Composer($this->app);
+        return $composer->installed();
     }
 }

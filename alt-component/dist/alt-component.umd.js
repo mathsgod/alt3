@@ -3761,12 +3761,12 @@ module.exports = __webpack_require__("373a");
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Card.vue?vue&type=template&id=5a38ce72&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.c},[(_vm.loading)?_c('div',{staticClass:"overlay"},[_c('i',{staticClass:"fas fa-2x fa-sync-alt fa-spin"})]):_vm._e(),_vm._t("default")],2)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Card.vue?vue&type=template&id=33ce170a&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.c},[(_vm.myLoading)?_c('div',{staticClass:"overlay"},[_c('i',{staticClass:"fas fa-2x fa-sync-alt fa-spin"})]):_vm._e(),_vm._t("default")],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Card.vue?vue&type=template&id=5a38ce72&
+// CONCATENATED MODULE: ./src/Card.vue?vue&type=template&id=33ce170a&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Card.vue?vue&type=script&lang=js&
 //
@@ -3791,7 +3791,15 @@ var staticRenderFns = []
     outline: Boolean,
     loading: Boolean
   },
-  mounted: function mounted() {//console.log("card");
+  data: function data() {
+    return {
+      myLoading: this.loading
+    };
+  },
+  watch: {
+    loading: function loading(value) {
+      this.myLoading = value;
+    }
   },
   computed: {
     c: function c() {
@@ -3818,6 +3826,14 @@ var staticRenderFns = []
       }
 
       return c;
+    }
+  },
+  methods: {
+    showLoading: function showLoading() {
+      this.myLoading = true;
+    },
+    hideLoading: function hideLoading() {
+      this.myLoading = false;
     }
   }
 });

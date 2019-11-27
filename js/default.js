@@ -30,3 +30,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }, false);
     });
 });
+
+function __add_favorite() {
+    var label = prompt("請輸入標籤", window.document.title);
+    if (label != undefined && label != "") {
+        $.post("UI/save/saveFav", {
+            layout: {
+                label: label,
+                link: self.location.pathname + self.location.search
+            }
+        }).done(function (resp) {
+            if (resp.code == 200) {
+                window.self.location.reload();
+            } else {
+                alert("error add fav");
+            }
+        });
+    }
+}

@@ -4,8 +4,6 @@ class User_myfav extends ALT\Page
 {
     public function post()
     {
-
-
         foreach ($_POST["ui_id"] as $i => $ui_id) {
             $ui = new App\UI($ui_id);
             $content = $ui->content();
@@ -18,21 +16,16 @@ class User_myfav extends ALT\Page
     public function get()
     {
         $this->app->savePlace();
-        $w[] = ["user_id=?", $this->app->user->user_id];
-        $w[] = "uri='fav'";
-        $ds = App\UI::find($w)->usort(function ($a, $b) {
-            if ($a->content()["sequence"] > $b->content()["sequence"]) {
-                return 1;
-            } elseif ($a->content()["sequence"] < $b->content()["sequence"]) {
-                return -1;
-            }
-            return 0;
-        });
 
+        $ds = App\UI::Query([
+            "user_id" => $this->app->user_id,
+            "uri" => 'fav'
+        ])->orderBy("sequence")->toArray();
 
         $t = $this->createT($ds);
+        $t->header->title = "My favorite";
         $t->setAttribute("id", "table1");
-        $t->header("My favorite");
+
         $t->add("", function ($o) {
             return "<i class='fa fa-sort'></i><input type='hidden' name='ui_id[]' value='{$o->ui_id}'/>";
         });
@@ -58,22 +51,33 @@ class User_myfav extends ALT\Page
             }
             return $i;
         });
-        // $t->add("Link", "link");
-        $f = p("form")->attr("id", "form1")->attr("method", "post")->append($t);
+
+        $f = p("form")->attr("id", "form1")->append($t);
         $this->write($f);
     }
 }
-
 ?>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         $("#table1 table>tbody").sortable({
             handle: ".fa-sort",
             axis: "y",
             cursor: "move",
-            update: function(event, ui) {
-                $("#form1").ajaxSubmit();
+            update(event, ui) {
+
+                var ids = [];
+                $("#form1 input").each((index, el) => {
+                    ids.push(parseInt(el.value));
+                });
+
+                Vue.gql.mutation("api", {
+                    updateFavoriteSequence: {
+                        __args: {
+                            id: ids
+                        }
+                    }
+                });
+
             }
         });
     });

@@ -66,6 +66,16 @@ class Form extends HTMLFormElement
         $this->show_reset = false;
     }
 
+    public function __get($name)
+    {
+        switch ($name) {
+            case "header":
+                return $this->card->header;
+                break;
+        }
+        return parent::__get($name);
+    }
+
     public function __set($name, $value)
     {
         switch ($name) {
@@ -109,7 +119,7 @@ class Form extends HTMLFormElement
         return $this;
     }
 
-    public function box()
+    public function card()
     {
         return p($this->card);
     }

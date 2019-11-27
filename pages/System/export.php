@@ -12,11 +12,11 @@ class System_export extends ALT\Page
 {
 	public function post()
 	{
-		$module = Module::_($_POST["module"]);
+		$module = $this->app->module($_POST["module"]);
 
 		$name = $module->class;
 
-		$table = $name::__table();
+		$table = $name::_table();
 
 		if ($_POST["format"] == "CSV") {
 			$writer = WriterFactory::create(Type::CSV);
@@ -26,7 +26,7 @@ class System_export extends ALT\Page
 			$writer->openToBrowser($table . ".xlsx");
 		}
 
-		$db = $name::__db();
+		$db = $name::$_db;
 
 		$col = [];
 		foreach ($db->query("describe `{$table}`") as $rs) {
@@ -48,11 +48,12 @@ class System_export extends ALT\Page
 			return;
 		}
 		$mv = $this->createE();
-		$data = $this->app->getModule();
-		usort($data, function ($a, $b) {
-			return $a->class > $b->class;
+		$module = $this->app->modules();
+		usort($module, function ($a, $b) {
+			return $a->name <=> $b->name;
 		});
-		$mv->add("Target table")->select("module")->ds($data, "class", "name");
+
+		$mv->add("Target table")->select("module")->ds($module, "name", "name");
 		$mv->add("Format")->select("format")->ds(["Excel" => "Excel", "CSV" => "CSV"]);
 
 		$this->write($this->createForm($mv));

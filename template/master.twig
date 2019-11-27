@@ -15,11 +15,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>{{app.config.user.company}}</title>
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{composer_base}}/fortawesome/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="{{composer_base}}/vendor/fortawesome/font-awesome/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{system_base}}/adminlte/dist/css/adminlte.min.css">
+
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"-->
 
     <link rel="stylesheet" href="{{system_base}}/css/main.css">
 
@@ -34,7 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{system_base}}/plugins/fullcalendar-bootstrap/main.min.css">
 
     <!-- fancybox -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css">
+    <link rel="stylesheet" href="{{system_base}}/plugins/fancybox/jquery.fancybox.min.css">
 
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{system_base}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
@@ -52,6 +53,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- jQuery -->
     <script src="{{system_base}}/plugins/jquery/jquery.min.js"></script>
 
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{system_base}}/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
     <!-- Bootstrap 4 -->
     <script src="{{system_base}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -67,8 +75,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- iCheck -->
     <link rel="stylesheet" href="{{system_base}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    <!-- jquery validation-->
+    <script src="{{system_base}}/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="{{system_base}}/plugins/jquery-validation/additional-methods.min.js"></script>
 
     <script src="{{system_base}}/plugins/moment/moment-with-locales.min.js"></script>
 
@@ -85,7 +94,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="{{system_base}}/js/default.js" defer></script>
     <script src="{{system_base}}/js/tab-ajax.js"></script>
-    
+
+    <script src="{{system_base}}/dist/confirm.js" defer></script>
+
+
+    <!-- plugins -->
+    {% for plugin in plugins %}
+    {% for js in plugin.setting.js %}
+    <script src="{{plugin.base}}/{{js}}" defer></script>
+    {% endfor %}
+    {% endfor %}
+
 </head>
 
 <body class="hold-transition sidebar-mini  text-sm layout-fixed layout-footer-fixed">
@@ -251,6 +270,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-pills nav-sidebar nav-flat flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false" id="nav-sidebar">
 
 
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-fw fa-heart"></i>
+                                <span>Favorite</span>
+                                <i class="right fas fa-angle-left"></i>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:__add_favorite();">
+                                        <i class="nav-icon fa fa-fw fa-plus text-aqua"></i>
+                                        <span>add</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="User/myfav">
+                                        <i class="nav-icon fa fa-fw fa-heart"></i>
+                                        <span>manage</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        {% for fav in favs %}
+                        <li class="nav-item">
+                            <a href="{{fav.link}}" class="nav-link">
+                                <i class="nav-icon fa fa-fw {{fav.icon?fav.icon:'fa-link'}} {{fav.color?fav.color:''}}"></i>
+                                <span>{{fav.label}}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+
+
+                        <li class="nav-header">Main navigation</li>
                         {% for menu in sidebar_menu %}
                         <li class="nav-item" is="nav-item" :menu="{{menu|json_encode}}"></li>
                         {% endfor %}
@@ -363,7 +416,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         {% if not alert.description %}
                             mb-0
                         {% endif %}"><i class="{{alert.icon}}"></i> {{alert.message}}</h5>
-                        {{alert.description}}
+                        {{alert.description|raw}}
                     </div>
                     {% endfor %}
 
@@ -371,7 +424,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="callout callout-{{callout.type}}">
                         <h5>{{callout.title}}</h5>
                         {% if callout.description %}
-                        <p>{{callout.description}}</p>
+                        <p>{{callout.description|raw}}</p>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -421,7 +474,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootbox -->
     <script src="{{system_base}}/plugins/bootbox/bootbox.all.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script src="{{system_base}}/plugins/fancybox/jquery.fancybox.min.js"></script>
 
     <!-- Vue dialog -->
     <script src="{{system_base}}/src/vue.dialog.js"></script>
@@ -429,11 +482,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- SweetAlert2 -->
     <script src="{{system_base}}/plugins/sweetalert2/sweetalert2.min.js"></script>
 
-    {% for plugin in plugins %}
-    {% for js in plugin.setting.js %}
-    <script src="{{plugin.base}}/{{js}}"></script>
-    {% endfor %}
-    {% endfor %}
+
+
+
 
 </body>
 
