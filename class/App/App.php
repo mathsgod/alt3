@@ -418,6 +418,11 @@ class App extends \R\App
         return $_SESSION["app"]["version"];
     }
 
+    public function composer(): Composer
+    {
+        return new Composer($this);
+    }
+
 
     public function savePlace()
     {

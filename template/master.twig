@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="robots" content="noindex, nofollow">
     <base href="{{base}}" />
 
-    <title>{{app.config.user.company}}</title>
+    <title>{{app.config.user.company}} | {{module.name}}</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{composer_base}}/vendor/fortawesome/font-awesome/css/all.min.css">
@@ -98,12 +98,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{system_base}}/dist/confirm.js" defer></script>
 
 
+
+
     <!-- plugins -->
     {% for plugin in plugins %}
     {% for js in plugin.setting.js %}
     <script src="{{plugin.base}}/{{js}}" defer></script>
     {% endfor %}
+
+    {% for css in plugin.setting.css %}
+    <link rel="stylesheet" type="text/css" href="{{plugin.base}}/{{css}}" />
     {% endfor %}
+
+
+    {% endfor %}
+
 
 </head>
 
@@ -273,20 +282,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-fw fa-heart"></i>
-                                <span>Favorite</span>
-                                <i class="right fas fa-angle-left"></i>
+                                <p>
+                                    Favorite
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a class="nav-link" href="javascript:__add_favorite();">
                                         <i class="nav-icon fa fa-fw fa-plus text-aqua"></i>
-                                        <span>add</span>
+                                        <p>
+                                            Add
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="User/myfav">
                                         <i class="nav-icon fa fa-fw fa-heart"></i>
-                                        <span>manage</span>
+                                        <p>
+                                            Manage
+                                        </p>
                                     </a>
                                 </li>
 
@@ -297,7 +312,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="{{fav.link}}" class="nav-link">
                                 <i class="nav-icon fa fa-fw {{fav.icon?fav.icon:'fa-link'}} {{fav.color?fav.color:''}}"></i>
-                                <span>{{fav.label}}</span>
+                                <p>{{fav.label}}</p>
                             </a>
                         </li>
                         {% endfor %}

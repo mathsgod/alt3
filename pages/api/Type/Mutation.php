@@ -4,9 +4,20 @@ namespace Type;
 
 use GraphQL\Error\Error;
 use App\User;
+use App\UI;
 
 class Mutation
 {
+    public function addFavorite($root, $args, $app): bool
+    {
+        $ui = new UI();
+        $ui->user_id = $app->user->user_id;
+        $ui->uri = 'fav';
+        $ui->layout = json_encode($args);
+        $ui->save();
+        return true;
+    }
+
     public function updateFavoriteSequence($root, $args, $app): bool
     {
         foreach ($args["id"] as $i => $id) {

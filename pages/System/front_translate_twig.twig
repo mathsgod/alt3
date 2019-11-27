@@ -1,184 +1,185 @@
 <div class="row" id="div1">
     <div class="col-md-2">
 
-        <div class="box box-primary">
-            <div class="box-body no-padding">
+        <div class="card card-primary card-outline">
+            <div class="card-body p-0">
                 {{tree|raw}}
             </div>
-        </div>
-
-        <div class="box box-primary">
-            <div class="box-body">
+            <div class="card-body p-1">
                 <div class="form-group">
                     <label>Height</label>
-                    <input class="form-control input-sm" type="input" v-model="edit_height" />
+                    <input class="form-control form-control-sm" type="number" v-model.number="edit_height" />
                 </div>
             </div>
         </div>
-
-
     </div>
 
-    <div class="col-md-10">
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="active" href="#tab-1" data-toggle="tab">Page</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#tab-2" data-toggle="tab">Global</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab-1">
-                    <div class="box box-primary">
-                        <div class="box-body">
-                            <table class="table table-condensed table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Source</th>
-                                        <th v-for="lang in langs" v-text="lang">
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-if="file">
-                                        <td>
-                                            <button @click.prevent="onClickTranAll" class="btn btn-xs btn-primary">Translate all</button>
-                                        </td>
-                                        <td v-for="lang in langs">
-                                            <button @click.prevent="copyFromSource(lang)" class="btn btn-xs btn-primary">Copy from source</button>
-                                            <button @click.prevent="onClickTranSource(lang)" class="btn btn-xs btn-primary">Tran from Source</button>
-                                            <button @click.prevent="tranSrcIfEmpty(lang)" class="btn btn-xs btn-primary">Translate data if value is empty</button>
+    <div class="col">
+        <div class="card card-outline card-outline-tabs card-primary border-top-0">
+            <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" class="active" href="#tab-1" data-toggle="tab">Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-2" data-toggle="tab">Global</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body p-1">
 
-                                            <button v-if="lang=='zh_CN'" @click.prevent="onClickAllT2S()" class="btn btn-xs btn-primary">T2S</button>
-                                            <button v-if="lang=='en_US'" @click.prevent="onClickAllT2E()" class="btn btn-xs btn-primary">T2E</button>
-                                            <button v-if="lang=='zh_HK'" @click.prevent="onClickAllE2T()" class="btn btn-xs btn-primary">E2T</button>
-                                            <button @click="saveTran(lang)" class="btn btn-xs btn-success">
-                                                <i class="fa fa-save"></i> Save</button>
-                                        </td>
-                                    </tr>
-                                    <tr v-for="d in renderData">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-1">
+                        <div class="card card-primary">
+                            <div class="card-body table-responsive p-1">
+                                <table class="table table-sm table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Source</th>
+                                            <th v-for="lang in langs" v-text="lang">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-if="file">
+                                            <td>
+                                                <button @click.prevent="onClickTranAll" class="btn btn-xs btn-primary">Translate all</button>
+                                            </td>
+                                            <td v-for="lang in langs">
+                                                <button @click.prevent="copyFromSource(lang)" class="btn btn-xs btn-primary">Copy from source</button>
+                                                <button @click.prevent="onClickTranSource(lang)" class="btn btn-xs btn-primary">Tran from Source</button>
+                                                <button @click.prevent="tranSrcIfEmpty(lang)" class="btn btn-xs btn-primary">Translate data if value is empty</button>
 
-                                        <td v-if="d.edit" :colspan="langs.length + 1">
-                                            <button @click="copyFromSourceSingle(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="far fa-fw fa-copy"></i> Copy from source</button>
-                                            <button @click="onClickTran(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> Translate from source</button>
-                                            <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(selected_data)" class="btn btn-xs btn-success">T2S</button>
-                                            <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> T2E</button>
-                                            <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> E2T</button>
-                                            <button class="btn btn-xs btn-success" @click.prevent="selected_data = null"><i class="fa fa-check"></i></button>
-                                            <textarea v-model="selected_data.msgstr[selected_lang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="selected_lang"></textarea>
-                                        </td>
+                                                <button v-if="lang=='zh_CN'" @click.prevent="onClickAllT2S()" class="btn btn-xs btn-primary">T2S</button>
+                                                <button v-if="lang=='en_US'" @click.prevent="onClickAllT2E()" class="btn btn-xs btn-primary">T2E</button>
+                                                <button v-if="lang=='zh_HK'" @click.prevent="onClickAllE2T()" class="btn btn-xs btn-primary">E2T</button>
+                                                <button @click="saveTran(lang)" class="btn btn-xs btn-success">
+                                                    <i class="fa fa-save"></i> Save</button>
+                                            </td>
+                                        </tr>
+                                        <tr v-for="d in renderData">
 
-                                        <td v-if="!d.edit" style="width:100px" v-text="d.msgid"></td>
+                                            <td v-if="d.edit" :colspan="langs.length + 1">
+                                                <button @click="copyFromSourceSingle(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="far fa-fw fa-copy"></i> Copy from source</button>
+                                                <button @click="onClickTran(selected_data,selected_lang)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> Translate from source</button>
+                                                <button v-if="selected_lang=='zh_CN'" @click.prevent="onClickT2S(selected_data)" class="btn btn-xs btn-success">T2S</button>
+                                                <button v-if="selected_lang=='en_US'" @click.prevent="onClickT2E(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> T2E</button>
+                                                <button v-if="selected_lang=='zh_HK'" @click.prevent="onClickE2T(selected_data)" class="btn btn-xs btn-success"><i class="fab fa-fw fa-google"></i> E2T</button>
+                                                <button class="btn btn-xs btn-success" @click.prevent="selected_data = null"><i class="fa fa-check"></i></button>
+                                                <textarea v-model="selected_data.msgstr[selected_lang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="selected_lang"></textarea>
+                                            </td>
 
-                                        <td style="cursor:pointer;" v-if="!d.edit" v-for="lang in langs" @click="clickData(d,lang)" :class="{active: ((selected_data==d) && (lang==selected_lang)) }">
-                                            <div style="text-overflow:ellipsis;overflow-y:auto;max-height:100px" v-text="d.msgstr[lang]">
+                                            <td v-if="!d.edit" style="width:100px" v-text="d.msgid"></td>
 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="box-footer" v-if="file">
-                            <button @click.prevent="saveTran()" class="btn btn-success">Save all</button>
-                            <button @click.prevent="loadGlobalToSingle()" class="btn btn-success">Load global</button>
-                        </div>
-                    </div>
+                                            <td style="cursor:pointer;" v-if="!d.edit" v-for="lang in langs" @click="clickData(d,lang)" :class="{active: ((selected_data==d) && (lang==selected_lang)) }">
+                                                <div style="text-overflow:ellipsis;overflow-y:auto;max-height:100px" v-text="d.msgstr[lang]">
 
-
-                    <div class="box box-primary" v-if="unuse">
-                        <div class="box-header">
-                            <div class="box-title">
-                                Unuse
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer" v-if="file">
+                                <button @click.prevent="saveTran()" class="btn btn-success">Save all</button>
+                                <button @click.prevent="loadGlobalToSingle()" class="btn btn-success">Load global</button>
                             </div>
                         </div>
-                        <div class="box-body">
-                            <table class="table table-condensed table-hover" v-for="lang in langs">
+
+
+                        <div class="card card-primary" v-if="unuse">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Unuse
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm table-hover" v-for="lang in langs">
+                                    <thead>
+                                        <tr>
+                                            <th v-text="lang"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="d in unuse[lang]">
+                                            <td>
+                                                <table class="table table-sm table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>msgid</th>
+                                                            <th>msgstr</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(msgid,i) in d.msgid">
+                                                            <td v-text="msgid"></td>
+                                                            <td v-text="d.msgstr[i]"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% verbatim %}
+
+
+                    <div class="tab-pane" id="tab-2">
+                        <div id="global-tab">
+
+                            <table class="table table-sm table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th v-text="lang"></th>
+                                        <th></th>
+                                        <th>Source</th>
+                                        <th v-for="lang in langs" v-text="lang"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="d in unuse[lang]">
+                                    <tr v-for="entry in globalRenderData">
+                                        <td v-if="!entry.edit">
+                                            <button class="btn btn-xs btn-danger" @click="removeGlobal(entry)"><i class="fa fa-times fa-fw"></i></button>
+                                        </td>
+                                        <td v-if="!entry.edit" @click="clickGlobal(entry)">
+                                            {{entry.name}}
+                                        </td>
+                                        <td v-if="!entry.edit" v-for="lang in langs" @click="clickGlobal(entry,lang)">
+                                            {{entry.value[lang]}}
+                                        </td>
+
+                                        <td v-if="entry.edit" :colspan="langs.length + 2">
+                                            <button class="btn btn-xs btn-success" @click.prevent="globalSelected = null"><i class="fa fa-check"></i></button>
+                                            <textarea v-if="globalSelectedLang" v-model="globalSelected.value[globalSelectedLang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="globalSelectedLang"></textarea>
+                                            <textarea v-if="!globalSelectedLang" v-model="globalSelected.name" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="globalSelectedLang"></textarea>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
                                         <td>
-                                            <table class="table table-condensed table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>msgid</th>
-                                                        <th>msgstr</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(msgid,i) in d.msgid">
-                                                        <td v-text="msgid"></td>
-                                                        <td v-text="d.msgstr[i]"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+
+                                        </td>
+                                        <td>
+                                            <textarea v-model="globalNew" class="form-control"></textarea>
+                                            <button class="btn btn-xs btn-success" @click="addGlobal()"><i class="fa fa-plus fa-fw"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <div>
+                                <button class="btn btn-success" @click="onSaveGlobal">Save all</button>
+                                <button class="btn btn-success" @click="onApplyGlobal">Apply to all</button>
+                            </div>
                         </div>
                     </div>
 
-                </div>
-                {% verbatim %}
-
-
-                <div class="tab-pane" id="tab-2">
-                    <div id="global-tab">
-
-                        <table class="table table-condensed table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Source</th>
-                                    <th v-for="lang in langs" v-text="lang"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="entry in globalRenderData">
-                                    <td v-if="!entry.edit">
-                                        <button class="btn btn-xs btn-danger" @click="removeGlobal(entry)"><i class="fa fa-times fa-fw"></i></button>
-                                    </td>
-                                    <td v-if="!entry.edit" @click="clickGlobal(entry)">
-                                        {{entry.name}}
-                                    </td>
-                                    <td v-if="!entry.edit" v-for="lang in langs" @click="clickGlobal(entry,lang)">
-                                        {{entry.value[lang]}}
-                                    </td>
-
-                                    <td v-if="entry.edit" :colspan="langs.length + 2">
-                                        <button class="btn btn-xs btn-success" @click.prevent="globalSelected = null"><i class="fa fa-check"></i></button>
-                                        <textarea v-if="globalSelectedLang" v-model="globalSelected.value[globalSelectedLang]" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="globalSelectedLang"></textarea>
-                                        <textarea v-if="!globalSelectedLang" v-model="globalSelected.name" class="form-control" :style="{height: edit_height+ 'px'}" :placeholder="globalSelectedLang"></textarea>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <textarea v-model="globalNew" class="form-control"></textarea>
-                                        <button class="btn btn-xs btn-success" @click="addGlobal()"><i class="fa fa-plus fa-fw"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div>
-                            <button class="btn btn-success" @click="onSaveGlobal">Save all</button>
-                            <button class="btn btn-success" @click="onApplyGlobal">Apply to all</button>
-                        </div>
-                    </div>
+                    {% endverbatim %}
                 </div>
 
-                {% endverbatim %}
             </div>
 
         </div>
@@ -459,4 +460,9 @@
         vm.selectFile(file);
     }
 
-</script> {% endverbatim %}
+    document.addEventListener("DOMContentLoaded", () => {
+        $(".jstree").jstree();
+    });
+
+</script>
+{% endverbatim %}

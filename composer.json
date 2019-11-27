@@ -37,10 +37,17 @@
         "mathsgod/p-query": "^2.0",
         "mathsgod/r-graphql": "^1.3",
         "mathsgod/hl-holiday": "^1.2",
-        "mathsgod/hl-weather": "^2.0"
+        "mathsgod/hl-weather": "^2.0",
+        "mathsgod/r-translate": "^1.0"
     },
     "require-dev": {
         "box/spout": "^2.7",
-        "phpunit/phpunit": "^6.5"
+        "phpunit/phpunit": "^6.5",
+        "vakata/jstree": "^3.3",
+        "sepia/po-parser": "^5.1"
+    },
+    "suggest": {
+        "phpunit/phpunit": "The PHP Unit Testing framework.",
+        "monolog/monolog": "Allows more advanced logging of the application flow"
     }
 }
