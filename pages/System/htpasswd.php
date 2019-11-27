@@ -9,7 +9,7 @@ class System_htpasswd extends ALT\Page
         $encrypted_password = crypt($password, base64_encode($password));
 
 
-        $this->alert->info($username . ':' . $encrypted_password);
+        $this->alert->info("Result", $username . ':' . $encrypted_password);
         $this->redirect();
     }
 

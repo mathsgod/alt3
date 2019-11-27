@@ -19,17 +19,11 @@ class System_phpunit extends ALT\Page
         //$autoload = App::Path("global.inc.php");
 
         $composer_autoload = $pi["composer_root"] . "/vendor/autoload.php";
-        $s = `$phpunit --debug --bootstrap $composer_autoload tests`;
+
+        $s = "$phpunit --debug --bootstrap $composer_autoload tests\n\n";
+        $s .= `$phpunit --debug --bootstrap $composer_autoload tests`;
 
         return ["content" => $s];
-
-        $this->write("<pre>" . $s . "</pre>");
-        $this->write("<hr/>");
-
-        //test system
-        $version = App::Version();
-        $s = `php $phpunit --debug --bootstrap $autoload system/{$version}/tests `;
-        $this->write("<pre>" . $s . "</pre>");
     }
 
     public function get()

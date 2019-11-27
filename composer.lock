@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f08e1b760723de7fe5ecdbb8cb1b55b4",
+    "content-hash": "af535c9fe2d096c9c7599487ccff2599",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -232,6 +232,38 @@
             "time": "2019-06-20T04:53:46+00:00"
         },
         {
+            "name": "mathsgod/gql-php-generator",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/gql-php-generator.git",
+                "reference": "5b59f6d8fefbc3aa349f2ce4cccf208e7b5d7b42"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/gql-php-generator/mathsgod-gql-php-generator-1.0.2-3ff047.zip",
+                "reference": "5b59f6d8fefbc3aa349f2ce4cccf208e7b5d7b42",
+                "shasum": "42ce1173cc5f8a3cf217946760a090a0bcd05048"
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GQL\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "mathsgod@yahoo.com"
+                }
+            ],
+            "description": "A library used for generator gql file by input pdo",
+            "time": "2019-07-05T10:01:14+00:00"
+        },
+        {
             "name": "mathsgod/graphql-php-directive-resolvers",
             "version": "1.0.0",
             "source": {
@@ -372,17 +404,17 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.0.16",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:9df64f890850ef93d948662630d719c3c69da5da@github.com/mathsgod/p-query.git",
-                "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7"
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/p-query.git",
+                "reference": "d0bc60076e419ace992acfa3bde238d541f1a89a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.0.16-707f2e.zip",
-                "reference": "db5af6a48a5c4255b10c854ee8514024da1943e7",
-                "shasum": "c25680f5d141bee9875bcf429f2e36b037505648"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.2.0-9af92c.zip",
+                "reference": "d0bc60076e419ace992acfa3bde238d541f1a89a",
+                "shasum": "08cb69e9d819c581714ecb48c114ec1b8015e8cc"
             },
             "require": {
                 "php": ">=7.0",
@@ -410,7 +442,7 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-07-03T10:08:07+00:00"
+            "time": "2019-11-27T10:36:56+00:00"
         },
         {
             "name": "mathsgod/r",

@@ -20,9 +20,11 @@ class System_viewas extends ALT\Page
         $ref = $_SERVER['HTTP_REFERER'];
         $t = $this->createT(App\User::Find());
         $t->add("Username", "username");
-        $t->add("")->button()->href(function ($o) use ($ref) {
+
+        $t->add("view as")->button()->text("View as")->attr("href", function () use ($ref) {
+            $o = p($this)->data("object");
             return "System/viewas?" . http_build_query(["user_id" => $o->user_id, "ref" => $ref]);
-        })->text("View as");
+        });
         $this->write($t);
     }
 }

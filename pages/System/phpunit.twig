@@ -1,15 +1,17 @@
 <div id="div1">
-	<alt-box class="box-primary" ref="box1">
-		<alt-box-header>PHP Unit test</alt-box-header>
-		<alt-box-body>
+	<card primary outline ref="box1">
+		<card-header>
+			PHP Unit test
+		</card-header>
+		<card-body>
 			<div v-text="content" style="white-space:pre">
 
 			</div>
-		</alt-box-body>
-		<alt-box-footer>
+		</card-body>
+		<card-footer>
 			<button class="btn btn-primary" @click="run">Run</button>
-		</alt-box-footer>
-	</alt-box>
+		</card-footer>
+	</card>
 </div>
 <script>
 
@@ -23,7 +25,7 @@
 				this.$refs.box1.showLoading();
 				this.$http.get("System/phpunit/run").then(resp => {
 					this.$refs.box1.hideLoading();
-					this.content=resp.body.content;
+					this.content = resp.body.content;
 				});
 			}
 		}

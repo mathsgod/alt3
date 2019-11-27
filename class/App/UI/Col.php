@@ -507,22 +507,28 @@ class Col extends HTMLElement
 
     public function button($field = null)
     {
-        $p = new \BS\ButtonCollection;
+
+        $as = new \P\Query();
         foreach ($this->cell as $cell) {
-            $btn = new \BS\Button();
-            $btn->classList->add("btn-xs");
-            p($cell)->append($btn);
+            $a = new \P\HTMLAnchorElement();
+            $cell->append($a);
+            $a->classList->add("btn");
+            $a->classList->add("btn-primary");
+            $a->classList->add("btn-xs");
+
             if ($object = p($cell)->data("object")) {
-                p($btn)->data("object", $object);
+                p($a)->data("object", $object);
             }
 
             if ($field) {
-                p($btn)->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+                p($a)->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
             }
 
-            $p[] = $btn;
+
+
+            $as[] = $a;
         }
-        return $p;
+        return $as;
     }
 
     public function tokenField($field, $options)

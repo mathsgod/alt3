@@ -21,6 +21,7 @@ class Table extends HTMLTableElement
         $this->page = $page;
         $this->setAttribute("is", "alt-table");
         $this->classList->add("table");
+        $this->classList->add("table-sm");
 
         $this->createTBody();
     }
