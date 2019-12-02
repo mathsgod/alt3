@@ -8,6 +8,25 @@ use App\UI;
 
 class Mutation
 {
+    public function bodyAddClass($root, $args, $app)
+    {
+        $body = $app->user->style["body"] ?? [];
+        $body[] = $args["class"];
+        $app->user->style["body"] = array_values($body);
+        $app->user->save();
+        return;
+    }
+
+    public function bodyRemoveClass($root, $args, $app)
+    {
+        $body = $app->user->style["body"] ?? [];
+
+        $app->user->style["body"] = array_filter($app->user->style["body"], function ($c) use ($args) {
+            return $c != $args["class"];
+        });
+        $app->user->save();
+    }
+
     public function sidebar($root, $args, $app)
     {
         $app->user->style["sidebar"] = $args["class"];

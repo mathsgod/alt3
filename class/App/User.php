@@ -4,7 +4,10 @@ namespace App;
 
 class User extends Core\User
 {
-    use ModelTrait;
+    use ModelTrait {
+        canUpdate as protected canUpdate2;
+        canDelete as protected canDelete2;
+    }
 
     public function canUpdate(): bool
     {
@@ -15,7 +18,28 @@ class User extends Core\User
         if ($user->isAdmin()) {
             return true;
         }
-        return false;
+        return $this->canUpdate2();
+    }
+
+    public function canDelete(): bool
+    {
+        $user = self::$_app->user;
+        if ($this->isGuest()) {
+            return false;
+        }
+        if ($user->user_id == $this->user_id) {
+            return false;
+        }
+        if ($user->isAdmin()) {
+            return parent::canDelete();
+        }
+        if ($user->isPowerUser()) {
+            if ($this->isAdmin()) {
+                return false;
+            }
+        }
+
+        return $this->canDelete2();
     }
 
     public function createUserLog(string $result = null)

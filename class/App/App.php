@@ -30,6 +30,10 @@ class App extends \R\App
         Model::$_db = $this->db;
         Model::$_app = $this;
         Module::$_app = $this;
+        User::$_app = $this;
+        UserGroup::$_app = $this;
+        ModelTrait::$_app = $this;
+        //        Config::$_app = $this;
 
         //system config
         $pi = $this->pathInfo();
@@ -42,16 +46,17 @@ class App extends \R\App
 
         //user
         if (!$_SESSION["app"]["user"]) {
-            $_SESSION["app"]["user"] = new User(2);
+            $this->user = new User(2);
         } else {
             $this->user = new User($_SESSION["app"]["user"]->user_id);
         }
-
+        $_SESSION["app"]["user"] = $this->user;
         $this->user_id = $this->user->user_id;
     }
 
     public function run()
     {
+        $this->acl = [];
         $ugs = [];
         foreach ($this->user->UserGroup() as $ug) {
             $ugs[] = (string) $ug;
@@ -353,12 +358,15 @@ class App extends \R\App
 
     public function acl(string $path): bool
     {
+        if ($this->user->isAdmin()) {
+            return true;
+        }
 
         if (in_array($path, $this->acl["path"]["deny"])) {
             return false;
         }
 
-        return in_array($path, $this->acl["path"]["allow"]);
+        return (bool) in_array($path, $this->acl["path"]["allow"]);
     }
 
     public function createMail()

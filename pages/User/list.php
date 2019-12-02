@@ -7,17 +7,11 @@ class User_list extends App\Page
 {
     public function get()
     {
-
-
-        // outp(App\User::find());
-
         $rt = $this->createRT2([$this, "ds"]);
-
         //$rt->selectable = true;
         $rt->addView();
         $rt->addEdit();
         $rt->addDel();
-
         $rt->add("Username", "username")->ss();
         //$rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::Query());
         /*function ($obj) {
@@ -62,8 +56,6 @@ class User_list extends App\Page
                 "format" => "tick"
             ]
         ];
-
-
         //        $rt->key("user_id");
         $rt->add("usergroup_id", function ($obj) {
             return $obj->UserGroup()->implode(",");
@@ -72,12 +64,8 @@ class User_list extends App\Page
         });
         //$rt->add("isonline", "isOnline()")->format("tick");
         //$rt->add("username", "username")->alink("v");
-
         if ($t >= 0) $w[] = ["status=:status1", ["status1" => $t]];
-
         $rt->source = App\User::Query()->where($w);
-
-
         return $rt;
     }
 

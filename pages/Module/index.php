@@ -19,7 +19,7 @@ class Module_index extends ALT\Page
             $a = $li->a;
             $a->i->class($module->icon);
             $a->class("nav-link");
-            $a->text($module->name);
+            $a->text(" " . $module->name);
             $a->href("Module?page=" . $module->name);
 
 
@@ -33,9 +33,8 @@ class Module_index extends ALT\Page
         $this->data["left_box"] = $card;
 
 
-        /*
         if ($page) {
-            $m = Module::_($page);
+            $m = $this->app->module($page);
 
             $e = $this->createV($m);
             $e->header("Details");
@@ -88,9 +87,7 @@ class Module_index extends ALT\Page
                     $t1[] = $t;
                 }
             } catch (exception $e) { }
-            $tpl->assign("content", implode("", $t1));
+            $this->data["content"] = implode("", $t1);
         }
-
-        */
     }
 }

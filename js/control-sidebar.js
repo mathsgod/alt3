@@ -41,6 +41,7 @@
         '<h5>Customize</h5><hr class="mb-2"/>'
     );
 
+    /*
     var $no_border_checkbox = $('<input />', {
         type: 'checkbox',
         value: 1,
@@ -53,8 +54,11 @@
             $('.main-header').removeClass('border-bottom-0');
         }
     });
+    
     var $no_border_container = $('<div />', { 'class': 'mb-1' }).append($no_border_checkbox).append('<span>No Navbar border</span>');
     $container.append($no_border_container);
+
+    */
 
     var $text_sm_body_checkbox = $('<input />', {
         type: 'checkbox',
@@ -64,12 +68,17 @@
     }).on('click', function () {
         if ($(this).is(':checked')) {
             $('body').addClass('text-sm');
+
+            api.bodyAddClass("text-sm");
         } else {
             $('body').removeClass('text-sm');
+
+            api.bodyRemoveClass("text-sm");
         }
     });
     var $text_sm_body_container = $('<div />', { 'class': 'mb-1' }).append($text_sm_body_checkbox).append('<span>Body small text</span>');
     $container.append($text_sm_body_container);
+    /*
 
     var $text_sm_header_checkbox = $('<input />', {
         type: 'checkbox',
@@ -86,7 +95,7 @@
     var $text_sm_header_container = $('<div />', { 'class': 'mb-1' }).append($text_sm_header_checkbox).append('<span>Navbar small text</span>');
     $container.append($text_sm_header_container);
 
-    var $text_sm_sidebar_checkbox = $('<input />', {
+   /* var $text_sm_sidebar_checkbox = $('<input />', {
         type: 'checkbox',
         value: 1,
         checked: $('.nav-sidebar').hasClass('text-sm'),
@@ -99,8 +108,9 @@
         }
     })
     var $text_sm_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($text_sm_sidebar_checkbox).append('<span>Sidebar nav small text</span>');
-    $container.append($text_sm_sidebar_container);
+    $container.append($text_sm_sidebar_container);*/
 
+    /*
     var $text_sm_footer_checkbox = $('<input />', {
         type: 'checkbox',
         value: 1,
@@ -115,6 +125,7 @@
     })
     var $text_sm_footer_container = $('<div />', { 'class': 'mb-1' }).append($text_sm_footer_checkbox).append('<span>Footer small text</span>');
     $container.append($text_sm_footer_container);
+    
 
     var $flat_sidebar_checkbox = $('<input />', {
         type: 'checkbox',
@@ -205,7 +216,7 @@
     })
     var $text_sm_brand_container = $('<div />', { 'class': 'mb-4' }).append($text_sm_brand_checkbox).append('<span>Brand small text</span>')
     $container.append($text_sm_brand_container);
-
+*/
     $container.append('<h6>Navbar Variants</h6>');
 
     var $navbar_variants = $('<div />', {
@@ -316,22 +327,22 @@
         'sidebar-light-olive'
     ];
 
-    $container.append('<h6>Accent Color Variants</h6>')
-    var $accent_variants = $('<div />', {
-        'class': 'd-flex'
-    });
-    $container.append($accent_variants)
-    $container.append(createSkinBlock(accent_colors, function () {
-        var color = $(this).data('color');
-        var accent_class = color;
-        var $body = $('body');
-        accent_colors.map(function (skin) {
-            $body.removeClass(skin);
+    /*    $container.append('<h6>Accent Color Variants</h6>')
+        var $accent_variants = $('<div />', {
+            'class': 'd-flex'
         });
-
-        $body.addClass(accent_class);
-    }));
-
+        $container.append($accent_variants)
+        $container.append(createSkinBlock(accent_colors, function () {
+            var color = $(this).data('color');
+            var accent_class = color;
+            var $body = $('body');
+            accent_colors.map(function (skin) {
+                $body.removeClass(skin);
+            });
+    
+            $body.addClass(accent_class);
+        }));
+    */
     $container.append('<h6>Dark Sidebar Variants</h6>');
     var $sidebar_variants = $('<div />', {
         'class': 'd-flex'
@@ -381,28 +392,28 @@
     }));
 
     var logo_skins = navbar_all_colors;
-    $container.append('<h6>Brand Logo Variants</h6>')
-    var $logo_variants = $('<div />', {
-        'class': 'd-flex'
-    });
-    $container.append($logo_variants);
-    var $clear_btn = $('<a />', {
-        href: 'javascript:void(0)'
-    }).text('clear').on('click', function () {
-        var $logo = $('.brand-link');
-        logo_skins.map(function (skin) {
-            $logo.removeClass(skin);
+    /*    $container.append('<h6>Brand Logo Variants</h6>')
+        var $logo_variants = $('<div />', {
+            'class': 'd-flex'
         });
-    });
-    $container.append(createSkinBlock(logo_skins, function () {
-        var color = $(this).data('color');
-        var $logo = $('.brand-link');
-        logo_skins.map(function (skin) {
-            $logo.removeClass(skin);
+        $container.append($logo_variants);
+        var $clear_btn = $('<a />', {
+            href: 'javascript:void(0)'
+        }).text('clear').on('click', function () {
+            var $logo = $('.brand-link');
+            logo_skins.map(function (skin) {
+                $logo.removeClass(skin);
+            });
         });
-        $logo.addClass(color);
-    }).append($clear_btn));
-
+        $container.append(createSkinBlock(logo_skins, function () {
+            var color = $(this).data('color');
+            var $logo = $('.brand-link');
+            logo_skins.map(function (skin) {
+                $logo.removeClass(skin);
+            });
+            $logo.addClass(color);
+        }).append($clear_btn));
+    */
     function createSkinBlock(colors, callback) {
         var $block = $('<div />', {
             'class': 'd-flex flex-wrap mb-3'

@@ -304,4 +304,9 @@ class Page extends \R\Page
             return $this->response;
         }
     }
+
+    public function createDataTable($objects): UI\DataTables
+    {
+        return new UI\DataTables($objects, $this);
+    }
 }

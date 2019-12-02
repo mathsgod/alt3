@@ -16,6 +16,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{composer_base}}/vendor/fortawesome/font-awesome/css/all.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{system_base}}/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+
     <!-- Theme style -->
     <link rel="stylesheet" href="{{system_base}}/adminlte/dist/css/adminlte.min.css">
 
@@ -63,6 +67,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootstrap 4 -->
     <script src="{{system_base}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- DataTables -->
+    <script src="{{system_base}}/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="{{system_base}}/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
     <!-- Select2 -->
     <link rel="stylesheet" href="{{system_base}}/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{system_base}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -97,9 +105,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="{{system_base}}/dist/confirm.js" defer></script>
 
-
-
-
     <!-- plugins -->
     {% for plugin in plugins %}
     {% for js in plugin.setting.js %}
@@ -113,10 +118,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     {% endfor %}
 
-
+    <script src="{{system_base}}/src/api.js" defer></script>
 </head>
 
-<body class="hold-transition sidebar-mini  sidebar-open  text-sm layout-fixed layout-footer-fixed">
+{% set body = app.user.style.body|join(' ') %}
+<body class="hold-transition sidebar-mini sidebar-open layout-fixed layout-footer-fixed {{body}}">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -299,7 +305,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false" id="nav-sidebar">
+                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column nav-child-indent nav-compact" data-widget="treeview" role="menu" data-accordion="false" id="nav-sidebar">
 
 
                         <li class="nav-item has-treeview">

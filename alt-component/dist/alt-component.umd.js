@@ -6439,6 +6439,38 @@ var Ace_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Ace = (Ace_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datatables.vue?vue&type=template&id=84938ff4&
+var Datatablesvue_type_template_id_84938ff4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"table table-hover table-sm table-bordered"},[_vm._t("default")],2)}
+var Datatablesvue_type_template_id_84938ff4_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Datatables.vue?vue&type=template&id=84938ff4&
+
+// EXTERNAL MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datatables.vue?vue&type=script&lang=js&
+var Datatablesvue_type_script_lang_js_ = __webpack_require__("ffaa");
+
+// CONCATENATED MODULE: ./src/Datatables.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Datatablesvue_type_script_lang_js_ = (Datatablesvue_type_script_lang_js_["a" /* default */]); 
+// CONCATENATED MODULE: ./src/Datatables.vue
+
+
+
+
+
+/* normalize component */
+
+var Datatables_component = Object(componentNormalizer["a" /* default */])(
+  src_Datatablesvue_type_script_lang_js_,
+  Datatablesvue_type_template_id_84938ff4_render,
+  Datatablesvue_type_template_id_84938ff4_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var Datatables = (Datatables_component.exports);
 // CONCATENATED MODULE: ./src/main.js
 
 
@@ -6461,6 +6493,8 @@ main_default()("date", src_Date);
 main_default()("select2", Select2);
 
 main_default()("ace", Ace);
+
+main_default()("alt-datatables", Datatables);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 
@@ -10961,6 +10995,219 @@ module.exports = {
   TouchList: 0
 };
 
+
+/***/ }),
+
+/***/ "ffaa":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var core_js_modules_es_array_find__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("7db0");
+/* harmony import */ var core_js_modules_es_array_find__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("4160");
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_array_some__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("45fc");
+/* harmony import */ var core_js_modules_es_array_some__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_some__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("ac1f");
+/* harmony import */ var core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_string_search__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("841c");
+/* harmony import */ var core_js_modules_es_string_search__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_search__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("159b");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var C_Users_maths_Desktop_web_alt3_alt_component_node_modules_babel_runtime_corejs3_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("bf2d");
+
+
+
+
+
+
+
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["a"] = ({
+  name: "alt-datatables",
+  data: function data() {
+    return {
+      table: null,
+      columns: [],
+      searchColumns: []
+    };
+  },
+  props: {
+    buttons: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    }
+  },
+  mounted: function mounted() {
+    //if(this.$attrs["data-columns"]){
+    //}
+    this.columns = JSON.parse(this.$attrs["data-columns"]);
+    this.initTable();
+  },
+  methods: {
+    initTable: function initTable() {
+      var _this = this;
+
+      var buttons = [];
+      this.buttons.forEach(function (o) {
+        if (Object(C_Users_maths_Desktop_web_alt3_alt_component_node_modules_babel_runtime_corejs3_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"])(o) == "object") {
+          eval("o.action=" + o.action + ";");
+        }
+
+        buttons.push(o);
+      });
+      this.table = $(this.$el).DataTable({
+        buttons: buttons
+      });
+
+      if (this.$attrs["data-server-side"] == "true") {
+        this.table.button().add(0, {
+          action: function action(e, dt, button, config) {
+            dt.ajax.reload();
+          },
+          text: '<i class="fa fa-sync-alt"></i> Reload'
+        });
+      }
+      /*
+                this.table.button().add(1, {
+                    action: function (e, dt, button, config) {
+                        //dt.ajax.reload();
+                        dt.destroy();
+                        this.initTable();
+                    }.bind(this),
+                    text: '<i class="fa fa-sync-alt"></i> Responsive'
+                });*/
+
+
+      this.table.on("responsive-resize", function (e, datatable, columns) {
+        this.searchColumns.forEach(function (c, i) {
+          if (datatable.columns().responsiveHidden()[i]) {
+            c.show();
+          } else {
+            c.hide();
+          }
+        });
+      }.bind(this));
+      /*this.table.on("preXhr.dt",()=>{
+                    $(this.$el).closest('.box').data("box").showLoading()
+                });
+                      this.table.on("xhr.dt",()=>{
+                    $(this.$el).closest('.box').data("box").hideLoading()
+                });*/
+
+      /*var thead = $("<thead>");
+                var tr = $("<tr class='search-row'>").appendTo(thead);
+                $(this.$el).find("thead").after(thead);*/
+
+      if (this.isSearchable()) {
+        var thead = $("<thead>");
+        var tr = $("<tr role='row' class='search-row'>").appendTo(thead);
+        $(this.$el).find("thead").after(thead);
+        this.columns.forEach(function (o, i) {
+          var td = $("<td>");
+
+          _this.searchColumns.push(td);
+
+          td.appendTo(tr);
+
+          var column = _this.table.columns(i);
+
+          if (!o.searchable) return;
+
+          if (o.searchType == "select2") {
+            var search = $("<select class='form-control input-sm'>");
+            var opt = $("<option>");
+            search.append(opt);
+            o.searchOption.forEach(function (o) {
+              var opt = $("<option>");
+              opt.text(o.label);
+              opt.val(o.value);
+              search.append(opt);
+            });
+            search.on("change", function () {
+              column.search(search.val()).draw();
+            });
+            td.append(search);
+            search.select2({});
+          } else if (o.searchType == "text") {
+            var search = $("<input class='form-control input-sm'>");
+            td.append(search);
+            search.keyup(function (e) {
+              var code = e.keyCode ? e.keyCode : e.which;
+
+              if (code == 13) {
+                _this.table.columns(i).search(search.val()).draw();
+              }
+            });
+          } else if (o.searchType == "select") {
+            var search = $("<select class='form-control input-sm'>");
+            var opt = $("<option>");
+            search.append(opt);
+            o.searchOption.forEach(function (o) {
+              var opt = $("<option>");
+              opt.text(o.label);
+              opt.val(o.value);
+              search.append(opt);
+            });
+            search.on("change", function () {
+              column.search(search.val()).draw();
+            });
+            td.append(search);
+          } else if (o.searchType == "date") {
+            var search = $('<input class="form-control input-sm" value="" />');
+            search.daterangepicker({
+              //singleDatePicker: true,
+              opens: "center",
+              showDropdowns: true,
+              //"autoApply": true,
+              autoUpdateInput: false,
+              locale: {
+                format: "YYYY-MM-DD",
+                cancelLabel: "Clear"
+              },
+              ranges: {
+                Today: [moment(), moment()],
+                Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                "Last 7 Days": [moment().subtract(6, "days"), moment()],
+                "Last 30 Days": [moment().subtract(29, "days"), moment()],
+                "This Month": [moment().startOf("month"), moment().endOf("month")],
+                "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+              }
+            });
+            search.on("apply.daterangepicker", function (ev, picker) {
+              if (picker.startDate.format("YYYY-MM-DD") == picker.endDate.format("YYYY-MM-DD")) {
+                search.val(picker.startDate.format("YYYY-MM-DD"));
+              } else {
+                search.val(picker.startDate.format("YYYY-MM-DD") + " to " + picker.endDate.format("YYYY-MM-DD"));
+              }
+
+              var s = {};
+              s.from = picker.startDate.format("YYYY-MM-DD");
+              s.to = picker.endDate.format("YYYY-MM-DD");
+              column.search(JSON.stringify(s)).draw();
+            });
+            search.on("cancel.daterangepicker", function (ev, picker) {
+              search.val("");
+              column.search("").draw();
+            });
+            td.append(search);
+          }
+        });
+      }
+    },
+    isSearchable: function isSearchable() {
+      return this.columns.some(function (c) {
+        return c.searchable;
+      });
+    }
+  }
+});
 
 /***/ })
 

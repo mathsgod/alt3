@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Model extends Core\Model
+abstract class Model extends Core\Model
 {
     use ModelTrait;
 }

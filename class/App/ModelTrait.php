@@ -5,7 +5,7 @@ namespace App;
 trait ModelTrait
 {
     public static $_app;
-    public function canRead()
+    public function canRead(): bool
     {
         if (self::$_app->user->isAdmin()) {
             return true;
@@ -30,7 +30,7 @@ trait ModelTrait
         return false;
     }
 
-    public function canUpdate()
+    public function canUpdate(): bool
     {
         if (self::$_app->user->isAdmin()) {
             return true;
@@ -55,7 +55,7 @@ trait ModelTrait
         return false;
     }
 
-    public function canDelete()
+    public function canDelete(): bool
     {
         if (self::$_app->user->isAdmin()) {
             return true;

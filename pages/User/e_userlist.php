@@ -23,7 +23,7 @@ class User_e_userlist extends ALT\Page
             $o->save();
         }
         $this->app->alert->success("User updated");
-        $this->_redirect($obj->uri("v"));
+        $this->redirect($obj->uri("v"));
     }
 
     public function get()

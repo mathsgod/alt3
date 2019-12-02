@@ -28,3 +28,6 @@ VueRegisterElement("select2", select2);
 
 import ace from "./Ace";
 VueRegisterElement("ace", ace);
+
+import Datatables from "./Datatables";
+VueRegisterElement("alt-datatables", Datatables);
