@@ -7,16 +7,77 @@ trait ModelTrait
     public static $_app;
     public function canRead()
     {
-        return true;
+        if (self::$_app->user->isAdmin()) {
+            return true;
+        }
+
+        $deny = self::$_app->acl["action"]["deny"];
+        if ($deny[get_class($this)]["FC"]) {
+            return false;
+        }
+        if ($deny[get_class($this)]["R"]) {
+            return false;
+        }
+
+        $allow = self::$_app->acl["action"]["allow"];
+        if ($allow[get_class($this)]["FC"]) {
+            return true;
+        }
+        if ($allow[get_class($this)]["R"]) {
+            return true;
+        }
+
+        return false;
     }
+
     public function canUpdate()
     {
-        return true;
+        if (self::$_app->user->isAdmin()) {
+            return true;
+        }
+
+        $deny = self::$_app->acl["action"]["deny"];
+        if ($deny[get_class($this)]["FC"]) {
+            return false;
+        }
+        if ($deny[get_class($this)]["U"]) {
+            return false;
+        }
+
+        $allow = self::$_app->acl["action"]["allow"];
+        if ($allow[get_class($this)]["FC"]) {
+            return true;
+        }
+        if ($allow[get_class($this)]["U"]) {
+            return true;
+        }
+
+        return false;
     }
 
     public function canDelete()
     {
-        return true;
+        if (self::$_app->user->isAdmin()) {
+            return true;
+        }
+
+        $deny = self::$_app->acl["action"]["deny"];
+        if ($deny[get_class($this)]["FC"]) {
+            return false;
+        }
+        if ($deny[get_class($this)]["D"]) {
+            return false;
+        }
+
+        $allow = self::$_app->acl["action"]["allow"];
+        if ($allow[get_class($this)]["FC"]) {
+            return true;
+        }
+        if ($allow[get_class($this)]["D"]) {
+            return true;
+        }
+
+        return false;
     }
 
     public function id()

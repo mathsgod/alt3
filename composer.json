@@ -39,7 +39,8 @@
         "mathsgod/hl-holiday": "^1.2",
         "mathsgod/hl-weather": "^2.0",
         "mathsgod/r-translate": "^1.0",
-        "mathsgod/gql-php-generator": "^1.0"
+        "mathsgod/gql-php-generator": "^1.0",
+        "mathsgod/r-webauthn": "^1.0"
     },
     "require-dev": {
         "box/spout": "^2.7",

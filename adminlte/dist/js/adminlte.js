@@ -570,13 +570,10 @@
 
         if (this._options.autoCollapseSize) {
           if ($(window).width() <= this._options.autoCollapseSize) {
-            if (!$(Selector.BODY).hasClass(ClassName.OPEN)) {
-              this.collapse();
-            }
+            this.collapse();
+            //$(Selector.BODY).removeClass(ClassName.OPEN);
           } else if (resize == true) {
-            if ($(Selector.BODY).hasClass(ClassName.OPEN)) {
-              $(Selector.BODY).removeClass(ClassName.OPEN);
-            }
+            $(Selector.BODY).removeClass(ClassName.COLLAPSED);
           }
         }
       };

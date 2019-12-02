@@ -96,8 +96,9 @@ class ACL extends Model
             if ($user->isUser()) {
                 $result = self::$_app->config["system"]["user_default_acl"];
 
+                list($module_name,) = explode("/", $path, 1);
                 //if module is system, set false
-                $module = Module::ByPath($path);
+                $module = Module::_($module_name);
                 if (startsWith($module->class, "App")) {
                     $result = false;
                 }

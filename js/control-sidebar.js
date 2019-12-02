@@ -215,19 +215,33 @@
     var $navbar_variants_colors = createSkinBlock(navbar_all_colors, function (e) {
         var color = $(this).data('color');
         var $main_header = $('.main-header');
-        $main_header.removeClass('navbar-dark').removeClass('navbar-light')
+        $main_header.removeClass('navbar-dark').removeClass('navbar-light');
         navbar_all_colors.map(function (color) {
             $main_header.removeClass(color);
-        })
+        });
+
+        var c = "";
 
         if (navbar_dark_skins.indexOf(color) > -1) {
             $main_header.addClass('navbar-dark');
+            c = "navbar-dark";
         } else {
             $main_header.addClass('navbar-light');
+            c = "navbar-light";
         }
 
         $main_header.addClass(color);
-    })
+
+        c += " " + color;
+
+        window.Vue.gql.mutation("api", {
+            mainHeader: {
+                __args: {
+                    class: c
+                }
+            }
+        });
+    });
 
     $navbar_variants.append($navbar_variants_colors);
 
@@ -313,12 +327,12 @@
         var $body = $('body');
         accent_colors.map(function (skin) {
             $body.removeClass(skin);
-        })
+        });
 
         $body.addClass(accent_class);
-    }))
+    }));
 
-    $container.append('<h6>Dark Sidebar Variants</h6>')
+    $container.append('<h6>Dark Sidebar Variants</h6>');
     var $sidebar_variants = $('<div />', {
         'class': 'd-flex'
     });
@@ -331,10 +345,18 @@
             $sidebar.removeClass(skin);
         });
 
-        $sidebar.addClass(sidebar_class)
+        $sidebar.addClass(sidebar_class);
+
+        Vue.gql.mutation("api", {
+            sidebar: {
+                __args: {
+                    class: sidebar_class
+                }
+            }
+        });
     }));
 
-    $container.append('<h6>Light Sidebar Variants</h6>')
+    $container.append('<h6>Light Sidebar Variants</h6>');
     var $sidebar_variants = $('<div />', {
         'class': 'd-flex'
     });
@@ -348,6 +370,14 @@
         });
 
         $sidebar.addClass(sidebar_class);
+
+        Vue.gql.mutation("api", {
+            sidebar: {
+                __args: {
+                    class: sidebar_class
+                }
+            }
+        });
     }));
 
     var logo_skins = navbar_all_colors;

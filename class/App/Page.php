@@ -53,7 +53,7 @@ class Page extends \R\Page
         }
     }
 
-    public function module(): Module
+    public function module()
     {
         $route = $this->request->getAttribute("route");
         $ps = explode("/", $route->path);
@@ -236,6 +236,13 @@ class Page extends \R\Page
     {
         $obj = $this->object();
         $id = $obj->id();
+
+        if ($id) { //update
+            if (!$obj->canUpdate()) {
+                throw new Exception("access deny");
+            }
+        }
+
         $data = $this->request->getParsedBody();
         $params = $this->request->getQueryParams();
 

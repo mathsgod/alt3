@@ -2,20 +2,21 @@ directive @hasRole on FIELD_DEFINITION
 scalar JSON
 
 type Mutation{
-    me:Me
     login(username:String!,password:String!,code:String):Me
+    loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
     forgotPassword(username:String!,email:String!):Boolean
-    updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Administrators,Users])
-    resetPassword(new_password:String!):Boolean @hasRole(role:[Administrators,Users])
-    updateFavoriteSequence(id:[Int!]!):Boolean @hasRole(role:[Administrators,Users])
-    addFavorite(label:String!,link:String):Boolean @hasRole(role:[Administrators,Users])
+    updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Administrators,Power Users,Users])
+    resetPassword(new_password:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    updateFavoriteSequence(id:[Int!]!):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    addFavorite(label:String!,link:String):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    mainHeader(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    sidebar(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
 }
 
 type Query{
     me:Me
     credentialRequestOptions(username:String!):String
-    loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
     UserGroups:[UserGroup]
     

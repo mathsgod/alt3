@@ -1,0 +1,11 @@
+Path:
+  access_deny: [Users,Power Users]
+  Dashboard: [Users,Power Users]
+  Dashboard/index: [Users,Power Users]
+  User/profile: [Users,Power Users]
+  User/myfav: [Users,Power Users]
+  User/profile: [Users,Power Users]
+  User/2step: [Users,Power Users]
+  User/2step_whitelist: [Users,Power Users]
+  User/list: [Power Users]
+  

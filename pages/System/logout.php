@@ -1,7 +1,8 @@
 <?php
+
 use App\UserLog;
 
-class System_logout extends App\Page
+class System_logout extends R\Page
 {
     public function get()
     {
@@ -24,7 +25,8 @@ class System_logout extends App\Page
         }
 
         $_SESSION["app"] = [];
-        $this->redirect("index");
 
+        $pi = $this->app->pathinfo();
+        header("location: " . $pi["system_base"]);
     }
 }

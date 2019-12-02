@@ -5,45 +5,56 @@ var vm = new Vue({
     data: {
         username: "",
         password: "",
-        code: "",
         message: "Sign in to start your session",
         error: false
     },
     async created() {
         if ('credentials' in navigator) {
-            if (localStorage.getItem("app.fido2")) {
-                var username = localStorage.getItem("app.fido2");
-                let resp = this.$gql.query("api", {
+            let username = localStorage.getItem("app.fido2");
+            if (username) {
+                let resp = (await this.$gql.query("api", {
                     credentialRequestOptions: {
                         __args: {
                             username
                         }
                     }
-                });
-                resp = resp.data;
+                })).data;
 
-                var a = new WebAuthn();
-                a.authenticate(resp.data.data.credentialRequestOptions).then(info => {
-                    this.$gql.query("api", {
-                        loginWebAuthn: {
-                            __args: {
-                                username: username,
-                                assertion: JSON.stringify(info)
-                            }
+                if (resp.error) {
+                    return;
+                }
+
+                var a = new WebAuthn.WebAuthn();
+                let info;
+                try {
+                    info = await a.authenticate(resp.data.credentialRequestOptions);
+                } catch (e) {
+                    console.log(e.message);
+                    return;
+                }
+
+                resp = (await this.$gql.query("api", {
+                    loginWebAuthn: {
+                        __args: {
+                            username: username,
+                            assertion: JSON.stringify(info)
                         }
-                    }).then(resp => {
-                        if (resp.data.data.loginWebAuthn) {
-                            window.self.location.reload();
-                        } else {
-                            bootbox.alert("login error");
-                        }
-                    });
-                }).catch(resp => {
-                    this.passwordLogin();
-                });
-            } else {
-                this.passwordLogin();
+                    }
+                })).data;
+
+                if (resp.error) {
+                    alert(resp.error.messsage);
+                    return;
+                }
+
+                if (resp.data.loginWebAuthn) {
+                    window.self.location.reload();
+                } else {
+                    bootbox.alert("login error");
+                }
+                return;
             }
+            this.passwordLogin();
         }
     }, mounted() {
         if (localStorage.getItem("app.username")) {
@@ -52,22 +63,21 @@ var vm = new Vue({
         }
     },
     methods: {
-        passwordLogin() {
-            navigator.credentials.get({
+        async passwordLogin() {
+            var creds = await navigator.credentials.get({
                 password: true
-            }).then(creds => {
-                if (creds) {
-                    //Do something with the credentials.
-                    this.login(creds.id, creds.password);
-                }
             });
-        }, async login(username, password, code) {
+            if (creds) {
+                //Do something with the credentials.
+                this.login(creds.id, creds.password);
+            }
+        }, async login(username, password, code = "") {
             let resp = await this.$gql.mutation("api", {
                 login: {
                     __args: {
                         username: username,
                         password: password,
-                        code: code ? code : ""
+                        code: code
                     },
                     username: true
                 }
@@ -78,7 +88,7 @@ var vm = new Vue({
                 if (resp.error.message == "2-step verification") {
                     bootbox.prompt("Please input 2-step verification code", result => {
                         if (result) {
-                            this.login(username, password.code);
+                            this.login(username, password, result);
                         }
 
                     });
@@ -87,6 +97,7 @@ var vm = new Vue({
                 }
                 return;
             }
+
             if (resp.data.login) {
                 if (this.$refs.remember.checked) {
                     localStorage.setItem("app.username", username);
@@ -101,6 +112,7 @@ var vm = new Vue({
                     window.self.location.reload();
                 }
             }
+
         }, signIn() {
             if (this.username == "") {
                 this.error = true;

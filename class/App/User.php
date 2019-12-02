@@ -6,6 +6,18 @@ class User extends Core\User
 {
     use ModelTrait;
 
+    public function canUpdate(): bool
+    {
+        $user = self::$_app->user;
+        if ($user->user_id == $this->user_id) {
+            return true;
+        }
+        if ($user->isAdmin()) {
+            return true;
+        }
+        return false;
+    }
+
     public function createUserLog(string $result = null)
     {
         $r["user_id"] = $this->user_id;
@@ -32,6 +44,9 @@ class User extends Core\User
     {
         $this->update(["last_online" => date("Y-m-d H:i:s")]);
     }
+
+    public function offline()
+    { }
 
     public function isOnline(): bool
     {

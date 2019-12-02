@@ -4,6 +4,10 @@ icon: fa fa-user fa-fw
 group: System
 
 menu:
+  Profile:
+    icon: fa fa-fw fa-id-card
+    link: User/profile
   My favoriate:
     icon: fa fa-heart fa-fw
     link: User/myfav
+  

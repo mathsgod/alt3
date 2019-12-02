@@ -26,17 +26,6 @@ class Query
         return $weba->prepare_for_login($credential);
     }
 
-    public function loginWebAuthn($root, $args, $context)
-    {
-        try {
-            $context->loginFido2($args["username"], $args["assertion"]);
-            return true;
-        } catch (Exception $e) {
-            throw new Error($e->getMessage());
-        }
-        return false;
-    }
-
     public function UserGroup($root, $args, $context)
     {
 

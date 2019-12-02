@@ -87,7 +87,16 @@ class MasterPage extends \R\Page
                     $sidebar_menu[] = $menu;
                 } else {
                     $module = $modules;
-                    $links = $module->getMenuLink($path);
+                    $links = [];
+
+                    foreach ($module->getMenuLink($path) as $link) {
+                        if ($this->app->acl($link["link"])) {
+                            $links[] = $link;
+                        }
+                    }
+
+
+
                     if (!sizeof($links)) {
                         continue;
                     }

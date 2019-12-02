@@ -43,13 +43,53 @@ class App extends \R\App
         //user
         if (!$_SESSION["app"]["user"]) {
             $_SESSION["app"]["user"] = new User(2);
+        } else {
+            $this->user = new User($_SESSION["app"]["user"]->user_id);
         }
-        $this->user = $_SESSION["app"]["user"];
+
         $this->user_id = $this->user->user_id;
     }
 
     public function run()
     {
+        $ugs = [];
+        foreach ($this->user->UserGroup() as $ug) {
+            $ugs[] = (string) $ug;
+        }
+
+        $acl = Yaml::parseFile(dirname(__DIR__, 2) . "/acl.yml");
+        foreach ($acl["Path"] as $path => $usergroups) {
+            if (array_intersect($ugs, $usergroups)) {
+                $this->acl["path"]["allow"][] = $path;
+            }
+        }
+
+
+        $w = [];
+        $u[] = "user_id=" . $this->user->user_id;
+        foreach ($this->user->UserGroup() as $ug) {
+            $u[] = "usergroup_id=$ug->usergroup_id";
+        }
+        $w[] = implode(" or ", $u);
+        $query = ACL::Query()->where($w);
+        foreach ($query as $acl) {
+            if ($acl->action) {
+                if ($acl->value == "allow") {
+                    $this->acl["action"]["allow"][$acl->module][] = $acl->action;
+                } else {
+                    $this->acl["action"]["deny"][$acl->module][] = $acl->action;
+                }
+            } elseif ($acl->path) {
+                if ($acl->value == "allow") {
+                    $this->acl["path"]["allow"][] = $acl->module . "/" . $acl->path;
+                } elseif ($acl->value == "deny") {
+                    $this->acl["path"]["deny"][] = $acl->module . "/" . $acl->path;
+                }
+            }
+        }
+
+        ///-------------
+
         $this->alert = new Alert();
 
         $request = $this->request;
@@ -78,7 +118,6 @@ class App extends \R\App
                 break;
             }
         }
-
 
         $class = $route->class;
         $page = new $class($this);
@@ -173,17 +212,12 @@ class App extends \R\App
         }
 
         $_SESSION["app"]["user_id"] = $user->user_id;
-
         $_SESSION["app"]["user"] = $user;
-
         $_SESSION["app"]["login"] = true;
-
         $user->createUserLog("SUCCESS");
-
         $user->online();
 
         AuthLock::Clear();
-
         $this->user = $user;
         $this->user_id = $user->user_id;
 
@@ -319,45 +353,12 @@ class App extends \R\App
 
     public function acl(string $path): bool
     {
-        $user = $this->user;
-        $raw_path = $path;
-        $p = parse_url($path);
-        $path = $p["path"];
 
-        if ($p["scheme"]) { //external
-            return true;
+        if (in_array($path, $this->acl["path"]["deny"])) {
+            return false;
         }
 
-        if ($path[0] == "/") { //absolute path
-
-            $result = $user->isAdmin();
-
-            $ugs = $user->UserGroup();
-
-            $w = [];
-            $w[] = ["path=?", $path];
-
-            $u = [];
-            $u[] = "user_id=" . $user->user_id;
-
-            foreach ($ugs as $ug) {
-                $u[] = "usergroup_id=$ug->usergroup_id";
-            }
-
-            $w[] = implode(" or ", $u);
-            foreach (ACL::Find($w) as $acl) {
-                $v = $acl->value();
-                if ($v == "deny") {
-                    return false;
-                }
-                if ($v == "allow") {
-                    $result = true;
-                }
-            }
-
-            return $result;
-        }
-        return ACL::Allow($path);
+        return in_array($path, $this->acl["path"]["allow"]);
     }
 
     public function createMail()
@@ -438,5 +439,35 @@ class App extends \R\App
         } else {
             $_SESSION["app"]["redirect"] = $path;
         }
+    }
+
+    public function loginFido2(string $username, string  $assertion): bool
+    {
+        $user = User::Query([
+            "username" => $username
+        ])->first();
+
+        if (!$user) {
+            return false;
+        }
+
+        if (!$user->isAllowLogin()) {
+            return false;
+        }
+
+        $assertion = json_decode($assertion);
+        $weba = new \R\WebAuthn($_SERVER["HTTP_HOST"]);
+        if (!$weba->authenticate($assertion, $user->credential)) {
+            return false;
+        }
+
+        $_SESSION["app"]["user_id"] = $user->user_id;
+        $_SESSION["app"]["user"] = $user;
+        $_SESSION["app"]["login"] = true;
+        $user->createUserLog("SUCCESS");
+        $user->online();
+        $this->user = $user;
+
+        return true;
     }
 }

@@ -123,7 +123,7 @@
                         credentialCreationOptions: true
                     }
                 }).then(resp => {
-                    var webn = new WebAuthn();
+                    var webn = new WebAuthn.WebAuthn();
                     webn.register(resp.data.data.me.credentialCreationOptions).then(resp => {
                         this.webAuthnRegister(resp);
                     }).catch(resp => {
@@ -146,7 +146,11 @@
                         }
                     }).then(resp => {
                         localStorage.setItem("app.fido2", resp.data.data.me.username);
-                        alert("Register completed");
+                        Swal.fire({
+                            type: "success",
+                            title: "Register completed"
+                        });
+
                     });
                 });
             }

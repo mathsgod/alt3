@@ -14,11 +14,15 @@ Vue.component("nav-item", {
         </li>
         `,
     props: {
-        menu: Object
+        menu: Object,
+        isRoot: Boolean
     }, mounted() {
 
     }, computed: {
         isActive() {
+            if (this.isRoot && this.menu.active) {
+                return true;
+            }
             if (this.menu.submenu) {
                 return false;
             }
