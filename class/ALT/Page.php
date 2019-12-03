@@ -27,7 +27,9 @@ class Page extends \App\Page
 
         if ($request->isAccept("text/html") && $request->getMethod() == "get") {
             $this->master = new MasterPage($this->app);
-            $this->header->title = $this->module()->name;
+            if ($this->module()) {
+                $this->header->title = $this->module()->name;
+            }
         }
 
         try {
@@ -47,7 +49,7 @@ class Page extends \App\Page
             }
 
             $this->master->data["plugins"] = array_values($this->plugins);
-        
+
             return $this->master->__invoke($request, $response);
         }
         return $response;

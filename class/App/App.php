@@ -18,6 +18,7 @@ class App extends \R\App
     public $user_id;
     public $locale = "zh-hk";
     public $plugins = [];
+    public $setting = [];
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
@@ -56,6 +57,16 @@ class App extends \R\App
 
     public function run()
     {
+        //-- setting
+        $this->setting = Yaml::parseFile(dirname(__DIR__, 2) . "/setting.yml");
+
+
+        //-- Translate
+        $translate = Yaml::parseFile(dirname(__DIR__, 2) . "/translate.yml");
+        $translate = $translate[$this->user->language];
+        $this->translate = $translate;
+
+        //-- ACL
         $this->acl = [];
         $ugs = [];
         foreach ($this->user->UserGroup() as $ug) {
@@ -63,11 +74,22 @@ class App extends \R\App
         }
 
         $acl = Yaml::parseFile(dirname(__DIR__, 2) . "/acl.yml");
-        foreach ($acl["Path"] as $path => $usergroups) {
+        foreach ($acl["path"] as $path => $usergroups) {
             if (array_intersect($ugs, $usergroups)) {
                 $this->acl["path"]["allow"][] = $path;
             }
         }
+
+        foreach ($acl["action"] as $actions) {
+            foreach ($actions as $action => $modules) {
+                foreach ($modules as $module => $usergroups) {
+                    if (array_intersect($ugs, $usergroups)) {
+                        $this->acl["action"]["allow"][$module][] = $action;
+                    }
+                }
+            }
+        }
+
 
 
         $w = [];
@@ -114,7 +136,7 @@ class App extends \R\App
 
         $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
-        //----
+        //---- Module --
         $ps = explode("/", $route->path);
         $ps = array_values(array_filter($ps, "strlen"));
         foreach ($this->modules() as $module) {
@@ -122,6 +144,14 @@ class App extends \R\App
                 $this->module = $module;
                 break;
             }
+        }
+
+        //--- Module Translate 
+        foreach (Translate::Query([
+            "module" => $this->module->name,
+            "language" => $this->user->language
+        ]) as $translate) {
+            $this->translate[$translate->name] = $translate->value;
         }
 
         $class = $route->class;
@@ -253,11 +283,18 @@ class App extends \R\App
                 $o = str_replace("{root}", $root, $o);
             });
 
-            $twig["loader"] = new \Twig_Loader_Filesystem($root);
-            $twig["environment"] = new \Twig_Environment($twig["loader"], $config);
-            $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
 
-            return $twig["environment"]->loadTemplate($template_file);
+            $twig["loader"] = new \Twig\Loader\FilesystemLoader($root);
+            $twig["environment"] = new \Twig\Environment($twig["loader"], $config);
+            $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
+            //$twig["environment"]->addExtension(new TwigI18n());
+
+            $_this = $this;
+            $twig["environment"]->addFilter(new \Twig\TwigFilter('trans', function (string $str) use ($_this) {
+                return $_this->translate($str);
+            }));
+
+            return $twig["environment"]->load($template_file);
         }
     }
 
@@ -353,7 +390,7 @@ class App extends \R\App
 
     public function translate(string $str): string
     {
-        return $str;
+        return $this->translate[$str] ?? $str;
     }
 
     public function acl(string $path): bool
@@ -404,9 +441,8 @@ class App extends \R\App
                 $response = $response->withHeader("content-type", "application/json");
                 $response = $response->withBody(new Stream(json_encode($msg)));
             } else {
-                $q = http_build_query(["q" => $uri]);
                 $response = new Response(403);
-                $response = $response->withHeader("location", $base . "/access_deny?" . $q);
+                $response = $response->withHeader("location", $base . "/access_deny#" . $uri);
             }
         } else {
             $response = new Response(403);

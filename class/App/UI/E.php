@@ -11,10 +11,12 @@ class E extends HTMLDivElement
     public $column_ratio = [2, 10];
     public $content;
     public $contents = [];
+    public $page = null;
 
     public function __construct($object, \App\Page $page)
     {
         parent::__construct();
+        $this->page = $page;
         //$this->setAttribute("is", "alt-e");
         $this->classList->add("form-horizontal");
         $this->object = $object;
@@ -80,12 +82,12 @@ class E extends HTMLDivElement
     {
         $form_group = new FormGroup();
         $form_group->classList->add("row");
-        p($form_group)->append("<label class='col-sm-2 col-form-label'>$label</label>");
+        $label = p("label")->addClass("col-sm-2 col-form-label")->text($this->page->translate($label));
+        p($form_group)->append($label);
 
         $c2 = new Col("div");
         //$form_group->setAttribute("is","bs-form-group");
-        $c2->classList->add('col-sm-10');
-
+        $c2->classList->add('col');
 
         $cell = p("div");
         $cell->appendTo($c2);

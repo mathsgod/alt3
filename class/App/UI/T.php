@@ -28,27 +28,27 @@ class T extends Card
         return $this->table->addCheckbox($index, $callback);
     }
 
-    public function add($label, $getter = null)
+    public function add(string $label, $getter = null): Col
     {
-        return $this->table->add($label, $getter);
+        return $this->table->add($this->page->translate($label), $getter);
     }
 
-    public function addChildRow($label, $getter = null)
+    public function addChildRow(string $label, $getter = null)
     {
-        return $this->table->addChildRow($label, $getter);
+        return $this->table->addChildRow($this->page->translate($label), $getter);
     }
 
-    public function addView()
+    public function addView(): Col
     {
         return $this->table->addView();
     }
 
-    public function addEdit()
+    public function addEdit(): \P\AnchorCollection
     {
         return $this->table->addEdit();
     }
 
-    public function addDel()
+    public function addDel(): Col
     {
         return $this->table->addDel();
     }
@@ -77,7 +77,7 @@ class T extends Card
         return $this;
     }
 
-    public function subHTML($label, $callback, $index)
+    public function subHTML($label, $callback, $index): Col
     {
         $url = $callback[0]->path() . "/" . $callback[1];
         return $this->table->add($label, function ($o) use ($url, $index) {

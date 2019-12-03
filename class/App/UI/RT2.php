@@ -2,6 +2,7 @@
 
 namespace App\UI;
 
+use Closure;
 //class RT extends \RT
 class RT2 extends Element
 {
@@ -59,14 +60,10 @@ class RT2 extends Element
         }
 
         $c->data = str_replace(["(", ")"], "_", $c->data);
-
-
         $this->columns[] = $c;
-
-
-
         return $c;
     }
+
     public function addEdit()
     {
         $c = $this->response->addEdit();
@@ -103,7 +100,6 @@ class RT2 extends Element
 
     public function __toString()
     {
-
         $this->setAttribute(":columns", $this->columns);
         $this->setAttribute(":data", $this->data);
         $this->setAttribute(":ajax", $this->ajax);

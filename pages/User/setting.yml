@@ -7,7 +7,11 @@ menu:
   Profile:
     icon: fa fa-fw fa-id-card
     link: User/profile
-  My favoriate:
+  My favorite:
     icon: fa fa-heart fa-fw
     link: User/myfav
   
+translate:
+  zh-hk:
+    First name: 名字
+    Last name: 姓氏

@@ -19,7 +19,7 @@ class Page extends \R\Page
 
     public function translate(string $str): string
     {
-        return $str;
+        return $this->module()->translate($str);
     }
 
     public function object()
@@ -27,7 +27,6 @@ class Page extends \R\Page
         if ($this->_object) {
             return $this->_object;
         }
-
 
         $class = "\\" . $this->module()->class;
 

@@ -30,7 +30,8 @@ class Navbar extends \P\HTMLElement
     public function addButton(string $label, $uri = null): \App\UI\A
     {
         $a = new \App\UI\A();
-        $a->classList->add("btn-primary");
+        $a->classList->add("btn-info");
+        $a->classList->add("btn-sm");
         $a->classList->add("m-1");
         $a->classList->add("navbar-btn");
 

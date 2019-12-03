@@ -119,18 +119,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {% endfor %}
 
     <script src="{{system_base}}/src/api.js" defer></script>
+
+    <script src="{{system_base}}/js/sidebar.js" defer></script>
+    <script src="{{system_base}}/js/control-sidebar.js" defer></script>
+
+    <!-- overlayScrollbars -->
+    <script src="{{system_base}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js" defer></script>
+
+    <!-- AdminLTE App -->
+    <script src="{{system_base}}/adminlte/dist/js/adminlte.js" defer></script>
+
+    <!-- Bootbox -->
+    <script src="{{system_base}}/plugins/bootbox/bootbox.all.min.js" defer></script>
+
+    <script src="{{system_base}}/plugins/fancybox/jquery.fancybox.min.js" defer></script>
+
+    <!-- Vue dialog -->
+    <script src="{{system_base}}/src/vue.dialog.js" defer></script>
+
+    <!-- SweetAlert2 -->
+    <script src="{{system_base}}/plugins/sweetalert2/sweetalert2.min.js" defer></script>
+
 </head>
 
 {% set body = app.user.style.body|join(' ') %}
+
 <body class="hold-transition sidebar-mini sidebar-open layout-fixed layout-footer-fixed {{body}}">
     <div class="wrapper">
 
         <!-- Navbar -->
-        {% set header = app.user.style.header %}
-        {% if not header %}
-        {% set header = 'navbar-dark navbar-info' %}
+        {% set mainheader = app.user.style.header %}
+        {% if not mainheader %}
+        {% set mainheader = 'navbar-dark navbar-info' %}
         {% endif %}
-        <nav class="main-header navbar navbar-expand {{header}}">
+        <nav class="main-header navbar navbar-expand {{mainheader}}">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -165,8 +187,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        <!-- span class="badge badge-danger navbar-badge">3</span -->
                     </a>
+                    {#
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
@@ -218,6 +241,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                     </div>
+                    #}
                 </li>
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
@@ -253,16 +277,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="User/profile" class="dropdown-item">
-                            <i class="fa fa-fw fa-id-badge mr-2"></i> Profile
+                            <i class="fa fa-fw fa-id-badge mr-2"></i> {{'Profile'|trans}}
                         </a>
                         {% if app.user.isAdmin %}
                         <a href="System/viewas" class="dropdown-item">
-                            <i class="fa fa-fw fa-eye mr-2"></i> View as
+                            <i class="fa fa-fw fa-eye mr-2"></i> {{'View as'|trans}}
                         </a>
                         {% endif %}
-                        <a href="System/logout" class="dropdown-item">
-                            <i class="fas fa-fw fa-sign-out-alt mr-2"></i> Logout
+
+                        <div class="dropdown-divider"></div>
+
+                        <!-- LANGUAGE -->
+                        {% for key,lang in app.config.language %}
+                        <a href="User/setting?language={{key}}" class="dropdown-item">
+                            {{lang}}
+                            {% if key == app.user.language %}
+                            <i class="fa fa-fw fa-check mr-2"></i>
+                            {% endif %}
+
                         </a>
+                        {% endfor %}
+
+                        <div class="dropdown-divider"></div>
+
+                        <a href="System/logout" class="dropdown-item">
+                            <i class="fas fa-fw fa-sign-out-alt mr-2"></i> {{'Logout'|trans}}
+                        </a>
+
                     </div>
                 </li>
                 <li class="nav-item">
@@ -312,7 +353,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-fw fa-heart"></i>
                                 <p>
-                                    Favorite
+                                    {{app.translate('My favorite')}}
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -321,7 +362,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <a class="nav-link" href="javascript:__add_favorite();">
                                         <i class="nav-icon fa fa-fw fa-plus text-aqua"></i>
                                         <p>
-                                            Add
+                                            {{'Add'|trans}}
                                         </p>
                                     </a>
                                 </li>
@@ -441,8 +482,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active"><a href="{{module.name}}">{{module.name}}</a></li>
+                                <li class="breadcrumb-item"><a href="#">{{'Home'|trans}}</a></li>
+                                {% if module %}
+                                <li class="breadcrumb-item active"><a href="{{module.name}}">{{module.name|trans}}</a></li>
+                                {% endif %}
+
+                                <li class="breadcrumb-item active"><a href="#">{{header.title}}</a></li>
+
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -501,33 +547,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {{app.version}}
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; {{app.config.user['copyright-year']}} <a href="{{app.config.user['copyright-url']}}" target="_blank">{{app.config.user['copyright-name']}}</a>.</strong> All rights reserved.
+            <strong>{{'Copyright'|trans}} &copy; {{app.config.user['copyright-year']}} <a href="{{app.config.user['copyright-url']}}" target="_blank">{{app.config.user['copyright-name']}}</a>.</strong> {{'All rights reserved'|trans}}.
         </footer>
     </div>
     <!-- ./wrapper -->
-
-    <script src="{{system_base}}/js/sidebar.js"></script>
-    <script src="{{system_base}}/js/control-sidebar.js"></script>
-
-    <!-- overlayScrollbars -->
-    <script src="{{system_base}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-
-    <!-- AdminLTE App -->
-    <script src="{{system_base}}/adminlte/dist/js/adminlte.js"></script>
-
-    <!-- Bootbox -->
-    <script src="{{system_base}}/plugins/bootbox/bootbox.all.min.js"></script>
-
-    <script src="{{system_base}}/plugins/fancybox/jquery.fancybox.min.js"></script>
-
-    <!-- Vue dialog -->
-    <script src="{{system_base}}/src/vue.dialog.js"></script>
-
-    <!-- SweetAlert2 -->
-    <script src="{{system_base}}/plugins/sweetalert2/sweetalert2.min.js"></script>
-
-
-
 
 
 </body>

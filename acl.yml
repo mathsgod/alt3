@@ -1,4 +1,4 @@
-Path:
+path:
   access_deny: [Users,Power Users]
   Dashboard: [Users,Power Users]
   Dashboard/index: [Users,Power Users]
@@ -8,4 +8,13 @@ Path:
   User/2step: [Users,Power Users]
   User/2step_whitelist: [Users,Power Users]
   User/list: [Power Users]
-  
+  User/setting: [Power Users,Users]
+  Dashboard/holiday: [Power Users,Users]
+  Dashboard/weather: [Power Users,Users]
+  User: [Power Users]
+  UserGroup: [Power Users]
+  UserGroup/ae: [Power Users]
+
+action:
+  FC:
+    UserLog: [Power Users]

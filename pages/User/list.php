@@ -29,7 +29,6 @@ class User_list extends App\Page
         //$rt->add("Expiry date", "expiry_date")->sort()->searchDate();
         //$rt->add("Join date", "join_date")->sort()->searchDate();
         $rt->add("Language", "language")->sort();
-        $rt->add("Skin", "skin")->sort(); //->noHide();
 
         $rt->add("Online", "isonline");
         //$rt->addButton("test")->attr("onClick","window.self.location='User/1/v'");
