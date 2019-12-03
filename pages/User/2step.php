@@ -2,13 +2,10 @@
 // Created By: Raymond Chong
 // Created Date: 2013-04-10
 // Last Updated:
+use Google\Authenticator\GoogleAuthenticator;
+
 class User_2step extends ALT\Page
 {
-    public function barcode($data)
-    {
-        $this->write(file_get_contents("https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=" . $data));
-    }
-
     public function post($cmd)
     {
         switch ($cmd) {
@@ -26,14 +23,15 @@ class User_2step extends ALT\Page
 
     private function create_code()
     {
-        require_once(SYSTEM . "/plugins/GoogleAuthenticator/GoogleAuthenticator.php");
         $g = new GoogleAuthenticator();
         $secret = $g->generateSecret();
         $u = $this->app->user;
         $u->secret = $secret;
         $u->save();
 
-        $b = $this->createBox();
+        $b = $this->createCard();
+        $b->setAttribute("info");
+        $b->setAttribute("outline");
         $b->header->title = "2-step secret key";
 
         $username = $this->app->user->username;
@@ -42,21 +40,24 @@ class User_2step extends ALT\Page
         $b->body->innerHTML .= "Your secret key are created: <b>$secret</b><br/>";
         $b->body->innerHTML .= "Host: $hostname <br/>";
 
-        $data = urlencode(sprintf("otpauth://totp/%s@%s?secret=%s", $username, $hostname, $secret));
-        $b->body->innerHTML .= "<div align='center'><img src='User/2step/barcode?data={$data}' /></div>";
+        $content = file_get_contents($g->getUrl($username, $hostname, $secret));
+        $content = base64_encode($content);
+        $img = p("img")->attr("src", "data:image/png;base64," . $content);
+        $b->body->innerHTML .= "<div align='center'>" . $img . "</div>";
 
         $this->write($b);
     }
 
     public function get($auto_create)
     {
-        // $this->header()->setTitle("2-step verfication");
+        $this->header->title = "2-step verfication";
+
         if ($auto_create) {
             $this->create_code();
             return;
         }
 
-        if ($this->app->secret) {
+        if ($this->app->user->secret) {
             $f = $this->createForm("2-step verification already set, remove it?");
             $f->action("User/2step?cmd=remove");
             $this->write($f);

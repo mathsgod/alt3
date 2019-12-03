@@ -12,9 +12,22 @@ path:
   Dashboard/holiday: [Power Users,Users]
   Dashboard/weather: [Power Users,Users]
   User: [Power Users]
+  User/index: [Power Users]
   UserGroup: [Power Users]
   UserGroup/ae: [Power Users]
+  cancel_viewas: [Power Users,Users]
+  User/v: [Power Users]
+  User/e_userlist: [Power Users]
+  User/reset_password: [Power Users]
 
 action:
   FC:
-    UserLog: [Power Users]
+    App\UserLog: [Power Users]
+  C:
+    App\User: [Power Users]
+  R:
+    
+  U:
+    App\User: [Power Users]
+  D:
+    App\User: [Power Users]

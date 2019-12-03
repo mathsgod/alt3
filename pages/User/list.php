@@ -7,13 +7,14 @@ class User_list extends App\Page
 {
     public function get()
     {
+
         $rt = $this->createRT2([$this, "ds"]);
         //$rt->selectable = true;
         $rt->addView();
         $rt->addEdit();
         $rt->addDel();
         $rt->add("Username", "username")->ss();
-        //$rt->add("User group", "usergroup_id")->searchOption(App\UserGroup::Query());
+        $rt->add("User group", "usergroup_id"); //->searchOption(App\UserGroup::Query());
         /*function ($obj) {
             return $obj->UserGroup()->implode(",");
         })->searchOption(App\UserGroup::find(), null, "usergroup_id")->searchCallback(function ($v) {
@@ -57,7 +58,11 @@ class User_list extends App\Page
         ];
         //        $rt->key("user_id");
         $rt->add("usergroup_id", function ($obj) {
-            return $obj->UserGroup()->implode(",");
+            $ugs = [];
+            foreach ($obj->UserGroup() as $ug) {
+                $ugs[] = (string) $ug;
+            }
+            return implode(",", $ugs);
         })->searchCallback(function ($v) {
             return ["user_id in (select user_id from UserList where usergroup_id=:usergroup_id)", ["usergroup_id" => $v]];
         });

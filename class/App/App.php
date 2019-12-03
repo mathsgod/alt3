@@ -80,18 +80,14 @@ class App extends \R\App
             }
         }
 
-        foreach ($acl["action"] as $actions) {
-            foreach ($actions as $action => $modules) {
-                foreach ($modules as $module => $usergroups) {
-                    if (array_intersect($ugs, $usergroups)) {
-                        $this->acl["action"]["allow"][$module][] = $action;
-                    }
+        foreach ($acl["action"] as $action => $actions) {
+            foreach ($actions as $module => $usergroups) {
+                if (array_intersect($ugs, $usergroups)) {
+                    $this->acl["action"]["allow"][$module][] = $action;
                 }
             }
         }
-
-
-
+        
         $w = [];
         $u[] = "user_id=" . $this->user->user_id;
         foreach ($this->user->UserGroup() as $ug) {

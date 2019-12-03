@@ -9,30 +9,73 @@ class User extends Core\User
         canDelete as protected canDelete2;
     }
 
+    public function setting(): array
+    {
+        return json_decode($this->setting, true) ?? [];
+    }
+
+    public function canRead(): bool
+    {
+        $user = self::$_app->user;
+        if ($user->isAdmin()) { //admin can update all
+            return true;
+        }
+
+        if ($user->user_id == $this->user_id) { //update itself
+            return true;
+        }
+
+        if ($user->isPowerUser()) {
+            if ($this->isAdmin()) {
+                return false;
+            }
+        }
+        if ($this->isGuest()) { //cannot update guest
+            return false;
+        }
+
+        return $this->canUpdate2();
+    }
+
     public function canUpdate(): bool
     {
         $user = self::$_app->user;
-        if ($user->user_id == $this->user_id) {
+        if ($user->isAdmin()) { //admin can update all
             return true;
         }
-        if ($user->isAdmin()) {
+
+        if ($user->user_id == $this->user_id) { //update itself
             return true;
         }
+
+        if ($user->isPowerUser()) {
+            if ($this->isAdmin()) {
+                return false;
+            }
+        }
+        if ($this->isGuest()) { //cannot update guest
+            return false;
+        }
+
         return $this->canUpdate2();
     }
 
     public function canDelete(): bool
     {
+
         $user = self::$_app->user;
-        if ($this->isGuest()) {
+        if ($this->isGuest()) { //cannot delete guest
             return false;
         }
-        if ($user->user_id == $this->user_id) {
+
+        if ($user->user_id == $this->user_id) { //cannot delete myself
             return false;
         }
-        if ($user->isAdmin()) {
-            return parent::canDelete();
+
+        if ($user->isAdmin()) { //admin
+            return true;
         }
+
         if ($user->isPowerUser()) {
             if ($this->isAdmin()) {
                 return false;

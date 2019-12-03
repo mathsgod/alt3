@@ -35,20 +35,22 @@ trait ModelTrait
         if (self::$_app->user->isAdmin()) {
             return true;
         }
+        $class = get_class($this);
 
         $deny = self::$_app->acl["action"]["deny"];
-        if ($deny[get_class($this)]["FC"]) {
+        if (in_array("FC", $deny[$class])) {
             return false;
         }
-        if ($deny[get_class($this)]["U"]) {
+        if (in_array("U", $deny[$class])) {
             return false;
         }
 
         $allow = self::$_app->acl["action"]["allow"];
-        if ($allow[get_class($this)]["FC"]) {
+        if (in_array("FC", $allow[$class])) {
             return true;
         }
-        if ($allow[get_class($this)]["U"]) {
+
+        if (in_array("U", $allow[$class])) {
             return true;
         }
 
@@ -57,25 +59,29 @@ trait ModelTrait
 
     public function canDelete(): bool
     {
+
         if (self::$_app->user->isAdmin()) {
             return true;
         }
+        $class = get_class($this);
 
         $deny = self::$_app->acl["action"]["deny"];
-        if ($deny[get_class($this)]["FC"]) {
+        if (in_array("FC", $deny[$class])) {
             return false;
         }
-        if ($deny[get_class($this)]["D"]) {
+        if (in_array("D", $deny[$class])) {
             return false;
         }
 
         $allow = self::$_app->acl["action"]["allow"];
-        if ($allow[get_class($this)]["FC"]) {
+        if (in_array("FC", $allow[$class])) {
             return true;
         }
-        if ($allow[get_class($this)]["D"]) {
+
+        if (in_array("D", $allow[$class])) {
             return true;
         }
+
 
         return false;
     }
