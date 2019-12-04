@@ -636,7 +636,7 @@ class Col extends HTMLElement
         return $p;
     }
 
-    public function checkbox($field)
+    public function checkbox($field): \P\Query
     {
         //		$p = $this->input($field);
         //	$p->attr("type", "hidden");
@@ -652,17 +652,13 @@ class Col extends HTMLElement
             call_user_func($this->callback, null, $input[0]);
 
 
-            $cb = new \BS\CheckBox();
+            $cb = new CheckBox();
             p($cell)->append($cb);
 
             $input = p($cb)->find("input");
-            $input->attr("is", "icheck");
             $input->attr("name", $field);
             $input->attr("data-field", $field);
             $input->val(1);
-            $input->attr("true-value", "true");
-            $input->attr("false-value", "false");
-
 
             if ($object = p($cell)->data("object")) {
                 $value = is_object($object) ? $object->$field : $object[$field];
@@ -679,11 +675,10 @@ class Col extends HTMLElement
         }
 
         if ($this->createTemplate) {
-            $cb = new \BS\CheckBox();
+            $cb = new CheckBox();
             $input = p($cb)->find("input");
             $input->attr("name", $field);
             $input->attr("data-field", $field);
-            $input->addClass("iCheck");
             $input->val(1);
 
             $this->c_tpl[] = $cb;
@@ -786,42 +781,7 @@ class Col extends HTMLElement
         return $p;
     }
 
-    public function multiSelect($field)
-    {
-        $p = new \P\SelectCollection();
-        foreach ($this->cell as $cell) {
-            $input = p("input")->appendTo($cell);
-            $input->attr("type", "hidden");
-            $input->attr("data-field", $field);
-            $input->attr("name", $field);
-
-            $select = p("select")->appendTo($cell);
-            $select->attr("is", "alt-multiselect");
-            $select->attr("data-field", $field);
-            $select->attr("name", $field);
-
-            if ($object = p($cell)->data("object")) {
-                $select->data("object", $object);
-
-                $value = is_object($object) ? $object->$field : $object[$field];
-                if (is_string($value)) {
-                    $value = explode(",", $value);
-                }
-                $select->attr("data-value", json_encode($value, JSON_UNESCAPED_UNICODE));
-                if ($this->callback) {
-                    call_user_func($this->callback, $object, $input[0]);
-                    call_user_func($this->callback, $object, $select[0]);
-                }
-            }
-
-            $select->attr("name", $field . "[]");
-
-            $p[] = $select[0];
-        }
-        return $p;
-    }
-
-    public function multiSelectPicker($field)
+    public function multiSelect($field): \P\SelectCollection
     {
         $p = new \P\SelectCollection();
 
@@ -869,6 +829,11 @@ class Col extends HTMLElement
         }
 
         return $p;
+    }
+
+    public function multiSelectPicker($field)
+    {
+        return $this->multiSelect($field);
     }
 
     public function selectPicker($field)
@@ -941,7 +906,7 @@ class Col extends HTMLElement
         $p = new \P\SelectCollection();
 
         foreach ($this->cell as $cell) {
-            $cell->classList->add("select2-primary");
+            $cell->classList->add("select2-info");
             $select = p("select")->appendTo($cell);
             $select->addClass("form-control");
             $select->attr("is", "select2");

@@ -31,3 +31,6 @@ VueRegisterElement("ace", ace);
 
 import Datatables from "./Datatables";
 VueRegisterElement("alt-datatables", Datatables);
+
+import datetime from "./Datetime";
+VueRegisterElement("alt-datetime", datetime);

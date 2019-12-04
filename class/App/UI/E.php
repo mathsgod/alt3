@@ -86,8 +86,7 @@ class E extends HTMLDivElement
         p($form_group)->append($label);
 
         $c2 = new Col("div");
-        //$form_group->setAttribute("is","bs-form-group");
-        $c2->classList->add('col');
+        $c2->classList->add('col-md-10');
 
         $cell = p("div");
         $cell->appendTo($c2);

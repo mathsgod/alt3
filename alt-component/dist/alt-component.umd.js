@@ -6471,6 +6471,79 @@ var Datatables_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datatables = (Datatables_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=template&id=89f5e516&
+var Datetimevue_type_template_id_89f5e516_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{ref:"input",staticClass:"form-control",domProps:{"value":_vm.value}})}
+var Datetimevue_type_template_id_89f5e516_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Datetime.vue?vue&type=template&id=89f5e516&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=script&lang=js&
+//
+//
+//
+/* harmony default export */ var Datetimevue_type_script_lang_js_ = ({
+  props: {
+    value: String,
+    sideBySide: {
+      type: Boolean,
+      default: true
+    },
+    format: {
+      type: String,
+      default: "YYYY-MM-DD HH:mm"
+    },
+    icon: {
+      type: String,
+      default: "far fa-calendar-alt"
+    },
+    minDate: {
+      default: false
+    },
+    maxDate: {
+      default: false
+    }
+  },
+  mounted: function mounted() {
+    if (this.required) {
+      window.$(this.$el).closest(".form-group").addClass("has-feedback");
+
+      if ($(this.$el).closest(".form-group").length == 0) {
+        $(this.$el).css("margin-bottom", "0px");
+        $(this.$el).addClass("form-group has-feedback");
+      }
+    }
+
+    window.$(this.$refs.input).datetimepicker({
+      sideBySide: this.sideBySide,
+      format: this.format,
+      minDate: this.minDate,
+      maxDate: this.maxDate
+    });
+  }
+});
+// CONCATENATED MODULE: ./src/Datetime.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Datetimevue_type_script_lang_js_ = (Datetimevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/Datetime.vue
+
+
+
+
+
+/* normalize component */
+
+var Datetime_component = Object(componentNormalizer["a" /* default */])(
+  src_Datetimevue_type_script_lang_js_,
+  Datetimevue_type_template_id_89f5e516_render,
+  Datetimevue_type_template_id_89f5e516_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var Datetime = (Datetime_component.exports);
 // CONCATENATED MODULE: ./src/main.js
 
 
@@ -6495,6 +6568,8 @@ main_default()("select2", Select2);
 main_default()("ace", Ace);
 
 main_default()("alt-datatables", Datatables);
+
+main_default()("alt-datetime", Datetime);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 
