@@ -1,5 +1,6 @@
 path:
   access_deny: [Users,Power Users]
+  404_not_found: [Users,Power Users]
   Dashboard: [Users,Power Users]
   Dashboard/index: [Users,Power Users]
   User/profile: [Users,Power Users]

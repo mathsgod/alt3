@@ -87,7 +87,7 @@ class App extends \R\App
                 }
             }
         }
-        
+
         $w = [];
         $u[] = "user_id=" . $this->user->user_id;
         foreach ($this->user->UserGroup() as $ug) {
@@ -211,6 +211,24 @@ class App extends \R\App
         return $page;
     }
 
+    public function IP2StepExemptCheck($ip): bool
+    {
+        $ips = explode(",", $this->config["user"]["2-step verification white list"]);
+
+        foreach ($ips as $i) {
+            $cx = explode("/", $i);
+            if (sizeof($cx) == 1) {
+                $cx[1] = "255.255.255.255";
+            }
+            $res = ip2long($cx[0]) & ip2long($cx[1]);
+            $res2 = ip2long($ip) & ip2long($cx[1]);
+            if ($res == $res2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function login(string $username, string $password, string $code = null): bool
     {
         //check AuthLock
@@ -226,6 +244,7 @@ class App extends \R\App
             AuthLock::Add();
             throw new Exception("Login error");
         }
+
 
         if ($this->config["user"]["2-step verification"]) {
             $need_check = true;

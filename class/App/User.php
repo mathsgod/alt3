@@ -2,12 +2,22 @@
 
 namespace App;
 
+use Google\Authenticator\GoogleAuthenticator;
+
 class User extends Core\User
 {
     use ModelTrait {
         canUpdate as protected canUpdate2;
         canDelete as protected canDelete2;
     }
+
+
+    public function checkCode(string $code): bool
+    {
+        $g = new GoogleAuthenticator();
+        return $g->checkCode($this->secret, $code);
+    }
+
 
     public function setting(): array
     {
