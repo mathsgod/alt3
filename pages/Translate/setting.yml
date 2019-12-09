@@ -1,0 +1,11 @@
+class: App\Translate
+icon: fa fa-language fa-fw
+group: System
+show_list: true
+show_create: true
+
+menu:
+  Front translate:
+    link: System/front_translate_twig
+  Translate all:
+    link: Translate/all

@@ -24,7 +24,7 @@ class MasterPage extends \R\Page
 
         $pi = $this->app->pathInfo();
 
-        $this->data["base"] = $pi["system_base"] . "/";
+        $this->data["base"] = $pi["cms_base"] . "/";
 
 
         //group menu to structure

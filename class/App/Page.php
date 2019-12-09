@@ -260,7 +260,21 @@ class Page extends \R\Page
 
             if ($files = $this->request->getUploadedFiles()) {
                 foreach ($files as $name => $file) {
-                    $obj->$name = (string) $file->getStream();
+
+                    if (property_exists($obj, $name)) {
+                        $obj->$name = (string) $file->getStream();
+                    }
+                    if (property_exists($obj, $name . "_name")) {
+                        $obj->{$name . "_name"} = $file->getClientFilename();
+                    }
+
+                    if (property_exists($obj, $name . "_type")) {
+                        $obj->{$name . "_type"} = $file->getClientMediaType();
+                    }
+
+                    if (property_exists($obj, $name . "_size")) {
+                        $obj->{$name . "_size"} = $file->getSize();
+                    }
                 }
             }
         }

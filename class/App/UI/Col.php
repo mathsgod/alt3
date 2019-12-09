@@ -257,6 +257,50 @@ class Col extends HTMLElement
         return $p;
     }
 
+    public function file(string $field): InputCollection
+    {
+        $p = new InputCollection;
+        foreach ($this->cell as $cell) {
+            try {
+                $object = p($cell)->data("object");
+                $value = is_object($object) ? $object->$field : $object[$field];
+                if ($value) {
+
+                    $div = p(
+                        <<<HTML
+<div class="input-group">
+    <div class="input-group-btn">
+    </div>
+</div>                    
+HTML
+                    );
+                    $button = p("<button type='button' class='btn btn-default' onclick='$(this).parent().next().attr(\"disabled\",false)'>reupload</button>");
+                    $div->find(".input-group-btn")->append($button);
+
+
+                    $input = p("input");
+                    $input->attr("type", "file");
+                    $input->addClass("form-control");
+                    $input->attr("name", $field);
+                    $input->attr("disabled", true);
+                    $div->append($input);
+                    $div->appendTo($cell);
+                } else {
+                    $input = p("input")->appendTo($cell);
+                    $input->attr("type", "file");
+                    $input->addClass("form-control");
+                    $input->attr("name", $field);
+                }
+
+                $p[] = $input[0];
+            } catch (Exception $e) {
+                $cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
+            }
+        }
+        return $p;
+    }
+
+
     public function roxyfileman($field)
     {
         $p = $this->input($field);

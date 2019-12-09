@@ -2,13 +2,12 @@
 
 namespace App;
 
-use Psr\Http\Message\RequestInterface;
-
+use R\Psr7\Request;
 
 class Route extends \R\Route
 {
     public $app;
-    public function __construct(RequestInterface $request, App $app)
+    public function __construct(Request $request, App $app)
     {
         $this->app = $app;
         $uri = $request->getUri();
@@ -19,7 +18,6 @@ class Route extends \R\Route
         if ($this->path == "/") {
             $this->path = "/index";
         }
-
 
         if (substr($this->path, -1) == "/") {
             $this->no_index = true;
@@ -69,23 +67,26 @@ class Route extends \R\Route
         }
     }
 
-    public function psr0(RequestInterface $request, $loader)
+    public function psr0(Request $request, $loader)
     {
+        $pi = $this->app->pathinfo();
         $qs = explode("/", $this->path);
+        if (!$qs) $qs = [];
+
         $method = strtolower($request->getMethod());
-        $root = $request->getServerParams()["DOCUMENT_ROOT"];
+        $document_root = $pi["document_root"];
+        $system_root = $pi["system_root"];
         $base = $request->getURI()->getBasePath();
 
         $page = $this->app->config["system"]["pages"];
         if (!$page) {
-            $page = "/pages";
+            $page = DIRECTORY_SEPARATOR . "pages";
         }
 
         while (count($qs)) {
             $path = implode("/", $qs);
 
-
-            if (file_exists($file = $root . $base . $page . $path . "/index.php")) {
+            if (file_exists($file = $document_root . $base . $page . $path . "/index.php")) {
                 $this->file = $file;
                 $this->path = implode("/", $qs) . "/index";
                 $this->class = implode("_", $qs) . "_index";
@@ -94,7 +95,7 @@ class Route extends \R\Route
                 return;
             }
 
-            if (file_exists($file = SYSTEM . DIRECTORY_SEPARATOR . "pages" . $path . DIRECTORY_SEPARATOR . "index.php")) {
+            if (file_exists($file = $system_root . $page . $path . DIRECTORY_SEPARATOR . "index.php")) {
 
                 $this->file = $file;
                 $this->path = implode("/", $qs) . "/index";
@@ -104,7 +105,7 @@ class Route extends \R\Route
                 return;
             }
 
-            if (file_exists($file = $root . $base . $page . $path . ".php")) {
+            if (file_exists($file = $document_root . $base . $page . $path . ".php")) {
                 $this->file = $file;
                 $this->path = $path;
                 $this->class = implode("_", $qs);
@@ -113,7 +114,7 @@ class Route extends \R\Route
                 return;
             }
 
-            if (file_exists($file = SYSTEM . DIRECTORY_SEPARATOR . "pages" . $path . ".php")) {
+            if (file_exists($file = $system_root . $page . $path . ".php")) {
                 $this->file = $file;
                 $this->path = implode("/", $qs);
                 $this->class = implode("_", $qs);

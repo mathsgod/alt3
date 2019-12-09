@@ -1,0 +1,4 @@
+class: App\SystemValue
+show_list: true
+show_create: true
+group: System

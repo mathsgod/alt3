@@ -27,6 +27,15 @@ class App extends \R\App
             throw new Exception("config.ini not found");
         }
 
+        spl_autoload_register(function ($class) use ($root) {
+            $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+            $file = realpath($root . "/pages/$class_path/$class.class.php");
+            if (is_readable($file)) {
+                require_once($file);
+            }
+        });
+
+
         parent::__construct($root, $loader, $logger);
         Model::$_db = $this->db;
         Model::$_app = $this;
@@ -36,14 +45,25 @@ class App extends \R\App
         ModelTrait::$_app = $this;
         //        Config::$_app = $this;
 
+
+        //-- CONFIG.INI
+        $user_config = $this->config;
         //system config
         $pi = $this->pathInfo();
         $file = $pi["system_root"] . "/config.ini";
         $this->config = parse_ini_file($file, true);
 
+        //user config
+        foreach ($user_config as $n => $v) {
+            foreach ($v as $a => $b) {
+                $this->config[$n][$a] = $b;
+            }
+        }
+
         foreach (Config::Query() as $c) {
             $this->config["user"][$c->name] = $c->value;
         }
+
 
         //user
         if (!$_SESSION["app"]["user"]) {
@@ -151,6 +171,7 @@ class App extends \R\App
         }
 
         $class = $route->class;
+
         $page = new $class($this);
         if ($page) {
             $response = new Response(200);
@@ -281,15 +302,28 @@ class App extends \R\App
 
     public function twig(string $file)
     {
-        if ($file[0] != "/" || file_exists($file)) {
-            $pi = pathinfo($file);
+        $pi = $this->pathInfo();
+
+        $twig_file = null;
+
+        if ($file[0] != "/") {
+            if (is_readable($file)) {
+                $twig_file = $file;
+            } elseif (is_readable($pi["document_root"] . "/" . $file)) {
+                $twig_file = $pi["document_root"] . "/" . $file;
+            } elseif (is_readable($pi["system_root"] . "/" . $file)) {
+                $twig_file = $pi["system_root"] . "/" . $file;
+            }
+        } else {
+            if (is_readable($this->pathInfo()["document_root"] . $file)) {
+                $twig_file = $this->pathInfo()["document_root"] . $file;
+            }
+        }
+
+        if ($twig_file) {
+            $pi = pathinfo($twig_file);
             $root = $pi["dirname"];
             $template_file = $pi["basename"];
-        } else {
-            $root = $this->pathInfo()["document_root"];
-            $template_file = substr($file, strlen($root) + 1);
-        }
-        if (is_readable($root . "/" . $template_file)) {
 
             if (!$config = $this->config["twig"]) {
                 $config = [];
@@ -315,6 +349,8 @@ class App extends \R\App
 
     public function pathInfo(): array
     {
+        $system_root = dirname(__DIR__, 2);
+
         $server = $this->request->getServerParams();
 
         $document_root = $server["DOCUMENT_ROOT"];
@@ -322,24 +358,25 @@ class App extends \R\App
             $document_root = $this->config["system"]["document_root"];
         }
 
-        $cms = dirname($server["PHP_SELF"]);
-        $cms_root = $document_root . $cms;
+        $cms_base = dirname($server["PHP_SELF"]);
+        $cms_root = $document_root . $cms_base;
 
         if (file_exists($document_root . "/composer.json")) {
             $composer_root = $document_root;
         } else if (file_exists($cms_root . "/composer.json")) {
             $composer_root = $cms_root;
+        } elseif (file_exists($system_root . "/composer.json")) {
+            $composer_root = $system_root;
         }
 
 
         $composer_base = substr($composer_root, strlen($document_root));
         $composer_base = str_replace(DIRECTORY_SEPARATOR, "/", $composer_base);
 
-        $system_root = dirname(__DIR__, 2);
         $system_base = substr($system_root, strlen($document_root));
         $system_base = str_replace(DIRECTORY_SEPARATOR, "/", $system_base);
 
-        return compact("composer_base", "composer_root", "document_root", "cms_root", "system_root", "system_base");
+        return compact("composer_base", "composer_root", "document_root", "cms_root", "cms_base", "system_root", "system_base");
     }
 
     public function module(string $name)
@@ -376,6 +413,8 @@ class App extends \R\App
             $module = new Module($name, $config);
             $modules[$name] = $module;
         }
+        //  outp($modules);
+        //d/ie();
 
         $cms_root = $pi["cms_root"];
         foreach (glob($cms_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $m) {
@@ -387,12 +426,11 @@ class App extends \R\App
                 $config = parse_ini_file($config_file, true);
             }
             if (!$module = $modules[$name]) {
-                $module = new Module($name, $config);
+                $modules[$name] = new Module($name, $config);
             } else {
                 $module->loadConfig($config);
             }
         }
-
         //sorting
         usort($modules, function ($a, $b) {
             return $a->sequence <=> $b->sequence;

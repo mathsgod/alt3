@@ -25,7 +25,11 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
+            {% if app.config.user.logo %}
+            <img src="{{app.config.user.logo}}" />
+            {% else %}
             {{app.config.user.company}}
+            {% endif %}
         </div>
         <!-- /.login-logo -->
         <div class="card" id="app">
@@ -69,6 +73,10 @@
                 <p class="mb-1">
                     <a href="#" @click.prevent="forgetPassword">I forgot my password</a>
                 </p>
+                <p class="mb-1">
+                    {{app.version}}
+                </p>
+
 
             </div>
             <!-- /.login-card-body -->

@@ -10,10 +10,6 @@ $loader = require_once(__DIR__ . "/vendor/autoload.php");
 use Monolog\Handler\StreamHandler;
 $log = new Logger('App');
 $log->pushHandler(new StreamHandler(__DIR__ . '/logs/' . date("Y-m-d") . ".log", Logger::DEBUG));*/
-function gettext2()
-{
-    return "A";
-}
 
 session_start();
 $app = new App\App(__DIR__);

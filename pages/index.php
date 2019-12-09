@@ -1,9 +1,5 @@
 
 <?
-
-use \Psr\Http\Message\RequestInterface;
-use \Psr\Http\Message\ResponseInterface;
-
 class _index extends R\Page
 {
     public function get()
