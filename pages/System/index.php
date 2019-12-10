@@ -4,49 +4,46 @@ class System_index extends ALT\Page
 {
     public function get()
     {
-        $panel = new BS\Panel("primary");
-        $panel->heading("System");
-        $panel->collapsible(false);
+        $card = $this->createCard();
+        $card->header->title = "System";
 
-        $list = new BS\ListGroup();
-        $list->addLinkedItem("Composer", "System/composer");
-        //    	$list->addLinkedItem("Composer (system)","System/composer_system");
-        //$list->addLinkedItem("Bower","System/bower");
+        $list = html("ul")->class("list-group");
+        $list->li->class("list-group-item")->a->href("System/composer")->text("Composer");
+        $list->li->class("list-group-item")->a->href("System/alter_table_utf8")->text("Alter table charset");
+        $list->li->class("list-group-item")->a->href('System/tlscheck')->text("Check TLS version");
+        $list->li->class("list-group-item")->a->href("System/db_process")->text("Show DB Process");
+        $list->li->class("list-group-item")->a->href("System/phpinfo")->text("System info");
+        $list->li->class("list-group-item")->a->href("System/email_test")->text("Email test");
+//        $list->li->class("list-group-item")->a->href("UI/clear")->text("Clear UI");
+        $list->li->class("list-group-item")->a->href("System/update")->text("System update");
+        $list->li->class("list-group-item")->a->href("System/shell")->text("Shell");
+        $list->li->class("list-group-item")->a->href("System/csv_import")->text("CSV import");
+        $list->li->class("list-group-item")->a->href("System/export")->text("Export");
+        $list->li->class("list-group-item")->a->href("System/pdo")->text("PDO log");
+        $list->li->class("list-group-item")->a->href("System/db_check")->text("DB Check");
+        $list->li->class("list-group-item")->a->href("System/db_migration")->text("DB migration");
+        $list->li->class("list-group-item")->a->href("System/composer")->text("Composer");
+        $list->li->class("list-group-item")->a->href("System/adminer")->text("Adminer");
 
-        $list->addLinkedItem("Alter table charset", "System/alter_table_utf8");
-        $list->addLinkedItem("alter table column charset to default", "System/alter_table_column_utf8");
-        $list->addLinkedItem("Check TLS version", 'System/tlscheck');
-        // $list->addLinkedItem("Clear MyView Session",'System/session_clear');
-        $list->addLinkedItem("Show DB Process", "System/db_process");
-        $list->addLinkedItem("System info", "System/phpinfo");
-        //        $list->addLinkedItem("System check","System/check");
-        $list->addLinkedItem("Email test", "System/email_test");
-        $list->addLinkedItem("Clear UI", "UI/clear")->addClass('confirm');
-        $list->addLinkedItem("System update", "System/update");
-        $list->addLinkedItem("Shell", "System/shell");
-        $list->addLinkedItem("CSV import", "System/csv_import");
-        $list->addLinkedItem("Export", "System/export");
-        //$list->addLinkedItem("WebAPI log","System/webapi");
-        $list->addLinkedItem("PDO log", "System/pdo");
-        //$list->addLinkedItem("wikiParser","System/wikiParser");
-        $list->addLinkedItem("DB Check", "System/db_check");
-        $list->addLinkedItem("DB migration", "System/db_migration");
-        $list->addLinkedItem("Composer", "System/composer");
-        $list->addLinkedItem("Adminer", "System/adminer");
+        $list->li->class("list-group-item")->a->href("System/front_translate_twig")->text("Front translate");
+        $list->li->class("list-group-item")->a->href("System/phpunit")->text("Unit test");
 
-        $list->addLinkedItem("Front translate", "System/front_translate_twig");
-        $list->addLinkedItem("Unit test", "System/phpunit");
+        p($card->body)->html($list);
 
-        $panel->body()->append($list);
-        // $this->write($panel);
-        $panel2 = new BS\Panel("primary");
-        $panel2->heading("System locale");
-        $panel2->collapsible(true);
-        $panel2->body()->append(implode("<br/>", App\System::Locale()));
+        $this->write($card);
 
-        $pg = new BS\PanelGroup();
-        $pg->addPanel($panel);
-        $pg->addPanel($panel2);
-        $this->write($pg);
+
+        $card = $this->createCard();
+        $card->header->title = "System locale";
+        p($card->body)->html(implode("<br/>", $this->locale()));
+        $this->write($card);
+    }
+
+    private function  locale(): array
+    {
+        $locale = `locale -a`;
+        return array_filter(explode("\n", $locale), function ($l) {
+            return strlen($l) > 0;
+        });
     }
 }

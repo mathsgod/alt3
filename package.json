@@ -4,7 +4,8 @@
   "description": "Raymond framework",
   "main": "src/index.js",
   "dependencies": {
-    "webpack": "^4.41.2"
+    "webpack": "^4.41.2",
+    "x-html": "git+https://github.com/mathsgod/x-html.git"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

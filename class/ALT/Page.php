@@ -30,6 +30,14 @@ class Page extends \App\Page
             if ($this->module()) {
                 $this->header->title = $this->module()->name;
             }
+
+            if ($referer = $this->request->getHeader("Referer")[0]) {
+
+                $uri = $this->request->getUri()->withUserInfo(null, null);
+                if ($referer != (string) $uri) { //reload
+                    $_SESSION['app']["referer"][(string) $uri] = $referer;
+                }
+            }
         }
 
         try {

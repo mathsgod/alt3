@@ -532,22 +532,23 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "731f0174b140835db454e4c106eaa5576329784b"
+                "reference": "5acbe7b640e0f78fa00b201f916d24502ad17617"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.1.0-310998.zip",
-                "reference": "731f0174b140835db454e4c106eaa5576329784b",
-                "shasum": "92f7b2fe92f3f4b282b5058dd6e1c5c914bac7ce"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.1.1-5b472f.zip",
+                "reference": "5acbe7b640e0f78fa00b201f916d24502ad17617",
+                "shasum": "263d544a963a65ac034d7637470ec093dd073e1b"
             },
             "require": {
                 "ext-pdo": "*",
                 "mathsgod/data-structure": "~1.0.1",
-                "php": ">=7.0"
+                "php": ">=7.0",
+                "psr/log": "^1.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "*"
@@ -567,7 +568,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2019-11-01T10:07:25+00:00"
+            "time": "2019-12-10T06:58:07+00:00"
         },
         {
             "name": "mathsgod/r-graphql",

@@ -44,7 +44,7 @@ class System_export extends ALT\Page
 	public function get()
 	{
 		if (!class_exists("Box\Spout\Writer\WriterFactory")) {
-			$this->callout->danger("Error", "box/spout not found, <a href='System/composer'>install it</a>.");
+			$this->callout->danger("Error", "box/spout not found, <a href='System/composer?require=box/spout'>install it</a>.");
 			return;
 		}
 		$mv = $this->createE();

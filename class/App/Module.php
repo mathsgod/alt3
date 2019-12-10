@@ -26,6 +26,7 @@ class Module
     public function __construct(string $name, array $config = [])
     {
         $this->name = $name;
+        $this->class = $name;
 
         foreach ($config as $k => $v) {
             $this->$k = $v;

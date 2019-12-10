@@ -2,7 +2,6 @@
 
 class System_alter_table_utf8 extends ALT\Page
 {
-
     public function post()
     {
         $charset = $_POST["charset"];
@@ -24,23 +23,19 @@ class System_alter_table_utf8 extends ALT\Page
                 }
             }
         }
-        App::Redirect();
+        $this->redirect();
     }
 
     public function get()
     {
-
-        $e = $this->createE();
+        $e = $this->createE(["charset" => "utf8mb4"]);
 
         $charset = array_map(function ($o) {
             return $o["Charset"];
         }, $this->app->db->query("SHOW CHARACTER SET")->fetchAll());
 
         sort($charset);
-
-        $s = $e->add("Charset")->select("charset")->options($charset);
-
-
+        $e->add("Charset")->select("charset")->options($charset);
         $this->write($this->createForm($e));
     }
 }

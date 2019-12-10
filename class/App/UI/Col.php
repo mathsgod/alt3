@@ -549,28 +549,26 @@ HTML
         return $p;
     }
 
-    public function button($field = null)
+    public function button($field = null): \P\Query
     {
 
         $as = new \P\Query();
         foreach ($this->cell as $cell) {
-            $a = new \P\HTMLAnchorElement();
-            $cell->append($a);
-            $a->classList->add("btn");
-            $a->classList->add("btn-primary");
-            $a->classList->add("btn-xs");
+            $btn = new \P\HTMLButtonElement();
+            $cell->append($btn);
+            $btn->classList->add("btn");
+            $btn->classList->add("btn-primary");
+            $btn->classList->add("btn-xs");
 
             if ($object = p($cell)->data("object")) {
-                p($a)->data("object", $object);
+                p($btn)->data("object", $object);
             }
 
             if ($field) {
-                p($a)->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+                p($btn)->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
             }
 
-
-
-            $as[] = $a;
+            $as[] = $btn;
         }
         return $as;
     }

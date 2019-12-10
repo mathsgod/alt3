@@ -5,6 +5,7 @@ namespace App;
 trait ModelTrait
 {
     public static $_app;
+    
     public function canRead(): bool
     {
         if (self::$_app->user->isAdmin()) {

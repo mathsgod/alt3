@@ -2,9 +2,9 @@ module.exports = {
     mode: "production",
     entry: {
         index: "./src/index.js",
-        confirm: "./src/confirm.js"
-        //login: "./src/login.js",
-        //layout: "./src/layout.js"
+        confirm: "./src/confirm.js",
+        api: "./src/api.js",
+        "vue.dialog": "./src/vue.dialog.js"
     },
     module: {
         rules: [

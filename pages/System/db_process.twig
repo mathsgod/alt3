@@ -10,10 +10,9 @@
             this.loadData();
             setInterval(this.loadData, 5000);
         }, methods: {
-            loadData() {
-                this.$http.get("System/db_process/data").then(resp => {
-                    this.content = resp.body;
-                });
+            async loadData() {
+                var resp = await this.$http.get("System/db_process/data");
+                this.content = resp.bodyText;
             }, killProcess(id) {
                 this.$http.get("System/db_process/kill", {
                     params: {

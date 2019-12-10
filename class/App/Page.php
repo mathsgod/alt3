@@ -6,6 +6,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use R\Psr7\Stream;
 use R\Psr7\JSONStream;
+use Exception;
 
 class Page extends \R\Page
 {
@@ -311,7 +312,7 @@ class Page extends \R\Page
         if ($referer = $this->request->getHeader("Referer")[0]) {
             if ($url = $_SESSION["app"]["referer"][$referer]) {
                 $this->response = $this->response->withHeader("Location", $url);
-                return;
+                return $this->response;
             }
             $this->response = $this->response->withHeader("Location", $referer);
             return $this->response;
