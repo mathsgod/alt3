@@ -2,14 +2,14 @@
   <td>
     <input
       v-if="searchable && searchType=='text'"
-      type="text"
+      type="search"
       class="form-control form-control-sm search"
       v-model="search"
       @keyup.enter="doSearch()"
     />
     <input
       v-if="searchable && searchType=='equal'"
-      type="text"
+      type="search"
       class="form-control form-control-sm search"
       v-model="search"
       @keyup.enter="doSearch()"

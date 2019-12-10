@@ -107,7 +107,7 @@ var vm = new Vue({
 
                 let redirect = window.self.location.hash;
                 if (redirect != "") {
-                    window.self.location = redirect.substring(1);
+                    window.self.location = redirect.substring(2);
                 } else {
                     window.self.location.reload();
                 }

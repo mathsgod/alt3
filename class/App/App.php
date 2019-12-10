@@ -7,6 +7,7 @@ use Composer\Autoload\ClassLoader;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use R\Psr7\Request;
 use R\Psr7\Response;
 use R\Psr7\Stream;
 use Symfony\Component\Yaml\Yaml;
@@ -172,8 +173,9 @@ class App extends \R\App
 
         $class = $route->class;
 
-        $page = new $class($this);
-        if ($page) {
+
+        if ($class) {
+            $page = new $class($this);
             $response = new Response(200);
             try {
                 $request = $request->withMethod($route->method);
@@ -202,9 +204,11 @@ class App extends \R\App
 
             file_put_contents("php://output", (string) $response->getBody());
         } elseif (self::Logined()) {
-            $this->redirect("404_not_found");
+            $base = dirname($this->request->getServerParams()["PHP_SELF"]);
+            header("location: {$base}/404_not_found#" . $this->request->getUri()->getPath());
         } else {
-            //$this->redirect("/");
+            $base = dirname($this->request->getServerParams()["PHP_SELF"]);
+            header("location: {$base}#" . $this->request->getUri()->getPath());
         }
     }
 
@@ -339,9 +343,10 @@ class App extends \R\App
             //$twig["environment"]->addExtension(new TwigI18n());
 
             $_this = $this;
-            $twig["environment"]->addFilter(new \Twig\TwigFilter('trans', function (string $str) use ($_this) {
-                return $_this->translate($str);
+            $twig["environment"]->addFilter(new \Twig\TwigFilter('trans', function ($str) use ($_this) {
+                return $_this->translate($str ?? "");
             }));
+
 
             return $twig["environment"]->load($template_file);
         }
@@ -475,7 +480,7 @@ class App extends \R\App
         return $mail;
     }
 
-    public function accessDeny(RequestInterface $request): ResponseInterface
+    public function accessDeny(Request $request): ResponseInterface
     {
         $uri = $request->getUri()->getPath();
         $uri = substr($uri, 1);
@@ -495,11 +500,11 @@ class App extends \R\App
                 $response = $response->withBody(new Stream(json_encode($msg)));
             } else {
                 $response = new Response(403);
-                $response = $response->withHeader("location", $base . "/access_deny#" . $uri);
+                $response = $response->withHeader("location", $base . "/access_deny#/" . $uri);
             }
         } else {
             $response = new Response(403);
-            $response = $response->withHeader("location", $base . "/#" . $uri);
+            $response = $response->withHeader("location", $base . "/#/" . $uri);
         }
 
         return $response;
