@@ -49,6 +49,12 @@ class Plugin
         }
 
 
+        $language = $app->user->language;
+        $this->setting["js"] = array_map(function ($js) use ($language) {
+            return str_replace("{language}", $language, $js);
+        }, $this->setting["js"]);
+
+
         $found = false;
         foreach ($path as $p) {
             $r = glob($p[0], GLOB_ONLYDIR);
@@ -68,9 +74,15 @@ class Plugin
             }
         }
 
+        //check js file exist
+        $this->setting["js"] = array_filter($this->setting["js"], function ($js) {
+            return is_readable($this->path . "/" . $js);
+        });
+
         if (!$found) {
             throw new \Exception($name . " not found");
         }
+ 
     }
 
     public function csss()

@@ -34,3 +34,6 @@ VueRegisterElement("alt-datatables", Datatables);
 
 import datetime from "./Datetime";
 VueRegisterElement("alt-datetime", datetime);
+
+import ckeditor from "./ckeditor";
+VueRegisterElement("ckeditor", ckeditor);

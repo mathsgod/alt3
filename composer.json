@@ -46,7 +46,8 @@
         "box/spout": "^2.7",
         "phpunit/phpunit": "^6.5",
         "vakata/jstree": "^3.3",
-        "sepia/po-parser": "^5.1"
+        "sepia/po-parser": "^5.1",
+        "ckeditor/ckeditor": "^4.13"
     },
     "suggest": {
         "phpunit/phpunit": "The PHP Unit Testing framework.",
