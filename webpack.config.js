@@ -2,9 +2,14 @@ module.exports = {
     mode: "production",
     entry: {
         index: "./src/index.js",
-        confirm: "./src/confirm.js",
-        api: "./src/api.js",
-        "vue.dialog": "./src/vue.dialog.js"
+        main: ["./src/api.js",
+            "./src/control-sidebar.js",
+            "./src/sidebar.js",
+            "./src/tab-ajax.js",
+            "./src/vue-gql.js",
+            "./src/default.js",
+            "./src/confirm.js",
+            "./src/vue.dialog.js"]
     },
     module: {
         rules: [

@@ -2,9 +2,9 @@
 
 namespace ALT;
 
-use \Psr\Http\Message\RequestInterface;
-use \Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 use Exception;
+use R\Psr7\Request;
 
 class Page extends \App\Page
 {
@@ -21,7 +21,7 @@ class Page extends \App\Page
         $this->header = new PageHeader;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(Request $request, ResponseInterface $response): ResponseInterface
     {
         $this->request = $request;
 
@@ -57,6 +57,16 @@ class Page extends \App\Page
             }
 
             $this->master->data["plugins"] = array_values($this->plugins);
+
+            $pi = $this->app->pathinfo();
+            foreach (glob($pi["cms_root"] . "/js/*.js") as $js) {
+                $this->master->data["custom_js"][] = "js/" . basename($js);
+            }
+
+            if (is_readable($pi["cms_root"] . "/AdminLTE/custom-header.html")) {
+                $this->master->data["custom_header"] = file_get_contents($pi["cms_root"] . "/AdminLTE/custom-header.html");
+            }
+
 
             return $this->master->__invoke($request, $response);
         }

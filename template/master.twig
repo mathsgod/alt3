@@ -54,7 +54,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{system_base}}/plugins/vue/vue.min.js"></script>
     {% endif %}
     <script src="{{system_base}}/plugins/vue/vue-resource.min.js"></script>
-    <script src="{{system_base}}/js/vue-gql.js"></script>
 
     <link rel="stylesheet" href="{{system_base}}/alt-component/dist/alt-component.css">
     <script src="{{system_base}}/alt-component/dist/alt-component.umd.min.js"></script>
@@ -115,11 +114,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    <script src="{{system_base}}/js/default.js" defer></script>
-    <script src="{{system_base}}/js/tab-ajax.js"></script>
-
-    <script src="{{system_base}}/dist/confirm.js" defer></script>
-
     <!-- plugins -->
     {% for plugin in plugins %}
     {% for js in plugin.setting.js %}
@@ -133,10 +127,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     {% endfor %}
 
-    <script src="{{system_base}}/dist/api.js" defer></script>
-
-    <script src="{{system_base}}/js/sidebar.js" defer></script>
-    <script src="{{system_base}}/js/control-sidebar.js" defer></script>
 
     <!-- overlayScrollbars -->
     <script src="{{system_base}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js" defer></script>
@@ -149,12 +139,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src="{{system_base}}/plugins/fancybox/jquery.fancybox.min.js" defer></script>
 
-    <!-- Vue dialog -->
-    <script src="{{system_base}}/dist/vue.dialog.js" defer></script>
+    <!-- webpack -->
+    <script src="{{system_base}}/dist/main.js" defer></script>
 
     <!-- SweetAlert2 -->
     <script src="{{system_base}}/plugins/sweetalert2/sweetalert2.min.js" defer></script>
 
+
+    <!-- Custom js -->
+    {% for js in custom_js %}
+    <script src="{{js}}" defer></script>
+    {% endfor %}
+
+
+
+    <script src="{{system_base}}/src/jquery.ajaxbox.js" defer></script>
 </head>
 
 {% set body = app.user.style.body|join(' ') %}
@@ -499,6 +498,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
+
+            {{custom_header|raw}}
+
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
