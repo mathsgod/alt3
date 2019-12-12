@@ -7,8 +7,8 @@ use Composer\Autoload\ClassLoader;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use R\Psr7\Request;
 use R\Psr7\Response;
+use R\Psr7\ServerRequest;
 use R\Psr7\Stream;
 use Symfony\Component\Yaml\Yaml;
 
@@ -470,17 +470,17 @@ class App extends \R\App
         $smtp = $this->config["user"]["smtp"];
 
         if ($smtp && $smtp->value) {
-            $this->IsSMTP();
-            $this->Host = (string) $smtp;
-            $this->SMTPAuth = true;
-            $this->Username = $this->config["user"]["smtp-username"];
-            $this->Password = $this->config["user"]["smtp-password"];
+            $mail->IsSMTP();
+            $mail->Host = (string) $smtp;
+            $mail->SMTPAuth = true;
+            $mail->Username = $this->config["user"]["smtp-username"];
+            $mail->Password = $this->config["user"]["smtp-password"];
         }
 
         return $mail;
     }
 
-    public function accessDeny(Request $request): ResponseInterface
+    public function accessDeny(ServerRequest $request): ResponseInterface
     {
         $uri = $request->getUri()->getPath();
         $uri = substr($uri, 1);

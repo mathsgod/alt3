@@ -21,10 +21,13 @@ class Config_list extends App\Page
 
             if ($category == "user") {
                 $t->add("Value", function ($o) {
-                    $x = new Xeditable\Text($o[1]);
-                    $x->pk = $o[0];
-                    $x->url = "Config/update";
-                    return $x;
+                    $input = html("x-input");
+                    $input->attr([
+                        "data-url" => "Config/update",
+                        "data-name" => $o[0],
+                        "value" => $o[1]
+                    ]);
+                    return $input;
                 });
             } else {
                 $t->add("Value", function ($o) {

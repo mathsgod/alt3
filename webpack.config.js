@@ -9,7 +9,8 @@ module.exports = {
             "./src/vue-gql.js",
             "./src/default.js",
             "./src/confirm.js",
-            "./src/vue.dialog.js"]
+            "./src/vue.dialog.js",
+            "./node_modules/x-html-bs4/dist/x-html-bs4.umd.js"]
     },
     module: {
         rules: [

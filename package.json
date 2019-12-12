@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "dependencies": {
     "webpack": "^4.41.2",
-    "x-html": "git+https://github.com/mathsgod/x-html.git"
+    "x-html-bs4": "git+https://github.com/mathsgod/x-html-bs4.git"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

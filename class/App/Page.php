@@ -2,11 +2,10 @@
 
 namespace App;
 
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use R\Psr7\Stream;
-use R\Psr7\JSONStream;
 use Exception;
+use R\Psr7\ServerRequest;
 
 class Page extends \R\Page
 {
@@ -166,7 +165,7 @@ class Page extends \R\Page
         return $p;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequest $request, ResponseInterface $response): ResponseInterface
     {
         $route = $request->getAttribute("route");
 
@@ -246,39 +245,29 @@ class Page extends \R\Page
         $data = $this->request->getParsedBody();
         $params = $this->request->getQueryParams();
 
-        if (isset($data["_pk"])) {
-            $class = "\\" . $this->module()->class;
-            $obj = new $class($data["_pk"]);
-            $name = $data["name"];
-            $value = $data["value"];
-            $obj->$name = $value;
-        } elseif (isset($params["xeditable"])) {
-            $name = $data["name"];
-            $value = $data["value"];
-            $obj->$name = $value;
-        } else {
-            $obj->bind($data);
 
-            if ($files = $this->request->getUploadedFiles()) {
-                foreach ($files as $name => $file) {
+        $obj->bind($data);
 
-                    if (property_exists($obj, $name)) {
-                        $obj->$name = (string) $file->getStream();
-                    }
-                    if (property_exists($obj, $name . "_name")) {
-                        $obj->{$name . "_name"} = $file->getClientFilename();
-                    }
+        if ($files = $this->request->getUploadedFiles()) {
+            foreach ($files as $name => $file) {
 
-                    if (property_exists($obj, $name . "_type")) {
-                        $obj->{$name . "_type"} = $file->getClientMediaType();
-                    }
+                if (property_exists($obj, $name)) {
+                    $obj->$name = (string) $file->getStream();
+                }
+                if (property_exists($obj, $name . "_name")) {
+                    $obj->{$name . "_name"} = $file->getClientFilename();
+                }
 
-                    if (property_exists($obj, $name . "_size")) {
-                        $obj->{$name . "_size"} = $file->getSize();
-                    }
+                if (property_exists($obj, $name . "_type")) {
+                    $obj->{$name . "_type"} = $file->getClientMediaType();
+                }
+
+                if (property_exists($obj, $name . "_size")) {
+                    $obj->{$name . "_size"} = $file->getSize();
                 }
             }
         }
+
 
 
         $obj->save();

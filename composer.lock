@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb0d2b30ffd57bc3a498b68b729c6b1d",
+    "content-hash": "921e4a67d21161724b6011b07cb5b254",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -445,17 +445,17 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/p-query.git",
-                "reference": "d0bc60076e419ace992acfa3bde238d541f1a89a"
+                "reference": "8a736df1566cd8befca174960a61f4f52c405937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.2.0-9af92c.zip",
-                "reference": "d0bc60076e419ace992acfa3bde238d541f1a89a",
-                "shasum": "08cb69e9d819c581714ecb48c114ec1b8015e8cc"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.2.1-ba0f39.zip",
+                "reference": "8a736df1566cd8befca174960a61f4f52c405937",
+                "shasum": "8e4a5da71c2c9fbd0b8584647008c58ec36ecc43"
             },
             "require": {
                 "php": ">=7.0",
@@ -483,7 +483,7 @@
                 }
             ],
             "description": "Raymond php html library",
-            "time": "2019-11-27T10:36:56+00:00"
+            "time": "2019-12-06T10:03:03+00:00"
         },
         {
             "name": "mathsgod/r",

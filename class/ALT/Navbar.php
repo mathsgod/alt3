@@ -47,46 +47,18 @@ class Navbar extends \P\HTMLElement
         return $a;
     }
 
-    public function addButtonGroup()
+    public function addButtonGroup(): ButtonGroup
     {
         $bg = new ButtonGroup($this->page);
         $this->_content->append($bg);
         return $bg;
     }
 
-    public function addDropdown($label)
+    public function addDropdown(string $label = null)
     {
-        $dd = new \BS\Dropdown($label);
+        $dd = new Dropdown($label);
         $this->_content->append($dd);
         return $dd;
-    }
-
-    public function addButtonDropdown($label)
-    {
-        $bdd = new ButtonDropdown($this->page, $label);
-        $bdd->button->classList->add("navbar-btn");
-        $bdd->button->classList->add("btn-primary");
-        $bdd->button->classList->add("btn-sm");
-
-
-        $this->_content->append($bdd);
-        return $bdd;
-        $bdd->addClass("navbar-btn");
-        $btn = $bdd->Button();
-        $btn->addClass("btn-primary btn-sm")->text($this->page->translate($label));
-        $btn->append(" <span class='caret'></span>");
-        $this->_content->append($bdd);
-        return $bdd;
-    }
-
-    public function addLayoutReset()
-    {
-        $btn = new Button("primary", "sm", "UI/reset_layout?uri=" . $this->page->path());
-        $this->_content->append($btn);
-        p($btn)->addClass("navbar-btn");
-        p($btn)->text("Layout reset");
-        $btn->icon("fa fa-fw fa-sync");
-        return $btn;
     }
 
     public function __toString()

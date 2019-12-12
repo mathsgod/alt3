@@ -1,6 +1,8 @@
 <?php
-namespace App;
-class MailLog extends Model {
-}
 
-?>
+namespace App;
+
+class MailLog extends Model
+{
+    use ModelTrait;
+}

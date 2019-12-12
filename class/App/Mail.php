@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 class Mail extends Core\Mail
@@ -18,7 +19,7 @@ class Mail extends Core\Mail
 
             $l->host = $this->Host;
 
-            $l->save(false);
+            $l->save();
         }
 
         return parent::send();
