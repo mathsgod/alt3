@@ -15,9 +15,10 @@ class CardHeader extends HTMLDivElement
         parent::__construct();
         $this->page = $page;
         $this->setAttribute("is", "card-header");
+        $this->classList->add("card-header");
 
-        //$this->tools = new BoxTools($page);
-        //$this->append($this->tools);
+        $this->tools = new CardTools($page);
+        $this->appendChild($this->tools);
     }
 
     public function addButton($label, $uri)
@@ -32,7 +33,7 @@ class CardHeader extends HTMLDivElement
     public function __set($name, $value)
     {
         if ($name == "title") {
-            $template = p("<span></span>");
+            $template = p("<h5 class='card-title'></h5>");
             $template->text($value);
             $template->attr("slot", "title");
             $this->prepend($template[0]);

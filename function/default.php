@@ -17,3 +17,11 @@ if (!function_exists("tick")) {
         }
     }
 }
+
+
+if (!function_exists("nf")) {
+    function nf($value)
+    {
+        return number_format($value, 2);
+    }
+}

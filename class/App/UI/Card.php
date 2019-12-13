@@ -11,8 +11,8 @@ class CardClassTokenList extends \P\DOMTokenList
     {
         $values = $this->values();
         if ($this->values()) {
-            if (in_array($value, Card::CARD_CLASS)) {
-                $this->value = implode(" ", array_diff($values, Card::CARD_CLASS));
+            if (in_array($value, Card::CARD_TYPE)) {
+                $this->value = implode(" ", array_diff($values, Card::CARD_TYPE));
             }
         }
         parent::offsetSet($offset, $value);
@@ -21,7 +21,14 @@ class CardClassTokenList extends \P\DOMTokenList
 
 class Card extends HTMLDivElement
 {
-    const CARD_CLASS = ["card-default", "card-primary", "card-success", "card-info", "card-warning", "card-danger"];
+    const CARD_TYPE = [
+        "card-primary",
+        "card-secondary",
+        "card-success",
+        "card-info",
+        "card-warning",
+        "card-danger"
+    ];
 
     const ATTRIBUTES = [
         "dataUrl" => ["name" => "data-url"],
@@ -35,24 +42,32 @@ class Card extends HTMLDivElement
     protected $page;
     private static $NUM = 0;
 
-    public function __construct(Page $page)
+    public $outline = true;
+
+    public function __construct(Page $page, string $type = "")
     {
         parent::__construct();
         $this->page = $page;
 
-        //$this->classList->add("card");
+        $this->classList = new CardClassTokenList($this, "class");
+        $this->classList->add("card");
         $this->setAttribute("is", "card");
-
-
-        /*        $ui = \App\UI::_($this->dataUri);
-        if ($ui->layout) {
-            $layout = json_decode($ui->layout, true);
-            if ($layout["collapsed"]) {
-                $this->collapsed = $layout["collapsed"];
-            }
+        if ($type) {
+            $this->classList->add("card-$type");
         }
 
-        self::$NUM++;*/
+        self::$NUM++;
+    }
+
+    public function __toString()
+    {
+        $this->setAttribute("outline", $this->outline);
+        if ($this->outline) {
+            $this->classList->add("card-outline");
+        } else {
+            $this->classList->remove("card-outline");
+        }
+        return parent::__toString();
     }
 
     public function collapsible(bool $collapsible)
@@ -87,14 +102,6 @@ class Card extends HTMLDivElement
             return $this->footer;
         }
 
-        switch ($name) {
-            case "classList":
-                if (!$this->hasAttribute("class")) {
-                    $this->setAttribute("class", "");
-                }
-                return new CardClassTokenList($this->attributes->getNamedItem("class"));
-                break;
-        }
         return parent::__get($name);
     }
 

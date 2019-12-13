@@ -4,8 +4,8 @@ namespace ALT;
 
 class Dropdown extends \P\HTMLDivElement
 {
-    private $button = null;
-    private $menu = null;
+    public $button = null;
+    public $menu = null;
 
     public function __construct(string $label = null)
     {
@@ -13,7 +13,7 @@ class Dropdown extends \P\HTMLDivElement
         $this->classList->add("btn-group");
 
         $this->button = $this->ownerDocument->createElement("button", $label);
-        $this->button->classList->add("btn btn-primary dropdown-toggle");
+        $this->button->classList->add("btn dropdown-toggle");
         $this->button->setAttribute("data-toggle", "dropdown");
         $this->appendChild($this->button);
 

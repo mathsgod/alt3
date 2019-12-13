@@ -88,9 +88,9 @@ class Page extends \R\Page
         return $rt;
     }
 
-    protected function createCard(): UI\Card
+    protected function createCard(string $type = ""): UI\Card
     {
-        return new UI\Card($this);
+        return new UI\Card($this, $type);
     }
 
     protected function createForm($content): UI\Form

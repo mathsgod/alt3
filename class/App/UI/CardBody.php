@@ -14,5 +14,6 @@ class CardBody extends HTMLDivElement
         $this->page = $page;
 
         $this->setAttribute("is", "card-body");
+        $this->classList->add("card-body");
     }
 }

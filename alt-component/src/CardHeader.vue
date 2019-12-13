@@ -1,9 +1,8 @@
 <template>
   <div class="card-header">
-    <h3 class="card-title">
-      <slot name="title"></slot>
-    </h3>
     <slot></slot>
+    <slot name="title"></slot>
+    <slot name="tools"></slot>
   </div>
 </template>
 
