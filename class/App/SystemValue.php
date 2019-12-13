@@ -1,9 +1,10 @@
 <?php
+
 namespace App;
 
 class SystemValue extends Model
 {
-    public static function _($name, $lang = 'en')
+    public static function _(string $name, string $lang = 'en')
     {
         return self::First(["language" => $lang, "name" => $name]);
     }
@@ -13,12 +14,8 @@ class SystemValue extends Model
         return $this->value;
     }
 
-    private static $_cache = [];
     public function values()
     {
-        if (is_null($lang)) {
-            $lang = \My::Language();
-        }
         // test json
         $v = $this->value;
         if (!preg_match(
@@ -44,5 +41,3 @@ class SystemValue extends Model
         return $vals;
     }
 }
-
-?>
