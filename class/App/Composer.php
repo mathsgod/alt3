@@ -10,7 +10,7 @@ class Composer
         $this->app = $app;
     }
 
-    public function auth()
+    public function auth(): array
     {
         return json_decode(file_get_contents($this->path() . "/auth.json"), true);
     }
@@ -50,7 +50,7 @@ class Composer
         }
     }
 
-    public function getPHP()
+    public function getPHP(): string
     {
         $v = PHP_VERSION_ID;
         $v = (string) intval($v / 100);
@@ -84,7 +84,7 @@ class Composer
         return $ret;
     }
 
-    public function hasPackage($package)
+    public function hasPackage($package): bool
     {
         foreach ($this->installed() as $p) {
             if ($p["name"] == $package) {
