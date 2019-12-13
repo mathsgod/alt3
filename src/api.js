@@ -27,7 +27,5 @@ class API {
     query(data) {
         return Vue.gql.query("api", data);
     }
-
-}
-
-var api = new API();
+};
+window.api = new API();

@@ -2,7 +2,8 @@ module.exports = {
     mode: "production",
     entry: {
         index: "./src/index.js",
-        main: ["./src/api.js",
+        main: [
+            "./src/api.js",
             "./src/control-sidebar.js",
             "./src/sidebar.js",
             "./src/tab-ajax.js",
