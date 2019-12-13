@@ -4,7 +4,7 @@ namespace App;
 
 class AuthLock extends Model
 {
-    public static function IsLock()
+    public static function IsLock(): bool
     {
         $ip = $_SERVER["REMOTE_ADDR"];
         if ($ip) {
