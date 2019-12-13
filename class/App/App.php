@@ -20,6 +20,7 @@ class App extends \R\App
     public $locale = "zh-hk";
     public $plugins = [];
     public $setting = [];
+    public $system_value = [];
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
@@ -73,6 +74,14 @@ class App extends \R\App
             $this->user = new User($_SESSION["app"]["user_id"]);
         }
         $this->user_id = $this->user->user_id;
+
+        if ($this->user->language) {
+            $this->locale = $this->user->language;
+        }
+
+        foreach (SystemValue::Query() as $sv) {
+            $this->system_value[$sv->language][$sv->name] = $sv;
+        }
     }
 
     public function run()
@@ -528,6 +537,14 @@ class App extends \R\App
         return new Composer($this);
     }
 
+    public function sv(string $name, $locale = null)
+    {
+        if (!$locale) $locale = $this->locale;
+
+        if ($this->system_value[$locale][$name]) {
+            return $this->system_value[$locale][$name]->values();
+        }
+    }
 
     public function savePlace()
     {

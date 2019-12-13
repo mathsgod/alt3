@@ -5,8 +5,8 @@ namespace App;
 trait ModelTrait
 {
     public static $_app;
-    
-    public function canRead(): bool
+
+    public function canRead()
     {
         if (self::$_app->user->isAdmin()) {
             return true;
@@ -31,7 +31,7 @@ trait ModelTrait
         return false;
     }
 
-    public function canUpdate(): bool
+    public function canUpdate()
     {
         if (self::$_app->user->isAdmin()) {
             return true;
@@ -58,7 +58,7 @@ trait ModelTrait
         return false;
     }
 
-    public function canDelete(): bool
+    public function canDelete()
     {
 
         if (self::$_app->user->isAdmin()) {
@@ -94,7 +94,7 @@ trait ModelTrait
     }
 
 
-    public function uri($a = null): string
+    public function uri($a = null)
     {
         $reflect = new \ReflectionClass($this);
         $uri = $reflect->getShortName();
