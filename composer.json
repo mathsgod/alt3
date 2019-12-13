@@ -50,7 +50,8 @@
         "ckeditor/ckeditor": "^4.13"
     },
     "suggest": {
-        "phpunit/phpunit": "The PHP Unit Testing framework.",
+        "phpoffice/phpexcel": "phpoffice",
+        "phpunit/phpunit": "phpunit",
         "monolog/monolog": "Allows more advanced logging of the application flow"
     }
 }
