@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-async function __add_favorite() {
+window.__add_favorite = async function () {
     var label = prompt("請輸入標籤", window.document.title);
     if (label != undefined && label != "") {
         var resp = await Vue.gql.mutation("api", {
