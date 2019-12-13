@@ -540,9 +540,9 @@ class App extends \R\App
     public function sv(string $name, $locale = null)
     {
         if (!$locale) $locale = $this->locale;
-
-        if ($this->system_value[$locale][$name]) {
-            return $this->system_value[$locale][$name]->values();
+        if ($sv = $this->system_value[$locale][$name]) {
+            if ($sv->_value) return $sv->_value;
+            return $sv->_value = $sv->values();
         }
     }
 
