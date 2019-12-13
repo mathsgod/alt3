@@ -10,4 +10,9 @@ abstract class Model extends Core\Model
         $key = $this->_key();
         return $this->$key;
     }
+
+    public static function _sv(string $name)
+    {
+        return self::$_app->sv($name);
+    }
 }
