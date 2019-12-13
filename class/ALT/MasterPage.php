@@ -121,7 +121,7 @@ class MasterPage extends \R\Page
         $this->data["alerts"] = $this->app->flushMessage();
         $this->data["app"] = $this->app;
 
-        if ($_SESSION["app"]["org_user"]) {
+        if ($_SESSION["app"]["org_user_id"]) {
             $this->data["allow_cancel_viewas"] = true;
         }
 

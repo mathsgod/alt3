@@ -67,12 +67,11 @@ class App extends \R\App
 
 
         //user
-        if (!$_SESSION["app"]["user"]) {
+        if (!$_SESSION["app"]["user_id"]) {
             $this->user = new User(2);
         } else {
-            $this->user = new User($_SESSION["app"]["user"]->user_id);
+            $this->user = new User($_SESSION["app"]["user_id"]);
         }
-        $_SESSION["app"]["user"] = $this->user;
         $this->user_id = $this->user->user_id;
     }
 
@@ -319,8 +318,10 @@ class App extends \R\App
                 $twig_file = $pi["system_root"] . "/" . $file;
             }
         } else {
-            if (is_readable($this->pathInfo()["document_root"] . $file)) {
-                $twig_file = $this->pathInfo()["document_root"] . $file;
+            if (is_readable($file)) {
+                $twig_file = $file;
+            } elseif (is_readable($pi["document_root"] . $file)) {
+                $twig_file = $pi["document_root"] . $file;
             }
         }
 
@@ -370,10 +371,11 @@ class App extends \R\App
             $composer_root = $document_root;
         } else if (file_exists($cms_root . "/composer.json")) {
             $composer_root = $cms_root;
+        } else if (file_exists($cms_root . "/composer/composer.json")) {
+            $composer_root = $cms_root . "/composer";
         } elseif (file_exists($system_root . "/composer.json")) {
             $composer_root = $system_root;
         }
-
 
         $composer_base = substr($composer_root, strlen($document_root));
         $composer_base = str_replace(DIRECTORY_SEPARATOR, "/", $composer_base);

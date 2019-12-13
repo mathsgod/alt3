@@ -11,6 +11,6 @@ class _logout extends R\Page
 
         unset($_SESSION["app"]);
 
-        $this->response = $this->response->withHeader("location", $pi["system_base"]);
+        $this->response = $this->response->withHeader("location", $pi["cms_base"]);
     }
 }
