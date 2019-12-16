@@ -429,8 +429,6 @@ class App extends \R\App
             $module = new Module($name, $config);
             $modules[$name] = $module;
         }
-        //  outp($modules);
-        //d/ie();
 
         $cms_root = $pi["cms_root"];
         foreach (glob($cms_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $m) {
