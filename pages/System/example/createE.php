@@ -8,6 +8,16 @@ class System_example_createE extends ALT\Page
 
     public function get()
     {
+        $e = $this->createE([
+            "t1" => "hello"
+        ]);
+        $e->add("inputSelect")->inputSelect("t1", ["a", "b", "c"]);
+
+        $this->write($this->createForm($e));
+
+
+
+
         $e = $this->createE($this->app->user);
         $e->add("Username")->input("username");
         $e->add("remark")->textarea("remark");

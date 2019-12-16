@@ -16,18 +16,7 @@ class Button extends \P\HTMLButtonElement
 
     public function text($text)
     {
-        return parent::text($this->page->translate($text));
-    }
-
-    public function __toString()
-    {
-        if ($href = $this->attr("href")) {
-            if (!\App\ACL::Allow($href)) {
-                return "";
-            }
-        }
-
-        return parent::__toString();
+        p($this)->text($this->page->translate($text));
     }
 
     public function icon(string $icon): Button
@@ -35,7 +24,6 @@ class Button extends \P\HTMLButtonElement
         $this->prepend(p("<i class='$icon'></i>")[0]);
         return $this;
     }
-
 
     public function label($label)
     {
@@ -57,8 +45,8 @@ class Button extends \P\HTMLButtonElement
 
     public function fancybox()
     {
-        $this->attr("data-type", "ajax");
-        $this->attr("data-fancybox", true);
+        p($this)->attr("data-type", "ajax");
+        p($this)->attr("data-fancybox", true);
         return $this;
     }
 }

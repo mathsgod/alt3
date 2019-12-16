@@ -636,12 +636,13 @@ HTML
         return $p;
     }
 
-    public function inputSelect($field)
+    public function inputSelect($field, $options = [])
     {
-        $p = new \BS\InputSelectCollection();
+        $p = new \ALT\InputSelectCollection();
+
         foreach ($this->cell as $cell) {
 
-            $is = new InputSelect();
+            $is = new \ALT\InputSelect();
             $input = p($is)->find("input");
             $input->attr("data-field", $field);
             $input->attr("name", $field);
@@ -655,11 +656,20 @@ HTML
                 }
             }
 
+            foreach ($options as $v) {
+                $is->addItem($v);
+            }
+
             $p[] = $is;
         }
 
         if ($this->createTemplate) {
-            $is = new \BS\InputSelect();
+            $is = new \ALT\InputSelect();
+
+            foreach ($options as $v) {
+                $is->addItem($v);
+            }
+
             p($is)->find("input")->attr("data-field", $field)->attr("name", $field);
             $p[] = $is;
             $this->c_tpl[] = $is;
