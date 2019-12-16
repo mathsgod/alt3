@@ -44,30 +44,15 @@ class Card extends HTMLDivElement
 
     public $outline = true;
 
-    public function __construct(Page $page, string $type = "")
+    public function __construct(Page $page)
     {
         parent::__construct();
         $this->page = $page;
 
         $this->classList = new CardClassTokenList($this, "class");
         $this->classList->add("card");
-        $this->setAttribute("is", "card");
-        if ($type) {
-            $this->classList->add("card-$type");
-        }
 
         self::$NUM++;
-    }
-
-    public function __toString()
-    {
-        $this->setAttribute("outline", $this->outline);
-        if ($this->outline) {
-            $this->classList->add("card-outline");
-        } else {
-            $this->classList->remove("card-outline");
-        }
-        return parent::__toString();
     }
 
     public function collapsible(bool $collapsible)

@@ -13,13 +13,16 @@ class System_example_card extends ALT\Page
         $dd = $card->header->tools->addDropdown("A");
         $dd->addItem("test", "User/1/v");
 
-
-
-
         $card->body->innerText = "test";
 
-        $this->write($card);
+        $card->collapsible(true);
 
-        $c = $this->createCard();
+
+        $div = p("div");
+        $div[0]->appendChild($card);
+
+        $this->write($div);
+
+        //$c = $this->createCard();
     }
 }

@@ -7,7 +7,6 @@ module.exports = {
             "./src/control-sidebar.js",
             "./src/sidebar.js",
             "./src/tab-ajax.js",
-            "./src/vue-gql.js",
             "./src/default.js",
             "./src/confirm.js",
             "./src/vue.dialog.js",

@@ -90,7 +90,13 @@ class Page extends \R\Page
 
     protected function createCard(string $type = ""): UI\Card
     {
-        return new UI\Card($this, $type);
+        $card = new UI\Card($this);
+        $card->classList->add("card-outline");
+        if ($type) {
+            $card->classList->add("card-$type");
+        }
+
+        return $card;
     }
 
     protected function createForm($content): UI\Form

@@ -15,7 +15,6 @@ class CardTools extends  HTMLDivElement
     {
         parent::__construct();
         $this->page = $page;
-        $this->setAttribute("slot", "tools");
         $this->classList->add("card-tools");
     }
 

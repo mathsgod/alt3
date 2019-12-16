@@ -14,7 +14,6 @@ class CardHeader extends HTMLDivElement
     {
         parent::__construct();
         $this->page = $page;
-        $this->setAttribute("is", "card-header");
         $this->classList->add("card-header");
 
         $this->tools = new CardTools($page);
@@ -35,7 +34,6 @@ class CardHeader extends HTMLDivElement
         if ($name == "title") {
             $template = p("<h5 class='card-title'></h5>");
             $template->text($value);
-            $template->attr("slot", "title");
             $this->prepend($template[0]);
             return;
         }
