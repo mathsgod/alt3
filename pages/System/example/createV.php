@@ -11,6 +11,11 @@ class System_example_createV extends ALT\Page
         })->cell()->css("font-family", "consolas");
 
 
+        $v->add("Alink", function ($o) {
+            return $o;
+        })->alink("v");;
+
+
         $this->write($v);
     }
 }
