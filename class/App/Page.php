@@ -74,7 +74,9 @@ class Page extends \R\Page
 
     protected function createTab($prefix = null): UI\Tab
     {
-        return new UI\Tab($this, $prefix);
+        $tab = new UI\Tab($this, $prefix);
+        $tab->classList->add("card-primary");
+        return $tab;
     }
 
     protected function createRT2($objects, $module = null): UI\RT2

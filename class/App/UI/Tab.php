@@ -16,8 +16,8 @@ class Tab extends Card
     {
         parent::__construct($page);
         $this->classList->add("card-outline card-outline-tabs border-top-0");
-        $this->setAttribute("primary", true);
-
+        
+        
         $this->navs = $this->ownerDocument->createElement("ul");
         $this->navs->classList->add("nav");
         $this->navs->classList->add("nav-tabs");
@@ -110,11 +110,15 @@ class Tab extends Card
         $i = new TabItem();
 
         $a = p("a")->attr("href", "#tab-{$tab_id}")->text($label)->appendTo($i->li);
+        $a->addClass("nav-link");
+        $prefix = $this->getAttribute("prefix");
+        $id = "tab-{$prefix}{$tab_id}";
+        $a->attr("data-target", "#$id");
         $a->attr("data-toggle", "tab");
-        $this->navs->append($i->li);
+        p($this->navs)->append($i->li);
 
-        p($i->div)->attr("id", "tab-$tab_id")->append($content);
-        $this->content->append($i->div);
+        p($i->div)->attr("id", $id)->append($content);
+        p($this->content)->append($i->div);
         return $i;
     }
 }
