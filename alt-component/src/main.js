@@ -1,5 +1,12 @@
 import VueRegisterElement from "vue-register-element/dist/main.js";
 
+import grid from "./Grid";
+VueRegisterElement("grid", grid);
+
+import grid_section from "./GridSection";
+VueRegisterElement("grid-section", grid_section);
+
+
 import Card from "./Card.vue";
 import CardBody from "./CardBody.vue";
 import CardHeader from "./CardHeader.vue";

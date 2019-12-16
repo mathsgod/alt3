@@ -86,25 +86,15 @@ class Page extends \App\Page
         $route = $this->request->getAttribute("route");
         $action = $route->action;
 
-        $grid = new Grid();
+        $grid = new Grid($sizes);
         $uri = $this->module()->name . "/" . $action . "/grid[" . $grid->attr('grid-num') . "]";
         $grid->attr("data-uri", $uri);
         // load layout
-        //$ui = \App\UI::_($uri);
-        //if ($ui->layout) {
-        //  $grid->layout = json_decode($ui->layout, true);
-        //}
+        $ui = $this->app->ui($uri);
 
-        foreach ($sizes as $s) {
-            $row = $grid->addRow();
-            foreach (range(1, $s) as $a) {
-                $col = floor(12 / $s);
-                $section = p("section");
-                $section->attr("is", "alt-grid-section");
-                $section->addClass("col-md-$col ui-sortable connectedSortable");
-                $row->append($section);
-            }
-        }
+        $grid->layout = $ui->layout();
+
+
 
         return $grid;
     }

@@ -15,6 +15,7 @@ class CardHeader extends HTMLDivElement
         parent::__construct();
         $this->page = $page;
         $this->classList->add("card-header");
+        $this->setAttribute("is","card-header");
 
         $this->tools = new CardTools($page);
         $this->appendChild($this->tools);

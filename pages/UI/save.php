@@ -3,11 +3,12 @@
 /**
  * Created By: Raymond Chong
  */
+
 use App\UI;
 
 class UI_save extends App\Page
 {
-    public function saveBox()
+    public function saveCard()
     {
 
         $w = [];
@@ -62,8 +63,8 @@ class UI_save extends App\Page
         if ($_POST["type"] == "grid") {
             $this->saveGrid();
             return ["code" => 200];
-        } elseif ($_POST["type"] == "box") {
-            $this->saveBox();
+        } elseif ($_POST["type"] == "card") {
+            $this->saveCard();
             return ["code" => 200];
         } elseif ($_POST["type"] == "fav") {
             $this->saveFav();
@@ -79,7 +80,7 @@ class UI_save extends App\Page
             return ["code" => 200];
         }
 
-        $uri = App::DB()->quote($_POST["uri"]);
+        $uri = $this->app->db->quote($_POST["uri"]);
         if ($_POST["RT"]) {
             $ui = UI::_($_POST["uri"]);
             $layout = $ui->layout();
@@ -135,7 +136,7 @@ class UI_save extends App\Page
         $layout = $o->Layout();
         foreach (json_decode($_POST["data"], true) as $sequence => $value) {
             $name = $value["index"];
-            $layout[$name]["show"] = (bool)$value["checked"];
+            $layout[$name]["show"] = (bool) $value["checked"];
             $layout[$name]["sequence"] = $sequence;
         }
         $o->layout = json_encode($layout);
@@ -151,5 +152,3 @@ class UI_save extends App\Page
         return;
     }
 }
-
-?>

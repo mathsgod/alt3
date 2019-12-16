@@ -589,4 +589,21 @@ class App extends \R\App
 
         return true;
     }
+
+    public function ui(string $uri): UI
+    {
+
+        $ui = UI::Query([
+            "user_id" => $this->user_id,
+            "uri" => $uri
+        ])->first();
+
+        if (!$ui) {
+            $ui = new UI();
+            $ui->user_id = $this->user_id;
+            $ui->uri = $uri;
+        }
+
+        return $ui;
+    }
 }

@@ -49,6 +49,7 @@ class Card extends HTMLDivElement
         parent::__construct();
         $this->page = $page;
 
+        $this->setAttribute("is", "card");
         $this->classList = new CardClassTokenList($this, "class");
         $this->classList->add("card");
 
@@ -57,6 +58,7 @@ class Card extends HTMLDivElement
 
     public function collapsible(bool $collapsible)
     {
+        $this->header;
         $this->collapsible = $collapsible;
         return $this;
     }

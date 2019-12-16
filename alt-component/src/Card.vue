@@ -19,7 +19,16 @@ export default {
     danger: Boolean,
     dark: Boolean,
     outline: Boolean,
-    loading: Boolean
+    loading: Boolean,
+    collapsible: {
+      type: Boolean,
+      default: false
+    },
+    pinable: {
+      type: Boolean,
+      default: false
+    },
+    dataUri: String
   },
   data() {
     return {
@@ -56,7 +65,47 @@ export default {
       }
 
       return c;
+    },
+    header() {
+      return this.$children.filter(o => {
+        return o.$vnode.componentOptions.tag == "card-header";
+      });
+    },
+    body() {
+      return this.$children.filter(o => {
+        return o.$vnode.componentOptions.tag == "card-body";
+      });
+    },
+    footer() {
+      return this.$children.filter(o => {
+        return o.$vnode.componentOptions.tag == "card-footer";
+      });
     }
+  },
+  mounted() {
+    this.header.forEach(h => {
+      h.collapsible = this.collapsible;
+      h.pinable = this.pinable;
+
+      h.$on("collapsed", collapsed => {
+        this.$emit("collapsed", collapsed);
+
+        if (this.dataUri) {
+          var data = {
+            type: "card",
+            layout: {
+              collapsed: collapsed
+            },
+            uri: this.dataUri
+          };
+          this.$http.post("UI/save", data);
+        }
+      });
+
+      h.$on("pinned", pinned => {
+        this.$emit("pinned", pinned);
+      });
+    });
   },
   methods: {
     showLoading() {
@@ -64,6 +113,12 @@ export default {
     },
     hideLoading() {
       this.myLoading = false;
+    },
+    pin() {
+      this.header.forEach(h => h.pin());
+    },
+    unpin() {
+      this.header.forEach(h => h.unpin());
     }
   }
 };

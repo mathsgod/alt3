@@ -2,6 +2,8 @@
 
 namespace ALT;
 
+use App\UI\Card;
+
 class Grid extends \P\Query
 {
 	private static $NUM = 0;
@@ -9,13 +11,23 @@ class Grid extends \P\Query
 	public $layout;
 	public $sortable = true;
 	private $_location = [];
-	public function __construct()
+	public function __construct(array $sizes)
 	{
 		parent::__construct("div");
-		$this->attr("is", "alt-grid");
-		//$this->addClass("grid");
+		$this->attr("is", "grid");
 		$this->attr("grid-num", self::$NUM);
 		self::$NUM++;
+
+		foreach ($sizes as $s) {
+			$row = $this->addRow();
+			foreach (range(1, $s) as $a) {
+				$col = floor(12 / $s);
+				$section = p("section");
+				$section->attr("is", "grid-section");
+				$section->addClass("col-md-$col ui-sortable connectedSortable");
+				$row->append($section);
+			}
+		}
 	}
 
 	private $_row = [];
@@ -28,56 +40,60 @@ class Grid extends \P\Query
 		return $row;
 	}
 
-	public function __toString(): string
+	private function findRowSection($n): array
 	{
-		if ($this->sortable) {
-			$this->attr(":sortable", "true");
-		}
+		foreach ($this->layout as $row => $rows) {
 
-		foreach ($this->_location as $row => $rows) {
-			$r = $this->_row[$row];
 			foreach ($rows as $section => $sections) {
-				$s = $r->find("section")[$section];
-				// sorting
-				ksort($sections);
-				foreach ($sections as $items) {
-					p($s)->append((string)$items);
-				}
-			}
-		}
-		return parent::__toString();
-	}
 
-	public function add($box, $location)
-	{
-		if ($box instanceof \App\UI\Box || $box instanceof \App\UI\Tab) {
-			$box->collapsible(true);
-			$box->pinable(true);
-			p($box)->attr("grid-item", $this->item);
-		}
+				foreach ($sections as  $seq => $num) {
 
-		if ($this->layout) {
-			foreach ($this->layout as $row => $sections) {
-				foreach ($sections as $section => $items) {
-					foreach ($items as $order => $item) {
-						if ($item == $this->item) {
+					if ($num == $n) {
 
-							if ($this->_location[$row][$section][intval($order)]) {
-								$this->_location[$row][$section][] = $box;
-							} else {
-								$this->_location[$row][$section][intval($order)] = $box;
-							}
-							$this->item++;
-							return;
-						}
+						return [$row, $section, $seq];
 					}
 				}
 			}
 		}
-		
+		return [0, 0, 0];
+	}
 
-		$this->_location[$location[0]][$location[1]][] = $box;
+	public function add(Card $card,  $location = [0, 0, 0])
+	{
+		if ($card instanceof Card) {
+			$card->collapsible(true);
+			$card->pinable(true);
+			p($card)->attr("grid-item", $this->item);
+		}
 
+		if ($this->layout) {
+			$location = $this->findRowSection($this->item);
+		}
+
+		$row = $this->_row[$location[0]];
+		p($card)->attr("grid-sequence", $location[2]);
+
+
+		$section = $row->find("section")[$location[1]];
+		p($section)->append($card);
+
+
+		$this->item++;
+
+		//order this seq
+		$divs = [];
+
+		foreach (p($section)->children("div") as $d) {
+			$divs[] = $d;
+		}
+
+		usort($divs, function ($a, $b) {
+			return $a->getAttribute("grid-sequence") <=> $b->getAttribute("grid-sequence");
+		});
+
+		foreach ($divs as $div) {
+			p($section)->append($div);
+		}
 
 		return $this;
 	}

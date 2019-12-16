@@ -8,19 +8,92 @@
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <title>alt-component</title>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <link rel="stylesheet" href="adminlte/dist/css/AdminLTE.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.1/vue-resource.min.js"></script>
+
+
+  <link rel="stylesheet" href="http://127.0.0.1/alt3/adminlte/dist/css/AdminLTE.min.css" />
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
 </head>
 
 <body class="hold-transition fl">
   <div class="wrapper container">
 
-    <card>
+    <card :collapsible="true" class="card-outline card-primary" data-uri="UI/save">
       <card-header>Card header</card-header>
       <card-body>body</card-body>
       <card-footer>footer</card-footer>
     </card>
+
+    <hr />
+
+    <grid>
+      <div class=" row">
+        <grid-section class="col-md-6">
+
+          <card grid-item="1" :collapsible="true" class="card-outline card-primary" :pinable="true">
+            <card-header>Card header</card-header>
+            <card-body>body</card-body>
+            <card-footer>footer</card-footer>
+          </card>
+
+
+          <card grid-item="2" :collapsible="true" class="card-outline card-primary" :pinable="true">
+            <card-header>Card header 2</card-header>
+            <card-body>body 2</card-body>
+            <card-footer>footer 2</card-footer>
+          </card>
+
+        </grid-section>
+
+        <grid-section class="col-md-6">
+
+          <card grid-item="3" :collapsible="true" class="card-outline card-primary" :pinable="true">
+            <card-header>Card header3</card-header>
+            <card-body>body</card-body>
+            <card-footer>footer</card-footer>
+          </card>
+
+
+          <card grid-item="4" :collapsible="true" class="card-outline card-primary" :pinable="true">
+            <card-header>Card header 4</card-header>
+            <card-body>body 2</card-body>
+            <card-footer>footer 2</card-footer>
+          </card>
+
+        </grid-section>
+
+      </div>
+    </grid>
+
+
+    <div id="div1">
+
+
+
+    </div>
+
+
   </div>
+
+  <script>
+    var vm = new Vue({
+      el: "#div1"
+    });
+  </script>
 
 </body>
 
