@@ -17,8 +17,6 @@ class E extends HTMLDivElement
     {
         parent::__construct();
         $this->page = $page;
-        //$this->setAttribute("is", "alt-e");
-        $this->classList->add("form-horizontal");
         $this->object = $object;
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;

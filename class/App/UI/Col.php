@@ -674,7 +674,8 @@ HTML
     public function checkboxes($field)
     {
         $p = p();
-        foreach ($this->cell as $cell) { }
+        foreach ($this->cell as $cell) {
+        }
         return $p;
     }
 
@@ -962,7 +963,8 @@ HTML
                 try {
                     $data_value = is_object($object) ? $object->$field : $object[$field];
                     $select->attr(":value", json_encode($data_value));
-                } catch (\Exception $e) { }
+                } catch (\Exception $e) {
+                }
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
@@ -993,15 +995,15 @@ HTML
     {
         $p = p();
         foreach ($this->cell as $cell) {
-            $block = p("p")->appendTo($cell);
-            $block->addClass("help-block");
+            $block = p("span")->appendTo($cell);
+            $block->addClass("form-text text-muted");
             $block->html($text);
             $p[] = $block[0];
         }
 
         if ($this->createTemplate) {
-            $block = p("p");
-            $block->addClass("help-block");
+            $block = p("span");
+            $block->addClass("form-text text-muted");
             $block->html($text);
             $this->c_tpl[] = $block[0];
             $this->setAttribute("c-tpl", $this->c_tpl);

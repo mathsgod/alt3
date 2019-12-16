@@ -12,7 +12,10 @@ class System_example_createE extends ALT\Page
         $e->add("Username")->input("username");
         $e->add("remark")->textarea("remark");
 
-        $e->add("Username")->input("username")->required();
+        $col = $e->add("Username");
+        $col->input("username")->required();
+        $col->helpBlock("this is a helpBlock");
+
         $e->add("remark")->textarea("remark")->required();
 
         $this->write($this->createForm($e));

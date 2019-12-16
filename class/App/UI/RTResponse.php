@@ -101,7 +101,7 @@ class RTResponse implements JsonSerializable
             if (!$obj->canUpdate()) {
                 return;
             }
-            $a = html("a")->class("btn btn-xs btn-warning")->href($obj->uri("ae"));
+            $a = html("a")->class("btn btn-xs btn-warning text-white")->href($obj->uri("ae"));
             $a->i->class("fa fa-pencil-alt fa-fw");
             return $a;
         };

@@ -46,7 +46,7 @@ class Form extends HTMLFormElement
         $this->card->footer->append(" ");
 
         $this->back_button = new Button($page);
-        $this->back_button->classList->add("btn-warning");
+        $this->back_button->classList->add("btn-warning text-white");
         $this->back_button->label("Back");
         $this->back_button->setAttribute("type", "button");
         if ($_GET["fancybox"]) {
