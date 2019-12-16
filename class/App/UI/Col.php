@@ -573,17 +573,19 @@ HTML
         return $as;
     }
 
-    public function tokenField($field, $options)
+    public function tokenField($field, array $options = [])
     {
 
-        $p = new \P\SelectCollection();
+        $p = new \P\Query();
         foreach ($this->cell as $cell) {
 
+            $cell->classList->add("select2-info");
             $input = p("input")->appendTo($cell);
             $input->attr("type", "hidden");
             $input->attr("name", $field);
 
             $e = p("select2")->appendTo($cell);
+            $e->addClass("form-control");
             $e->attr("name", $field . "[]");
             $e->attr("data-tags", "true");
             $e->attr("multiple", true);
@@ -614,13 +616,13 @@ HTML
                 }
             }
 
-
-            $e->attr("data-data", $data);
+            $e->attr("data-data", json_encode($data));
             $p[] = $e;
         }
 
         if ($this->createTemplate) {
             $e = p("select2");
+            $e->addClass("form-control");
             $e->attr("name", $field);
             $e->attr("data-tags", "true");
             $e->attr("multiple", true);
@@ -628,11 +630,26 @@ HTML
             $p[] = $e[0];
             $this->c_tpl[] = $e[0];
             $this->setAttribute("c-tpl", $this->c_tpl);
+
+            $data = [];
+            foreach ($options as $v) {
+                if (!in_array($v, $value)) {
+                    $data[] = [
+                        "id" => $v,
+                        "text" => $v
+                    ];
+                }
+            }
+            $e->attr("data-data", json_encode($data));
+
+
+
             $p->on("change", function () {
                 $this->setAttribute("c-tpl",  $this->c_tpl);
             });
         }
 
+        //  $p->options($options);
         return $p;
     }
 
@@ -691,9 +708,6 @@ HTML
 
     public function checkbox($field): \P\Query
     {
-        //		$p = $this->input($field);
-        //	$p->attr("type", "hidden");
-
         $p = p();
         foreach ($this->cell as $cell) {
 
@@ -708,19 +722,19 @@ HTML
             $cb = new CheckBox();
             p($cell)->append($cb);
 
-            $input = p($cb)->find("input");
-            $input->attr("name", $field);
-            $input->attr("data-field", $field);
-            $input->val(1);
+
+            $cb->input->setAttribute("name", $field);
+            $cb->input->value = 1;
+
 
             if ($object = p($cell)->data("object")) {
                 $value = is_object($object) ? $object->$field : $object[$field];
                 if ($value) {
-                    $input->attr("checked", true);
+                    $cb->input->setAttribute("checked", true);
                 }
 
                 if ($this->callback) {
-                    call_user_func($this->callback, $object, p($cb)->find("input")[0]);
+                    call_user_func($this->callback, $object, $cb->input);
                 }
             }
 
@@ -729,10 +743,9 @@ HTML
 
         if ($this->createTemplate) {
             $cb = new CheckBox();
-            $input = p($cb)->find("input");
-            $input->attr("name", $field);
-            $input->attr("data-field", $field);
-            $input->val(1);
+            $input = $cb->input;
+            $input->input->setAttribute("name", $field);
+            $cb->input->value = 1;
 
             $this->c_tpl[] = $cb;
             $this->setAttribute("c-tpl", $this->c_tpl);

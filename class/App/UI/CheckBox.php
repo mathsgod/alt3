@@ -6,6 +6,8 @@ class CheckBox extends \P\HTMLDivElement
 {
 
     private static $_num = 0;
+    public $input;
+    public $label;
 
     public function __construct()
     {

@@ -12,6 +12,7 @@ class System_example_createE extends ALT\Page
             "t1" => "hello"
         ]);
         $e->add("inputSelect")->inputSelect("t1", ["a", "b", "c"]);
+        $e->add("tokenField")->tokenField("username", ["a", "b", "c"]);
 
         $this->write($this->createForm($e));
 
