@@ -34,16 +34,7 @@ table.rt > thead button.multiselect {
       </div>
     </card-body>
     <card-footer class="p-0 m-0 d-flex">
-      <div
-        is="rt-pagination"
-        :page="page"
-        :page-count="pageCount"
-        v-on:change-page="gotoPage"
-        v-on:first-page="firstPage"
-        v-on:next-page="nextPage"
-        v-on:prev-page="prevPage"
-        v-on:last-page="lastPage"
-      ></div>
+      <div is="rt-pagination" :page="page" :page-count="pageCount" @change-page="page=$event"></div>
 
       <div class="btn-group">
         <button
@@ -334,6 +325,11 @@ export default {
 
     window.addEventListener("resize", this.resize);
   },
+  watch: {
+    page() {
+      this.draw();
+    }
+  },
   computed: {
     storage() {
       var storage = JSON.parse(localStorage.getItem(this.id)) || {};
@@ -477,26 +473,6 @@ export default {
       storage.save();
 
       this.page = 1;
-      this.draw();
-    },
-    gotoPage(page) {
-      this.page = parseInt(page);
-      this.draw();
-    },
-    firstPage() {
-      this.page = 1;
-      this.draw();
-    },
-    nextPage() {
-      this.page++;
-      this.draw();
-    },
-    prevPage() {
-      this.page--;
-      this.draw();
-    },
-    lastPage() {
-      this.page = this.pageCount;
       this.draw();
     },
     data() {

@@ -1,11 +1,11 @@
 <template>
-  <div class="btn-group pull-left">
+  <div class="btn-group">
     <button
       data-toggle="tooltip"
       title="最前一頁"
       class="btn btn-default btn-sm"
       type="button"
-      @click.prevent="$emit('first-page')"
+      @click.prevent="$emit('change-page',1)"
       :disabled="firstPageDisabled"
     >
       <i class="fa fa-fw fa-step-backward"></i>
@@ -15,19 +15,19 @@
       title="上一頁"
       class="btn btn-default btn-sm"
       type="button"
-      @click.prevent="$emit('prev-page')"
+      @click.prevent="$emit('change-page',p-1)"
       :disabled="prevPageDisabled"
     >
       <i class="fa fa-fw fa-chevron-left"></i>
     </button>
     <div class="pull-left" style="user-select: none;">
       <input
-        style="width:60px"
+        style="width:70px"
         min="1"
         :max="pageCount"
         type="number"
         class="form-control form-control-sm"
-        v-model="p"
+        v-model.number="p"
         @change="changePage"
       />
     </div>
@@ -36,7 +36,7 @@
       title="下一頁"
       class="btn btn-default btn-sm"
       type="button"
-      @click.prevent="$emit('next-page')"
+      @click.prevent="$emit('change-page',p+1)"
       :disabled="nextPageDisabled"
     >
       <i class="fa fa-fw fa-chevron-right"></i>
@@ -46,7 +46,7 @@
       title="最後一頁"
       class="btn btn-default btn-sm"
       type="button"
-      @click.prevent="$emit('last-page')"
+      @click.prevent="$emit('change-page',pageCount)"
       :disabled="lastPageDisabled"
     >
       <i class="fa fa-fw fa-step-forward"></i>
@@ -82,18 +82,17 @@ export default {
     }
   },
   watch: {
-    page: function(v) {
-      //   console.log(v);
+    page(v) {
       this.p = v;
     }
   },
-  data: function() {
+  data() {
     return {
       p: this.page
     };
   },
   methods: {
-    changePage: function() {
+    changePage() {
       this.$emit("change-page", this.p);
     }
   }
