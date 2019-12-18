@@ -139,4 +139,5 @@ class Module
     {
         return $this->name . " " . $this->translate($this->name);
     }
+
 }

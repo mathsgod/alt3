@@ -470,7 +470,27 @@ class App extends \R\App
             return false;
         }
 
-        return (bool) in_array($path, $this->acl["path"]["allow"]);
+        $result = false;
+        if ($this->config["system"]["user_default_acl"] && $this->user->isUser()) {
+            if ($module = $this->getModuleByPath($path)) {
+                if (!starts_with($module->class, "App")) { //module is not system module
+                    $result = true;
+                }
+            }
+        }
+
+        if (!$result) {
+            $result = (bool) in_array($path, $this->acl["path"]["allow"]);
+        }
+
+        return $result;
+    }
+
+    public function getModuleByPath(string $path)
+    {
+        $ps = explode("/", $path);
+        $ps = array_values(array_filter($ps, "strlen"));
+        return $this->module($ps[0]);
     }
 
     public function createMail()
