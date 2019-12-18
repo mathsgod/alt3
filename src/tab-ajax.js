@@ -55,10 +55,12 @@ $(function () {
         }
 
         $(o).find("a[data-toggle]").on("shown.bs.tab", function (e) {
+            var from = e.relatedTarget;
+            if (from.getAttribute("data-toggle") == "tabajax") {
+                var dataTarget = from.getAttribute("data-target");
 
-            var targ = $(e.relatedTarget).attr("data-target");
-            $(targ).empty();
-
+                $(dataTarget).empty();
+            }
         });
 
     }

@@ -1,4 +1,4 @@
-class VueDialog {
+window.VueDialog = class VueDialog {
     constructor(options = {}) {
         this.options = options;
         this.vm = "";
@@ -60,4 +60,5 @@ class VueDialog {
     close() {
         this.box.modal('hide');
     }
-}
+};
+
