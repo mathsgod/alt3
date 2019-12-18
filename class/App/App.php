@@ -470,9 +470,23 @@ class App extends \R\App
             return false;
         }
 
+        $module = $this->getModuleByPath($path);
+
+        //deny
+        $action = $this->acl["action"]["deny"][$module->name];
+        if (in_array("FC", $action)) {
+            return false;
+        }
+
+        $action = $this->acl["action"]["allow"][$module->name];
+        if (in_array("FC", $action)) {
+            return true;
+        }
+
+
         $result = false;
         if ($this->config["system"]["user_default_acl"] && $this->user->isUser()) {
-            if ($module = $this->getModuleByPath($path)) {
+            if ($module) {
                 if (!starts_with($module->class, "App")) { //module is not system module
                     $result = true;
                 }
