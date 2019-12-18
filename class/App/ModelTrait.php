@@ -6,6 +6,20 @@ trait ModelTrait
 {
     public static $_app;
 
+    public function createdBy()
+    {
+        if ($this->created_by) {
+            return new User($this->created_by);
+        }
+    }
+
+    public function updatedBy()
+    {
+        if ($this->updated_by) {
+            return new User($this->updated_by);
+        }
+    }
+
     public function canRead()
     {
         if (self::$_app->user->isAdmin()) {

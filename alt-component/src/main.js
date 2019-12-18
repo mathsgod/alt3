@@ -44,3 +44,4 @@ VueRegisterElement("alt-datetime", datetime);
 
 import ckeditor from "./ckeditor";
 VueRegisterElement("ckeditor", ckeditor);
+
