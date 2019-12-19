@@ -10,6 +10,13 @@ class User_ae extends ALT\Page
 {
     public function post()
     {
+        $form = $this->getForm();
+
+
+        if (!$form->validate($_POST)) {
+            throw new Exception("access deny");
+        }
+
         parent::post();
 
         $obj = $this->object();
@@ -24,6 +31,11 @@ class User_ae extends ALT\Page
     }
 
     public function get()
+    {
+        $this->write($this->getForm());
+    }
+
+    public function getForm()
     {
         $obj = $this->object();
         $mv = $this->createE();
@@ -79,6 +91,6 @@ class User_ae extends ALT\Page
 
         $mv->add("Language")->select("language")->ds($this->app->config["language"]);
         $mv->add("Default page")->input("default_page");
-        $this->write($this->createForm($mv));
+        return $this->createForm($mv);
     }
 }

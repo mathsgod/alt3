@@ -195,13 +195,21 @@ class Page extends \R\Page
                 $this->template = $this->app->twig($template_file);
             }
         }
-
-        ob_start();
-        $response = parent::__invoke($request, $response);
-        $echo_content = ob_get_contents();
-        ob_end_clean();
+        try {
+            ob_start();
+            $response = parent::__invoke($request, $response);
+            $echo_content = ob_get_contents();
+            ob_end_clean();
+        } catch (Exception $e) {
+            $body = new Stream();
+            $body->write(json_encode(["error" => [
+                "message" => $e->getMessage()
+            ]], JSON_UNESCAPED_UNICODE));
+            return $response->withHeader("Content-Type", "application/json; charset=UTF-8")->withBody($body);
+        }
 
         $content = "";
+
 
         if ($request->getQueryParams()["_rt"]) {
             return $response;

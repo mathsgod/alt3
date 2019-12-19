@@ -38,7 +38,7 @@ class RT2 extends Element
         return $this;
     }
 
-    public function add(string $title, $getter)
+    public function add(string $title, string $getter)
     {
         $c = new Column();
 
@@ -122,5 +122,32 @@ class RT2 extends Element
         $c->width = "1px";
         $this->columns[] = $c;
         return $c;
+    }
+
+    public function validate(RTResponse $r): bool
+    {
+        foreach ($r->request["columns"] as $col) {
+            $c = $this->getColumn($col["name"]);
+            if (!$c) {
+                return false;
+            }
+        }
+
+        foreach ($r->order as $order) {
+            $c = $this->getColumn($order["name"]);
+            if (!$c) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function getColumn(string $name)
+    {
+        foreach ($this->columns as $col) {
+            if ($col->name == $name) {
+                return $col;
+            }
+        }
     }
 }

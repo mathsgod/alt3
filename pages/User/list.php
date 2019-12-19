@@ -5,9 +5,8 @@ use App\User;
 
 class User_list extends App\Page
 {
-    public function get()
+    private function getRT()
     {
-
         $rt = $this->createRT2([$this, "ds"]);
         //$rt->selectable = true;
         $rt->addView();
@@ -42,11 +41,21 @@ class User_list extends App\Page
 
         //$rt->selectable = true;
         $rt->cellUrl = "User";
-        $this->write($rt);
+
+        return $rt;
+    }
+    public function get()
+    {
+
+        $this->write($this->getRT());
     }
 
     public function ds(RTResponse $rt, $t): RTResponse
     {
+        if (!$this->getRT()->validate($rt)) {
+            throw new Exception("access deny");
+        }
+
         $rt->source = App\User::Query();
 
         $rt->columns = [

@@ -135,4 +135,26 @@ class Form extends HTMLFormElement
     {
         return p($this)->attr($name, $value);
     }
+
+    public function validate(array $arr): bool
+    {
+        $controls = [];
+        foreach ($this->querySelectorAll("input") as $input) {
+            $controls[$input->getAttribute("name")] = $input;
+        }
+        foreach ($this->querySelectorAll("select") as $select) {
+            $controls[$select->getAttribute("name")] = $select;
+        }
+        foreach ($this->querySelectorAll("textarea") as $textarea) {
+            $controls[$select->getAttribute("textarea")] = $textarea;
+        }
+
+        foreach ($arr as $name => $value) {
+            if (!$controls[$name]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

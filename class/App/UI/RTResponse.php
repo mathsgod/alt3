@@ -56,8 +56,8 @@ class RTResponse implements JsonSerializable
         $this->draw = $_GET["draw"];
         $this->request["columns"] = $_GET["columns"];
         $this->order = $_GET["order"];
-        $this->page = $_GET["page"];
-        $this->length = $_GET["length"];
+        $this->page = intval($_GET["page"]);
+        $this->length = intval($_GET["length"]);
         $this->search = $_GET["search"];
         $this->row = new Row();
 

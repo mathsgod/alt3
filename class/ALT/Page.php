@@ -44,6 +44,9 @@ class Page extends \App\Page
             $response = parent::__invoke($request, $response);
         } catch (Exception $e) {
             $this->alert->danger("Error", $e->getMessage());
+            if(!$this->master){
+                return $this->redirect();
+            }
         }
 
         if ($this->master) {
