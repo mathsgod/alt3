@@ -127,6 +127,7 @@ class RT2 extends Element
     public function validate(RTResponse $r): bool
     {
         foreach ($r->request["columns"] as $col) {
+            if (!$col["name"]) return false;
             $c = $this->getColumn($col["name"]);
             if (!$c) {
                 return false;
@@ -134,6 +135,7 @@ class RT2 extends Element
         }
 
         foreach ($r->order as $order) {
+            if (!$order["name"]) return false;
             $c = $this->getColumn($order["name"]);
             if (!$c) {
                 return false;
