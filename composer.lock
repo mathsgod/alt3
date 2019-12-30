@@ -532,17 +532,17 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "5acbe7b640e0f78fa00b201f916d24502ad17617"
+                "reference": "0fcdba319cbd6f7fd79393690ff3c888ca8821d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.1.1-5b472f.zip",
-                "reference": "5acbe7b640e0f78fa00b201f916d24502ad17617",
-                "shasum": "263d544a963a65ac034d7637470ec093dd073e1b"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-db/mathsgod-r-db-3.1.2-107329.zip",
+                "reference": "0fcdba319cbd6f7fd79393690ff3c888ca8821d4",
+                "shasum": "713a21352daa70c9dc7910783df96085c9795304"
             },
             "require": {
                 "ext-pdo": "*",
@@ -568,7 +568,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2019-12-10T06:58:07+00:00"
+            "time": "2019-12-30T04:28:31+00:00"
         },
         {
             "name": "mathsgod/r-graphql",

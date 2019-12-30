@@ -17,6 +17,7 @@ class App extends \R\App
     public $config = [];
     public $user;
     public $user_id;
+    public $usergroup_id = [];
     public $locale = "zh-hk";
     public $plugins = [];
     public $setting = [];
@@ -79,6 +80,11 @@ class App extends \R\App
             $this->locale = $this->user->language;
         }
 
+        //usergroup
+        foreach ($this->user->UserGroup() as $ug) {
+            $this->usergroup_id[] = $ug->usergroup_id;
+        }
+
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
         }
@@ -126,19 +132,18 @@ class App extends \R\App
         $query = ACL::Query()->where($w);
         foreach ($query as $acl) {
             if ($acl->action) {
-                if ($acl->value == "allow") {
-                    $this->acl["action"]["allow"][$acl->module][] = $acl->action;
-                } else {
-                    $this->acl["action"]["deny"][$acl->module][] = $acl->action;
-                }
-            } elseif ($acl->path) {
-                if ($acl->value == "allow") {
-                    $this->acl["path"]["allow"][] = $acl->module . "/" . $acl->path;
-                } elseif ($acl->value == "deny") {
-                    $this->acl["path"]["deny"][] = $acl->module . "/" . $acl->path;
-                }
+                $this->acl["action"][$acl->value][$acl->module][] = $acl->action;
+            } else {
+                $this->acl["path"][$acl->value][] = $acl->path();
             }
         }
+
+        //all special user
+        foreach (ACL::Query()->where(["special_user is not null"]) as $acl) {
+            $this->acl["special_user"][$acl->special_user][$acl->value][$acl->module][] = $acl->action;
+        }
+
+
 
         ///-------------
 
@@ -458,6 +463,29 @@ class App extends \R\App
     public function translate(string $str): string
     {
         return $this->translate[$str] ?? $str;
+    }
+
+    public function allowAction(string $action, string $module): bool
+    {
+        if ($this->user->isAdmin()) {
+            return true;
+        }
+
+        $acl = $this->acl["action"]["deny"][$module];
+        if (in_array("FC", $acl)) {
+            return false;
+        }
+        if (in_array($action, $acl)) {
+            return false;
+        }
+        $acl = $this->acl["action"]["allow"][$module];
+        if (in_array("FC", $acl)) {
+            return true;
+        }
+        if (in_array($action, $acl)) {
+            return true;
+        }
+        return false;
     }
 
     public function acl(string $path): bool

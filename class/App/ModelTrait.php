@@ -20,85 +20,86 @@ trait ModelTrait
         }
     }
 
-    public function canRead()
+    private function _acl_allow($action = []): bool
     {
-        if (self::$_app->user->isAdmin()) {
-            return true;
-        }
 
-        $deny = self::$_app->acl["action"]["deny"];
-        if ($deny[get_class($this)]["FC"]) {
-            return false;
-        }
-        if ($deny[get_class($this)]["R"]) {
+        $class = get_class($this);
+
+        //--- deny ---
+        if (array_intersect($action, self::$_app->acl["action"]["deny"][$class] ?? [])) {
             return false;
         }
 
-        $allow = self::$_app->acl["action"]["allow"];
-        if ($allow[get_class($this)]["FC"]) {
+        //creator owner
+        if (array_intersect($action, self::$_app->acl["special_user"][1]["deny"][$class] ?? [])) {
+            if (self::$_app->user_id == $this->created_by) {
+                return false;
+            }
+        }
+
+        //creator group
+        if (array_intersect($action, self::$_app->acl["special_user"][2]["deny"][$class] ?? [])) {
+            if (array_intersect(self::$_app->usergroup_id, $this->creator_group ?? [])) {
+                return false;
+            }
+        }
+
+        //everyone
+        if (array_intersect($action,  self::$_app->acl["special_user"][3]["deny"][$class] ?? [])) {
+            return false;
+        }
+
+        if (array_intersect($action, self::$_app->acl["action"]["allow"][$class] ?? [])) {
             return true;
         }
-        if ($allow[get_class($this)]["R"]) {
+
+        //creator owner
+        if (array_intersect($action, self::$_app->acl["special_user"][1]["allow"][$class] ?? [])) {
+            if (self::$_app->user_id == $this->created_by) {
+                return true;
+            }
+        }
+
+        //creator group
+        if (array_intersect($action, self::$_app->acl["special_user"][1]["allow"][$class] ?? [])) {
+            if (array_intersect(self::$_app->usergroup_id, $this->creator_group ?? [])) {
+                return true;
+            }
+        }
+
+        //everyone
+        if (array_intersect($action,  self::$_app->acl["special_user"][3]["allow"][$class] ?? [])) {
             return true;
         }
 
         return false;
     }
 
-    public function canUpdate()
+    public function canRead(): bool
     {
         if (self::$_app->user->isAdmin()) {
             return true;
         }
-        $class = get_class($this);
 
-        $deny = self::$_app->acl["action"]["deny"];
-        if (in_array("FC", $deny[$class])) {
-            return false;
-        }
-        if (in_array("U", $deny[$class])) {
-            return false;
-        }
-
-        $allow = self::$_app->acl["action"]["allow"];
-        if (in_array("FC", $allow[$class])) {
-            return true;
-        }
-
-        if (in_array("U", $allow[$class])) {
-            return true;
-        }
-
-        return false;
+        return  $this->_acl_allow(["FC", "R"]);
     }
 
-    public function canDelete()
+    public function canUpdate(): bool
+    {
+        if (self::$_app->user->isAdmin()) {
+            return true;
+        }
+
+        return  $this->_acl_allow(["FC", "U"]);
+    }
+
+    public function canDelete(): bool
     {
 
         if (self::$_app->user->isAdmin()) {
             return true;
         }
-        $class = get_class($this);
-
-        $deny = self::$_app->acl["action"]["deny"];
-        if (in_array("FC", $deny[$class])) {
-            return false;
-        }
-        if (in_array("D", $deny[$class])) {
-            return false;
-        }
-
-        $allow = self::$_app->acl["action"]["allow"];
-        if (in_array("FC", $allow[$class])) {
-            return true;
-        }
-
-        if (in_array("D", $allow[$class])) {
-            return true;
-        }
-
-
-        return false;
+        return  $this->_acl_allow(["FC", "D"]);
     }
 
     public function id()

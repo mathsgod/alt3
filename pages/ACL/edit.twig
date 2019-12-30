@@ -23,6 +23,14 @@
                         <option v-for="u in users" :value="u" v-text="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></option>
                     </select>
                 </div>
+
+                <div class="form-group">
+
+                    <label>SPECIAL USER</label>
+                    <select class="form-control form-control-sm" v-model="special_user" @change="changeSpecialUser">
+                        <option v-for="(k,v) in special_users" :value="v" v-text="k"></option>
+                    </select>
+                </div>
             </form>
 
 
@@ -143,13 +151,16 @@
             users: [],
             usergroup: null,
             user: null,
-            data1: []
+            data1: [],
+            special_users: [],
+            special_user: null
         },
         created() {
             this.$http.get(window.location + "/data").then(resp => {
                 this.modules = resp.data.module;
                 this.usergroups = resp.data.usergroup;
                 this.users = resp.data.user;
+                this.special_users = resp.data.special_user;
             });
         }, watch: {
             module() {
@@ -177,6 +188,10 @@
                     p.user_id = this.user.user_id;
                 }
 
+                if (this.special_user) {
+                    p.special_user = this.special_user;
+                }
+
                 p.value = a;
                 return this.$http.post(window.location.toString(), p);
             },
@@ -194,17 +209,29 @@
                     p.user_id = this.user.user_id;
                 }
 
+                if (this.special_user) {
+                    p.special_user = this.special_user;
+                }
+
                 this.$http.get(window.location + "/getValue", {
                     params: p
                 }).then(resp => {
                     this.data1 = resp.data;
                 });
 
-            }, changeUserGroup() {
+            },
+            changeSpecialUser() {
                 this.user = null;
+                this.usergroup = null;
+                this.getValue();
+            },
+            changeUserGroup() {
+                this.user = null;
+                this.special_user = null;
                 this.getValue();
             }, changeUser() {
                 this.usergroup = null;
+                this.special_user = null;
                 this.getValue();
             }, onSaveCustom() {
                 this.actionChecked(this.custom).then(resp => {

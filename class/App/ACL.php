@@ -8,6 +8,11 @@ class ACL extends Model
     const TYPE = ["Normal", "Regexp"];
     const SPECIAL_USER = [1 => "CREATOR OWNER", 2 => "CREATOR GROUP", 3 => "EVERYONE"];
 
+    public function User()
+    {
+        return new User($this->user_id);
+    }
+
     public function SpecialUser()
     {
         return self::SPECIAL_USER[$this->special_user];
@@ -15,10 +20,11 @@ class ACL extends Model
 
     public function path()
     {
-        if ($this->path == "" && !$this->action) {
-            return "[$this->module]";
+        if ($this->path == "") {
+            return $this->module;
+        } else {
+            return $this->module . "/" . $this->path;
         }
-        return $this->path;
     }
 
     public function UserName()
