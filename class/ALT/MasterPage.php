@@ -120,7 +120,7 @@ class MasterPage extends \R\Page
         $this->data["sidebar_menu"] = $menu_gen($ms);
         $this->data["alerts"] = $this->app->flushMessage();
         $this->data["app"] = $this->app;
-
+        
         if ($_SESSION["app"]["org_user_id"]) {
             $this->data["allow_cancel_viewas"] = true;
         }

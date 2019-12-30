@@ -12,6 +12,7 @@ class Page extends \App\Page
     public $callout;
     protected $header;
     public $master;
+    public $name;
 
     public function __construct(\App\App $app)
     {
@@ -24,6 +25,14 @@ class Page extends \App\Page
     public function __invoke(Request $request, ResponseInterface $response): ResponseInterface
     {
         $this->request = $request;
+
+        $route = $this->request->getAttribute("route");
+        $this->name = $route->action;
+        foreach ($this->module()->menu as $name => $action) {
+            if ($action["link"] == substr($route->path, 1)) {
+                $this->name = $name;
+            }
+        }
 
         if ($request->isAccept("text/html") && $request->getMethod() == "get") {
             $this->master = new MasterPage($this->app);
@@ -44,12 +53,22 @@ class Page extends \App\Page
             $response = parent::__invoke($request, $response);
         } catch (Exception $e) {
             $this->alert->danger("Error", $e->getMessage());
-            if(!$this->master){
+            if (!$this->master) {
                 return $this->redirect();
             }
         }
 
         if ($this->master) {
+            if ($route->action == "ae") {
+                if ($route->id) {
+                    $this->name = "Edit";
+                } else {
+                    $this->name = "Add";
+                }
+            }
+
+            $this->name = $this->translate($this->name);
+            $this->master->data["page"] = $this;
             $this->master->data["callouts"] = $this->callout;
             $this->master->data["header"] = $this->header;
             $this->master->data["module"] = $this->module();

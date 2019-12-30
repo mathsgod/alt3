@@ -2,7 +2,6 @@ class: App\Module
 log: 
 group: System
 icon: fa fa-folder fa-fw
-show_create: 1
 
 menu:
   Install: 

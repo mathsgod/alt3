@@ -19,7 +19,10 @@ class Page extends \R\Page
 
     public function translate(string $str): string
     {
-        return $this->module()->translate($str);
+        if ($module = $this->module()) {
+            return $module->translate($str);
+        }
+        return $this->app->translate($str);
     }
 
     public function object()

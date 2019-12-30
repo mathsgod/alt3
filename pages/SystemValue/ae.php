@@ -27,7 +27,11 @@ class SystemValue_ae extends ALT\Page
         $data = [];
         $data["name"] = $obj->name;
         foreach ($this->app->config["language"] as $v => $l) {
-            $data["value[$v]"] = (string) SystemValue::_($obj->name, $v);
+            if ($obj->name) {
+                $data["value[$v]"] = (string) SystemValue::_($obj->name, $v);
+            } else {
+                $data["value[$v]"] = "";
+            }
         }
 
         $mv = $this->createE($data);
