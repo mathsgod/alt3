@@ -93,13 +93,15 @@ class Module
         }
 
         if ($this->show_create) {
-            $links[] = [
-                "label" => $this->translate("Add"),
-                "link" => $this->name . "/ae",
-                "icon" => "fa fa-fw fa-plus",
-                "active" => ($path == $this->name . "/ae"),
-                "keyword" => ""
-            ];
+            if (self::$_app->allowAction("C", $this->name)) {
+                $links[] = [
+                    "label" => $this->translate("Add"),
+                    "link" => $this->name . "/ae",
+                    "icon" => "fa fa-fw fa-plus",
+                    "active" => ($path == $this->name . "/ae"),
+                    "keyword" => ""
+                ];
+            }
         }
 
         foreach ($this->menu as $k => $v) {
@@ -139,5 +141,4 @@ class Module
     {
         return $this->name . " " . $this->translate($this->name);
     }
-
 }
