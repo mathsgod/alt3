@@ -13,24 +13,24 @@ class ACL_list extends App\Page
 
         $rt->addDel();
         $rt->add("Module", "module")->ss();
-        $rt->Add("Path", "Path()")->ss();
+        $rt->Add("Path", "path")->ss();
         $rt->Add("Action", "action")->ss();
         $rt->Add("User", "user_id");
-        $rt->Add("UserGroup", "UserGroup()")->sort("usergroup_id")->ALink("v");
-        $rt->Add("Special User", "SpecialUser()")->sort("special_user");
-
-        $rt->Add("Value", "value")->sort(); //->align("center");
-
+        $rt->Add("UserGroup", "usergroup_id")->sort("usergroup_id")->ALink("v");
+        $rt->Add("Special User", "special_user")->sort("special_user");
+        $rt->Add("Value", "value")->sort();;
         $rt->add("Type", "type")->sort();
-        // $rt->Add("Code", "code")->Format("tick");
+
         $this->write($rt);
     }
 
     public function ds($rt)
     {
-        $rt->add("path", "Path()");
+        $rt->add("path", "path()");
         $rt->add("user_id", "User()")->alink("v");
         $rt->add("type", "Type()");
+        $rt->add("usergroup_id", "UserGroup()")->alink("v");
+        $rt->add("special_user", "SpecialUser()");
         $rt->source = ACL::Query();
         return $rt;
     }
