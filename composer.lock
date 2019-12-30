@@ -606,17 +606,17 @@
         },
         {
             "name": "mathsgod/r-psr7",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-psr7.git",
-                "reference": "fc360102ba416c545f085aee15d58d44f60eba13"
+                "reference": "990e274b84e0fb0d4b3b5d42e6e16ee6060b4aaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-psr7/mathsgod-r-psr7-2.3.0-0e1265.zip",
-                "reference": "fc360102ba416c545f085aee15d58d44f60eba13",
-                "shasum": "b023b197ee878350d32ebcd45dfd534f1d14f83c"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-psr7/mathsgod-r-psr7-2.3.1-92800c.zip",
+                "reference": "990e274b84e0fb0d4b3b5d42e6e16ee6060b4aaf",
+                "shasum": "fa6ea799411c47f51076b365377e0ed4c4cc4dd2"
             },
             "require": {
                 "php": ">=7.0",
@@ -638,7 +638,7 @@
                 "proprietary"
             ],
             "description": "psr7",
-            "time": "2019-12-12T09:39:22+00:00"
+            "time": "2019-12-30T09:35:03+00:00"
         },
         {
             "name": "mathsgod/r-translate",

@@ -14,3 +14,4 @@ $log->pushHandler(new StreamHandler(__DIR__ . '/logs/' . date("Y-m-d") . ".log",
 session_start();
 $app = new App\App(__DIR__);
 $app->run();
+

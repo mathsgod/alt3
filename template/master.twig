@@ -12,7 +12,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="robots" content="noindex, nofollow">
     <base href="{{base}}" />
 
-    <title>{{app.config.user.company}} | {{module.name|trans}} | {{page.name}}</title>
+    <title>{{app.config.user.company}} | {{module.name|trans}}
+        {% if page.name!="index" %}
+        | {{page.name}}
+        {% endif %}
+    </title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{composer_base}}/vendor/fortawesome/font-awesome/css/all.min.css">
@@ -434,7 +438,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-header">Main navigation</li>
                         {% for menu in sidebar_menu %}
-                        <li class="nav-item" is="nav-item" :is-root="true" :menu="{{menu|json_encode}}"></li>
+                        <li class="nav-item" is="nav-item" :is-root="true" :menu="{{menu|json_encode(constant('JSON_UNESCAPED_UNICODE'))}}"></li>
                         {% endfor %}
 
                         {#

@@ -30,7 +30,7 @@ Vue.component("nav-item", {
 
             if (this.q != "") {
 
-                if (this.menu.keyword.indexOf(this.q) < 0 && this.menus.submenu.length == 0) {
+                if (this.menu.keyword.toLowerCase().indexOf(this.q.toLowerCase()) < 0 && this.menus.submenu.length == 0) {
                     c["d-none"] = true;
                 }
             }
@@ -48,14 +48,14 @@ Vue.component("nav-item", {
             if (this.q == "") {
                 return this.menu;
             }
-            this.menu.submenu = this.filterMenu(this.q, this.menu.submenu);
+            this.menu.submenu = this.filterMenu(this.q.toLowerCase(), this.menu.submenu);
             return this.menu;
         }
     }, methods: {
         filterMenu(text, menu) {
             var m = [];
             for (var i in menu) {
-                if (menu[i].keyword.indexOf(text) >= 0) {
+                if (menu[i].keyword.toLowerCase().indexOf(text.toLowerCase()) >= 0) {
                     m.push(menu[i]);
                     continue;
                 }
@@ -70,7 +70,7 @@ Vue.component("nav-item", {
     }
 });
 
-var v = new Vue({
+window.sidebar = new Vue({
     el: "#nav-sidebar",
     data: {
         q: ""

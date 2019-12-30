@@ -22,6 +22,7 @@ class App extends \R\App
     public $plugins = [];
     public $setting = [];
     public $system_value = [];
+    public $router;
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
@@ -92,6 +93,7 @@ class App extends \R\App
 
     public function run()
     {
+
         //-- setting
         $this->setting = Yaml::parseFile(dirname(__DIR__, 2) . "/setting.yml");
 
@@ -150,14 +152,14 @@ class App extends \R\App
         $this->alert = new Alert();
 
         $request = $this->request;
-        $router = new \R\Router();
+        $this->router = new \R\Router();
 
-        $router->addRoute(function (RequestInterface $request, $loader) {
+        $this->router->addRoute(function (RequestInterface $request, $loader) {
             return new Route($request, $this);
         });
 
         ob_start();
-        $route = $router->getRoute($this->request, $this->loader);
+        $route = $this->router->getRoute($this->request, $this->loader);
         $request = $request->withAttribute("included_content", ob_get_contents());
         ob_end_clean();
 
@@ -237,8 +239,8 @@ class App extends \R\App
         $uri = $this->request->getUri()->withPath($path);
         $request = $this->request->withUri($uri);
 
-        $router = new \R\Router();
-        $route = $router->getRoute($request, $this->loader);
+
+        $route = $this->router->getRoute($request, $this->loader);
 
         $request = $request
             ->withAttribute("action", $route->action)

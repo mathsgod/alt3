@@ -82,8 +82,6 @@ class System_update extends ALT\Page
 
         $p = $this->app->page("System/db_check");
 
-        outp($p);
-        die();
         if ($p->needUpdate()) {
             $this->callout->warning("System", "DB version updated, please update db.");
         }
