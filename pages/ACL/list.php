@@ -16,9 +16,9 @@ class ACL_list extends App\Page
         $rt->Add("Path", "path")->ss();
         $rt->Add("Action", "action")->ss();
         $rt->Add("User", "user_id");
-        $rt->Add("UserGroup", "usergroup_id")->sort("usergroup_id")->ALink("v");
-        $rt->Add("Special User", "special_user")->sort("special_user");
-        $rt->Add("Value", "value")->sort();;
+        $rt->Add("UserGroup", "usergroup_id");
+        $rt->Add("Special User", "special_user");
+        $rt->Add("Value", "value")->sort();
         $rt->add("Type", "type")->sort();
 
         $this->write($rt);
