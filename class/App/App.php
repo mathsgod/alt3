@@ -381,7 +381,7 @@ class App extends \R\App
         }
 
         $cms_base = dirname($server["PHP_SELF"]);
-        $cms_root = $document_root . $cms_base;
+        $cms_root = substr($document_root . $cms_base, 0, -1);
 
         if (file_exists($document_root . "/composer.json")) {
             $composer_root = $document_root;
