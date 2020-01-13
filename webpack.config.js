@@ -1,8 +1,11 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
     mode: "production",
     entry: {
         index: "./src/index.js",
         main: [
+            "./src/main.js",
             "./src/api.js",
             "./src/control-sidebar.js",
             "./src/sidebar.js",
@@ -23,7 +26,11 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
+            }, {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
         ]
-    }
+    },
+    plugins: [new MiniCssExtractPlugin()]
 };
