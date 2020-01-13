@@ -29,9 +29,8 @@ class Form extends HTMLFormElement
         $this->submit_button = new Button($page);
         $this->submit_button->classList->add("btn-success");
         $this->submit_button->setAttribute("type", "submit");
-        $this->submit_button->icon("fa fa-fw fa-check");
-        //$this->submit_button->setAttribute("icon", "fa fa-check");
-        //$this->submit_button->setAttribute("is", "alt-button");
+        $this->submit_button->setAttribute("icon", "fa fa-fw fa-check");
+        $this->submit_button->setAttribute("is", "alt-button");
         $this->submit_button->label("Submit");
 
         $this->card->footer->append($this->submit_button);

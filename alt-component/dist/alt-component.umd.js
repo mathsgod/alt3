@@ -7037,6 +7037,86 @@ var ckeditor_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var ckeditor = (ckeditor_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=template&id=e78bcfa6&
+var Buttonvue_type_template_id_e78bcfa6_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{attrs:{"type":_vm.type},on:{"click":_vm.onClick}},[(_vm.iconClass)?_c('i',{class:_vm.displayIcon}):_vm._e(),_vm._t("default")],2)}
+var Buttonvue_type_template_id_e78bcfa6_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Button.vue?vue&type=template&id=e78bcfa6&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Button.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var Buttonvue_type_script_lang_js_ = ({
+  name: "alt-button",
+  props: {
+    icon: String,
+    type: String,
+    submitCheck: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: function data() {
+    return {
+      submitting: false,
+      iconClass: this.icon
+    };
+  },
+  computed: {
+    displayIcon: function displayIcon() {
+      if (this.submitting && this.submitCheck) {
+        return "fa fa-spinner fa-spin";
+      }
+
+      return this.iconClass;
+    }
+  },
+  methods: {
+    onClick: function onClick(event) {
+      if (this.type == "submit") {
+        var form = this.$el.form;
+
+        if (!$(form).valid()) {
+          return false;
+        }
+
+        if (this.submitting && this.submitCheck) {
+          event.preventDefault();
+          return;
+        }
+
+        this.submitting = true;
+      }
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/Button.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Buttonvue_type_script_lang_js_ = (Buttonvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/Button.vue
+
+
+
+
+
+/* normalize component */
+
+var Button_component = Object(componentNormalizer["a" /* default */])(
+  src_Buttonvue_type_script_lang_js_,
+  Buttonvue_type_template_id_e78bcfa6_render,
+  Buttonvue_type_template_id_e78bcfa6_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var Button = (Button_component.exports);
 // CONCATENATED MODULE: ./src/main.js
 
 
@@ -7069,6 +7149,8 @@ main_default()("alt-datatables", Datatables);
 main_default()("alt-datetime", Datetime);
 
 main_default()("ckeditor", ckeditor);
+
+main_default()("alt-button", Button);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 

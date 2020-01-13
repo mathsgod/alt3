@@ -136,6 +136,7 @@ class RT2 extends Element
 
         foreach ($r->order as $order) {
             if (!$order["name"]) return false;
+            if(($order["dir"]!="desc") && ($order["dir"]!="asc")) return false;
             $c = $this->getColumn($order["name"]);
             if (!$c) {
                 return false;

@@ -262,8 +262,6 @@ class Page extends \R\Page
         }
 
         $data = $this->request->getParsedBody();
-        $params = $this->request->getQueryParams();
-
 
         $obj->bind($data);
 
