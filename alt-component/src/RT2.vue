@@ -436,7 +436,7 @@ export default {
           link.click();
         });
     },
-    updateData(data) {
+    async updateData(data) {
       if (!this.cellUrl) {
         console.log("cell-url not found");
         return;
@@ -448,15 +448,16 @@ export default {
       if (!data.field) {
         console.log("field cannot be null");
       }
-      this.$http
-        .post(this.cellUrl, {
-          _pk: data.key,
-          name: data.field,
-          value: data.value
-        })
-        .then(resp => {
-          console.log("done");
-        });
+
+      var d = {};
+      d[data.field] = data.value;
+
+      let resp = await this.$http.post(this.cellUrl + "/" + data.key, d);
+      resp = resp.data;
+      if (resp.error) {
+        alert(resp.error.message);
+        return;
+      }
     },
     resetLocalStorage() {
       this.storage.clear();

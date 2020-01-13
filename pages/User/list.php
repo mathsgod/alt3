@@ -65,7 +65,7 @@ class User_list extends App\Page
                 "format" => "tick"
             ]
         ];
-        //        $rt->key("user_id");
+        $rt->key("user_id");
         $rt->add("usergroup_id", function ($obj) {
             $ugs = [];
             foreach ($obj->UserGroup() as $ug) {

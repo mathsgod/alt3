@@ -4,7 +4,7 @@
       <template v-if="column.editType=='text'">
         <input
           type="text"
-          class="form-control input-sm"
+          class="form-control form-control-sm"
           v-bind:value="column.getValue(data)"
           @blur="updateData($event.target.value)"
           @keyup.enter="updateData($event.target.value)"
@@ -24,7 +24,7 @@
       <template v-else-if="column.editType=='date'">
         <input
           type="text"
-          class="form-control input-sm"
+          class="form-control form-control-sm"
           v-bind:value="column.getValue(d)"
           v-on:blur="updateData($event.target.value)"
         />
