@@ -219,11 +219,13 @@ class App extends \R\App
 
             file_put_contents("php://output", (string) $response->getBody());
         } elseif (self::Logined()) {
-            $base = dirname($this->request->getServerParams()["PHP_SELF"]);
-            header("location: {$base}/404_not_found#" . $this->request->getUri()->getPath());
+            $pi = $this->pathInfo();
+            $cms_base = $pi["cms_base"];
+            header("location: {$cms_base}404_not_found#" . $this->request->getUri()->getPath());
         } else {
-            $base = dirname($this->request->getServerParams()["PHP_SELF"]);
-            header("location: {$base}#" . $this->request->getUri()->getPath());
+            $pi = $this->pathInfo();
+            $cms_base = $pi["cms_base"];
+            header("location: {$$cms_base}#" . $this->request->getUri()->getPath());
         }
     }
 
