@@ -1,5 +1,5 @@
 <template>
-    <textarea v-model='value'></textarea>
+  <textarea v-model="value"></textarea>
 </template>
 <script>
 export default {
@@ -10,16 +10,19 @@ export default {
     };
   },
   props: {
-    data: String
+    data: String,
+    config: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
   },
   mounted() {
-    if (typeof CKEDITOR != "undefined") {
+    if (typeof window.CKEDITOR != "undefined") {
       var base = $("base").attr("href");
-      CKEDITOR.config.filebrowserImageBrowseUrl =
-        base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
-      CKEDITOR.config.filebrowserBrowseUrl =
-        base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
-      CKEDITOR.replace(this.$el);
+      window.CKEDITOR.config = { ...CKEDITOR.config, ...this.config };
+      window.CKEDITOR.replace(this.$el);
     }
   }
 };

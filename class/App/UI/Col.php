@@ -310,6 +310,18 @@ HTML
 
     public function ckeditor($field)
     {
+
+/*        $payload = [
+            "iat" => time(),
+            "exp" => time() + 3600,
+            "api" => "http://192.168.88.108/hostlink-fileman/",
+            "path" => "C:\Users\maths\Desktop\web\hostlink-fileman\uploads",
+            "type" => "image",
+            "url" => "http://192.168.88.108/hostlink-fileman/uploads",
+        ];*/
+
+
+
         $p = p();
 
         foreach ($this->cell as $cell) {

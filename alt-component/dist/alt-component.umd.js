@@ -7257,12 +7257,12 @@ var Datetime_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datetime = (Datetime_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ckeditor.vue?vue&type=template&id=ceb4cc20&
-var ckeditorvue_type_template_id_ceb4cc20_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.value),expression:"value"}],domProps:{"value":(_vm.value)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value=$event.target.value}}})}
-var ckeditorvue_type_template_id_ceb4cc20_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ckeditor.vue?vue&type=template&id=66ed7322&
+var ckeditorvue_type_template_id_66ed7322_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.value),expression:"value"}],domProps:{"value":(_vm.value)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value=$event.target.value}}})}
+var ckeditorvue_type_template_id_66ed7322_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/ckeditor.vue?vue&type=template&id=ceb4cc20&
+// CONCATENATED MODULE: ./src/ckeditor.vue?vue&type=template&id=66ed7322&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
 var es_regexp_exec = __webpack_require__("ac1f");
@@ -7271,6 +7271,7 @@ var es_regexp_exec = __webpack_require__("ac1f");
 var es_string_replace = __webpack_require__("5319");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ckeditor.vue?vue&type=script&lang=js&
+
 
 
 //
@@ -7284,14 +7285,19 @@ var es_string_replace = __webpack_require__("5319");
     };
   },
   props: {
-    data: String
+    data: String,
+    config: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
   },
   mounted: function mounted() {
-    if (typeof CKEDITOR != "undefined") {
+    if (typeof window.CKEDITOR != "undefined") {
       var base = $("base").attr("href");
-      CKEDITOR.config.filebrowserImageBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html?type=image";
-      CKEDITOR.config.filebrowserBrowseUrl = base + "plugins/RoxyFileman.1.4.5/fileman/index.html";
-      CKEDITOR.replace(this.$el);
+      window.CKEDITOR.config = Object(objectSpread["a" /* default */])({}, CKEDITOR.config, {}, this.config);
+      window.CKEDITOR.replace(this.$el);
     }
   }
 });
@@ -7307,8 +7313,8 @@ var es_string_replace = __webpack_require__("5319");
 
 var ckeditor_component = Object(componentNormalizer["a" /* default */])(
   src_ckeditorvue_type_script_lang_js_,
-  ckeditorvue_type_template_id_ceb4cc20_render,
-  ckeditorvue_type_template_id_ceb4cc20_staticRenderFns,
+  ckeditorvue_type_template_id_66ed7322_render,
+  ckeditorvue_type_template_id_66ed7322_staticRenderFns,
   false,
   null,
   null,

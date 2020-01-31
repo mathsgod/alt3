@@ -1,0 +1,32 @@
+<input type="text" class="form-control" id="input1" />
+<input type="hidden" value="{{token}}" id="token" />
+
+<script>
+    window.addEventListener("message", event => {
+        console.log(event);
+        var data = event.data;
+        if (data.source == "ckeditor") {
+            CKEDITOR.tools.callFunction(data.CKEditorFuncNum,data.value);
+        } else {
+            if (data.action == "select-file") {
+                var element = document.getElementById(data.elementId);
+                element.value = data.value;
+                $.fancybox.close();
+
+            }
+
+        }
+    }, false);
+
+    $("#input1").on("focus", () => {
+        var token = $("#token").val();
+        var value = $("#input1").val();
+        var path = `http://localhost:8082/?token=${token}&elementId=input1&value=${value}`;
+        $.fancybox.open({
+            src: path,
+            type: "iframe"
+        });
+    });
+
+
+</script>
