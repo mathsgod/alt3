@@ -7248,12 +7248,12 @@ var Datetime_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datetime = (Datetime_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ckeditor.vue?vue&type=template&id=66ed7322&
-var ckeditorvue_type_template_id_66ed7322_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.value),expression:"value"}],domProps:{"value":(_vm.value)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value=$event.target.value}}})}
-var ckeditorvue_type_template_id_66ed7322_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ckeditor.vue?vue&type=template&id=4db391ea&
+var ckeditorvue_type_template_id_4db391ea_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.value),expression:"value"}],domProps:{"value":(_vm.value)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value=$event.target.value}}})}
+var ckeditorvue_type_template_id_4db391ea_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/ckeditor.vue?vue&type=template&id=66ed7322&
+// CONCATENATED MODULE: ./src/ckeditor.vue?vue&type=template&id=4db391ea&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
 var es_regexp_exec = __webpack_require__("ac1f");
@@ -7276,6 +7276,7 @@ var es_string_replace = __webpack_require__("5319");
     };
   },
   props: {
+    basepath: String,
     data: String,
     config: {
       type: Object,
@@ -7283,6 +7284,17 @@ var es_string_replace = __webpack_require__("5319");
         return {};
       }
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    window.addEventListener("message", function (event) {
+      var data = event.data;
+
+      if (data.source == "ckeditor") {
+        CKEDITOR.tools.callFunction(data.CKEditorFuncNum, _this.basepath + data.value);
+      }
+    }, false);
   },
   mounted: function mounted() {
     if (typeof window.CKEDITOR != "undefined") {
@@ -7304,8 +7316,8 @@ var es_string_replace = __webpack_require__("5319");
 
 var ckeditor_component = Object(componentNormalizer["a" /* default */])(
   src_ckeditorvue_type_script_lang_js_,
-  ckeditorvue_type_template_id_66ed7322_render,
-  ckeditorvue_type_template_id_66ed7322_staticRenderFns,
+  ckeditorvue_type_template_id_4db391ea_render,
+  ckeditorvue_type_template_id_4db391ea_staticRenderFns,
   false,
   null,
   null,
@@ -7394,6 +7406,80 @@ var Button_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Button = (Button_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24521ba1-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/fileman.vue?vue&type=template&id=1a2ed0c9&
+var filemanvue_type_template_id_1a2ed0c9_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.value1),expression:"value1"}],staticClass:"form-control",attrs:{"fileman":_vm.id},domProps:{"value":(_vm.value1)},on:{"input":function($event){if($event.target.composing){ return; }_vm.value1=$event.target.value}}})}
+var filemanvue_type_template_id_1a2ed0c9_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/fileman.vue?vue&type=template&id=1a2ed0c9&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/fileman.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+/* harmony default export */ var filemanvue_type_script_lang_js_ = ({
+  name: "fileman",
+  props: {
+    url: String,
+    value: String
+  },
+  data: function data() {
+    return {
+      id: "",
+      value1: this.value
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    this.id = new Date().getTime();
+    window.addEventListener("message", function (event) {
+      var data = event.data;
+
+      if (data.action == "select-file") {
+        if (_this.id == data.id) {
+          _this.$emit("input", data.value);
+
+          _this.value1 = data.value;
+          window.$.fancybox.close();
+        }
+      }
+    }, false);
+  },
+  mounted: function mounted() {
+    var url = this.url + "&id=" + this.id;
+    window.$(this.$el).on("focus", function () {
+      window.$.fancybox.open({
+        src: url,
+        type: "iframe"
+      });
+    });
+  }
+});
+// CONCATENATED MODULE: ./src/fileman.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_filemanvue_type_script_lang_js_ = (filemanvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/fileman.vue
+
+
+
+
+
+/* normalize component */
+
+var fileman_component = Object(componentNormalizer["a" /* default */])(
+  src_filemanvue_type_script_lang_js_,
+  filemanvue_type_template_id_1a2ed0c9_render,
+  filemanvue_type_template_id_1a2ed0c9_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var fileman = (fileman_component.exports);
 // CONCATENATED MODULE: ./src/main.js
 
 
@@ -7428,6 +7514,8 @@ main_default()("alt-datetime", Datetime);
 main_default()("ckeditor", ckeditor);
 
 main_default()("alt-button", Button);
+
+main_default()("fileman", fileman);
 // CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 

@@ -11,9 +11,17 @@
     ],
     "repositories": [
         {
+            "type": "path",
+            "url": "../hostlink-fileman",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "composer",
             "url": "https://raymond2.hostlink.com.hk/satis/web"
         }
+ 
     ],
     "autoload": {
         "psr-4": {
@@ -40,7 +48,8 @@
         "mathsgod/hl-weather": "^2.0",
         "mathsgod/r-translate": "^1.0",
         "mathsgod/gql-php-generator": "^1.0",
-        "mathsgod/r-webauthn": "^1.0"
+        "mathsgod/r-webauthn": "^1.0",
+        "mathsgod/hostlink-fileman": "dev-master"
     },
     "require-dev": {
         "box/spout": "^2.7",

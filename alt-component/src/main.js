@@ -48,3 +48,5 @@ VueRegisterElement("ckeditor", ckeditor);
 import altButton from "./Button";
 VueRegisterElement("alt-button", altButton);
 
+import fileman from "./fileman";
+VueRegisterElement("fileman", fileman);

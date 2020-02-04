@@ -7,23 +7,26 @@ use My\Func;
 use P\HTMLElement;
 use BS\InputSelect;
 use P\InputCollection;
+use Firebase\JWT\JWT;
 
 class Col extends HTMLElement
 {
     public $cell;
     public $label;
     public $c_tpl;
+    public $page;
 
     public function cell()
     {
         return $this->cell;
     }
 
-    public function __construct(string $tag)
+    public function __construct(string $tag, \App\Page $page)
     {
         parent::__construct($tag);
         $this->cell = p();
         $this->c_tpl = p();
+        $this->page = $page;
     }
 
     public function gf($gf)
@@ -300,6 +303,44 @@ HTML
         return $p;
     }
 
+    public function fileman(string $field)
+    {
+        $p = $this->input($field);
+        $p->attr("is", "fileman");
+
+        $pi = $this->page->app->pathinfo();
+        $composer_base = $pi["composer_base"];
+        $document_root = $pi["document_root"];
+
+        $config = $this->page->app->config["hostlink-fileman"];
+        $url = $config["url"] ?? $composer_base . "/vendor/mathsgod/hostlink-fileman/dist";
+
+        $payload = [
+            "iat" => time(),
+            "exp" => time() + 3600,
+            "root" =>  $document_root . "/uploads",
+            "api" =>  $composer_base . "/vendor/mathsgod/hostlink-fileman/api/",
+            "url" => $this->page->app->config["hostlink-fileman"]["upload_path"]
+        ];
+
+        if ($config["root"]) {
+            $payload["root"] = $config["root"];
+        }
+
+        if ($config["api"]) {
+            $payload["api"] = $config["api"];
+        }
+
+        $key = $config["key"] ?? session_id();
+
+        $token = JWT::encode($payload, $key);
+
+
+        $p->attr("url", $url . "/index.html?token=$token");
+
+        return $p;
+    }
+
 
     public function roxyfileman($field)
     {
@@ -311,7 +352,7 @@ HTML
     public function ckeditor($field)
     {
 
-/*        $payload = [
+        /*        $payload = [
             "iat" => time(),
             "exp" => time() + 3600,
             "api" => "http://192.168.88.108/hostlink-fileman/",
@@ -320,9 +361,38 @@ HTML
             "url" => "http://192.168.88.108/hostlink-fileman/uploads",
         ];*/
 
+        $pi = $this->page->app->pathinfo();
+        $composer_base = $pi["composer_base"];
+        $document_root = $pi["document_root"];
 
+
+        $config = $this->page->app->config["hostlink-fileman"];
+
+        $payload = [
+            "iat" => time(),
+            "exp" => time() + 3600,
+            "root" =>  $document_root . "/uploads",
+            "api" =>  $composer_base . "/vendor/mathsgod/hostlink-fileman/api/",
+            "url" => $this->page->app->config["hostlink-fileman"]["upload_path"]
+        ];
+
+        if ($config["root"]) {
+            $payload["root"] = $config["root"];
+        }
+
+        if ($config["api"]) {
+            $payload["api"] = $config["api"];
+        }
+
+        $key = $config["key"] ?? session_id();
+
+        $token = JWT::encode($payload, $key);
 
         $p = p();
+
+        $url = $config["url"] ?? $composer_base . "/vendor/mathsgod/hostlink-fileman/dist";
+        $basepath = $config["basepath"];
+
 
         foreach ($this->cell as $cell) {
             try {
@@ -331,6 +401,7 @@ HTML
                 $textarea->attr('data-field', $field);
                 $textarea->attr('name', $field);
                 $textarea->addClass('form-control');
+                $textarea->attr("basepath", $basepath);
 
                 if ($object = p($cell)->data("object")) {
                     $textarea->data("object", $object);
@@ -342,6 +413,15 @@ HTML
                         call_user_func($this->callback, $object, $textarea[0]);
                     }
                 }
+
+
+
+                $textarea->attr(":config", json_encode([
+                    "filebrowserImageBrowseUrl" => $url . "/index.html?token=$token&source=ckeditor&type=image",
+                    "filebrowserBrowseUrl" => $url . "/index.html?token=$token&source=ckeditor"
+                ]));
+
+
                 $p[] = $textarea[0];
             } catch (Exception $e) {
                 $cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");

@@ -83,7 +83,7 @@ class E extends HTMLDivElement
         $label = p("label")->addClass("col-sm-2 col-form-label")->text($this->page->translate($label));
         p($form_group)->append($label);
 
-        $c2 = new Col("div");
+        $c2 = new Col("div", $this->page);
         $c2->classList->add('col-md-10');
 
         $cell = p("div");

@@ -28,7 +28,7 @@ class Table extends HTMLTableElement
 
     public function add($label = null, $getter = null): Col
     {
-        $column = new Col("th");
+        $column = new Col("th",$this->page);
         $column->default = $this->default;
 
         $this->columns[] = $column;

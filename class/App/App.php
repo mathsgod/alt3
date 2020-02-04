@@ -23,6 +23,7 @@ class App extends \R\App
     public $setting = [];
     public $system_value = [];
     public $router;
+    public $composer;
 
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
@@ -38,6 +39,8 @@ class App extends \R\App
                 require_once($file);
             }
         });
+
+        $this->composer=new Composer($this);
 
 
         parent::__construct($root, $loader, $logger);

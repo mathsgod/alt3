@@ -10,6 +10,7 @@ export default {
     };
   },
   props: {
+    basepath: String,
     data: String,
     config: {
       type: Object,
@@ -17,6 +18,21 @@ export default {
         return {};
       }
     }
+  },
+  created() {
+    window.addEventListener(
+      "message",
+      event => {
+        var data = event.data;
+        if (data.source == "ckeditor") {
+          CKEDITOR.tools.callFunction(
+            data.CKEditorFuncNum,
+            this.basepath + data.value
+          );
+        }
+      },
+      false
+    );
   },
   mounted() {
     if (typeof window.CKEDITOR != "undefined") {
