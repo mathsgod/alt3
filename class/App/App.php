@@ -155,7 +155,6 @@ class App extends \R\App
         $this->alert = new Alert();
 
         $request = $this->request;
-        $this->router = new \R\Router();
 
         $this->router->addRoute(function (RequestInterface $request, $loader) {
             return new Route($request, $this);

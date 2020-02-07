@@ -519,17 +519,17 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "1efbf3314bd541d431979bba64b249f232e4e5e3"
+                "reference": "e727f87e37a1d135ce60d105d478363265b8c6a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r/mathsgod-r-3.1.0-59bbe3.zip",
-                "reference": "1efbf3314bd541d431979bba64b249f232e4e5e3",
-                "shasum": "146ee7273bd563071d4f5136bbc55f82afef2998"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r/mathsgod-r-3.2.0-69f936.zip",
+                "reference": "e727f87e37a1d135ce60d105d478363265b8c6a1",
+                "shasum": "82ac812dfcc400e3e3345a1be441d4c6cb9568cc"
             },
             "require": {
                 "mathsgod/r-psr7": "2.*",
@@ -560,7 +560,7 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-02-03T07:00:06+00:00"
+            "time": "2020-02-05T05:10:10+00:00"
         },
         {
             "name": "mathsgod/r-db",
@@ -638,17 +638,17 @@
         },
         {
             "name": "mathsgod/r-psr7",
-            "version": "2.3.3",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-psr7.git",
-                "reference": "bffd8b6f455c49b79f957efab95853c460e84524"
+                "reference": "4f39c078b1bd7b914ec462a5aa2bfb886ae399ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-psr7/mathsgod-r-psr7-2.3.3-535d8a.zip",
-                "reference": "bffd8b6f455c49b79f957efab95853c460e84524",
-                "shasum": "7a0113f31ea1b58cd737df365f2c3220e2747799"
+                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-psr7/mathsgod-r-psr7-2.4.0-069329.zip",
+                "reference": "4f39c078b1bd7b914ec462a5aa2bfb886ae399ed",
+                "shasum": "3d64b7a5efbbfd63cf8439a821e720bedf85ebd6"
             },
             "require": {
                 "php": ">=7.0",
@@ -670,7 +670,7 @@
                 "proprietary"
             ],
             "description": "psr7",
-            "time": "2020-02-03T05:22:44+00:00"
+            "time": "2020-02-07T09:55:41+00:00"
         },
         {
             "name": "mathsgod/r-translate",
