@@ -40,7 +40,7 @@ class App extends \R\App
             }
         });
 
-        $this->composer=new Composer($this);
+        $this->composer = new Composer($this);
 
 
         parent::__construct($root, $loader, $logger);
@@ -446,7 +446,11 @@ class App extends \R\App
         foreach (glob($cms_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $m) {
             $name = basename($m);
             $config = [];
-            if (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "setting.yml")) {
+            if (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "config.yml")) {
+                $config = Yaml::parseFile($config_file);
+            } elseif (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "config.ini")) {
+                $config = parse_ini_file($config_file, true);
+            } elseif (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "setting.yml")) {
                 $config = Yaml::parseFile($config_file);
             } elseif (is_readable($config_file = $m . DIRECTORY_SEPARATOR . "setting.ini")) {
                 $config = parse_ini_file($config_file, true);
