@@ -108,7 +108,7 @@ class V extends Card
         $label = ($this->page) ? $this->page->translate($label) : $label;
         $tbody = $this->table->find("tbody");
 
-        $tr = new Col("tr");
+        $tr = new Col("tr", $this->page);
         $tr->classList->add("d-flex");
 
         p($tr)->appendTo($tbody);
