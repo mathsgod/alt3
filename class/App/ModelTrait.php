@@ -6,6 +6,9 @@ trait ModelTrait
 {
     public static $_app;
 
+    /**
+     * @return User|null
+     */
     public function createdBy()
     {
         if ($this->created_by) {
@@ -13,6 +16,9 @@ trait ModelTrait
         }
     }
 
+    /**
+     * @return User|null
+     */
     public function updatedBy()
     {
         if ($this->updated_by) {
