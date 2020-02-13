@@ -596,8 +596,8 @@ class App extends \R\App
     {
         if ($_SESSION["app"]["version"])
             return $_SESSION["app"]["version"];
-        $composer = new Composer($this);
-        $package = $composer->package("mathsgod/alt");
+
+        $package = $this->composer->package("mathsgod/alt3");
 
         $_SESSION["app"]["version"] = $package->version ?? "6.0.0";
         return $_SESSION["app"]["version"];
