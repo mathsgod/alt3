@@ -75,7 +75,10 @@ trait ModelTrait
         return false;
     }
 
-    public function canRead(): bool
+    /**
+     * @return bool
+     */
+    public function canRead()
     {
         if (self::$_app->user->isAdmin()) {
             return true;
@@ -84,7 +87,10 @@ trait ModelTrait
         return  $this->_acl_allow(["FC", "R"]);
     }
 
-    public function canUpdate(): bool
+    /**
+     * @return bool
+     */
+    public function canUpdate()
     {
         if (self::$_app->user->isAdmin()) {
             return true;
@@ -93,7 +99,10 @@ trait ModelTrait
         return  $this->_acl_allow(["FC", "U"]);
     }
 
-    public function canDelete(): bool
+    /**
+     * @return bool
+     */
+    public function canDelete()
     {
 
         if (self::$_app->user->isAdmin()) {
@@ -109,6 +118,9 @@ trait ModelTrait
     }
 
 
+    /**
+     * @return string
+     */
     public function uri($a = null)
     {
         $reflect = new \ReflectionClass($this);
