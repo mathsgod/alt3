@@ -17,6 +17,10 @@ class User_ae extends ALT\Page
             throw new Exception("access deny");
         }
 
+        if ($_POST["password"]) {
+            $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        }
+
         parent::post();
 
         $obj = $this->object();

@@ -8,7 +8,7 @@ class User_reset_password extends ALT\Page
         } else {
             $u = $this->app->user;
         }
-        $u->password = $_POST["password"];
+        $u->password = password_hash($_POST["password"], PASSWORD_DEFAULT);
         $u->save();
         $this->alert->info("Password updated");
         $this->redirect();
