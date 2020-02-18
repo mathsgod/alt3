@@ -1,5 +1,7 @@
 <template>
-    <table><slot></slot></table>
+  <table>
+    <slot></slot>
+  </table>
 </template>
 <script>
 export default {
@@ -24,7 +26,7 @@ export default {
 
       var tr = $table.find("tr:first");
       var a = $(
-        "<a href='javascript:void(0)' class='btn btn-xs btn-primary'><i class='fa fa-plus'/></a>"
+        "<a href='javascript:void(0)' class='btn btn-xs btn-primary'><i class='fa fa-plus fa-fw' /></a>"
       );
       var th = $(
         "<th style='text-align:center;width:36px' align='center'>"
@@ -39,12 +41,12 @@ export default {
           $tr
         );
         var a = $(
-          "<a href='javascript:void(0)' class='btn btn-xs btn-danger'><i class='fa fa-minus' /></a>"
+          "<a href='javascript:void(0)' class='btn btn-xs btn-danger'><i class='fa fa-minus fa-fw' /></a>"
         ).prependTo($td);
         a.on("click", function() {
           var del_input = $("<input type='hidden' />");
           if (form_name != undefined) {
-            del_input.attr("name", form_name + "[d][]");
+            del_input.attr("name", `${form_name}[d][]`);
           } else {
             del_input.attr("name", "_d[]");
           }
@@ -73,7 +75,7 @@ export default {
           .each(function(i, o) {
             if (i == 0) {
               var a = $(
-                "<a href='javascript:void(0)' class='btn btn-xs btn-warning'><i class='fa fa-minus' /></a>"
+                "<a href='javascript:void(0)' class='btn btn-xs btn-warning'><i class='fa fa-minus fa-fw' /></a>"
               );
               var td = $("<td>").appendTo(new_tr);
               td.attr("align", "center");
