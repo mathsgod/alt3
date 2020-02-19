@@ -10,6 +10,7 @@ class User_ae extends ALT\Page
 {
     public function post()
     {
+        $obj = $this->object();
         $form = $this->getForm();
 
 
@@ -19,6 +20,8 @@ class User_ae extends ALT\Page
 
         if ($_POST["password"]) {
             $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+        } else {
+            $_POST["password"] = $obj->password;
         }
 
         parent::post();
