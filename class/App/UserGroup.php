@@ -4,7 +4,11 @@ namespace App;
 
 class UserGroup extends Core\UserGroup
 {
-    use ModelTrait;
+    use ModelTrait {
+        canUpdate as protected canUpdate2;
+        canDelete as protected canDelete2;
+    }
+
 
     public function User()
     {
@@ -63,13 +67,13 @@ class UserGroup extends Core\UserGroup
     public function canUpdate()
     {
         if ($this->usergroup_id <= 4) return false;
-        return parent::canUpdate();
+        return $this->canUpdate2();
     }
 
     public function canDelete()
     {
-        if ($this->_Size("UserList")) return false;
         if ($this->usergroup_id <= 4) return false;
-        return parent::canDelete();
+        if ($this->UserList->count()) return false;
+        return $this->canDelete2();
     }
 }
