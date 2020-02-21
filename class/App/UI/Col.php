@@ -490,7 +490,7 @@ HTML
         return $p;
     }
 
-    public function select($field)
+    public function select($field, $data_source = null, $display_member = null, $value_member = null)
     {
         $p = new \P\SelectCollection();
 
@@ -523,6 +523,10 @@ HTML
             $p->on("change", function () {
                 $this->setAttribute("c-tpl",  $this->c_tpl);
             });
+        }
+
+        if ($data_source) {
+            $p->ds($data_source, $display_member, $value_member);
         }
 
         return $p;
