@@ -6991,12 +6991,12 @@ var Datatables_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Datatables = (Datatables_component.exports);
-// CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2e0ec89c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=template&id=89f5e516&
-var Datetimevue_type_template_id_89f5e516_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{ref:"input",staticClass:"form-control",domProps:{"value":_vm.value}})}
-var Datetimevue_type_template_id_89f5e516_staticRenderFns = []
+// CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2e0ec89c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=template&id=4a98411a&
+var Datetimevue_type_template_id_4a98411a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{attrs:{"id":_vm.id,"data-target":("#" + _vm.id),"data-toggle":"datetimepicker"},domProps:{"value":_vm.value}})}
+var Datetimevue_type_template_id_4a98411a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Datetime.vue?vue&type=template&id=89f5e516&
+// CONCATENATED MODULE: ./src/Datetime.vue?vue&type=template&id=4a98411a&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datetime.vue?vue&type=script&lang=js&
 //
@@ -7005,6 +7005,9 @@ var Datetimevue_type_template_id_89f5e516_staticRenderFns = []
 /* harmony default export */ var Datetimevue_type_script_lang_js_ = ({
   props: {
     value: String,
+    id: {
+      type: String
+    },
     sideBySide: {
       type: Boolean,
       default: true
@@ -7013,20 +7016,40 @@ var Datetimevue_type_template_id_89f5e516_staticRenderFns = []
       type: String,
       default: "YYYY-MM-DD HH:mm"
     },
-    icon: {
-      type: String,
-      default: "far fa-calendar-alt"
-    },
     minDate: {
       default: false
     },
     maxDate: {
       default: false
+    },
+    stepping: {
+      default: 1
+    },
+    buttons: {
+      default: function _default() {
+        return {
+          showClose: true
+        };
+      }
+    }
+  },
+  created: function created() {
+    if (this.format == "YYYY-MM-DD") {
+      this.buttons.showToday = true;
+      this.buttons.showClose = false;
+    } else {
+      this.buttons.showToday = false;
+    }
+
+    if (!this.id) {
+      this.id = "dt_" + Math.floor(Math.random() * 10000000000000);
     }
   },
   mounted: function mounted() {
+    var $ = window.$;
+
     if (this.required) {
-      window.$(this.$el).closest(".form-group").addClass("has-feedback");
+      $(this.$el).closest(".form-group").addClass("has-feedback");
 
       if ($(this.$el).closest(".form-group").length == 0) {
         $(this.$el).css("margin-bottom", "0px");
@@ -7034,12 +7057,25 @@ var Datetimevue_type_template_id_89f5e516_staticRenderFns = []
       }
     }
 
-    window.$(this.$refs.input).datetimepicker({
+    window.$(this.$el).datetimepicker({
+      icons: {
+        time: "far fa-clock",
+        date: "far fa-calendar",
+        previous: "fa fa-chevron-left",
+        next: "fa fa-chevron-right",
+        clear: "far fa-trash",
+        close: "fa fa-times",
+        up: "fa fa-arrow-up",
+        down: "fa fa-arrow-down",
+        today: "fa fa-calendar-check"
+      },
       sideBySide: this.sideBySide,
       format: this.format,
       minDate: this.minDate,
-      maxDate: this.maxDate
-    });
+      maxDate: this.maxDate,
+      stepping: this.stepping,
+      buttons: this.buttons
+    }); // window.$(this.$el).on("change.datetimepicker", function(e) {});
   }
 });
 // CONCATENATED MODULE: ./src/Datetime.vue?vue&type=script&lang=js&
@@ -7054,8 +7090,8 @@ var Datetimevue_type_template_id_89f5e516_staticRenderFns = []
 
 var Datetime_component = Object(componentNormalizer["a" /* default */])(
   src_Datetimevue_type_script_lang_js_,
-  Datetimevue_type_template_id_89f5e516_render,
-  Datetimevue_type_template_id_89f5e516_staticRenderFns,
+  Datetimevue_type_template_id_4a98411a_render,
+  Datetimevue_type_template_id_4a98411a_staticRenderFns,
   false,
   null,
   null,

@@ -903,7 +903,6 @@ HTML
     {
         $p = $this->datetime($field);
         $p->attr("format", "HH:mm");
-        $p->attr("icon", "far fa-clock");
         return $p;
     }
 
@@ -914,6 +913,8 @@ HTML
 
             $div = p("input")->appendTo($cell);
             $div->attr("is", "alt-datetime");
+            $div->attr("type", "input");
+            $div->addClass("form-control");
             $div->attr("name", $field);
             $div->attr("data-field", $field);
             if ($object = p($cell)->data("object")) {
