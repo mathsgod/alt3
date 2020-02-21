@@ -189,4 +189,8 @@ nnnick/chartjs:
   js: ['dist/Chart.min.js']
 
 corejavascript/typeahead.js:
+  require: ['typeahead.js-bootstrap-css']
   js: [dist/typeahead.bundle.min.js]
+
+typeahead.js-bootstrap-css:
+  css: [typeaheadjs.min.css]
