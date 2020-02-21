@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "512dc106d686298b172bd3631c94f665",
+    "content-hash": "e542e6544e11a6fceac5f4010562b0d8",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1485,6 +1485,43 @@
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
             "time": "2019-10-23T05:15:13+00:00"
+        },
+        {
+            "name": "corejavascript/typeahead.js",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/corejavascript/typeahead.js.git",
+                "reference": "662ee462829fb977bdad59a5707db0db65335f9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/corejavascript/typeahead.js/zipball/662ee462829fb977bdad59a5707db0db65335f9c",
+                "reference": "662ee462829fb977bdad59a5707db0db65335f9c",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twitter Inc.",
+                    "homepage": "https://twitter.com/twitteross"
+                },
+                {
+                    "name": "Jake Harding",
+                    "homepage": "https://github.com/jharding"
+                }
+            ],
+            "description": "fast and fully-featured autocomplete library",
+            "homepage": "https://typeahead.js.org/",
+            "keywords": [
+                "autocomplete",
+                "typeahead"
+            ],
+            "time": "2019-11-16T14:05:22+00:00"
         },
         {
             "name": "doctrine/instantiator",

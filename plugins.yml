@@ -187,3 +187,6 @@ chartjs:
 
 nnnick/chartjs:
   js: ['dist/Chart.min.js']
+
+corejavascript/typeahead.js:
+  js: [dist/typeahead.bundle.min.js]

@@ -21,7 +21,6 @@
             "type": "composer",
             "url": "https://raymond2.hostlink.com.hk/satis/web"
         }
- 
     ],
     "autoload": {
         "psr-4": {
@@ -56,11 +55,13 @@
         "phpunit/phpunit": "^6.5",
         "vakata/jstree": "^3.3",
         "sepia/po-parser": "^5.1",
-        "ckeditor/ckeditor": "^4.13"
+        "ckeditor/ckeditor": "^4.13",
+        "corejavascript/typeahead.js": "^1.3"
     },
     "suggest": {
         "phpoffice/phpexcel": "phpoffice",
         "phpunit/phpunit": "phpunit",
-        "monolog/monolog": "Allows more advanced logging of the application flow"
+        "monolog/monolog": "Allows more advanced logging of the application flow",
+        "corejavascript/typeahead.js": "fast and fully-featured autocomplete library"
     }
 }

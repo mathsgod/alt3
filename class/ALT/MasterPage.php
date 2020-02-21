@@ -139,6 +139,13 @@ class MasterPage extends \R\Page
             $this->data["favs"][] = $content;
         }
 
+/*
+        $start = microtime(true);
+        $this->app->composer->installed();
+        $time_elapsed_secs = microtime(true) - $start;
+        echo $time_elapsed_secs;
+*/
+
         $stream = new Stream($this->template->render($this->data));
 
         return $response->withBody($stream);
