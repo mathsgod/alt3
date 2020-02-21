@@ -1,5 +1,11 @@
 <template>
-  <input :value="value" :id="id" :data-target="`#${id}`" data-toggle="datetimepicker" />
+  <input
+    :value="value"
+    :id="local_id"
+    :data-target="`#${local_id}`"
+    data-toggle="datetimepicker"
+    autocomplete="off"
+  />
 </template>
 <script>
 export default {
@@ -33,6 +39,11 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      local_id: this.id
+    };
+  },
   created() {
     if (this.format == "YYYY-MM-DD") {
       this.buttons.showToday = true;
@@ -40,8 +51,8 @@ export default {
     } else {
       this.buttons.showToday = false;
     }
-    if (!this.id) {
-      this.id = "dt_" + Math.floor(Math.random() * 10000000000000);
+    if (!this.local_id) {
+      this.local_id = "dt_" + Math.floor(Math.random() * 10000000000000);
     }
   },
   mounted() {
@@ -75,8 +86,6 @@ export default {
       stepping: this.stepping,
       buttons: this.buttons
     });
-
-    // window.$(this.$el).on("change.datetimepicker", function(e) {});
   }
 };
 </script>

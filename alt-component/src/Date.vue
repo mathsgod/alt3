@@ -1,5 +1,5 @@
 <template>
-  <input :value="value" />
+  <input :value="value" autocomplete="off" />
 </template>
 <script>
 export default {
