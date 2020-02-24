@@ -153,10 +153,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{system_base}}/src/default.js" defer></script>
     <script src="{{system_base}}/src/confirm.js" defer></script>
     <script src="{{system_base}}/src/vue.dialog.js" defer></script>
-    <script src="{{system_base}}/node_modules/x-html-bs4/dist/x-html-bs4.umd.js" defer></script>
+    
     {% else %}
     <script src="{{system_base}}/dist/main.js" defer></script>
     {% endif %}
+
+    <script src="{{system_base}}/dist/plugin.js" defer></script>
+
 
     <!-- SweetAlert2 -->
     <script src="{{system_base}}/plugins/sweetalert2/sweetalert2.min.js" defer></script>
