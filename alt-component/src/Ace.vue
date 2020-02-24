@@ -1,10 +1,11 @@
 <template>
-     <textarea></textarea>
+  <textarea></textarea>
 </template>
 
 <script>
 export default {
   mounted() {
+    var $ = window.$;
     if (this.$slots.default) {
       this.$el.value = this.$slots.default[0].text;
     }

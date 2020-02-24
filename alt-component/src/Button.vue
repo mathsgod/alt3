@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     onClick(event) {
+      var $=window.$;
       if (this.type == "submit") {
         var form = this.$el.form;
         if (!$(form).valid()) {

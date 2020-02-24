@@ -67,7 +67,7 @@ export default {
       }
     }
 
-    window.$(this.$el).datetimepicker({
+    $(this.$el).datetimepicker({
       icons: {
         time: "far fa-clock",
         date: "far fa-calendar",
@@ -85,6 +85,10 @@ export default {
       maxDate: this.maxDate,
       stepping: this.stepping,
       buttons: this.buttons
+    });
+
+    $(this.$el).on("change.datetimepicker", e => {
+      this.$emit("input", e.date.format(this.format));
     });
   }
 };
