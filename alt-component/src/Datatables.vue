@@ -1,9 +1,11 @@
 <template>
-    <table class="table table-hover table-sm table-bordered">
-        <slot></slot>
-    </table>
+  <table class="table table-hover table-sm table-bordered">
+    <slot></slot>
+  </table>
 </template>
 <script>
+var moment = window.moment;
+var $ = window.$;
 export default {
   name: "alt-datatables",
   data() {
@@ -43,7 +45,7 @@ export default {
 
       if (this.$attrs["data-server-side"] == "true") {
         this.table.button().add(0, {
-          action: function(e, dt, button, config) {
+          action: function(e, dt) {
             dt.ajax.reload();
           },
           text: '<i class="fa fa-sync-alt"></i> Reload'
@@ -59,12 +61,12 @@ export default {
                     }.bind(this),
                     text: '<i class="fa fa-sync-alt"></i> Responsive'
                 });*/
-
+      let that = this;
       this.table.on(
         "responsive-resize",
-        function(e, datatable, columns) {
+        function() {
           this.searchColumns.forEach((c, i) => {
-            if (datatable.columns().responsiveHidden()[i]) {
+            if (that.table.columns().responsiveHidden()[i]) {
               c.show();
             } else {
               c.hide();
@@ -101,12 +103,12 @@ export default {
           if (!o.searchable) return;
 
           if (o.searchType == "select2") {
-            var search = $("<select class='form-control input-sm'>");
+            let search = $("<select class='form-control input-sm'>");
             var opt = $("<option>");
             search.append(opt);
 
             o.searchOption.forEach(o => {
-              var opt = $("<option>");
+              let opt = $("<option>");
               opt.text(o.label);
               opt.val(o.value);
               search.append(opt);
@@ -120,7 +122,7 @@ export default {
 
             search.select2({});
           } else if (o.searchType == "text") {
-            var search = $("<input class='form-control input-sm'>");
+            let search = $("<input class='form-control input-sm'>");
             td.append(search);
 
             search.keyup(e => {
@@ -133,8 +135,8 @@ export default {
               }
             });
           } else if (o.searchType == "select") {
-            var search = $("<select class='form-control input-sm'>");
-            var opt = $("<option>");
+            let search = $("<select class='form-control input-sm'>");
+            let opt = $("<option>");
             search.append(opt);
 
             o.searchOption.forEach(o => {
@@ -150,7 +152,7 @@ export default {
 
             td.append(search);
           } else if (o.searchType == "date") {
-            var search = $('<input class="form-control input-sm" value="" />');
+            let search = $('<input class="form-control input-sm" value="" />');
             search.daterangepicker({
               //singleDatePicker: true,
               opens: "center",
@@ -205,7 +207,7 @@ export default {
               column.search(JSON.stringify(s)).draw();
             });
 
-            search.on("cancel.daterangepicker", function(ev, picker) {
+            search.on("cancel.daterangepicker", function() {
               search.val("");
               column.search("").draw();
             });
