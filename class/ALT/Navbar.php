@@ -26,6 +26,29 @@ class Navbar extends \P\HTMLElement
         return $this->_content[0]->hasChildNodes();
     }
 
+    public function showEdit()
+    {
+        $obj = $this->page->object();
+        if ($obj->canUpdate()) {
+            $a = new \App\UI\A();
+            $a->setAttribute("href", $obj->uri("ae"));
+            $a->classList->add("btn-warning btn-sm m1 navbar-btn text-white");
+            $a->innerHTML = "<i class='fa fa-pencil-alt fa-fw'></i>";
+            $this->_content->prepend($a);
+        }
+    }
+
+    public function showDelete()
+    {
+        $obj = $this->page->object();
+        if ($obj->canDelete()) {
+            $a = new \App\UI\A();
+            $a->setAttribute("href", $obj->uri("del"));
+            $a->classList->add("btn-danger btn-sm m1 navbar-btn confirm");
+            $a->innerHTML = "<i class='fa fa-times fa-fw'></i>";
+            $this->_content->append($a);
+        }
+    }
 
     public function addButton(string $label, $uri = null): \App\UI\A
     {

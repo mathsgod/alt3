@@ -30,6 +30,8 @@ class E extends HTMLDivElement
 
     public function addSplit()
     {
+        $this->classList->add("row col-md-12");
+        
         $this->content = p("div")->addClass("col-md-12")->appendTo($this);
         $this->contents[] = $this->content;
 
