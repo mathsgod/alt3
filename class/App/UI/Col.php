@@ -85,7 +85,7 @@ class Col extends HTMLElement
 
             if ($object = p($cell)->data("object")) {
                 $e->data("object", $object);
-                $e->text(is_object($object) ? $object->$field : $object[$field]);
+                $e->text($this->getObjectValue($object, $field));
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $e[0]);
@@ -266,7 +266,7 @@ class Col extends HTMLElement
         foreach ($this->cell as $cell) {
             try {
                 $object = p($cell)->data("object");
-                $value = is_object($object) ? $object->$field : $object[$field];
+                $value = $this->getObjectValue($object, $field);
                 if ($value) {
 
                     $div = p(
@@ -406,8 +406,8 @@ HTML
                 if ($object = p($cell)->data("object")) {
                     $textarea->data("object", $object);
 
-                    //$textarea->text(is_object($object) ? $object->$field : $object[$field]);
-                    $textarea->attr("data", is_object($object) ? $object->$field : $object[$field]);
+                    //$textarea->text($this->getObjectValue($object,$field));
+                    $textarea->attr("data", $this->getObjectValue($object, $field));
 
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $textarea[0]);
@@ -460,7 +460,7 @@ HTML
                 if ($object = p($cell)->data("object")) {
                     $textarea->data("object", $object);
 
-                    $textarea->text(is_object($object) ? $object->$field : $object[$field]);
+                    $textarea->text($this->getObjectValue($object, $field));
 
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $textarea[0]);
@@ -502,7 +502,7 @@ HTML
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $select[0]->setAttribute("data-value", json_encode($this->getObjectValue($object,$field)));
+                $select[0]->setAttribute("data-value", json_encode($this->getObjectValue($object, $field)));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
                 }
@@ -614,7 +614,7 @@ HTML
 
                 if ($object = p($cell)->data("object")) {
                     $input->data("object", $object);
-                    $input->attr("value", is_object($object) ? $object->$field : $object[$field]);
+                    $input->attr("value", $this->getObjectValue($object, $field));
 
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $input[0]);
@@ -661,7 +661,7 @@ HTML
             }
 
             if ($field) {
-                p($btn)->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+                p($btn)->attr("data-value", $this->getObjectValue($object, $field));
             }
 
             $as[] = $btn;
@@ -845,7 +845,7 @@ HTML
 
 
             if ($object = p($cell)->data("object")) {
-                $value = is_object($object) ? $object->$field : $object[$field];
+                $value = $this->getObjectValue($object, $field);
                 if ($value) {
                     $cb->input->setAttribute("checked", true);
                 }
@@ -879,7 +879,7 @@ HTML
         return $this->input($index)->addClass("cp");
     }
 
-    public function date($field): InputCollection
+    public function date(string $field): InputCollection
     {
         $p = new InputCollection;
         foreach ($this->cell as $cell) {
@@ -893,7 +893,7 @@ HTML
 
                 if ($object = p($cell)->data("object")) {
                     $div->data("object", $object);
-                    $div->attr("value", is_object($object) ? $object->$field : $object[$field]);
+                    $div->attr("value", $this->getObjectValue($object, $field));
 
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $div[0]);
@@ -920,14 +920,14 @@ HTML
         return $p;
     }
 
-    public function time($field)
+    public function time(string $field)
     {
         $p = $this->datetime($field);
         $p->attr("format", "HH:mm");
         return $p;
     }
 
-    public function datetime($field = null)
+    public function datetime(string $field)
     {
         $p = new \P\InputCollection;
         foreach ($this->cell as $cell) {
@@ -940,7 +940,7 @@ HTML
             $div->attr("data-field", $field);
             if ($object = p($cell)->data("object")) {
                 $div->data("object", $object);
-                $div->attr("value", is_object($object) ? $object->$field : $object[$field]);
+                $div->attr("value", $this->getObjectValue($object, $field));
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $div[0]);
@@ -965,7 +965,7 @@ HTML
         return $p;
     }
 
-    public function multiSelect($field): \P\SelectCollection
+    public function multiSelect(string $field): \P\SelectCollection
     {
         $p = new \P\SelectCollection();
 
@@ -981,7 +981,7 @@ HTML
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $value = $this->getObjectValue($object,$field);
+                $value = $this->getObjectValue($object, $field);
                 if (is_string($value)) {
                     $value = explode(",", $value);
                 }
@@ -1016,12 +1016,12 @@ HTML
         return $p;
     }
 
-    public function multiSelectPicker($field)
+    public function multiSelectPicker(string $field)
     {
         return $this->multiSelect($field);
     }
 
-    public function selectPicker($field)
+    public function selectPicker(string $field)
     {
         $p = new \P\SelectCollection();
 
@@ -1034,7 +1034,7 @@ HTML
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $select->attr("data-value", is_object($object) ? $object->$field : $object[$field]);
+                $select->attr("data-value", $this->getObjectValue($object, $field));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
                 }
@@ -1060,7 +1060,7 @@ HTML
         return $p;
     }
 
-    public function multiSelect2($field)
+    public function multiSelect2(string $field)
     {
         foreach ($this->cell as $cell) {
             $input = p("input")->appendTo($cell);
@@ -1086,7 +1086,7 @@ HTML
         return $select;
     }
 
-    public function select2($field)
+    public function select2(string $field)
     {
         $p = new \P\SelectCollection();
 
@@ -1103,7 +1103,7 @@ HTML
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
                 try {
-                    $data_value = is_object($object) ? $object->$field : $object[$field];
+                    $data_value = $this->getObjectValue($object, $field);
                     $select->attr(":value", json_encode($data_value));
                 } catch (\Exception $e) {
                 }
@@ -1133,7 +1133,7 @@ HTML
         return $p;
     }
 
-    public function helpBlock($text)
+    public function helpBlock(string $text)
     {
         $p = p();
         foreach ($this->cell as $cell) {
@@ -1157,14 +1157,14 @@ HTML
         return $p;
     }
 
-    public function img($field)
+    public function img(string $field)
     {
         $p = p();
         foreach ($this->cell as $cell) {
             $img = p("img")->appendTo($cell);
             $img->attr("data-field", $field);
             if ($object = p($cell)->data("object")) {
-                $img->attr("src", is_object($object) ? $object->$field : $object[$field]);
+                $img->attr("src", $this->getObjectValue($object, $field));
             }
             $p[] = $img[0];
         }
