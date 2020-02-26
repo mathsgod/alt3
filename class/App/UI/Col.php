@@ -43,7 +43,7 @@ class Col extends HTMLElement
         return $this;
     }
 
-    public function iconpicker($field)
+    /*public function iconpicker($field)
     {
         $p = new \BS\ButtonCollection;
 
@@ -64,7 +64,7 @@ class Col extends HTMLElement
             }
         }
         return $p;
-    }
+    }*/
 
     public function ace($field, $mode)
     {
