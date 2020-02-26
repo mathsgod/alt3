@@ -502,7 +502,7 @@ HTML
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $select[0]->setAttribute("data-value", json_encode(is_object($object) ? $object->$field : $object[$field]));
+                $select[0]->setAttribute("data-value", json_encode($this->getObjectValue($object,$field)));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
                 }
