@@ -981,10 +981,11 @@ HTML
 
             if ($object = p($cell)->data("object")) {
                 $select->data("object", $object);
-                $value = is_object($object) ? $object->$field : $object[$field];
+                $value = $this->getObjectValue($object,$field);
                 if (is_string($value)) {
                     $value = explode(",", $value);
                 }
+
                 $select->attr("data-value", json_encode($value, JSON_UNESCAPED_UNICODE));
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $select[0]);
