@@ -14,7 +14,9 @@ class InputSelectCollection extends \P\Query
     public function options($a)
     {
         foreach ($this as $node) {
-            $node->options($a);
+            foreach ($a as $b) {
+                $node->addItem($b);
+            }
         }
         return $this;
     }

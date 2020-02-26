@@ -210,7 +210,7 @@ class Col extends HTMLElement
         return $this->input($field)->type("number");
     }
 
-    public function input($field): InputCollection
+    public function input(string $field): InputCollection
     {
         $p = new InputCollection;
         foreach ($this->cell as $cell) {
@@ -224,7 +224,7 @@ class Col extends HTMLElement
 
                 if ($object = p($cell)->data("object")) {
                     $input->data("object", $object);
-                    $input->attr("value", is_object($object) ? $object->$field : $object[$field]);
+                    $input->attr("value", $this->getObjectValue($object, $field));
 
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $input[0]);
@@ -690,19 +690,26 @@ HTML
             $data = [];
             $value = [];
             if ($object = p($cell)->data("object")) {
-                $value = is_object($object) ? $object->$field : $object[$field];
+
+                $value = $this->getObjectValue($object, $field);
                 if (is_string($value)) {
                     $value = explode(",", $value);
                 }
+
+                $value = array_filter($value, function ($v) {
+                    return $v != "";
+                });
 
                 foreach ($value as $v) {
                     $data[] = [
                         "id" => $v,
                         "text" => $v,
-                        "selected" => true
                     ];
                 }
+
+                $e->attr(":value", json_encode($value));
             }
+
             foreach ($options as $v) {
                 if (!in_array($v, $value)) {
                     $data[] = [
@@ -749,6 +756,19 @@ HTML
         return $p;
     }
 
+    private function getObjectValue($object, string $field)
+    {
+        $f = explode("[", $field, 2);
+        $f = $f[0];
+
+        $value = is_object($object) ? $object->$f : $object[$f];
+        preg_match_all('#\[(.*?)\]#', $field, $match);
+        foreach ($match[1] as $m) {
+            $value = $value[$m];
+        }
+        return $value;
+    }
+
     public function inputSelect($field, $options = [])
     {
         $p = new \ALT\InputSelectCollection();
@@ -762,7 +782,8 @@ HTML
             $cell->append($is);
 
             if ($object = p($cell)->data("object")) {
-                $input->val(is_object($object) ? $object->$field : $object[$field]);
+
+                $input->val($this->getObjectValue($object, $field));
 
                 if ($this->callback) {
                     call_user_func($this->callback, $object, $is);
