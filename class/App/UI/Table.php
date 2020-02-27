@@ -28,7 +28,7 @@ class Table extends HTMLTableElement
 
     public function add($label = null, $getter = null): Col
     {
-        $column = new Col("th",$this->page);
+        $column = new Col("th", $this->page);
         $column->default = $this->default;
 
         $this->columns[] = $column;
@@ -228,7 +228,7 @@ if(checked){
         $o = p($html);
         $o->find("td")->each(function ($i, $o) {
             if (p($o)->find("input,textarea,select")->count()) {
-                p($o)->wrapInner("<div class='form-group no-margin'></div>");
+                p($o)->wrapInner("<div class='form-group m-0'></div>");
             }
         });
         return (string) $o;
