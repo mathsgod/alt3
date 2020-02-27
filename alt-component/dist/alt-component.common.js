@@ -6961,12 +6961,12 @@ var Ace_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var Ace = (Ace_component.exports);
-// CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2e0ec89c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datatables.vue?vue&type=template&id=9e48ee24&
-var Datatablesvue_type_template_id_9e48ee24_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"table table-hover table-sm table-bordered"},[_vm._t("default")],2)}
-var Datatablesvue_type_template_id_9e48ee24_staticRenderFns = []
+// CONCATENATED MODULE: C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2e0ec89c-vue-loader-template"}!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-service/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datatables.vue?vue&type=template&id=b0a8ceba&
+var Datatablesvue_type_template_id_b0a8ceba_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"table table-hover table-sm table-bordered"},[_vm._t("default")],2)}
+var Datatablesvue_type_template_id_b0a8ceba_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Datatables.vue?vue&type=template&id=9e48ee24&
+// CONCATENATED MODULE: ./src/Datatables.vue?vue&type=template&id=b0a8ceba&
 
 // EXTERNAL MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!C:/Users/maths/AppData/Roaming/npm/node_modules/@vue/cli-plugin-babel/node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Datatables.vue?vue&type=script&lang=js&
 var Datatablesvue_type_script_lang_js_ = __webpack_require__("ffaa");
@@ -6983,8 +6983,8 @@ var Datatablesvue_type_script_lang_js_ = __webpack_require__("ffaa");
 
 var Datatables_component = Object(componentNormalizer["a" /* default */])(
   src_Datatablesvue_type_script_lang_js_,
-  Datatablesvue_type_template_id_9e48ee24_render,
-  Datatablesvue_type_template_id_9e48ee24_staticRenderFns,
+  Datatablesvue_type_template_id_b0a8ceba_render,
+  Datatablesvue_type_template_id_b0a8ceba_staticRenderFns,
   false,
   null,
   null,
@@ -7365,6 +7365,7 @@ var fileman_component = Object(componentNormalizer["a" /* default */])(
 
 /* harmony default export */ var fileman = (fileman_component.exports);
 // CONCATENATED MODULE: ./src/main.js
+Vue = window.Vue;
 
 
 main_default()("grid", Grid);
@@ -7391,7 +7392,8 @@ main_default()("select2", Select2);
 
 main_default()("ace", Ace);
 
-main_default()("alt-datatables", Datatables);
+window.VueDataTables = Datatables;
+main_default()("datatables", Datatables);
 
 main_default()("alt-datetime", Datetime);
 
@@ -13500,27 +13502,42 @@ module.exports = global.Promise;
 var moment = window.moment;
 var $ = window.$;
 /* harmony default export */ __webpack_exports__["a"] = ({
-  name: "alt-datatables",
-  data: function data() {
-    return {
-      table: null,
-      columns: [],
-      searchColumns: []
-    };
-  },
+  name: "datatables",
   props: {
     buttons: {
       type: Array,
       default: function _default() {
         return [];
       }
+    },
+    columns: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    data: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
     }
   },
+  data: function data() {
+    return {
+      table: null,
+      searchColumns: []
+    };
+  },
   mounted: function mounted() {
-    //if(this.$attrs["data-columns"]){
-    //}
-    this.columns = JSON.parse(this.$attrs["data-columns"]);
-    this.initTable();
+    if (this.columns.length) {
+      this.table = window.$(this.$el).DataTable({
+        columns: this.columns,
+        data: this.data
+      });
+    } else {
+      this.table = window.$(this.$el).DataTable();
+    }
   },
   methods: {
     initTable: function initTable() {
@@ -13534,9 +13551,12 @@ var $ = window.$;
 
         buttons.push(o);
       });
+      console.log(this.columns);
       this.table = $(this.$el).DataTable({
+        columns: this.columns,
         buttons: buttons
       });
+      return;
 
       if (this.$attrs["data-server-side"] == "true") {
         this.table.button().add(0, {

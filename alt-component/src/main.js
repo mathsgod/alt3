@@ -1,3 +1,4 @@
+Vue = window.Vue;
 import VueRegisterElement from "vue-register-element/dist/main.js";
 
 import grid from "./Grid";
@@ -37,7 +38,8 @@ import ace from "./Ace";
 VueRegisterElement("ace", ace);
 
 import Datatables from "./Datatables";
-VueRegisterElement("alt-datatables", Datatables);
+window.VueDataTables = Datatables;
+VueRegisterElement("datatables", Datatables);
 
 import datetime from "./Datetime";
 VueRegisterElement("alt-datetime", datetime);

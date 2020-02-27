@@ -2,7 +2,7 @@
 
 // Created By: Raymond Chong
 // Created Date: 3/1/2011
-// Last Updated:
+// Last Updated: 2020-02-26
 namespace My;
 
 use P\HTMLElement;
@@ -35,7 +35,7 @@ class TreeNode extends HTMLElement
 
 		$node = new TreeNode();
 		$node->label->data = $text;
-		$node->icon("far fa-folder-o");
+		$node->icon("far fa-folder");
 
 		$this->ul->append($node);
 

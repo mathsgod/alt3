@@ -56,7 +56,8 @@
         "vakata/jstree": "^3.3",
         "sepia/po-parser": "^5.1",
         "ckeditor/ckeditor": "^4.13",
-        "corejavascript/typeahead.js": "^1.3"
+        "corejavascript/typeahead.js": "^1.3",
+        "kevinchappell/form-builder": "^3.4"
     },
     "suggest": {
         "phpoffice/phpexcel": "phpoffice",

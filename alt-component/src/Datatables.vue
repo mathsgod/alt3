@@ -7,26 +7,36 @@
 var moment = window.moment;
 var $ = window.$;
 export default {
-  name: "alt-datatables",
-  data() {
-    return {
-      table: null,
-      columns: [],
-      searchColumns: []
-    };
-  },
+  name: "datatables",
   props: {
     buttons: {
       type: Array,
       default: () => []
+    },
+    columns: {
+      type: Array,
+      default: () => []
+    },
+    data: {
+      type: Array,
+      default: () => []
     }
   },
+  data() {
+    return {
+      table: null,
+      searchColumns: []
+    };
+  },
   mounted() {
-    //if(this.$attrs["data-columns"]){
-
-    //}
-    this.columns = JSON.parse(this.$attrs["data-columns"]);
-    this.initTable();
+    if (this.columns.length) {
+      this.table = window.$(this.$el).DataTable({
+        columns: this.columns,
+        data: this.data
+      });
+    } else {
+      this.table = window.$(this.$el).DataTable();
+    }
   },
   methods: {
     initTable() {
@@ -39,9 +49,12 @@ export default {
         buttons.push(o);
       });
 
+      console.log(this.columns);
       this.table = $(this.$el).DataTable({
+        columns: this.columns,
         buttons: buttons
       });
+      return;
 
       if (this.$attrs["data-server-side"] == "true") {
         this.table.button().add(0, {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e542e6544e11a6fceac5f4010562b0d8",
+    "content-hash": "67acdacc3dbe6b9f1ea6f97c54ca0175",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1558,6 +1558,43 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
+        },
+        {
+            "name": "kevinchappell/form-builder",
+            "version": "v3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kevinchappell/formBuilder.git",
+                "reference": "1b2f4afde82a23b8761f190994b4c9b836a6de0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kevinchappell/formBuilder/zipball/1b2f4afde82a23b8761f190994b4c9b836a6de0e",
+                "reference": "1b2f4afde82a23b8761f190994b4c9b836a6de0e",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Chappell",
+                    "email": "kevin.b.chappell@gmail.com",
+                    "homepage": "https://kevin-chappell.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "jQuery formBuilder",
+            "homepage": "https://formbuilder.online",
+            "keywords": [
+                "builder",
+                "form",
+                "form builder",
+                "formbuilder"
+            ],
+            "time": "2020-02-02T05:13:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",
