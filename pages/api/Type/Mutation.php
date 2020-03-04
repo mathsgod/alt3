@@ -5,11 +5,18 @@ namespace Type;
 use GraphQL\Error\Error;
 use App\User;
 use App\UI;
+use Exception;
 
 class Mutation
 {
     public function bodyAddClass($root, $args, $app)
     {
+        //check style type
+        $attr = User::__attribute("style");
+        if ($attr["Type"] !== "json") {
+            throw new Error("Table User, field style must be set to json");
+        }
+
         $body = $app->user->style["body"] ?? [];
         $body[] = $args["class"];
         $app->user->style["body"] = array_values($body);
@@ -19,9 +26,14 @@ class Mutation
 
     public function bodyRemoveClass($root, $args, $app)
     {
+        $attr = User::__attribute("style");
+        if ($attr["Type"] !== "json") {
+            throw new Error("Table User, field style must be set to json");
+        }
+
         $body = $app->user->style["body"] ?? [];
 
-        $app->user->style["body"] = array_filter($app->user->style["body"], function ($c) use ($args) {
+        $app->user->style["body"] = array_filter($body, function ($c) use ($args) {
             return $c != $args["class"];
         });
         $app->user->save();
@@ -93,7 +105,7 @@ class Mutation
         try {
             $app->login($args["username"], $args["password"], $args["code"]);
             return $app->user;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new Error($e->getMessage());
         }
     }

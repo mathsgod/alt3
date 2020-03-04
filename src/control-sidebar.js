@@ -65,15 +65,18 @@
         value: 1,
         checked: $('body').hasClass('text-sm'),
         'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('body').addClass('text-sm');
+    }).on('click', async function () {
+        try {
+            if ($(this).is(':checked')) {
+                await api.bodyAddClass("text-sm");
+                $('body').addClass('text-sm');
+            } else {
+                await api.bodyRemoveClass("text-sm");
+                $('body').removeClass('text-sm');
+            }
+        } catch (e) {
+            swal.fire("Error", e, "error");
 
-            api.bodyAddClass("text-sm");
-        } else {
-            $('body').removeClass('text-sm');
-
-            api.bodyRemoveClass("text-sm");
         }
     });
     var $text_sm_body_container = $('<div />', { 'class': 'mb-1' }).append($text_sm_body_checkbox).append('<span>Body small text</span>');

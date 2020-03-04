@@ -1,23 +1,30 @@
 class API {
-    bodyAddClass(name) {
-        return this.mutation({
+    async bodyAddClass(name) {
+        var resp = await this.mutation({
             bodyAddClass: {
                 __args: {
                     class: name
                 }
             }
         });
+        resp = resp.data;
+        if (resp.error) {
+            throw resp.error.message;
+        }
     }
 
-    bodyRemoveClass(name) {
-        return this.mutation({
+    async bodyRemoveClass(name) {
+        var resp = await this.mutation({
             bodyRemoveClass: {
                 __args: {
                     class: name
                 }
             }
         });
-
+        resp = resp.data;
+        if (resp.error) {
+            throw resp.error.message;
+        }
     }
 
     mutation(data) {
