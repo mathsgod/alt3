@@ -100,6 +100,15 @@ class App extends \R\App
         //-- setting
         $this->setting = Yaml::parseFile(dirname(__DIR__, 2) . "/setting.yml");
 
+        if (file_exists($this->root . "/setting.yml")) {
+            $setting = Yaml::parseFile($this->root . "/setting.yml");
+            //user config
+            foreach ($setting as $n => $v) {
+                foreach ($v as $a => $b) {
+                    $this->setting[$n][$a] = $b;
+                }
+            }
+        }
 
         //-- Translate
         $translate = Yaml::parseFile(dirname(__DIR__, 2) . "/translate.yml");
