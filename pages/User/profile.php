@@ -42,6 +42,7 @@ class User_profile extends ALT\Page
         $this->data["user_update_box"] = $this->getUpdateBox();
         $this->data["userlog"] = $this->getUserLogBox();
         $this->data["eventlog"] = $this->getUserActionBox();
+        $this->data["composer_base"] = $this->app->pathinfo()["composer_base"];
     }
 
     public function getUpdateBox()
