@@ -119,11 +119,14 @@ class User extends Core\User
 
     public function online()
     {
-        $this->update(["last_online" => date("Y-m-d H:i:s")]);
+        if ($this->isUser()) {
+            $this->update(["last_online" => date("Y-m-d H:i:s")]);
+        }
     }
 
     public function offline()
-    { }
+    {
+    }
 
     public function isOnline(): bool
     {
