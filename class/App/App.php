@@ -97,6 +97,8 @@ class App extends \R\App
     public function run()
     {
 
+        $this->user->online();
+
         //-- setting
         $this->setting = Yaml::parseFile(dirname(__DIR__, 2) . "/setting.yml");
 
