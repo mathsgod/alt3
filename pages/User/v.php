@@ -4,6 +4,7 @@ class User_v extends ALT\GridPage
 {
 	public function get()
 	{
+		$this->navbar->showEdit();
 		$obj = $this->object();
 
 		$this->navbar->addButton("Reset password", $obj->uri("reset_password"));
