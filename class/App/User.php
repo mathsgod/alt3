@@ -6,6 +6,9 @@ use Google\Authenticator\GoogleAuthenticator;
 
 class User extends Core\User
 {
+    public $username;
+    public $first_name;
+
     use ModelTrait {
         canUpdate as protected canUpdate2;
         canDelete as protected canDelete2;

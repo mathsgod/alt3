@@ -121,8 +121,9 @@ class System_db_check extends ALT\Page
 
 	public function findSQL()
 	{
+		$pi = $this->app->pathinfo();
+		$db_scheme = json_decode(file_get_contents($pi["system_root"] . "/db_schema.json"), true);
 
-		$db_scheme = json_decode(file_get_contents($this->app->config["system"]["update_source"] . "db_scheme.php"), true);
 
 		$db = $this->app->db;
 
@@ -130,7 +131,7 @@ class System_db_check extends ALT\Page
 
 		$tables = [];
 
-		foreach ($schema->tables as $name => $table) {
+		foreach ($schema->tables as $table) {
 			$tables[$table->name] = $table;
 		}
 

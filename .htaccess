@@ -1,3 +1,8 @@
+<FilesMatch "\.(?:ini|yml)$">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
 <IfModule mod_fcgid.c>
 RewriteEngine on
 RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

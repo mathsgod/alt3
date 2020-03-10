@@ -17,6 +17,9 @@ class UserGroup extends Core\UserGroup
     }
 
     private static $_CACHE;
+    /**
+     * @return \App\UserGroup
+     */
     public static function _($name)
     {
         if (isset(self::$_CACHE[$name])) {
