@@ -11,13 +11,11 @@ class User extends Core\User
         canDelete as protected canDelete2;
     }
 
-
     public function checkCode(string $code): bool
     {
         $g = new GoogleAuthenticator();
         return $g->checkCode($this->secret, $code);
     }
-
 
     public function setting(): array
     {

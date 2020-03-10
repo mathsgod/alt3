@@ -10,10 +10,12 @@ class EventLog_v extends ALT\Page
 
         if ($obj->action == "Delete") {
             $class = $obj->class;
-            try {
-                $o = new $class($obj->id);
-            } catch (Exception $e) {
-                $this->navbar()->addButton("Restore object", $obj->uri('restore_object'))->addClass('confirm');
+            if (class_exists($class)) {
+                try {
+                    $o = new $class($obj->id);
+                } catch (Exception $e) {
+                    $this->navbar->addButton("Restore object", $obj->uri('restore_object'))->addClass('confirm');
+                }
             }
         }
 
@@ -24,10 +26,30 @@ class EventLog_v extends ALT\Page
         $mv->add("Class", "class");
         $mv->add("ID", "id");
         $mv->add("User", "User()")->alink("v");
-        $mv->add("Source", "source")->attr("data-format", 'json');
-        $mv->add("Target", 'target')->attr("data-format", 'json');
         $mv->add("Created time", "created_time");
         $this->write($mv);
+
+        $grid = $this->createGrid([2]);
+
+        $s = $this->createV($obj->source);
+        $s->header->title = "Source";
+        foreach ($obj->source as  $k => $v) {
+            $s->add($k, $k);
+        }
+        $grid->add($s, [0, 0]);
+
+
+        $t = $this->createV($obj->target);
+        $t->header->title = "Target";
+        foreach ($obj->target as  $k => $v) {
+            $t->add($k, $k);
+        }
+        $grid->add($t, [0, 0]);
+
+
+        $this->write($grid);
+
+
 
         if ($obj->action == "Update") {
 

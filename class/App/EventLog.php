@@ -10,8 +10,8 @@ class EventLog extends Model
 
     public function getDifferent()
     {
-        $source = json_decode($this->source, true);
-        $target = json_decode($this->target, true);
+        $source = $this->source;
+        $target = $this->target;
         $a = array_diff_assoc($source, $target);
         $b = array_diff_assoc($target, $source);
 
@@ -30,10 +30,11 @@ class EventLog extends Model
     public static function LogDelete($object)
     {
         $class = get_class($object);
+
         if ($object instanceof self) return;
 
         $r["id"] = $object->id();
-        $r["user_id"] = self::_app()->user->user_id;
+        $r["user_id"] = self::$_app->user->user_id;
         $r["class"] = $class;
         $r["action"] = "Delete";
         $r["source"] = json_encode($object);
@@ -41,17 +42,17 @@ class EventLog extends Model
         self::_table()->insert($r);
     }
 
-    public static function Log($object, $action)
+    public static function Log($object, string $action)
     {
         $class = get_class($object);
         if ($object instanceof self) return;
         // check the module
         $rc = new \ReflectionClass($class);
         $short_name = $rc->getShortName();
-        $m = Module::All()[$short_name];
+        $m = self::$_app->module($short_name);
         if (!$m->log) return;
 
-        $r["user_id"] = self::_app()->user->user_id;
+        $r["user_id"] = self::$_app->user->user_id;
         $r["class"] = $class;
 
         $r["id"] = $object->id();
@@ -71,7 +72,8 @@ class EventLog extends Model
 
     public function restoreObject(): bool
     {
-        $data = json_decode($this->target, true);
+        $data = $this->source;
+
         $class = $this->class;
 
         $table = $class::_table();

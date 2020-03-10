@@ -9,7 +9,6 @@ class UserGroup extends Core\UserGroup
         canDelete as protected canDelete2;
     }
 
-
     public function User()
     {
         return $this->UserList()->map(function ($o) {
