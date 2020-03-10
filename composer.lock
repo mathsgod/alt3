@@ -548,11 +548,11 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "317ad07e173e651bb3dc7cde2de120ef82d1f12d"
+                "reference": "2d97719aca02a60f1b4208db5c54bc51b6fef505"
             },
             "require": {
                 "ext-pdo": "*",
@@ -578,7 +578,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-02-26T09:11:11+00:00"
+            "time": "2020-03-10T04:19:23+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -687,14 +687,14 @@
             "version": "1.0.9",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-webauthn.git",
+                "url": "https://github.com/mathsgod/r-webauthn.git",
                 "reference": "b184ee468a6a4b5067cec8493075738df57d643b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-webauthn/mathsgod-r-webauthn-1.0.9-765867.zip",
+                "url": "https://api.github.com/repos/mathsgod/r-webauthn/zipball/b184ee468a6a4b5067cec8493075738df57d643b",
                 "reference": "b184ee468a6a4b5067cec8493075738df57d643b",
-                "shasum": "d3ffa5ecd72330c9b1b991bd21fa88cddfed3399"
+                "shasum": ""
             },
             "require": {
                 "2tvenom/cborencode": "^1.0",
