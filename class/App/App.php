@@ -28,8 +28,8 @@ class App extends \R\App
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
         //check config file
-        if (!file_exists($root . "/config.ini")) {
-            throw new Exception("config.ini not found");
+        if (!file_exists($root . "/config.ini") && !file_exists($root . "/config.yml")) {
+            throw new Exception("config.ini or config.yml not found");
         }
 
         spl_autoload_register(function ($class) use ($root) {
@@ -40,10 +40,13 @@ class App extends \R\App
             }
         });
 
+        if (file_exists($config_file = $root . "/config.yml")) {
+            $this->config = Yaml::parseFile($config_file);
+        }
+
         $this->composer = new Composer($this);
-
-
         parent::__construct($root, $loader, $logger);
+
         Model::$_db = $this->db;
         Model::$_app = $this;
         Module::$_app = $this;

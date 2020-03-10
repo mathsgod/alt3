@@ -14,6 +14,7 @@ class Config_list extends App\Page
             }
 
             $t = $this->createT($c);
+            $t->header->title = $category;
 
             $t->add("Name", function ($o) {
                 return $o[0];
@@ -31,6 +32,9 @@ class Config_list extends App\Page
                 });
             } else {
                 $t->add("Value", function ($o) {
+                    if (is_array($o[1])) {
+                        return json_encode($o[1], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                    }
                     return $o[1];
                 });
             }

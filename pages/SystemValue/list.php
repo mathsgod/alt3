@@ -15,7 +15,7 @@ class SystemValue_list extends App\Page
         $rt->Order("name", "asc");
         $rt->add("Name", "name")->ss();
 
-        foreach ($this->app->config["language"] as $v => $l) {
+        foreach ($this->app->config["system"]["language"] as $v => $l) {
             $rt->add($l, "value_$v");
         }
 
@@ -27,7 +27,7 @@ class SystemValue_list extends App\Page
             ["language" => "en"]
         );
 
-        foreach ($this->app->config["language"] as $v => $l) {
+        foreach ($this->app->config["system"]["language"] as $v => $l) {
             $rt->add("value_$v", function ($obj) use ($v) {
                 return nl2br(SystemValue::_($obj->name, $v));
             })->type = "html";
