@@ -53,8 +53,6 @@ class App extends \R\App
         User::$_app = $this;
         UserGroup::$_app = $this;
         ModelTrait::$_app = $this;
-        //        Config::$_app = $this;
-
 
         //-- CONFIG.INI
         $user_config = $this->config;
@@ -97,28 +95,14 @@ class App extends \R\App
         }
     }
 
-    public function run()
+    public function loginWith(User $user)
     {
+        $this->user = $user;
+        $this->loadACL();
+    }
 
-        $this->user->online();
-
-        //-- setting
-        $this->setting = Yaml::parseFile(dirname(__DIR__, 2) . "/setting.yml");
-
-        if (file_exists($this->root . "/setting.yml")) {
-            $setting = Yaml::parseFile($this->root . "/setting.yml");
-            //user config
-            foreach ($setting as $n => $v) {
-                foreach ($v as $a => $b) {
-                    $this->setting[$n][$a] = $b;
-                }
-            }
-        }
-
-        //-- Translate
-        $translate = Yaml::parseFile(dirname(__DIR__, 2) . "/translate.yml");
-        $translate = $translate[$this->user->language];
-        $this->translate = $translate;
+    private function loadACL()
+    {
 
         //-- ACL
         $this->acl = [];
@@ -161,6 +145,33 @@ class App extends \R\App
         foreach (ACL::Query()->where(["special_user is not null"]) as $acl) {
             $this->acl["special_user"][$acl->special_user][$acl->value][$acl->module][] = $acl->action;
         }
+    }
+
+    public function run()
+    {
+        $this->loadACL();
+
+        $this->user->online();
+
+        //-- setting
+        $this->setting = Yaml::parseFile(dirname(__DIR__, 2) . "/setting.yml");
+
+        if (file_exists($this->root . "/setting.yml")) {
+            $setting = Yaml::parseFile($this->root . "/setting.yml");
+            //user config
+            foreach ($setting as $n => $v) {
+                foreach ($v as $a => $b) {
+                    $this->setting[$n][$a] = $b;
+                }
+            }
+        }
+
+        //-- Translate
+        $translate = Yaml::parseFile(dirname(__DIR__, 2) . "/translate.yml");
+        $translate = $translate[$this->user->language];
+        $this->translate = $translate;
+
+
 
 
 

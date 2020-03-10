@@ -6,6 +6,10 @@ use Google\Authenticator\GoogleAuthenticator;
 
 class User extends Core\User
 {
+    /**
+     * @var int
+     */
+    public $user_id;
     public $username;
     public $first_name;
 
@@ -73,11 +77,11 @@ class User extends Core\User
 
     public function canDelete(): bool
     {
-
         $user = self::$_app->user;
         if ($this->isGuest()) { //cannot delete guest
             return false;
         }
+
 
         if ($user->user_id == $this->user_id) { //cannot delete myself
             return false;
@@ -159,5 +163,10 @@ class User extends Core\User
         $mm->addAddress($this->email);
         $mm->Send();
         return $password;
+    }
+
+    public function UserGroup()
+    {
+        return UserGroup::Query()->where("usergroup_id in (select usergroup_id from UserList where user_id=:user_id)", ["user_id" => $this->user_id]);
     }
 }

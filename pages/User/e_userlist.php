@@ -1,4 +1,5 @@
 <?php
+
 use App\UserGroup;
 use App\UserList;
 
@@ -7,21 +8,23 @@ class User_e_userlist extends ALT\Page
     public function post()
     {
         $obj = $this->object();
-        $ids = [];
-        foreach ($obj->UserList() as $ul) {
-            $ids[] = $ul->usergroup_id;
-            if (!in_array($ul->usergroup_id, $_POST["usergroup_id"])) {
-                $ul->delete();
+
+        $ugs = $obj->UserGroup()->toArray();
+
+
+        foreach ($ugs as $ug) {
+            if (!in_array($ug->usergroup_id, $_POST["usergroup_id"])) {
+                //remove user
+                $ug->removeUser($obj);
             }
         }
 
+
         foreach ($_POST["usergroup_id"] as $usergroup_id) {
-            if (in_array($usergroup_id, $ids)) continue;
-            $o = new UserList();
-            $o->usergroup_id = $usergroup_id;
-            $o->user_id = $obj->user_id;
-            $o->save();
+            $ug = new UserGroup($usergroup_id);
+            $ug->addUser($obj);
         }
+
         $this->app->alert->success("User updated");
         $this->redirect($obj->uri("v"));
     }
