@@ -90,7 +90,7 @@ final class UserTest extends TestCase
         $admin = App\User::_("admin");
         $this->assertTrue($admin->isAdmin());
         $this->assertTrue($admin->is("Administrators"));
-        //$this->assertFalse($admin->isUser());
+        $this->assertFalse($admin->isUser());
 
         //$this->assertTrue($admin->isOneOf(["Guests", "Administrators"]));
     }

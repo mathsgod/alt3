@@ -6,7 +6,12 @@ class SystemValue extends Model
 {
     public static function _(string $name, string $lang = 'en')
     {
-        return self::First(["language" => $lang, "name" => $name]);
+        return self::Query(
+            [
+                "language" => $lang,
+                "name" => $name
+            ]
+        )->first();
     }
 
     public function __toString()

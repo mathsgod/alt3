@@ -503,11 +503,11 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "0572c9472665d92bdbd263faa46e769ce5ec4edd"
+                "reference": "e6689a1dfc9716ef85a8102dd093ca46ff3ebfe1"
             },
             "require": {
                 "mathsgod/r-psr7": "2.*",
@@ -515,7 +515,6 @@
                 "psr/log": "*"
             },
             "require-dev": {
-                "mathsgod/data-structure": "^1.0",
                 "mathsgod/r-db": "^3.0",
                 "phpunit/phpunit": "*"
             },
@@ -538,15 +537,15 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-02-19T04:06:30+00:00"
+            "time": "2020-03-10T09:35:04+00:00"
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.2.1",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "2d97719aca02a60f1b4208db5c54bc51b6fef505"
+                "reference": "460b3e34d3eba7cc5a84f34e1bdb1d0163931219"
             },
             "require": {
                 "ext-pdo": "*",
@@ -572,7 +571,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-03-10T04:19:23+00:00"
+            "time": "2020-03-10T08:31:46+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -681,7 +680,7 @@
             "version": "1.0.10",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mathsgod/r-webauthn.git",
+                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-webauthn.git",
                 "reference": "b184ee468a6a4b5067cec8493075738df57d643b"
             },
             "dist": {
