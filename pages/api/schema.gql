@@ -14,6 +14,8 @@ type Mutation{
     sidebar(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     bodyAddClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     bodyRemoveClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    sidebarNavAddClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    sidebarNavRemoveClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
 }
 
 type Query{

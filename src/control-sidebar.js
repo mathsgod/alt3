@@ -128,98 +128,108 @@
     })
     var $text_sm_footer_container = $('<div />', { 'class': 'mb-1' }).append($text_sm_footer_checkbox).append('<span>Footer small text</span>');
     $container.append($text_sm_footer_container);
-    
+*/
 
     var $flat_sidebar_checkbox = $('<input />', {
         type: 'checkbox',
         value: 1,
         checked: $('.nav-sidebar').hasClass('nav-flat'),
         'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('.nav-sidebar').addClass('nav-flat');
-        } else {
-            $('.nav-sidebar').removeClass('nav-flat');
+    }).on('click', async function () {
+        try {
+            if ($(this).is(':checked')) {
+                await api.sidebarNavAddClass("nav-flat");
+                $('.nav-sidebar').addClass('nav-flat');
+            } else {
+                await api.sidebarNavRemoveClass("nav-flat");
+                $('.nav-sidebar').removeClass('nav-flat');
+            }
+        } catch (e) {
+            swal.fire("Error", e, "error");
+
         }
-    })
+
+    });
+
     var $flat_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($flat_sidebar_checkbox).append('<span>Sidebar nav flat style</span>')
     $container.append($flat_sidebar_container);
-
-    var $legacy_sidebar_checkbox = $('<input />', {
-        type: 'checkbox',
-        value: 1,
-        checked: $('.nav-sidebar').hasClass('nav-legacy'),
-        'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('.nav-sidebar').addClass('nav-legacy');
-        } else {
-            $('.nav-sidebar').removeClass('nav-legacy');
-        }
-    })
-    var $legacy_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($legacy_sidebar_checkbox).append('<span>Sidebar nav legacy style</span>')
-    $container.append($legacy_sidebar_container);
-
-    var $compact_sidebar_checkbox = $('<input />', {
-        type: 'checkbox',
-        value: 1,
-        checked: $('.nav-sidebar').hasClass('nav-compact'),
-        'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('.nav-sidebar').addClass('nav-compact')
-        } else {
-            $('.nav-sidebar').removeClass('nav-compact')
-        }
-    })
-    var $compact_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($compact_sidebar_checkbox).append('<span>Sidebar nav compact</span>')
-    $container.append($compact_sidebar_container);
-
-    var $child_indent_sidebar_checkbox = $('<input />', {
-        type: 'checkbox',
-        value: 1,
-        checked: $('.nav-sidebar').hasClass('nav-child-indent'),
-        'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('.nav-sidebar').addClass('nav-child-indent');
-        } else {
-            $('.nav-sidebar').removeClass('nav-child-indent');
-        }
-    })
-    var $child_indent_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($child_indent_sidebar_checkbox).append('<span>Sidebar nav child indent</span>')
-    $container.append($child_indent_sidebar_container);
-
-    var $no_expand_sidebar_checkbox = $('<input />', {
-        type: 'checkbox',
-        value: 1,
-        checked: $('.main-sidebar').hasClass('sidebar-no-expand'),
-        'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('.main-sidebar').addClass('sidebar-no-expand');
-        } else {
-            $('.main-sidebar').removeClass('sidebar-no-expand');
-        }
-    })
-    var $no_expand_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($no_expand_sidebar_checkbox).append('<span>Main Sidebar disable hover/focus auto expand</span>')
-    $container.append($no_expand_sidebar_container);
-
-    var $text_sm_brand_checkbox = $('<input />', {
-        type: 'checkbox',
-        value: 1,
-        checked: $('.brand-link').hasClass('text-sm'),
-        'class': 'mr-1'
-    }).on('click', function () {
-        if ($(this).is(':checked')) {
-            $('.brand-link').addClass('text-sm');
-        } else {
-            $('.brand-link').removeClass('text-sm');
-        }
-    })
-    var $text_sm_brand_container = $('<div />', { 'class': 'mb-4' }).append($text_sm_brand_checkbox).append('<span>Brand small text</span>')
-    $container.append($text_sm_brand_container);
-*/
+    /*
+        var $legacy_sidebar_checkbox = $('<input />', {
+            type: 'checkbox',
+            value: 1,
+            checked: $('.nav-sidebar').hasClass('nav-legacy'),
+            'class': 'mr-1'
+        }).on('click', function () {
+            if ($(this).is(':checked')) {
+                $('.nav-sidebar').addClass('nav-legacy');
+            } else {
+                $('.nav-sidebar').removeClass('nav-legacy');
+            }
+        })
+        var $legacy_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($legacy_sidebar_checkbox).append('<span>Sidebar nav legacy style</span>')
+        $container.append($legacy_sidebar_container);
+    */
+    /*
+        var $compact_sidebar_checkbox = $('<input />', {
+            type: 'checkbox',
+            value: 1,
+            checked: $('.nav-sidebar').hasClass('nav-compact'),
+            'class': 'mr-1'
+        }).on('click', function () {
+            if ($(this).is(':checked')) {
+                $('.nav-sidebar').addClass('nav-compact')
+            } else {
+                $('.nav-sidebar').removeClass('nav-compact')
+            }
+        })
+        var $compact_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($compact_sidebar_checkbox).append('<span>Sidebar nav compact</span>')
+        $container.append($compact_sidebar_container);
+    /*
+        var $child_indent_sidebar_checkbox = $('<input />', {
+            type: 'checkbox',
+            value: 1,
+            checked: $('.nav-sidebar').hasClass('nav-child-indent'),
+            'class': 'mr-1'
+        }).on('click', function () {
+            if ($(this).is(':checked')) {
+                $('.nav-sidebar').addClass('nav-child-indent');
+            } else {
+                $('.nav-sidebar').removeClass('nav-child-indent');
+            }
+        })
+        var $child_indent_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($child_indent_sidebar_checkbox).append('<span>Sidebar nav child indent</span>')
+        $container.append($child_indent_sidebar_container);
+    
+        var $no_expand_sidebar_checkbox = $('<input />', {
+            type: 'checkbox',
+            value: 1,
+            checked: $('.main-sidebar').hasClass('sidebar-no-expand'),
+            'class': 'mr-1'
+        }).on('click', function () {
+            if ($(this).is(':checked')) {
+                $('.main-sidebar').addClass('sidebar-no-expand');
+            } else {
+                $('.main-sidebar').removeClass('sidebar-no-expand');
+            }
+        })
+        var $no_expand_sidebar_container = $('<div />', { 'class': 'mb-1' }).append($no_expand_sidebar_checkbox).append('<span>Main Sidebar disable hover/focus auto expand</span>')
+        $container.append($no_expand_sidebar_container);
+    
+        var $text_sm_brand_checkbox = $('<input />', {
+            type: 'checkbox',
+            value: 1,
+            checked: $('.brand-link').hasClass('text-sm'),
+            'class': 'mr-1'
+        }).on('click', function () {
+            if ($(this).is(':checked')) {
+                $('.brand-link').addClass('text-sm');
+            } else {
+                $('.brand-link').removeClass('text-sm');
+            }
+        })
+        var $text_sm_brand_container = $('<div />', { 'class': 'mb-4' }).append($text_sm_brand_checkbox).append('<span>Brand small text</span>')
+        $container.append($text_sm_brand_container);
+    */
     $container.append('<h6>Navbar Variants</h6>');
 
     var $navbar_variants = $('<div />', {

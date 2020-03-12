@@ -9,6 +9,38 @@ use Exception;
 
 class Mutation
 {
+    public function sidebarNavAddClass($root, $args, $app)
+    {
+        //check style type
+        $attr = User::__attribute("style");
+        if ($attr["Type"] !== "json") {
+            throw new Error("Table User, field style must be set to json");
+        }
+
+        $c = $app->user->style["sidebar_nav"] ?? [];
+        $c[] = $args["class"];
+        $app->user->style["sidebar_nav"] = array_values($c);
+        $app->user->save();
+        return true;
+    }
+
+
+    public function sidebarNavRemoveClass($root, $args, $app)
+    {
+        $attr = User::__attribute("style");
+        if ($attr["Type"] !== "json") {
+            throw new Error("Table User, field style must be set to json");
+        }
+
+        $c = $app->user->style["sidebar_nav"] ?? [];
+
+        $app->user->style["sidebar_nav"] = array_filter($c, function ($c) use ($args) {
+            return $c != $args["class"];
+        });
+        $app->user->save();
+        return true;
+    }
+
     public function bodyAddClass($root, $args, $app)
     {
         //check style type

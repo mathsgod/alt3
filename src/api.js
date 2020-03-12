@@ -27,6 +27,34 @@ class API {
         }
     }
 
+    async sidebarNavAddClass(name) {
+        var resp = await this.mutation({
+            sidebarNavAddClass: {
+                __args: {
+                    class: name
+                }
+            }
+        });
+        resp = resp.data;
+        if (resp.error) {
+            throw resp.error.message;
+        }
+    }
+
+    async sidebarNavRemoveClass(name) {
+        var resp = await this.mutation({
+            sidebarNavRemoveClass: {
+                __args: {
+                    class: name
+                }
+            }
+        });
+        resp = resp.data;
+        if (resp.error) {
+            throw resp.error.message;
+        }
+    }
+
     mutation(data) {
         return Vue.gql.mutation("api", data);
     }

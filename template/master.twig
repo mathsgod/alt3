@@ -176,6 +176,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 {% set body = app.user.style.body|join(' ') %}
 
+
 <body class="hold-transition sidebar-mini sidebar-open layout-fixed {{body}}">
     <div class="wrapper">
 
@@ -375,6 +376,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             {% endif %}
 
 
+            {% if app.user.style.sidebar_nav %}
+            {% set sidebar_nav = app.user.style.sidebar_nav|join(' ') %}
+            {% endif %}
+
             <!-- Sidebar -->
             <div class="sidebar" id="nav-sidebar">
                 <!-- Sidebar user panel (optional) -->
@@ -391,7 +396,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar nav-flat flex-column nav-child-indent nav-compact" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar nav-compact flex-column nav-child-indent {{sidebar_nav}}" data-widget="treeview" role="menu" data-accordion="false">
 
 
                         <li class="nav-item has-treeview">
