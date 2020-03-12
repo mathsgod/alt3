@@ -17,3 +17,7 @@ textarea.form-control:required{
     background-position: top calc(.375em + .1875rem) right calc(.375em + .1875rem);
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
 }
+
+.sidebar-mini .nav-sidebar, .sidebar-mini .nav-sidebar .nav-link, .sidebar-mini .nav-sidebar>.nav-header {
+    white-space: normal;
+}
