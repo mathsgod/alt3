@@ -93,6 +93,7 @@ class App extends \R\App
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
         }
+
     }
 
     public function loginWith(User $user)

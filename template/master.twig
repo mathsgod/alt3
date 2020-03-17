@@ -89,6 +89,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- bootstrap-datepicker -->
     <link rel="stylesheet" href="{{system_base}}/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
     <script src="{{system_base}}/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    {% if app.user.language =="zh-hk" %}
+    <script src="{{system_base}}/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-TW.min.js"></script>
+    {% endif %}
+    
 
     <!-- iCheck -->
     <link rel="stylesheet" href="{{system_base}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
@@ -116,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- tempusdominus-bootstrap4 -->
     <link rel="stylesheet" href="{{system_base}}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
-    <script type="text/javascript" src="{{system_base}}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js" defer></script>
+    <script type="text/javascript" src="{{system_base}}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- plugins -->
     {% for plugin in plugins %}
