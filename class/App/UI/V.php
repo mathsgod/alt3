@@ -9,7 +9,6 @@ class V extends Card
 {
     public $columns = [];
     public $tableClass = [];
-    public $column_ratio = [2, 10];
     public $tables = [];
     public $row = 0;
 
@@ -18,6 +17,7 @@ class V extends Card
     public function __construct($object, Page $page)
     {
         parent::__construct($page);
+        $this->classList->add("alt-v");
         $this->object = $object;
         $this->tableClass = "table-sm";
         $this->body->classList->add('p-0');
@@ -34,9 +34,8 @@ class V extends Card
 
     public function header($title = null)
     {
-        $this->classList->remove("no-border");
-        $this->classList->add('box-primary');
-        return parent::header($title);
+        $this->title = $title;
+        return $this;
     }
 
     public function addBreak()
@@ -115,7 +114,6 @@ class V extends Card
         $th = p("th")->addClass("bg-info text-nowrap overflow-hidden")->append($label);
         $th->appendTo($tr);
 
-        $col = $this->column_ratio[0];
         $th->addClass("col-3 col-md-2");
 
         $cell = p("td");

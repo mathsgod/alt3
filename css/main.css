@@ -18,6 +18,12 @@ textarea.form-control:required{
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
 }
 
+/*
 .sidebar-mini .nav-sidebar, .sidebar-mini .nav-sidebar .nav-link, .sidebar-mini .nav-sidebar>.nav-header {
     white-space: normal;
+}*/
+.card-body.p-0 .table tbody>tr>td:last-of-type,
+.card-body.p-0 .table tbody>tr>th:last-of-type{
+    padding-right: 0.6rem;
+    padding-left: 0.6rem;
 }
