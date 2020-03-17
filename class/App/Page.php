@@ -15,6 +15,7 @@ class Page extends \R\Page
     {
         parent::__construct($app);
         $this->alert = $app->alert;
+        
     }
 
     public function translate(string $str): string
