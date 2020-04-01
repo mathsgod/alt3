@@ -7,4 +7,4 @@ group: System
 menu:
   Add JSON:
     link: Config/ae?type=json
-    icon: fa fa-fw fa-user
+    icon: far fa-fw fa-circle

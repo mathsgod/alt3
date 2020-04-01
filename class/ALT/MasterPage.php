@@ -5,6 +5,7 @@ namespace ALT;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use R\Psr7\Stream;
+use stdClass;
 
 class MasterPage extends \R\Page
 {
@@ -22,6 +23,7 @@ class MasterPage extends \R\Page
         $this->template = $app->twig("template/master.twig");
         $this->data = $app->pathInfo();
     }
+
 
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
@@ -71,19 +73,20 @@ class MasterPage extends \R\Page
                         continue;
                     }
 
-                    $menu = [];
-                    $menu["label"] = $app->translate($modulegroup_name);
-                    $menu["link"] = "#";
-                    $menu["icon"] = $app->setting['group'][$modulegroup_name]["icon"] ?? "far fa-circle";
-                    $menu["keyword"] = $menu["label"] . " " . $modulegroup_name;
-                    $menu["active"] = false;
-                    $menu["submenu"] = $menu_gen($modules);
-                    foreach ($menu["submenu"] as $submenu) {
-                        if ($submenu["active"]) {
-                            $menu["active"] = true;
+                    $menu = new NavItem();
+                    $menu->label = $app->translate($modulegroup_name);
+                    $menu->link = "#";
+                    $menu->icon = $app->setting['group'][$modulegroup_name]["icon"] ?? "far fa-circle";
+                    $menu->keyword = $menu->label . " " . $modulegroup_name;
+                    $menu->active = false;
+                    $menu->submenu = $menu_gen($modules);
+
+                    foreach ($menu->submenu as $submenu) {
+                        if ($submenu->active) {
+                            $menu->active = true;
                         }
                     }
-                    if (!sizeof($menu["submenu"])) {
+                    if (!sizeof($menu->submenu)) {
                         continue;
                     }
 
@@ -95,10 +98,10 @@ class MasterPage extends \R\Page
 
                     foreach ($module->getMenuLink($path) as $link) {
 
-                        if ($this->app->acl($link["link"])) {
-                            if ($link["badge"]) {
-                                $p = $app->page($link["badge"]);
-                                $link["badge"] = $p->get();
+                        if ($this->app->acl($link->link)) {
+                            if ($link->badge) {
+                                $p = $app->page($link->badge);
+                                $link->badge = $p->get();
                             }
 
                             $links[] = $link;
@@ -107,25 +110,25 @@ class MasterPage extends \R\Page
                     if (!sizeof($links)) {
                         continue;
                     }
-                    $menu = [];
-                    $menu["label"] = $module->translate($module->name);
-                    $menu["icon"] = $module->icon;
-                    $menu["keyword"] = $module->keyword();
+                    $menu = new NavItem();
+                    $menu->label = $module->translate($module->name);
+                    $menu->icon = $module->icon;
+                    $menu->keyword = $module->keyword();
 
-                    if ($module->badge) {
+                    /*                    if ($module->badge) {
                         $p = $app->page($module->badge);
                         $menu["badge"] = $p->get();
                     }
+*/
 
-
-                    $menu["active"] = $app->module->name == $module->name;
+                    $menu->active = $app->module->name == $module->name;
 
                     if (sizeof($links) > 1) {
-                        $menu["link"] = "#";
-                        $menu["submenu"] = $links;
+                        $menu->link = "#";
+                        $menu->submenu = $links;
                     } else {
-                        $menu["link"] = $links[0]["link"];
-                        $menu["target"] = $links[0]["target"];
+                        $menu->link = $links[0]->link;
+                        $menu->target = $links[0]->target;
                     }
                     $sidebar_menu[] = $menu;
                 }
@@ -133,7 +136,14 @@ class MasterPage extends \R\Page
             return $sidebar_menu;
         };
 
-        $this->data["sidebar_menu"] = $menu_gen($ms);
+        $sidebar_menu = $menu_gen($ms);
+
+
+        foreach ($sidebar_menu as $menu) {
+            $menu->getBadge();
+        }
+
+        $this->data["sidebar_menu"] = $sidebar_menu;
         $this->data["alerts"] = $this->app->flushMessage();
         $this->data["app"] = $this->app;
 

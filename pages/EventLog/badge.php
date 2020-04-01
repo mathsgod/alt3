@@ -6,7 +6,7 @@ class EventLog_badge extends App\Page
     {
         return [
             "class" => "info",
-            "content" => 'new'
+            "content" => 'abc'
         ];
     }
 }

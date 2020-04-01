@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use ALT\NavItem;
 
 class Module
 {
@@ -82,25 +83,24 @@ class Module
 
 
         if ($this->show_list || $this->show_index) {
-
-            $links[] = [
-                "label" => $this->translate("List"),
-                "link" => $this->name,
-                "icon" => "fa fa-fw fa-list",
-                "active" => ($path == $this->name),
-                "keyword" => ""
-            ];
+            $link = new NavItem();
+            $link->label = $this->translate("List");
+            $link->link = $this->name;
+            $link->icon = "fa fa-fw fa-list";
+            $link->active = ($path == $this->name);
+            $link->keyword = "";
+            $links[] = $link;
         }
 
         if ($this->show_create) {
             if (self::$_app->allowAction("C", $this->name)) {
-                $links[] = [
-                    "label" => $this->translate("Add"),
-                    "link" => $this->name . "/ae",
-                    "icon" => "fa fa-fw fa-plus",
-                    "active" => ($path == $this->name . "/ae"),
-                    "keyword" => ""
-                ];
+                $link = new NavItem();
+                $link->label = $this->translate("Add");
+                $link->link = $this->name . "/ae";
+                $link->icon =  "fa fa-fw fa-plus";
+                $link->active = ($path == $this->name . "/ae");
+                $link->keyword = "";
+                $links[] = $link;
             }
         }
 
@@ -108,23 +108,24 @@ class Module
         foreach ($this->menu as $k => $v) {
 
             if (is_array($v)) {
-                $links[] = [
-                    "label" => $this->translate($k),
-                    "link" => $v["link"],
-                    "icon" => $v["icon"],
-                    "active" => ($path == $v["link"]),
-                    "target" => $v["target"],
-                    "keyword" => $this->translate($k),
-                    "badge" => $v["badge"]
-                ];
+                $link = new NavItem();
+                $link->label = $this->translate($k);
+                $link->link = $v["link"];
+                $link->icon = $v["icon"];
+                $link->active = ($path == $v["link"]);
+                $link->target = $v["target"];
+                $link->keyword = $this->translate($k);
+                $link->badge = $v["badge"];
+                $links[] = $link;
             } else {
-                $links[] = [
-                    "label" => $this->translate($k),
-                    "link" => $v,
-                    "icon" => "fa fa-fw fa-link",
-                    "active" => ($path == $v),
-                    "keyword" => $this->translate($k)
-                ];
+
+                $link = new NavItem();
+                $link->label = $this->translate($k);
+                $link->link = $v;
+                $link->icon = "fa fa-fw fa-link";
+                $link->active = ($path == $v);
+                $link->keyword = $this->translate($k);
+                $links[] = $link;
             }
         }
 
