@@ -11,6 +11,11 @@ class MasterPage extends \R\Page
     public $data = [];
     private $template;
 
+    /**
+     * @var \App\App
+     */
+    public $app;
+
     public function __construct(\App\App $app)
     {
         $this->app = $app;
@@ -87,12 +92,18 @@ class MasterPage extends \R\Page
                     $module = $modules;
                     $links = [];
 
+
                     foreach ($module->getMenuLink($path) as $link) {
+
                         if ($this->app->acl($link["link"])) {
+                            if ($link["badge"]) {
+                                $p = $app->page($link["badge"]);
+                                $link["badge"] = $p->get();
+                            }
+
                             $links[] = $link;
                         }
                     }
-
                     if (!sizeof($links)) {
                         continue;
                     }
@@ -100,6 +111,11 @@ class MasterPage extends \R\Page
                     $menu["label"] = $module->translate($module->name);
                     $menu["icon"] = $module->icon;
                     $menu["keyword"] = $module->keyword();
+
+                    if ($module->badge) {
+                        $p = $app->page($module->badge);
+                        $menu["badge"] = $p->get();
+                    }
 
 
                     $menu["active"] = $app->module->name == $module->name;
@@ -139,7 +155,7 @@ class MasterPage extends \R\Page
             $this->data["favs"][] = $content;
         }
 
-/*
+        /*
         $start = microtime(true);
         $this->app->composer->installed();
         $time_elapsed_secs = microtime(true) - $start;

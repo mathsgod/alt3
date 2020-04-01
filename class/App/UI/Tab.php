@@ -74,8 +74,12 @@ class Tab extends Card
         }
 
         if (isset($t)) {
-            $href .= "?t=$t";
+            $url = parse_url($href);
+            parse_str($url["query"],$query);
+            $query["t"]=$t;
+            $href=$url["path"]."?".http_build_query($query);
         }
+        
         $url = dirname($this->page->path()) . "/" . $uri;
         if (!$this->page->app->acl($url)) {
             return;

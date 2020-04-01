@@ -5,4 +5,6 @@ show_list: true
 group: System
 
 menu:
-  Add JSON: Config/ae?type=json
+  Add JSON:
+    link: Config/ae?type=json
+    icon: fa fa-fw fa-user

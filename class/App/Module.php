@@ -104,7 +104,9 @@ class Module
             }
         }
 
+
         foreach ($this->menu as $k => $v) {
+
             if (is_array($v)) {
                 $links[] = [
                     "label" => $this->translate($k),
@@ -112,7 +114,8 @@ class Module
                     "icon" => $v["icon"],
                     "active" => ($path == $v["link"]),
                     "target" => $v["target"],
-                    "keyword" => $this->translate($k)
+                    "keyword" => $this->translate($k),
+                    "badge" => $v["badge"]
                 ];
             } else {
                 $links[] = [

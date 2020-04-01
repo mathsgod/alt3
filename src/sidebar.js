@@ -6,6 +6,7 @@ Vue.component("nav-item", {
                 <p>
                     {{menu.label}}
                     <i v-if="menu.submenu" class="right fas fa-angle-left"></i>
+                    <span class="badge right" :class="getBadgeClass()" v-if="hasBadge" v-text="menu.badge.content"></span>
                 </p>
             </a>
             <ul v-if="menus.submenu" class="nav nav-treeview">
@@ -50,8 +51,19 @@ Vue.component("nav-item", {
             }
             this.menu.submenu = this.filterMenu(this.q.toLowerCase(), this.menu.submenu);
             return this.menu;
+        }, hasBadge() {
+            if (this.menu.badge) {
+                return true;
+            }
+            return false;
+
         }
     }, methods: {
+        getBadgeClass() {
+            if (this.menu.badge) {
+                return "badge-" + this.menu.badge.class;
+            }
+        },
         filterMenu(text, menu) {
             var m = [];
             for (var i in menu) {
