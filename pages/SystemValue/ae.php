@@ -35,7 +35,12 @@ class SystemValue_ae extends ALT\Page
         }
 
         $mv = $this->createE($data);
-        $mv->add("Name")->input("name")->required();
+        if ($obj->systemvalue_id) {
+            $mv->add("Name", "name");
+        } else {
+            $mv->add("Name")->input("name")->required();
+        }
+
 
         foreach ($this->app->config["language"] as $v => $l) {
             $mv->add("Value " . $l)->textarea("value[$v]"); //->attr("is", "ace");
