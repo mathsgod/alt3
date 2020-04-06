@@ -815,10 +815,58 @@ HTML
         return $p;
     }
 
-    public function checkboxes($field)
+    public function checkboxes(string $field, array $ds)
     {
+        //<div class="icheck-primary"><input type="checkbox" id="_checkbox_1" name="a" value="1"><label for="_checkbox_1"></label></div>
+
+
         $p = p();
         foreach ($this->cell as $cell) {
+
+            $object = p($cell)->data("object");
+            if ($object) {
+                $object = $this->getObjectValue($object, $field);
+
+                if (is_string($object)) {
+                    $object = explode(",", $object);
+                }
+            }
+
+
+            $div = p("div");
+            $div->addClass("row");
+            $div->appendTo($cell);
+
+
+            foreach ($ds as $k => $v) {
+                $id = uniqid("_$field", true);
+                $cb_div = p("div")->appendTo($div);
+                $cb_div->addClass("col-2");
+
+                $cb = p("div")->appendTo($cb_div);
+                $cb->addClass("icheck-primary");
+
+                $cb_input = p("input")->appendTo($cb);
+                $cb_input->attr("id", $id);
+                $cb_input->attr("type", "checkbox");
+                $cb_input->attr("value", $k);
+                $cb_input->attr("name", $field . "[]");
+
+                if ($object) {
+                    if (in_array($k, $object)) {
+                        $cb_input->attr("checked", true);
+                    }
+                }
+
+
+                $label = p("label");
+                $label->attr("for", $id);
+                $label->appendTo($cb);
+                $label->text($v);
+
+
+                $cb_div->appendTo($div);
+            }
         }
         return $p;
     }
