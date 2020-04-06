@@ -9,8 +9,13 @@ use R\Psr7\ServerRequest;
 
 class Page extends \R\Page
 {
+    /**
+     * @var \App\App
+     */
+    public $app;
     public $data = [];
     protected $alert;
+
     public function __construct(App $app)
     {
         parent::__construct($app);
