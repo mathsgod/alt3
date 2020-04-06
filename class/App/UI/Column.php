@@ -176,7 +176,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function searchCallBack($callback)
+    public function searchCallBack(callable $callback)
     {
         $this->searchable = true;
         $this->searchCallback = $callback;
