@@ -81,13 +81,13 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function minWidth($width)
+    public function minWidth(string $width)
     {
         $this->minWidth = $width;
         return;
     }
 
-    public function width($width)
+    public function width(string $width)
     {
         $this->width = $width;
         $this->minWidth = $width;
@@ -96,7 +96,7 @@ class Column implements JsonSerializable
         return $this;
     }
 
-    public function editable($type = "text", $data = null)
+    public function editable(string $type = "text", $data = null)
     {
         $this->editable = true;
         $this->editType = $type;
