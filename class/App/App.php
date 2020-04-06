@@ -206,6 +206,12 @@ class App extends \R\App
             }
         }
 
+        foreach(Translate::Query([
+            "language"=>$this->user->language
+        ]) as $translate){
+            $this->translate[$translate->name] = $translate->value;
+        }
+
         //--- Module Translate 
         foreach (Translate::Query([
             "module" => $this->module->name,
