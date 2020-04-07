@@ -20,7 +20,7 @@ class RT2 extends Element
     public $exports = [];
     public $order = [];
 
-    public function __construct($objects, $page, $config)
+    public function __construct(\App\Page $page, array $config = [])
     {
         parent::__construct("div");
 
@@ -32,7 +32,7 @@ class RT2 extends Element
         $this->responsive = $config["rt2-responsive"];
     }
 
-    public function order(string $name, $dir = null)
+    public function order(string $name, string $dir = null)
     {
         $this->order[] = ["name" => $name, "dir" => $dir];
         return $this;
@@ -136,7 +136,7 @@ class RT2 extends Element
 
         foreach ($r->order as $order) {
             if (!$order["name"]) return false;
-            if(($order["dir"]!="desc") && ($order["dir"]!="asc")) return false;
+            if (($order["dir"] != "desc") && ($order["dir"] != "asc")) return false;
             $c = $this->getColumn($order["name"]);
             if (!$c) {
                 return false;

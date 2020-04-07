@@ -9,13 +9,17 @@ use R\Psr7\ServerRequest;
 
 class Page extends \R\Page
 {
+    /**
+     * @var \App\App
+     */
+    public $app;
     public $data = [];
     protected $alert;
+
     public function __construct(App $app)
     {
         parent::__construct($app);
         $this->alert = $app->alert;
-        
     }
 
     public function translate(string $str): string
@@ -83,9 +87,9 @@ class Page extends \R\Page
         return $tab;
     }
 
-    protected function createRT2($objects, $module = null): UI\RT2
+    protected function createRT2($objects): UI\RT2
     {
-        $rt = new UI\RT2(null, $this, $this->app->config);
+        $rt = new UI\RT2($this, $this->app->config);
         $rt->ajax["url"] = (string) $objects[0]->request->getURI()->getPath() . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
         $rt->ajax["url"] = substr($rt->ajax["url"], 1);
 
