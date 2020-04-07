@@ -93,7 +93,6 @@ class App extends \R\App
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
         }
-
     }
 
     public function loginWith(User $user)
@@ -206,9 +205,11 @@ class App extends \R\App
             }
         }
 
-        foreach(Translate::Query([
-            "language"=>$this->user->language
-        ]) as $translate){
+        $translates = Translate::Query([
+            "language" => $this->user->language
+        ])->where("module is null");
+
+        foreach ($translates as $translate) {
             $this->translate[$translate->name] = $translate->value;
         }
 
