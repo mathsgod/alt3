@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67acdacc3dbe6b9f1ea6f97c54ca0175",
+    "content-hash": "7a410fa31a99b41c79877105c51888c1",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -265,6 +265,45 @@
             ],
             "description": "Data structure",
             "time": "2019-06-20T04:53:46+00:00"
+        },
+        {
+            "name": "mathsgod/date",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mathsgod/date.git",
+                "reference": "5e3e9cd60dfc3615d95697c9ccdc52affc66e07c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mathsgod/date/zipball/5e3e9cd60dfc3615d95697c9ccdc52affc66e07c",
+                "reference": "5e3e9cd60dfc3615d95697c9ccdc52affc66e07c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "mathsgod@yahoo.com"
+                }
+            ],
+            "description": "date library for php",
+            "time": "2020-04-07T09:18:40+00:00"
         },
         {
             "name": "mathsgod/gql-php-generator",
