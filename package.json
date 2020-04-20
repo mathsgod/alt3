@@ -4,6 +4,7 @@
   "description": "Raymond framework",
   "main": "src/index.js",
   "dependencies": {
+    "element-ui": "^2.13.1",
     "http-vue-loader": "^1.4.2",
     "sweetalert2": "^9.10.0",
     "webpack": "^4.41.2",

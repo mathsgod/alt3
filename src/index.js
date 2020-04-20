@@ -1,4 +1,5 @@
 var Vue = window.Vue;
+
 var $ = window.$;
 var vm = new Vue({
     el: "#app",
