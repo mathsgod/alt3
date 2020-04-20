@@ -5,4 +5,6 @@ import "x-html-bs4/dist/x-html-bs4.umd.js";
 
 var Vue = window.Vue;
 import Element from 'element-ui';
-Vue.use(Element);
+
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(Element, { size: "small" });

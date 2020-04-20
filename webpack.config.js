@@ -1,4 +1,4 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: "production",
@@ -26,11 +26,13 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
-            }, {
-                test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
         ]
     },
-    plugins: [new MiniCssExtractPlugin()]
+    plugins: [
+        new CopyPlugin([
+          { from: './node_modules/element-ui/lib/theme-chalk', to: 'element-ui/lib/theme-chalk' },
+        ]),
+      ],
+
 };
