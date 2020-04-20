@@ -423,6 +423,8 @@ class App extends \R\App
 
         if (file_exists($document_root . "/composer.json")) {
             $composer_root = $document_root;
+        } else if (file_exists($document_root . "/composer/composer.json")) {
+            $composer_root = $document_root . "/composer";
         } else if (file_exists($cms_root . "/composer.json")) {
             $composer_root = $cms_root;
         } else if (file_exists($cms_root . "/composer/composer.json")) {
