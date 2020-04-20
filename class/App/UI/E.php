@@ -45,7 +45,7 @@ class E extends HTMLDivElement
 
     public function addBreak()
     {
-        $div = p("div")->addClass("clearfix");
+        $div = p("div")->addClass("row col-md-12");
         foreach ($this->contents as $content) {
             $div->append($content);
         }
