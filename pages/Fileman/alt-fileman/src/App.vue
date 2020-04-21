@@ -151,9 +151,10 @@ export default {
     this.type = url.searchParams.get("type");
 
     if (!this.token) {
-      do {
-        this.token = prompt("please input token");
-      } while (!this.token);
+      this.token = prompt("please input token");
+      if (!this.token) {
+        return;
+      }
     }
 
     try {
@@ -252,7 +253,7 @@ export default {
       this.$refs.tree1.handleRecursionNodeChilds(this.$refs.tree1, node => {
         if (
           typeof node.model != "undefined" &&
-//          node.model.hasOwnProperty("selected") &&
+          //          node.model.hasOwnProperty("selected") &&
           node.model.selected
         ) {
           n = node;
@@ -325,7 +326,10 @@ export default {
       this.files = await this.api.listFile(this.getSelectedNode().model.value);
     },
     onClickAddFile() {
-      this.$refs.upload_file_dialog.open(this.getSelectedNode().model.value,this.type);
+      this.$refs.upload_file_dialog.open(
+        this.getSelectedNode().model.value,
+        this.type
+      );
     },
     async downloadFile(f) {
       await this.api.downloadFile(f);
