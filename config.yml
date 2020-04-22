@@ -43,9 +43,9 @@ user:
   auth-lockout: true
 
 hostlink-fileman:
-  url: http://192.168.88.108:8081
-  upload_path: http://127.0.0.1/uploads
+  url:
+  upload_path:
   key: test1234
-  api: http://127.0.0.1/hostlink-fileman/api/
+  api: 
   root:
   basepath: /uploads

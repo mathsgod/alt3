@@ -151,10 +151,7 @@ export default {
     this.type = url.searchParams.get("type");
 
     if (!this.token) {
-      this.token = prompt("please input token");
-      if (!this.token) {
-        return;
-      }
+      alert("token not found");
     }
 
     try {
@@ -165,6 +162,7 @@ export default {
     }
 
     //this.api = new API(`http://127.0.0.1/hostlink-fileman/`);
+    console.log(this.payload);
     this.api = new API(this.payload.api, this.token);
     this.elementId = url.searchParams.get("id");
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a410fa31a99b41c79877105c51888c1",
+    "content-hash": "889fa3c220d6ff2cd02db04aaef2b5ed",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -436,11 +436,11 @@
         },
         {
             "name": "mathsgod/hostlink-fileman",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/hostlink-fileman.git",
-                "reference": "dbfb7a4469d13f8709d73270bce93045d9442b5b"
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../hostlink-fileman",
+                "reference": "bdf7ae66b3798146d54f4370fb794809f05636b3"
             },
             "require": {
                 "firebase/php-jwt": "^5.0",
@@ -450,6 +450,11 @@
                 "webonyx/graphql-php": "^0.12.6"
             },
             "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "": "api/class/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -460,7 +465,10 @@
                 }
             ],
             "description": "hostlink filemanager",
-            "time": "2020-02-07T10:10:30+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "mathsgod/html",
@@ -3144,11 +3152,14 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mathsgod/hostlink-fileman": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

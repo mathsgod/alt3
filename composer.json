@@ -48,8 +48,8 @@
         "mathsgod/r-translate": "^1.0",
         "mathsgod/gql-php-generator": "^1.0",
         "mathsgod/r-webauthn": "^1.0",
-        "mathsgod/hostlink-fileman": "^1.0",
-        "mathsgod/date": "^1.0"
+        "mathsgod/date": "^1.0",
+        "mathsgod/hostlink-fileman": "dev-master"
     },
     "require-dev": {
         "box/spout": "^2.7",
