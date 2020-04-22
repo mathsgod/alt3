@@ -100,6 +100,7 @@ export default {
       if (extname == ".jpg" || extname == ".png" || extname == ".gif") {
         let ins = tippy(event.target, {
           content: "Loading...",
+          allowHTML: true,
           async onShow(instance) {
             instance.setContent(`<img src="${file.url}" width="200"/>`);
           }

@@ -156,13 +156,12 @@ export default {
 
     try {
       this.payload = jwt_decode(this.token);
+      console.log(this.payload);
     } catch (e) {
       alert(e);
       return;
     }
 
-    //this.api = new API(`http://127.0.0.1/hostlink-fileman/`);
-    console.log(this.payload);
     this.api = new API(this.payload.api, this.token);
     this.elementId = url.searchParams.get("id");
 

@@ -43,9 +43,5 @@ user:
   auth-lockout: true
 
 hostlink-fileman:
-  url:
-  upload_path:
   key: test1234
-  api: 
-  root:
   basepath: /uploads

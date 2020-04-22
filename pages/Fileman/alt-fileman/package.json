@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "icheck-bootstrap": "^3.0.1",
+    "jquery": "^3.5.0",
     "json-to-graphql-query": "^2.0.0",
     "jwt-decode": "^2.2.0",
     "poppyjs": "^1.1.0",

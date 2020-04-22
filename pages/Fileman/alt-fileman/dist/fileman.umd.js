@@ -5295,6 +5295,13 @@ module.exports = function (it, key) {
 
 /***/ }),
 
+/***/ "52df":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "5692":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9937,6 +9944,9 @@ var sweetalert2 = __webpack_require__("94bd");
 // EXTERNAL MODULE: ./node_modules/icheck-bootstrap/icheck-bootstrap.css
 var icheck_bootstrap = __webpack_require__("cf6d");
 
+// EXTERNAL MODULE: ./node_modules/tippy.js/dist/tippy.css
+var tippy = __webpack_require__("52df");
+
 // EXTERNAL MODULE: ./node_modules/path-browserify/index.js
 var path_browserify = __webpack_require__("df7c");
 var path_browserify_default = /*#__PURE__*/__webpack_require__.n(path_browserify);
@@ -10027,12 +10037,12 @@ var e = {
 window.jsonToGraphQLQuery = lib["jsonToGraphQLQuery"];
 window.VariableType = lib["VariableType"];
 /* harmony default export */ var vue_gql = (e);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"481edf68-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=7089d610&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"481edf68-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=7c5c766e&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('div',{staticClass:"container-fluid"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-3"},[_c('div',[_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickCreateFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-plus"}),_vm._v(" Create ")]),_c('button',{staticClass:"btn btn-warning btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickRenameFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-pen"}),_vm._v(" Rename ")]),_c('button',{staticClass:"btn btn-danger btn-sm",attrs:{"disabled":!_vm.canDeleteFolder()},on:{"click":function($event){$event.preventDefault();return _vm.onClickRemoveFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete ")]),_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickRefreshFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-sync"}),_vm._v(" Refresh ")])]),_c('div',{staticStyle:{"overflow":"auto"}},[_c('v-jstree',{ref:"tree1",attrs:{"data":_vm.items1,"show-checkbox":"","allow-batch":"","whole-row":"","async":_vm.asyncLoad},on:{"item-click":_vm.onClickDirectory}})],1)]),_c('div',{staticClass:"col"},[_c('div',[_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){return _vm.onClickAddFile()}}},[_c('i',{staticClass:"fa fa-fw fa-plus"}),_vm._v(" Add files ")]),_c('div',{staticClass:"btn-group btn-group-toggle",attrs:{"data-toggle":"buttons"}},[_c('label',{staticClass:"btn btn-info btn-sm",class:{active:_vm.fileViewMode=='list'},on:{"click":function($event){_vm.fileViewMode='list'}}},[_c('input',{attrs:{"type":"radio","name":"fileViewMode"}}),_c('i',{staticClass:"fa fa-fw fa-list"})]),_c('label',{staticClass:"btn btn-info btn-sm",class:{active:_vm.fileViewMode=='grid'},on:{"click":function($event){_vm.fileViewMode='grid'}}},[_c('input',{attrs:{"type":"radio","name":"fileViewMode"}}),_c('i',{staticClass:"fa fa-fw fa-th"})])]),_c('button',{staticClass:"btn btn-info btn-sm",attrs:{"disabled":_vm.selectedFiles.length==0},on:{"click":function($event){return _vm.onClickDownloadFiles()}}},[_c('i',{staticClass:"fa fa-fw fa-download"}),_vm._v(" Download files ")]),_c('button',{staticClass:"btn btn-danger btn-sm",attrs:{"disabled":_vm.selectedFiles.length==0},on:{"click":function($event){return _vm.onClickDeleteFiles()}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete files ")])]),(_vm.fileViewMode=='list')?_c('file-list-view',{ref:"fileListView",attrs:{"api":_vm.api,"files":_vm.files},on:{"select-file":_vm.onSelectFile,"download-file":_vm.downloadFile,"remove-file":_vm.removeFile,"selected-files":_vm.onSelectedFiles,"rename-file":_vm.renameFile}}):_vm._e(),(_vm.fileViewMode=='grid')?_c('file-grid-view',{attrs:{"api":_vm.api,"files":_vm.files},on:{"select-file":_vm.onSelectFile,"download-file":_vm.downloadFile,"remove-file":_vm.removeFile}}):_vm._e()],1)]),_vm._m(0)]),_c('upload-file-dialog',{ref:"upload_file_dialog",attrs:{"api":_vm.api},on:{"files-uploaded":_vm.reloadFilesContent}})],1)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('footer',{staticClass:"main-footer unselectable"},[_c('div',{staticClass:"float-right d-none d-sm-inline"},[_vm._v("1.0.0")]),_c('strong',[_vm._v(" Hostlink fileman 著作權 © 2020 "),_c('a',{attrs:{"href":"https://www.hostlink.com.hk","target":"_blank"}},[_vm._v("HostLink")]),_vm._v(". ")]),_vm._v(" 版權所有. ")])}]
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=7089d610&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=7c5c766e&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
 var es_array_iterator = __webpack_require__("e260");
@@ -11166,12 +11176,12 @@ var api_API = /*#__PURE__*/function () {
 }();
 
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"481edf68-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/FileListView.vue?vue&type=template&id=11c1e080&
-var FileListViewvue_type_template_id_11c1e080_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"table table-sm table-hover"},[_c('thead',[_c('tr',[_c('td',[_c('div',{staticClass:"icheck-info"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.selectedAllFile),expression:"selectedAllFile"}],attrs:{"type":"checkbox","id":"selected_all_file"},domProps:{"checked":Array.isArray(_vm.selectedAllFile)?_vm._i(_vm.selectedAllFile,null)>-1:(_vm.selectedAllFile)},on:{"change":function($event){var $$a=_vm.selectedAllFile,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.selectedAllFile=$$a.concat([$$v]))}else{$$i>-1&&(_vm.selectedAllFile=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.selectedAllFile=$$c}}}}),_c('label',{attrs:{"for":"selected_all_file"}})])]),_c('td'),_c('td',{staticClass:"col-9 unselectable"},[_vm._v("Name")]),_c('td',{staticClass:"unselectable"},[_vm._v("Size")])])]),_c('tbody',_vm._l((_vm.files),function(f,key){return _c('tr',{key:key,on:{"dblclick":function($event){$event.preventDefault();return _vm.$emit('select-file',f)}}},[_c('td',[_c('div',{staticClass:"icheck-info"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.localSelectedFiles),expression:"localSelectedFiles"}],attrs:{"type":"checkbox","id":("file" + key)},domProps:{"value":f,"checked":Array.isArray(_vm.localSelectedFiles)?_vm._i(_vm.localSelectedFiles,f)>-1:(_vm.localSelectedFiles)},on:{"change":function($event){var $$a=_vm.localSelectedFiles,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=f,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.localSelectedFiles=$$a.concat([$$v]))}else{$$i>-1&&(_vm.localSelectedFiles=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.localSelectedFiles=$$c}}}}),_c('label',{attrs:{"for":("file" + key)}})])]),_c('td',[_c('div',{staticClass:"btn-group"},[_c('button',{staticClass:"btn btn-sm dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"}},[_vm._v("Action")]),_c('div',{staticClass:"dropdown-menu"},[_c('a',{staticClass:"dropdown-item",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.$emit('download-file',f)}}},[_c('i',{staticClass:"fa fa-fw fa-download"}),_vm._v(" Download ")]),_c('a',{staticClass:"dropdown-item",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.$emit('rename-file',f)}}},[_c('i',{staticClass:"fa fa-fw fa-pen"}),_vm._v(" Rename ")]),_c('a',{staticClass:"dropdown-item",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.$emit('remove-file',f)}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete ")])])])]),_c('td',{staticClass:"unselectable",domProps:{"textContent":_vm._s(f.filename)},on:{"mouseover":function($event){if($event.target !== $event.currentTarget){ return null; }return _vm.onMouseover(f,$event)}}}),_c('td',{staticClass:"unselectable",domProps:{"textContent":_vm._s(f.size)}})])}),0)])}
-var FileListViewvue_type_template_id_11c1e080_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"481edf68-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/FileListView.vue?vue&type=template&id=643cf3e1&
+var FileListViewvue_type_template_id_643cf3e1_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"table table-sm table-hover"},[_c('thead',[_c('tr',[_c('td',[_c('div',{staticClass:"icheck-info"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.selectedAllFile),expression:"selectedAllFile"}],attrs:{"type":"checkbox","id":"selected_all_file"},domProps:{"checked":Array.isArray(_vm.selectedAllFile)?_vm._i(_vm.selectedAllFile,null)>-1:(_vm.selectedAllFile)},on:{"change":function($event){var $$a=_vm.selectedAllFile,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=null,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.selectedAllFile=$$a.concat([$$v]))}else{$$i>-1&&(_vm.selectedAllFile=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.selectedAllFile=$$c}}}}),_c('label',{attrs:{"for":"selected_all_file"}})])]),_c('td'),_c('td',{staticClass:"col-9 unselectable"},[_vm._v("Name")]),_c('td',{staticClass:"unselectable"},[_vm._v("Size")])])]),_c('tbody',_vm._l((_vm.files),function(f,key){return _c('tr',{key:key,on:{"dblclick":function($event){$event.preventDefault();return _vm.$emit('select-file',f)}}},[_c('td',[_c('div',{staticClass:"icheck-info"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.localSelectedFiles),expression:"localSelectedFiles"}],attrs:{"type":"checkbox","id":("file" + key)},domProps:{"value":f,"checked":Array.isArray(_vm.localSelectedFiles)?_vm._i(_vm.localSelectedFiles,f)>-1:(_vm.localSelectedFiles)},on:{"change":function($event){var $$a=_vm.localSelectedFiles,$$el=$event.target,$$c=$$el.checked?(true):(false);if(Array.isArray($$a)){var $$v=f,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.localSelectedFiles=$$a.concat([$$v]))}else{$$i>-1&&(_vm.localSelectedFiles=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{_vm.localSelectedFiles=$$c}}}}),_c('label',{attrs:{"for":("file" + key)}})])]),_c('td',[_c('div',{staticClass:"btn-group"},[_c('button',{staticClass:"btn btn-sm dropdown-toggle",attrs:{"type":"button","data-toggle":"dropdown","aria-haspopup":"true","aria-expanded":"false"}},[_vm._v("Action")]),_c('div',{staticClass:"dropdown-menu"},[_c('a',{staticClass:"dropdown-item",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.$emit('download-file',f)}}},[_c('i',{staticClass:"fa fa-fw fa-download"}),_vm._v(" Download ")]),_c('a',{staticClass:"dropdown-item",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.$emit('rename-file',f)}}},[_c('i',{staticClass:"fa fa-fw fa-pen"}),_vm._v(" Rename ")]),_c('a',{staticClass:"dropdown-item",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.$emit('remove-file',f)}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete ")])])])]),_c('td',{staticClass:"unselectable",domProps:{"textContent":_vm._s(f.filename)},on:{"mouseover":function($event){if($event.target !== $event.currentTarget){ return null; }return _vm.onMouseover(f,$event)}}}),_c('td',{staticClass:"unselectable",domProps:{"textContent":_vm._s(f.size)}})])}),0)])}
+var FileListViewvue_type_template_id_643cf3e1_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/FileListView.vue?vue&type=template&id=11c1e080&
+// CONCATENATED MODULE: ./src/FileListView.vue?vue&type=template&id=643cf3e1&
 
 // CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
 function getBoundingClientRect(element) {
@@ -14431,7 +14441,7 @@ function createTippy(reference, passedProps) {
   }
 }
 
-function tippy(targets, optionalProps) {
+function tippy_esm_tippy(targets, optionalProps) {
   if (optionalProps === void 0) {
     optionalProps = {};
   }
@@ -14462,9 +14472,9 @@ function tippy(targets, optionalProps) {
   return tippy_esm_isElement(targets) ? instances[0] : instances;
 }
 
-tippy.defaultProps = defaultProps;
-tippy.setDefaultProps = setDefaultProps;
-tippy.currentInput = currentInput;
+tippy_esm_tippy.defaultProps = defaultProps;
+tippy_esm_tippy.setDefaultProps = setDefaultProps;
+tippy_esm_tippy.currentInput = currentInput;
 var hideAll = function hideAll(_temp) {
   var _ref = _temp === void 0 ? {} : _temp,
       excludedReferenceOrInstance = _ref.exclude,
@@ -14552,7 +14562,7 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
       };
     }
   };
-  var instance = tippy(div(), Object.assign({}, removeProperties(optionalProps, ['overrides']), {
+  var instance = tippy_esm_tippy(div(), Object.assign({}, removeProperties(optionalProps, ['overrides']), {
     plugins: [singleton].concat(optionalProps.plugins || []),
     triggerTarget: references
   }));
@@ -14601,7 +14611,7 @@ function delegate(targets, props) {
   var childProps = Object.assign({}, nativeProps, {
     showOnCreate: true
   });
-  var returnValue = tippy(targets, parentProps);
+  var returnValue = tippy_esm_tippy(targets, parentProps);
   var normalizedReturnValue = normalizeToArray(returnValue);
 
   function onTrigger(event) {
@@ -14633,7 +14643,7 @@ function delegate(targets, props) {
       return;
     }
 
-    var instance = tippy(targetNode, childProps);
+    var instance = tippy_esm_tippy(targetNode, childProps);
 
     if (instance) {
       childTippyInstances = childTippyInstances.concat(instance);
@@ -15087,11 +15097,11 @@ function areRectsDifferent(rectA, rectB) {
   return true;
 }
 
-tippy.setDefaultProps({
+tippy_esm_tippy.setDefaultProps({
   render: tippy_esm_render
 });
 
-/* harmony default export */ var tippy_esm = (tippy);
+/* harmony default export */ var tippy_esm = (tippy_esm_tippy);
 
 //# sourceMappingURL=tippy.esm.js.map
 
@@ -15200,6 +15210,7 @@ tippy.setDefaultProps({
       if (extname == ".jpg" || extname == ".png" || extname == ".gif") {
         var ins = tippy_esm(event.target, {
           content: "Loading...",
+          allowHTML: true,
           onShow: function onShow(instance) {
             return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -15237,8 +15248,8 @@ tippy.setDefaultProps({
 
 var FileListView_component = normalizeComponent(
   src_FileListViewvue_type_script_lang_js_,
-  FileListViewvue_type_template_id_11c1e080_render,
-  FileListViewvue_type_template_id_11c1e080_staticRenderFns,
+  FileListViewvue_type_template_id_643cf3e1_render,
+  FileListViewvue_type_template_id_643cf3e1_staticRenderFns,
   false,
   null,
   null,
@@ -15521,13 +15532,11 @@ var FileGridView_component = normalizeComponent(
               return _context.abrupt("return");
 
             case 13:
-              //this.api = new API(`http://127.0.0.1/hostlink-fileman/`);
-              console.log(_this.payload);
               _this.api = new api_API(_this.payload.api, _this.token);
               _this.elementId = url.searchParams.get("id");
               _this.init_value = url.searchParams.get("value");
 
-            case 17:
+            case 16:
             case "end":
               return _context.stop();
           }
@@ -16176,6 +16185,7 @@ var App_component = normalizeComponent(
 
 /* harmony default export */ var App = (App_component.exports);
 // CONCATENATED MODULE: ./src/main.js
+
 
 
 

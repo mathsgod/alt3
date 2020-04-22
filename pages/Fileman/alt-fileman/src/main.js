@@ -1,3 +1,10 @@
+//import Vue from 'vue';
+//window.Vue = Vue;
+//Vue.config.productionTip = false;
+
+import $ from "jquery";
+window.$ = $;
+import "bootstrap/dist/js/bootstrap.bundle.js";
 import "bootstrap/dist/css/bootstrap.css";
 
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -5,6 +12,8 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import 'sweetalert2/dist/sweetalert2.css';
 
 import 'icheck-bootstrap/icheck-bootstrap.css';
+
+import 'tippy.js/dist/tippy.css';
 
 import path from "path";
 window.path = path;
@@ -16,18 +25,12 @@ import GQL from './vue-gql.js';
 window.Vue.use(GQL);
 
 import App from './App.vue';
-/*
-import Vue from 'vue';
-
 
 import VueResource from 'vue-resource';
-window.Vue = Vue;
-window.VueResource = VueResource;
-
-
+window.Vue.use(VueResource);
+/*
 //Vue.config.productionTip = false;
 //Vue.use(VueResource);
-
 
 Vue.prototype.$gql = new GQL(Vue);
 */

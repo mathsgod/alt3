@@ -29,7 +29,7 @@ class Fileman_index extends App\Page
             "exp" => time() + 3600,
             "root" =>  $document_root . "/uploads",
             "api" => "http://127.0.0.1/alt3/Fileman/api",
-            "url" => $this->app->config["hostlink-fileman"]["upload_path"]
+            "url" => "http://127.0.0.1/uploads"
         ];
 
         if ($config["root"]) {
