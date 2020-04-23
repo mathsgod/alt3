@@ -14,6 +14,7 @@ export default {
   },
   mounted() {
     if (this.formCreate) {
+      var $ = window.$;
       var o = this.$el;
 
       var $table = $(o);
@@ -33,7 +34,7 @@ export default {
       ).prependTo(tr);
       th.append(a);
 
-      var del_index = [];
+      ///var del_index = [];
       $table.find("tr").each(function(i, o) {
         if (i == 0) return;
         var $tr = $(o);

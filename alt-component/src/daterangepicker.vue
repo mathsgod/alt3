@@ -12,6 +12,7 @@ export default {
     value: {}
   },
   mounted() {
+    var $ = window.$;
     var d = {
       locale: {
         format: "YYYY-MM-DD"
@@ -19,7 +20,7 @@ export default {
     };
     console.log(this.value);
     let options = { ...d, ...this.options };
-    let dp = window.$(this.$el).daterangepicker(options);
+    window.$(this.$el).daterangepicker(options);
 
     if (!this.value) {
       $(this.$el).val("");

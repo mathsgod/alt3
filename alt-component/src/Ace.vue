@@ -19,7 +19,7 @@ export default {
     $div.html(this.$el.value);
 
     this.$nextTick(() => {
-      var editor = ace.edit($div[0]);
+      var editor = window.ace.edit($div[0]);
       var mode = $(this.$el).attr("ace-mode");
       if (mode) {
         editor.session.setMode("ace/mode/" + mode);

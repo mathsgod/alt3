@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     sortStop() {
+      var $ = window.$;
       var grid = $(this.$el);
 
       var data = [];
@@ -55,8 +56,8 @@ export default {
           type: "grid",
           layout: data,
           uri: this.$attrs["data-uri"]
-        })
-        .then(resp => {});
+        });
+        //.then(resp => {});
     }
   }
 };

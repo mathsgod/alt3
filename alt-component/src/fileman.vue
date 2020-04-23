@@ -35,12 +35,7 @@ export default {
   },
   mounted() {
     let url = this.url + "&id=" + this.id;
-    window.$(this.$el).on("focus", () => {
-      window.$.fancybox.open({
-        src: url,
-        type: "iframe"
-      });
-    });
+    window.open(url, "Hostlink Fileman", "width=1280,height=768");
   }
 };
 </script>

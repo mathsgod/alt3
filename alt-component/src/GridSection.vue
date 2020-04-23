@@ -40,6 +40,7 @@ export default {
       });
     },
     startSort() {
+      var $ = window.$;
       this.isDragDrop = true;
       this.card.forEach(b => b.unpin());
       $(this.$el)
@@ -50,11 +51,12 @@ export default {
           forcePlaceholderSize: true,
           zIndex: 999999
         })
-        .on("sortstop", (event, ui) => {
+        .on("sortstop", (/*event, ui*/) => {
           this.$emit("sortstop");
         });
     },
     endSort() {
+      var $ = window.$;
       this.isDragDrop = false;
       this.card.forEach(b => b.pin());
       $(this.$el).sortable("destroy");

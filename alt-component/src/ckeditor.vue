@@ -25,7 +25,7 @@ export default {
       event => {
         var data = event.data;
         if (data.source == "ckeditor") {
-          CKEDITOR.tools.callFunction(
+          window.CKEDITOR.tools.callFunction(
             data.CKEditorFuncNum,
             this.basepath + data.value
           );
@@ -36,9 +36,10 @@ export default {
   },
   mounted() {
     if (typeof window.CKEDITOR != "undefined") {
-      var base = $("base").attr("href");
-      window.CKEDITOR.config = { ...CKEDITOR.config, ...this.config };
-      window.CKEDITOR.replace(this.$el);
+      var CKEDITOR = window.CKEDITOR;
+      //var base = $("base").attr("href");
+      CKEDITOR.config = { ...CKEDITOR.config, ...this.config };
+      CKEDITOR.replace(this.$el);
     }
   }
 };

@@ -378,7 +378,7 @@ export default {
   },
   methods: {
     clearChecked(name) {
-      var d = [];
+      //var d = [];
       this.storage.rows[name] = {};
       this.storage.save();
     },
@@ -505,7 +505,7 @@ export default {
     draw() {
       this.loading = true;
       this.local.draw++;
-      Vue.http
+      window.Vue.http
         .get(this.ajax.url, {
           params: {
             _rt: 1,
