@@ -7,6 +7,10 @@ use GraphQL\Error\Error;
 class Query
 {
 
+    public function test(){
+        return "testing";
+    }
+    
     public function me($root, $args, $context)
     {
         if ($context->user->user_id == 2) return null;

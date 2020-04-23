@@ -308,6 +308,7 @@ class App extends \R\App
 
     public function login(string $username, string $password, string $code = null): bool
     {
+        
         //check AuthLock
         if ($this->config["user"]["auth-lockout"]) {
             if (AuthLock::IsLock()) {
@@ -323,6 +324,7 @@ class App extends \R\App
         }
 
 
+        
         if ($this->config["user"]["2-step verification"]) {
             $need_check = true;
             if ($setting = $user->setting()) {

@@ -7,7 +7,6 @@ class api_index extends R\Page
 {
     public function post()
     {
-
         $directiveResolvers = [
             "hasRole" => function ($next, $source, $args, $app) {
                 if (!$args["role"]) {
@@ -38,8 +37,10 @@ class api_index extends R\Page
         }
 
         $loader = $this->app->loader;
-        $loader->addPsr4("Type\\", __DIR__ . "/Type");
-        $loader->register();
+
+        $loader->addPsr4("Type\\", __DIR__ . DIRECTORY_SEPARATOR . "Type");
+        $loader->register(true);
+        
         try {
             $schema = Schema::Build(file_get_contents(__DIR__ . "/schema.gql"), $this->app);
         } catch (Exception $e) {
@@ -56,6 +57,7 @@ class api_index extends R\Page
         $query = $input['query'];
         $variableValues = $input['variables'];
         $schema->debug = true;
+
 
         return $schema->executeQuery($query, $variableValues);
     }

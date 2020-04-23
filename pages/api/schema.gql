@@ -2,6 +2,7 @@ directive @hasRole on FIELD_DEFINITION
 scalar JSON
 
 type Mutation{
+    
     login(username:String!,password:String!,code:String):Me
     loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
@@ -23,7 +24,7 @@ type Query{
     credentialRequestOptions(username:String!):String
     UserGroup(usergroup_id:Int!):UserGroup
     UserGroups:[UserGroup]
-    
+    test:String
 }
 
 type Me{

@@ -306,39 +306,10 @@ HTML
 
     public function fileman(string $field)
     {
+        $app = $this->page->app;
         $p = $this->input($field);
         $p->attr("is", "fileman");
-
-        $pi = $this->page->app->pathinfo();
-        $composer_base = $pi["composer_base"];
-        $document_root = $pi["document_root"];
-
-        $config = $this->page->app->config["hostlink-fileman"];
-        $url = $config["url"] ?? $composer_base . "/vendor/mathsgod/hostlink-fileman/dist";
-
-        $payload = [
-            "iat" => time(),
-            "exp" => time() + 3600,
-            "root" =>  $document_root . "/uploads",
-            "api" =>  $composer_base . "/vendor/mathsgod/hostlink-fileman/api/",
-            "url" => $this->page->app->config["hostlink-fileman"]["upload_path"]
-        ];
-
-        if ($config["root"]) {
-            $payload["root"] = $config["root"];
-        }
-
-        if ($config["api"]) {
-            $payload["api"] = $config["api"];
-        }
-
-        $key = $config["key"] ?? session_id();
-
-        $token = JWT::encode($payload, $key);
-
-
-        $p->attr("url", $url . "/index.html?token=$token");
-
+        $p->attr("url", $app->base_path . "/Fileman/?token=");
         return $p;
     }
 
@@ -352,8 +323,10 @@ HTML
 
     public function ckeditor($field)
     {
+        $app = $this->page->app;
+        $fileman_path = $app->base_path . "/Fileman/?token=";
 
-        /*        $payload = [
+                /*        $payload = [
             "iat" => time(),
             "exp" => time() + 3600,
             "api" => "http://192.168.88.108/hostlink-fileman/",
@@ -369,30 +342,8 @@ HTML
 
         $config = $this->page->app->config["hostlink-fileman"];
 
-        $payload = [
-            "iat" => time(),
-            "exp" => time() + 3600,
-            "root" =>  $document_root . "/uploads",
-            "api" =>  $composer_base . "/vendor/mathsgod/hostlink-fileman/api/",
-            "url" => $this->page->app->config["hostlink-fileman"]["upload_path"]
-        ];
-
-        if ($config["root"]) {
-            $payload["root"] = $config["root"];
-        }
-
-        if ($config["api"]) {
-            $payload["api"] = $config["api"];
-        }
-
-        $key = $config["key"] ?? session_id();
-
-        $token = JWT::encode($payload, $key);
-
-        $p = p();
-
-        $url = $config["url"] ?? $composer_base . "/vendor/mathsgod/hostlink-fileman/dist";
         $basepath = $config["basepath"];
+
 
 
         foreach ($this->cell as $cell) {
@@ -418,8 +369,8 @@ HTML
 
 
                 $textarea->attr(":config", json_encode([
-                    "filebrowserImageBrowseUrl" => $url . "/index.html?token=$token&source=ckeditor&type=image",
-                    "filebrowserBrowseUrl" => $url . "/index.html?token=$token&source=ckeditor"
+                    "filebrowserImageBrowseUrl" => $fileman_path . "&source=ckeditor&type=image",
+                    "filebrowserBrowseUrl" => $fileman_path . "&source=ckeditor"
                 ]));
 
 

@@ -2,12 +2,17 @@
 
 use Firebase\JWT\JWT;
 
-class Fileman_api extends App\Page
+class Fileman_api extends R\Page
 {
 
     public function get()
     {
-        print_r($this->app->config["hostlink-fileman"]);
+        $token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODc2MTQ2NjEsImV4cCI6MTU4NzYxODI2MSwicm9vdCI6IkM6XC9Vc2Vyc1wvbWF0aHNcL0Rlc2t0b3BcL3dlYlwvdXBsb2FkcyIsImFwaSI6IlwvYWx0M1wvRmlsZW1hblwvYXBpXC8iLCJ1cmwiOiJcL3VwbG9hZHMifQ.9RcbZIxgbhUrC8IDDVDFZN7F3yDIakKC--CZctXOLdg";
+        $config = $this->app->config["hostlink-fileman"];
+        $f = new Fileman\App($token, $config);
+
+
+        print_r($f);
 
         $this->write("fileman api");
     }
@@ -17,11 +22,19 @@ class Fileman_api extends App\Page
         $config = $this->app->config["hostlink-fileman"];
         $f = new Fileman\App($token, $config);
 
+        
+
         return $f->post($_POST["query"]);
     }
 
     public function upload_file($token)
     {
+        $config = $this->app->config["hostlink-fileman"];
+        $f = new Fileman\App($token, $config);
+
+        return $f->uploadFile($_POST["path"],$_FILES["file"]);
+
+        return ;
         if (strstr($_POST["path"], "..")) {
             new Error("access deny");
         }
