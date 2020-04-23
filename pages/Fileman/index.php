@@ -7,6 +7,10 @@ class Fileman_index extends App\Page
 
     public function get($token)
     {
+        $pi = $this->app->pathinfo();
+
+        $this->data["system_base"]=$pi["system_base"];
+
 
         if (!$token) {
             $token = $this->getToken();
