@@ -21,6 +21,7 @@ export default {
     window.addEventListener(
       "message",
       event => {
+        
         var data = event.data;
         if (data.action == "select-file") {
           if (this.id == data.id) {
@@ -35,7 +36,9 @@ export default {
   },
   mounted() {
     let url = this.url + "&id=" + this.id;
-    window.open(url, "Hostlink Fileman", "width=1280,height=768");
+    this.$el.addEventListener("click", () => {
+      window.open(url, "Hostlink Fileman", "width=1280,height=768");
+    });
   }
 };
 </script>

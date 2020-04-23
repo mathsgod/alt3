@@ -28072,12 +28072,12 @@ var e = {
 window.jsonToGraphQLQuery = lib["jsonToGraphQLQuery"];
 window.VariableType = lib["VariableType"];
 /* harmony default export */ var vue_gql = (e);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b3422018-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=14c5c686&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b3422018-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=909652c4&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('div',{staticClass:"container-fluid"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-3"},[_c('div',[_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickCreateFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-plus"}),_vm._v(" Create ")]),_c('button',{staticClass:"btn btn-warning btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickRenameFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-pen"}),_vm._v(" Rename ")]),_c('button',{staticClass:"btn btn-danger btn-sm",attrs:{"disabled":!_vm.canDeleteFolder()},on:{"click":function($event){$event.preventDefault();return _vm.onClickRemoveFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete ")]),_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickRefreshFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-sync"}),_vm._v(" Refresh ")])]),_c('div',{staticStyle:{"overflow":"auto"}},[_c('v-jstree',{ref:"tree1",attrs:{"data":_vm.items1,"show-checkbox":"","allow-batch":"","whole-row":"","async":_vm.asyncLoad},on:{"item-click":_vm.onClickDirectory}})],1)]),_c('div',{staticClass:"col"},[_c('div',[_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){return _vm.onClickAddFile()}}},[_c('i',{staticClass:"fa fa-fw fa-plus"}),_vm._v(" Add files ")]),_c('div',{staticClass:"btn-group btn-group-toggle",attrs:{"data-toggle":"buttons"}},[_c('label',{staticClass:"btn btn-info btn-sm",class:{active:_vm.fileViewMode=='list'},on:{"click":function($event){_vm.fileViewMode='list'}}},[_c('input',{attrs:{"type":"radio","name":"fileViewMode"}}),_c('i',{staticClass:"fa fa-fw fa-list"})]),_c('label',{staticClass:"btn btn-info btn-sm",class:{active:_vm.fileViewMode=='grid'},on:{"click":function($event){_vm.fileViewMode='grid'}}},[_c('input',{attrs:{"type":"radio","name":"fileViewMode"}}),_c('i',{staticClass:"fa fa-fw fa-th"})])]),_c('button',{staticClass:"btn btn-info btn-sm",attrs:{"disabled":_vm.selectedFiles.length==0},on:{"click":function($event){return _vm.onClickDownloadFiles()}}},[_c('i',{staticClass:"fa fa-fw fa-download"}),_vm._v(" Download files ")]),_c('button',{staticClass:"btn btn-danger btn-sm",attrs:{"disabled":_vm.selectedFiles.length==0},on:{"click":function($event){return _vm.onClickDeleteFiles()}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete files ")])]),(_vm.fileViewMode=='list')?_c('file-list-view',{ref:"fileListView",attrs:{"api":_vm.api,"files":_vm.files},on:{"select-file":_vm.onSelectFile,"download-file":_vm.downloadFile,"remove-file":_vm.removeFile,"selected-files":_vm.onSelectedFiles,"rename-file":_vm.renameFile}}):_vm._e(),(_vm.fileViewMode=='grid')?_c('file-grid-view',{attrs:{"api":_vm.api,"files":_vm.files},on:{"select-file":_vm.onSelectFile,"download-file":_vm.downloadFile,"remove-file":_vm.removeFile}}):_vm._e()],1)]),_vm._m(0)]),_c('upload-file-dialog',{ref:"upload_file_dialog",attrs:{"api":_vm.api},on:{"files-uploaded":_vm.reloadFilesContent}})],1)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('footer',{staticClass:"main-footer unselectable"},[_c('div',{staticClass:"float-right d-none d-sm-inline"},[_vm._v("1.0.0")]),_c('strong',[_vm._v(" Hostlink fileman 著作權 © 2020 "),_c('a',{attrs:{"href":"https://www.hostlink.com.hk","target":"_blank"}},[_vm._v("HostLink")]),_vm._v(". ")]),_vm._v(" 版權所有. ")])}]
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=14c5c686&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=909652c4&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
 var es_array_iterator = __webpack_require__("e260");
@@ -33959,12 +33959,13 @@ var FileGridView_component = normalizeComponent(
           self.close();
         }
       } else {
-        window.parent.postMessage({
+        window.opener.postMessage({
           token: this.token,
           action: "select-file",
           value: f.pathname,
           id: this.elementId
         }, "*");
+        self.close();
       }
     },
     onClickRefreshFolder: function onClickRefreshFolder() {

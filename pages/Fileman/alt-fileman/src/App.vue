@@ -307,7 +307,7 @@ export default {
           self.close();
         }
       } else {
-        window.parent.postMessage(
+        window.opener.postMessage(
           {
             token: this.token,
             action: "select-file",
@@ -316,6 +316,7 @@ export default {
           },
           "*"
         );
+        self.close();
       }
     },
     async onClickRefreshFolder() {
