@@ -326,7 +326,7 @@ HTML
         $app = $this->page->app;
         $fileman_path = $app->base_path . "/Fileman/?token=";
 
-                /*        $payload = [
+        /*        $payload = [
             "iat" => time(),
             "exp" => time() + 3600,
             "api" => "http://192.168.88.108/hostlink-fileman/",
@@ -881,6 +881,42 @@ HTML
     public function colorpicker($index)
     {
         return $this->input($index)->addClass("cp");
+    }
+
+    public function datePicker(string $field): InputCollection
+    {
+        $p = new InputCollection;
+        foreach ($this->cell as $cell) {
+            try {
+                $div = p("date-picker")->appendTo($cell);
+                $div->attr("name", $field);
+
+                if ($object = p($cell)->data("object")) {
+                    $div->data("object", $object);
+                    $div->attr("value", $this->getObjectValue($object, $field));
+
+                    if ($this->callback) {
+                        call_user_func($this->callback, $object, $div[0]);
+                    }
+                }
+                $p[] = $div[0];
+            } catch (Exception $e) {
+                $cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
+            }
+        }
+
+        if ($this->createTemplate) {
+
+            $div = p("date-picker");
+            $div->attr("name", $field);
+            $p[] = $div[0];
+            $this->c_tpl[] = $div[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
+        }
+        return $p;
     }
 
     public function date(string $field): InputCollection

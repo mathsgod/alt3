@@ -1,1 +1,0 @@
-vue-cli-service serve --target lib --name alt src/main.js --port 8084

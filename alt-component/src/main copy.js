@@ -1,14 +1,4 @@
-//import Vue from 'vue';
-var Vue = window.Vue;
-import Element from 'element-ui';
-import "element-ui/lib/theme-chalk/index.css";
-Vue.use(Element, { size: "small" });
-
-import DatePicker from "./DatePicker.vue";
-Vue.component("date-picker", DatePicker);
-
-
-//var Vue = window.Vue;
+Vue = window.Vue;
 import VueRegisterElement from "vue-register-element/dist/main.js";
 
 import grid from "./Grid";
@@ -62,5 +52,3 @@ VueRegisterElement("alt-button", altButton);
 
 import fileman from "./fileman";
 VueRegisterElement("fileman", fileman);
-
-

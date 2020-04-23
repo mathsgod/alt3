@@ -13,7 +13,7 @@ class System_example_createE extends ALT\Page
         ]);
         $e->add("inputSelect")->inputSelect("t1", ["a", "b", "c"]);
         $e->add("tokenField")->tokenField("username", ["a", "b", "c"]);
-        
+
 
         $this->write($this->createForm($e));
 
@@ -63,6 +63,8 @@ class System_example_createE extends ALT\Page
         $e->add("Date Time (required)")->datetime("dt")->required();
         $e->add("Date Time")->time("t");
         $e->add("Date Time (required)")->time("t")->required();
+
+        $e->add("Date picker")->datePicker("date");
 
         $this->write($this->createForm($e));
     }

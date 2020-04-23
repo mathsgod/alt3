@@ -1,1 +1,0 @@
-vue-cli-service build --target lib src/main.js

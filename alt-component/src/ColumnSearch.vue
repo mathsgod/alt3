@@ -32,7 +32,7 @@
       <option v-for="(o,key) in searchOption" v-bind:value="o.value" v-text="o.label" :key="key"></option>
     </select>
 
-    <select
+    <!-- select
       v-if="searchable && searchType=='select' && searchOptGroup"
       class="form-control form-control-sm search"
       ref="search"
@@ -40,7 +40,7 @@
       v-on:change="doSearch()"
     >
       <option></option>
-      <optgroup v-for="(label,group) in searchOptGroup" v-bind:label="label">
+      <optgroup v-for="(label,group) in searchOptGroup" v-bind:label="label" :key="group">
         <option
           v-for="(o,key) in searchOption"
           v-bind:value="o.value"
@@ -49,9 +49,9 @@
           :key="key"
         ></option>
       </optgroup>
-    </select>
+    </select -->
 
-    <select
+    <!-- select
       v-if="searchable && searchType=='multiselect'"
       v-bind:multiple="searchMultiple"
       class="form-control form-control-sm search"
@@ -66,7 +66,7 @@
         v-text="o.label"
       ></option>
 
-      <optgroup v-if="searchOptGroup" v-for="(label,group) in searchOptGroup" v-bind:label="label">
+      <optgroup v-if="searchOptGroup" v-for="(label,group) in searchOptGroup" v-bind:label="label" :key="group">
         <option
           v-for="o in searchOption"
           v-bind:value="o.value"
@@ -74,10 +74,12 @@
           v-if="o.group==group"
         ></option>
       </optgroup>
-    </select>
+    </select -->
   </td>
 </template>
 <script>
+var moment=window.moment;
+var $=window.$;
 export default {
   name: "alt-column-search",
   props: {
@@ -112,7 +114,7 @@ export default {
       return;
     }
     if (this.searchType == "date") {
-      var search = $(this.$refs.search);
+      let search = $(this.$refs.search);
       search.keypress(e => {
         if (e.which == 13) {
           let v = this.$refs.search.value;
@@ -128,7 +130,7 @@ export default {
             this.search = s;
             this.doSearch();
           } else {
-            var s = {};
+            let s = {};
             s.from = v;
             s.to = v;
             this.search = s;
@@ -200,7 +202,7 @@ export default {
         this.doSearch();
       });
 
-      search.on("cancel.daterangepicker", (ev, picker) => {
+      search.on("cancel.daterangepicker", (/*ev, picker*/) => {
         search.val("");
         this.search = "";
         this.doSearch();
@@ -211,6 +213,7 @@ export default {
     doSearch() {
       this.$emit("search", [this.name, this.search]);
     }
+
   }
 };
 </script>
