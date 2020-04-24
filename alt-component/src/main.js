@@ -7,6 +7,13 @@ Vue.use(Element, { size: "small" });
 import DatePicker from "./DatePicker.vue";
 Vue.component("date-picker", DatePicker);
 
+import InputNumber from "./InputNumber.vue";
+Vue.component("input-number", InputNumber);
+
+import select3 from "./Select3";
+Vue.component("select3", select3);
+
+
 
 //var Vue = window.Vue;
 import VueRegisterElement from "vue-register-element/dist/main.js";

@@ -13,7 +13,8 @@
 
 <body>
   <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
 
@@ -22,9 +23,33 @@
   alt-component
   <div id="div1">
     <form method="POST">
-      <date value="2020-04-23" name="date1" required></date>
-      <button type="submit">submit</button>
+      <date-picker value="2020-04-23" name="date1" required></date-picker>
+      <hr />
+      <select3 :options="selectOptions" name="select3"></select3>
+      <div v-text="selectValue"></div>
+
+
+      <hr />
+
+      <input-number name="number1"></input-number>
+
+
+      <button type="submit" class="btn btn-xs btn-primary">submit</button>
     </form>
+
+    <hr />
+
+    <el-form :model="ruleForm" label-width="120px" class="demo-ruleForm">
+      <el-form-item label="Activity name" prop="name">
+        <el-input name="input1" required></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary">Create</el-button>
+      </el-form-item>
+
+    </el-form>
+
 
 
   </div>
@@ -32,7 +57,26 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       var vm = new Vue({
-        el: "#div1"
+        el: "#div1",
+        data: {
+          selectOptions: [{
+            value: 'Option1 value',
+            label: 'Option1'
+          }, {
+            value: 'Option2 value',
+            label: 'Option2'
+          }, {
+            value: 'Option3 value',
+            label: 'Option3'
+          }, {
+            value: 'Option4 value',
+            label: 'Option4'
+          }, {
+            value: 'Option5 value',
+            label: 'Option5'
+          }],
+          selectValue: null
+        }
       });
 
     });
