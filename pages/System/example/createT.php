@@ -1,6 +1,11 @@
 <?
 class System_example_createT extends ALT\Page
 {
+    public function post()
+    {
+        outp($_POST);
+    }
+
     public function get()
     {
 
@@ -15,14 +20,18 @@ class System_example_createT extends ALT\Page
         }
 
         $t = $this->createT($data);
+        $t->formCreate("hello", [
+            "start" => 'abc'
+        ]);
+        $t->table->setAttribute("form-addbottom", true);
 
-        $t->add("Start", "start");
+        $t->add("Start")->input("start");
         $t->add("End", "end");
         $t->add("To", "to");
         $t->add("Final", "final");
 
-        $t->setCreate("User/ae")->fancybox();
 
-        $this->write($t);
+
+        $this->write($this->createForm($t));
     }
 }
