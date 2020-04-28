@@ -5,6 +5,12 @@ class System_example_createV extends ALT\Page
     {
         $v = $this->createV($this->app->user);
         $v->add("Username", "username");
+        $v->addBreak();
+        $v->add("Username", "username");
+        $this->write($v);
+
+        $v = $this->createV($this->app->user);
+        $v->add("Username", "username");
 
         $v->add("Gateway", function ($o) {
             return nl2br(str_replace(' ', '&nbsp;', "1 2 3"));

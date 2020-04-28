@@ -42,7 +42,7 @@ class V extends Card
     {
         $this->row++;
 
-        $row_div = p("div")->addClass("row")->appendTo($this->body());
+        $row_div = p("div")->addClass("col-xs-12")->appendTo($this->body());
         $wrap_div = p("div")->addClass("col-xs-12")->appendTo($row_div);
         $this->container = $wrap_div;
 
