@@ -205,6 +205,49 @@ class Col extends HTMLElement
         return $p;
     }
 
+    public function inputNumber(string $field): InputCollection
+    {
+        $p = new InputCollection();
+        foreach ($this->cell as $cell) {
+            try {
+
+                $input = p("input-number")->appendTo($cell);
+                $input->attr("name", $field);
+
+                if ($object = p($cell)->data("object")) {
+                    $input->data("object", $object);
+                    $input->attr("value", $this->getObjectValue($object, $field));
+
+                    if ($this->callback) {
+                        call_user_func($this->callback, $object, $input[0]);
+                    }
+                }
+
+                $p[] = $input[0];
+            } catch (Exception $e) {
+                $cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
+            }
+        }
+
+        if ($this->createTemplate) {
+            $input = p("input-number");
+            $input->attr("name", $field);
+            $input->attr("value", $this->default[$field]);
+
+            $p[] = $input[0];
+
+            $this->c_tpl[] = $input[0];
+
+            $this->setAttribute("c-tpl", $this->c_tpl);
+
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
+        }
+
+        return $p;
+    }
+
     public function number($field = null): InputCollection
     {
         return $this->input($field)->type("number");

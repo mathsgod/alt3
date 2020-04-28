@@ -1,17 +1,9 @@
 <template>
-  <el-select v-model="localValue" placeholder="Select">
-    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-  </el-select>
+    <el-input-number v-model="localValue" v-bind="$attrs"></el-input-number>
 </template>
 <script>
 export default {
-  props: {
-    options: {
-      type: Array,
-      default() {
-        return [];
-      }
-    },
+    props: {
     value: {}
   },
   data() {
@@ -27,5 +19,5 @@ export default {
       this.$emit("input", this.localValue);
     }
   }
-};
+}
 </script>

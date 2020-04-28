@@ -70994,6 +70994,116 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var DatePicker = (component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"82e79c62-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/InputNumber.vue?vue&type=template&id=2f280dc4&
+var InputNumbervue_type_template_id_2f280dc4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('el-input-number',_vm._b({model:{value:(_vm.localValue),callback:function ($$v) {_vm.localValue=$$v},expression:"localValue"}},'el-input-number',_vm.$attrs,false))}
+var InputNumbervue_type_template_id_2f280dc4_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/InputNumber.vue?vue&type=template&id=2f280dc4&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/InputNumber.vue?vue&type=script&lang=js&
+//
+//
+//
+/* harmony default export */ var InputNumbervue_type_script_lang_js_ = ({
+  props: {
+    value: {}
+  },
+  data: function data() {
+    return {
+      localValue: this.value
+    };
+  },
+  watch: {
+    value: function value() {
+      this.localValue = this.value;
+    },
+    localValue: function localValue() {
+      this.$emit("input", this.localValue);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/InputNumber.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_InputNumbervue_type_script_lang_js_ = (InputNumbervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/InputNumber.vue
+
+
+
+
+
+/* normalize component */
+
+var InputNumber_component = Object(componentNormalizer["a" /* default */])(
+  src_InputNumbervue_type_script_lang_js_,
+  InputNumbervue_type_template_id_2f280dc4_render,
+  InputNumbervue_type_template_id_2f280dc4_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var InputNumber = (InputNumber_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"82e79c62-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Select3.vue?vue&type=template&id=390f62ac&
+var Select3vue_type_template_id_390f62ac_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('el-select',{attrs:{"placeholder":"Select"},model:{value:(_vm.localValue),callback:function ($$v) {_vm.localValue=$$v},expression:"localValue"}},_vm._l((_vm.options),function(item){return _c('el-option',{key:item.value,attrs:{"label":item.label,"value":item.value}})}),1)}
+var Select3vue_type_template_id_390f62ac_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Select3.vue?vue&type=template&id=390f62ac&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Select3.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+/* harmony default export */ var Select3vue_type_script_lang_js_ = ({
+  props: {
+    options: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    value: {}
+  },
+  data: function data() {
+    return {
+      localValue: this.value
+    };
+  },
+  watch: {
+    value: function value() {
+      this.localValue = this.value;
+    },
+    localValue: function localValue() {
+      this.$emit("input", this.localValue);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/Select3.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Select3vue_type_script_lang_js_ = (Select3vue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/Select3.vue
+
+
+
+
+
+/* normalize component */
+
+var Select3_component = Object(componentNormalizer["a" /* default */])(
+  src_Select3vue_type_script_lang_js_,
+  Select3vue_type_template_id_390f62ac_render,
+  Select3vue_type_template_id_390f62ac_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var Select3 = (Select3_component.exports);
 // EXTERNAL MODULE: ./node_modules/vue-register-element/dist/main.js
 var main = __webpack_require__("dfce");
 var main_default = /*#__PURE__*/__webpack_require__.n(main);
@@ -72207,7 +72317,11 @@ Vue.use(element_ui_common_default.a, {
   size: "small"
 });
 
-Vue.component("date-picker", DatePicker); //var Vue = window.Vue;
+Vue.component("date-picker", DatePicker);
+
+Vue.component("input-number", InputNumber);
+
+Vue.component("select3", Select3); //var Vue = window.Vue;
 
 
 
