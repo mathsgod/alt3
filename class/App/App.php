@@ -56,10 +56,6 @@ class App extends \R\App
 
         //-- CONFIG.INI
         $user_config = $this->config;
-        //system config
-        $pi = $this->pathInfo();
-        $file = $pi["system_root"] . "/config.ini";
-        $this->config = parse_ini_file($file, true);
 
         //user config
         foreach ($user_config as $n => $v) {
@@ -170,9 +166,6 @@ class App extends \R\App
         $translate = Yaml::parseFile(dirname(__DIR__, 2) . "/translate.yml");
         $translate = $translate[$this->user->language];
         $this->translate = $translate;
-
-
-
 
 
         ///-------------
@@ -308,7 +301,7 @@ class App extends \R\App
 
     public function login(string $username, string $password, string $code = null): bool
     {
-        
+
         //check AuthLock
         if ($this->config["user"]["auth-lockout"]) {
             if (AuthLock::IsLock()) {
@@ -324,7 +317,7 @@ class App extends \R\App
         }
 
 
-        
+
         if ($this->config["user"]["2-step verification"]) {
             $need_check = true;
             if ($setting = $user->setting()) {

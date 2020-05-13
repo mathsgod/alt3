@@ -93,7 +93,7 @@ class Module
         }
 
         if ($this->show_create) {
-            if (self::$_app->allowAction("C", $this->name)) {
+            if (self::$_app->allowAction("C", $this->class)) {
                 $link = new NavItem();
                 $link->label = $this->translate("Add");
                 $link->link = $this->name . "/ae";
