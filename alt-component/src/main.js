@@ -2,7 +2,8 @@
 var Vue = window.Vue;
 import Element from 'element-ui';
 import "element-ui/lib/theme-chalk/index.css";
-Vue.use(Element, { size: "small" });
+import locale from 'element-ui/lib/locale/lang/en';
+Vue.use(Element, { size: "small", locale });
 
 import DatePicker from "./DatePicker.vue";
 Vue.component("date-picker", DatePicker);
