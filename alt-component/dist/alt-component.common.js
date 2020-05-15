@@ -74655,7 +74655,9 @@ var _i18n = new vue_i18n_esm({
 
 });
 
+window.i18n = _i18n;
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(element_ui_common_default.a, {
+  size: "small",
   i18n: function i18n(key, value) {
     return _i18n.t(key, value);
   }

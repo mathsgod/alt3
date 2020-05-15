@@ -20,12 +20,13 @@ const messages = {
 const i18n = new VueI18n({
     locale: 'en', // set locale
     messages, // set locale messages
-})
+});
+window.i18n = i18n;
 
 Vue.use(Element, {
+    size: "small",
     i18n: (key, value) => i18n.t(key, value)
 });
-
 
 import DatePicker from "./DatePicker.vue";
 Vue.component("date-picker", DatePicker);

@@ -1,7 +1,6 @@
-<script src="//unpkg.com/vue"></script>
-<script src="//unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
-<script src="//unpkg.com/element-ui"></script>
-<script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+<!-- script src="//unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+<script src="//unpkg.com/element-ui"></script-->
+<!--script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script -->
 
 <div id="app">
 
@@ -12,11 +11,12 @@
 </div>
 
 <script>
-    ELEMENT.locale(ELEMENT.lang.en)
+
     new Vue({
         el: "#app",
         data: {
-            items: []
+            value: "",
+            options: []
         }
     });
 

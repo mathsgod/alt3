@@ -22,43 +22,21 @@
 
   alt-component
   <div id="div1">
-    <form method="POST">
-      <date-picker value="2020-04-23" name="date1" required></date-picker>
-      <hr />
-      <select3 :options="selectOptions" name="select3"></select3>
-      <div v-text="selectValue"></div>
-
-
-      <hr />
-
-      <input-number name="number1"></input-number>
-
-
-      <button type="submit" class="btn btn-xs btn-primary">submit</button>
-    </form>
-
-    <hr />
-
-    <el-form :model="ruleForm" label-width="120px" class="demo-ruleForm">
-      <el-form-item label="Activity name" prop="name">
-        <el-input name="input1" required></el-input>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary">Create</el-button>
-      </el-form-item>
-
-    </el-form>
-
-
+    <el-select v-model="value" placeholder="Select">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+      </el-option>
+    </el-select>
 
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      i18n.locale="zh";
       var vm = new Vue({
         el: "#div1",
         data: {
+          value:"",
+          options:[],
           selectOptions: [{
             value: 'Option1 value',
             label: 'Option1'
