@@ -1,9 +1,31 @@
-//import Vue from 'vue';
-var Vue = window.Vue;
+import Vue from 'vue';
+import VueI18n from 'vue-i18n'
 import Element from 'element-ui';
+
 import "element-ui/lib/theme-chalk/index.css";
-import locale from 'element-ui/lib/locale/lang/en';
-Vue.use(Element, { size: "small", locale });
+import enLocale from 'element-ui/lib/locale/lang/en';
+import zhLocale from 'element-ui/lib/locale/lang/zh-TW';
+
+Vue.use(VueI18n);
+
+const messages = {
+    en: {
+        ...enLocale // Or use `Object.assign({ message: 'hello' }, enLocale)`
+    },
+    zh: {
+        ...zhLocale // Or use `Object.assign({ message: '你好' }, zhLocale)`
+    }
+}
+// Create VueI18n instance with options
+const i18n = new VueI18n({
+    locale: 'en', // set locale
+    messages, // set locale messages
+})
+
+Vue.use(Element, {
+    i18n: (key, value) => i18n.t(key, value)
+});
+
 
 import DatePicker from "./DatePicker.vue";
 Vue.component("date-picker", DatePicker);

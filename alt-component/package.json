@@ -11,6 +11,7 @@
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.17.6",
     "vue-register-element": "git+https://github.com/mathsgod/VueRegisterElement.git",
     "vue-select2": "git+https://github.com/mathsgod/vue-select2.git"
   },
