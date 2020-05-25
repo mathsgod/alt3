@@ -21,16 +21,16 @@ class SystemValue_ae extends ALT\Page
 
     public function get()
     {
-        //$this->addLib("ace");
         $obj = $this->object();
 
         $data = [];
         $data["name"] = $obj->name;
-        foreach ($this->app->config["language"] as $v => $l) {
+
+        foreach ($this->app->languages() as $l) {
             if ($obj->name) {
-                $data["value"][$v] = (string) SystemValue::_($obj->name, $v);
+                $data["value"][$l] = (string) SystemValue::_($obj->name, $l);
             } else {
-                $data["value"][$v] = "";
+                $data["value"][$l] = "";
             }
         }
 
@@ -41,12 +41,16 @@ class SystemValue_ae extends ALT\Page
             $mv->add("Name")->input("name")->required();
         }
 
-
-        foreach ($this->app->config["language"] as $v => $l) {
-            $mv->add("Value " . $l)->textarea("value[$v]"); //->attr("is", "ace");
+        foreach ($this->app->languages() as $v) {
+            $mv->add("Value " . $v)->textarea("value[$v]"); //->attr("is", "ace");
         }
 
 
-        $this->write($this->createForm($mv));
+        $f = $this->createForm($mv);
+        if ($obj->systemvalue_id) {
+            $f->addHidden("name", $obj->name);
+        }
+
+        $this->write($f);
     }
 }

@@ -15,19 +15,17 @@ class SystemValue_list extends App\Page
         $rt->Order("name", "asc");
         $rt->add("Name", "name")->ss();
 
-        foreach ($this->app->config["system"]["language"] as $v => $l) {
-            $rt->add($l, "value_$v");
+        foreach ($this->app->languages() as $v) {
+            $rt->add($v, "value_$v");
         }
 
         $this->write($rt);
     }
     public function ds($rt)
     {
-        $rt->source = SystemValue::Query(
-            ["language" => "en"]
-        );
+        $rt->source = SystemValue::Query(["language" => "en"]);
 
-        foreach ($this->app->config["system"]["language"] as $v => $l) {
+        foreach ($this->app->languages() as $v) {
             $rt->add("value_$v", function ($obj) use ($v) {
                 return nl2br(SystemValue::_($obj->name, $v));
             })->type = "html";

@@ -709,4 +709,19 @@ class App extends \R\App
 
         return $ui;
     }
+
+    public function languages(): array
+    {
+
+        $languages = array_keys($this->config["system"]["language"]);
+        $languages = $languages ?? [];
+
+        if ($lang = $this->config["language"]["value"]) {
+            $languages = array_merge($languages, $lang);
+        }
+
+        $languages = array_unique($languages);
+
+        return $languages;
+    }
 }
