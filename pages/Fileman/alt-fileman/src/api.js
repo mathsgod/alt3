@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import Vue from 'vue';
 export default class API {
 
     constructor(server, token) {
@@ -8,7 +9,7 @@ export default class API {
     }
 
     async listAllDirecotry(path) {
-        let resp = await window.Vue.gql.query(this.getAPIServer(), {
+        let resp = await Vue.gql.query(this.getAPIServer(), {
             listAllDirectory: {
                 __args: {
                     path: path
@@ -67,7 +68,7 @@ export default class API {
     }
 
     async renameDirectory(oldname, newname) {
-        let resp = await window.Vue.gql.mutation(this.getAPIServer(), {
+        let resp = await Vue.gql.mutation(this.getAPIServer(), {
             renameDirectory: {
                 __args: {
                     oldname: oldname,
@@ -81,7 +82,7 @@ export default class API {
 
     async renameFile(oldname, newname) {
         console.log("renameFile", oldname, newname);
-        let resp = await window.Vue.gql.mutation(this.getAPIServer(), {
+        let resp = await Vue.gql.mutation(this.getAPIServer(), {
             renameFile: {
                 __args: {
                     oldname: oldname,
@@ -97,7 +98,7 @@ export default class API {
     }
 
     async removeFile(filename) {
-        let resp = await window.Vue.gql.mutation(this.getAPIServer(), {
+        let resp = await Vue.gql.mutation(this.getAPIServer(), {
             removeFile: {
                 __args: {
                     filename: filename
@@ -110,7 +111,7 @@ export default class API {
     }
 
     async removeDirectory(pathname) {
-        let resp = await window.Vue.gql.mutation(this.getAPIServer(), {
+        let resp = await Vue.gql.mutation(this.getAPIServer(), {
             removeDirectory: {
                 __args: {
                     pathname: pathname
@@ -124,7 +125,7 @@ export default class API {
 
     async createDirectory(pathname) {
         console.log("create directory", pathname);
-        let resp = await window.Vue.gql.mutation(this.getAPIServer(), {
+        let resp = await Vue.gql.mutation(this.getAPIServer(), {
             createDirectory: {
                 __args: {
                     pathname: pathname
@@ -138,7 +139,7 @@ export default class API {
     }
 
     async listDirectory(path) {
-        let resp = await window.Vue.gql.query(this.getAPIServer(), {
+        let resp = await Vue.gql.query(this.getAPIServer(), {
             listDirectory: {
                 __args: {
                     path: path
@@ -156,7 +157,7 @@ export default class API {
     }
 
     async listFile(path) {
-        let resp = await window.Vue.gql.query(this.getAPIServer(), {
+        let resp = await Vue.gql.query(this.getAPIServer(), {
             listFile: {
                 __args: {
                     path: path

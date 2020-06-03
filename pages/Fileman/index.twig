@@ -1,14 +1,23 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
-<script src="{{system_base}}/pages/Fileman/alt-fileman/dist/fileman.umd.js"></script>
-<link rel="stylesheet" href="{{system_base}}/pages/Fileman/alt-fileman/dist/fileman.css">
+<html>
 
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="{{system_base}}/pages/Fileman/alt-fileman/dist/fileman.umd.js"></script>
+    <link rel="stylesheet" href="{{system_base}}/pages/Fileman/alt-fileman/dist/fileman.css">
 
-<div id="div1">
-    <a-fileman></a-fileman>
-</div>
-<script>
-    Vue.component("a-fileman", window.fileman.default);
-    var vm = new Vue({
-        el: "#div1",
-    });
-</script>
+</head>
+
+<body>
+
+    <div id="div1">
+        <a-fileman></a-fileman>
+    </div>
+    <script>
+        Vue.component("a-fileman", window.fileman.default);
+        var vm = new Vue({
+            el: "#div1",
+        });
+    </script>
+</body>
+
+</html>

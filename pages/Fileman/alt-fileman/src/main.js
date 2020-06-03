@@ -1,6 +1,6 @@
-//import Vue from 'vue';
+import Vue from 'vue';
 //window.Vue = Vue;
-//Vue.config.productionTip = false;
+Vue.config.productionTip = false;
 
 import $ from "jquery";
 window.$ = $;
@@ -22,12 +22,15 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 window.Swal = Swal;
 
 import GQL from './vue-gql.js';
-window.Vue.use(GQL);
+Vue.use(GQL);
 
 import App from './App.vue';
 
 import VueResource from 'vue-resource';
-window.Vue.use(VueResource);
+Vue.use(VueResource);
+
+import VJstree from "vue-jstree";
+
 /*
 //Vue.config.productionTip = false;
 //Vue.use(VueResource);

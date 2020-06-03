@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "001e503ce17233ed54a8a17c14d65d19",
+    "content-hash": "889fa3c220d6ff2cd02db04aaef2b5ed",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -440,11 +440,11 @@
         },
         {
             "name": "mathsgod/hostlink-fileman",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/hostlink-fileman.git",
-                "reference": "dec46c370828316b915338f22ec2dfa57be6a1cd"
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../hostlink-fileman",
+                "reference": "5e96543202377f2abebd9cb0e542962f97c0c29a"
             },
             "require": {
                 "firebase/php-jwt": "^5.0",
@@ -468,7 +468,10 @@
                 }
             ],
             "description": "hostlink filemanager",
-            "time": "2020-04-23T04:38:08+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "mathsgod/html",
@@ -3194,7 +3197,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mathsgod/hostlink-fileman": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

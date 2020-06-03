@@ -108,7 +108,6 @@
 </template>
 
 <script>
-import VJstree from "vue-jstree";
 import UploadFileDialog from "./UploadFileDialog";
 import API from "./api";
 import FileListView from "./FileListView";
@@ -120,8 +119,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 export default {
   name: "app",
   components: {
-    //  HelloWorld,
-    VJstree: VJstree,
+
     "upload-file-dialog": UploadFileDialog,
     "file-list-view": FileListView,
     "file-grid-view": FileGridView
@@ -152,6 +150,7 @@ export default {
 
     if (!this.token) {
       alert("token not found");
+      return;
     }
 
     try {

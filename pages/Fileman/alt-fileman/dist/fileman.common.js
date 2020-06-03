@@ -17126,6 +17126,13 @@ module.exports = store.inspectSource;
 
 /***/ }),
 
+/***/ "8bbf":
+/***/ (function(module, exports) {
+
+module.exports = require("vue");
+
+/***/ }),
+
 /***/ "90e3":
 /***/ (function(module, exports) {
 
@@ -27951,6 +27958,10 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
+// EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
+var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
+var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
+
 // EXTERNAL MODULE: ./node_modules/jquery/dist/jquery.js
 var jquery = __webpack_require__("1157");
 var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery);
@@ -28722,6 +28733,7 @@ var jwt_decode_lib_default = /*#__PURE__*/__webpack_require__.n(jwt_decode_lib);
 
 
 
+
 var api_API = /*#__PURE__*/function () {
   function API(server, token) {
     _classCallCheck(this, API);
@@ -28741,7 +28753,7 @@ var api_API = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return window.Vue.gql.query(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.query(this.getAPIServer(), {
                   listAllDirectory: {
                     __args: {
                       path: path
@@ -28907,7 +28919,7 @@ var api_API = /*#__PURE__*/function () {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return window.Vue.gql.mutation(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.mutation(this.getAPIServer(), {
                   renameDirectory: {
                     __args: {
                       oldname: oldname,
@@ -28946,7 +28958,7 @@ var api_API = /*#__PURE__*/function () {
               case 0:
                 console.log("renameFile", oldname, newname);
                 _context6.next = 3;
-                return window.Vue.gql.mutation(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.mutation(this.getAPIServer(), {
                   renameFile: {
                     __args: {
                       oldname: oldname,
@@ -28993,7 +29005,7 @@ var api_API = /*#__PURE__*/function () {
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return window.Vue.gql.mutation(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.mutation(this.getAPIServer(), {
                   removeFile: {
                     __args: {
                       filename: filename
@@ -29030,7 +29042,7 @@ var api_API = /*#__PURE__*/function () {
             switch (_context8.prev = _context8.next) {
               case 0:
                 _context8.next = 2;
-                return window.Vue.gql.mutation(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.mutation(this.getAPIServer(), {
                   removeDirectory: {
                     __args: {
                       pathname: pathname
@@ -29074,7 +29086,7 @@ var api_API = /*#__PURE__*/function () {
               case 0:
                 console.log("create directory", pathname);
                 _context9.next = 3;
-                return window.Vue.gql.mutation(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.mutation(this.getAPIServer(), {
                   createDirectory: {
                     __args: {
                       pathname: pathname
@@ -29117,7 +29129,7 @@ var api_API = /*#__PURE__*/function () {
             switch (_context10.prev = _context10.next) {
               case 0:
                 _context10.next = 2;
-                return window.Vue.gql.query(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.query(this.getAPIServer(), {
                   listDirectory: {
                     __args: {
                       path: path
@@ -29165,7 +29177,7 @@ var api_API = /*#__PURE__*/function () {
             switch (_context11.prev = _context11.next) {
               case 0:
                 _context11.next = 2;
-                return window.Vue.gql.query(this.getAPIServer(), {
+                return external_commonjs_vue_commonjs2_vue_root_Vue_default.a.gql.query(this.getAPIServer(), {
                   listFile: {
                     __args: {
                       path: path
@@ -35771,9 +35783,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 
 // CONCATENATED MODULE: ./src/main.js
-//import Vue from 'vue';
-//window.Vue = Vue;
-//Vue.config.productionTip = false;
+ //window.Vue = Vue;
+
+external_commonjs_vue_commonjs2_vue_root_Vue_default.a.config.productionTip = false;
 
 window.$ = jquery_default.a;
 
@@ -35787,10 +35799,10 @@ window.path = path_browserify_default.a;
 
 window.Swal = dist_sweetalert2_default.a;
 
-window.Vue.use(vue_gql);
+external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vue_gql);
 
 
-window.Vue.use(vue_resource_esm);
+external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vue_resource_esm);
 /*
 //Vue.config.productionTip = false;
 //Vue.use(VueResource);
