@@ -214,8 +214,11 @@ class RTResponse implements JsonSerializable
         $source = $this->filteredSource();
 
         if ($this->page) {
-            $source->limit([$this->page, $this->length]);
+            $source->limit($this->length);
+            $source->offset($this->length * ($this->page-1));
         }
+
+
 
         $data = [];
         foreach ($source as $obj) {
