@@ -1,6 +1,13 @@
 import Vue from 'vue';
-//window.Vue = Vue;
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
 Vue.config.productionTip = false;
+
+Vue.use(ElementUI, {
+  size: "mini"
+});
 
 import $ from "jquery";
 window.$ = $;
@@ -30,6 +37,7 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
 import VJstree from "vue-jstree";
+Vue.component("v-jstree", VJstree);
 
 /*
 //Vue.config.productionTip = false;

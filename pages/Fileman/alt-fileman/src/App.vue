@@ -3,24 +3,27 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-3">
-          <div>
-            <button class="btn btn-info btn-sm" @click.prevent="onClickCreateFolder">
-              <i class="fa fa-fw fa-plus"></i> Create
-            </button>
-            <button class="btn btn-warning btn-sm" @click.prevent="onClickRenameFolder">
-              <i class="fa fa-fw fa-pen"></i> Rename
-            </button>
-            <button
-              class="btn btn-danger btn-sm"
-              @click.prevent="onClickRemoveFolder"
-              :disabled="!canDeleteFolder()"
-            >
-              <i class="fa fa-fw fa-times"></i> Delete
-            </button>
-            <button class="btn btn-info btn-sm" @click.prevent="onClickRefreshFolder">
-              <i class="fa fa-fw fa-sync"></i> Refresh
-            </button>
-          </div>
+          <el-row>
+            <el-button-group>
+              <el-button @click="onClickCreateFolder" size="small">
+                <i class="fa fa-fw fa-plus"></i> Create
+              </el-button>
+              <el-button @click.prevent="onClickRenameFolder" size="small">
+                <i class="fa fa-fw fa-pen"></i> Rename
+              </el-button>
+              <el-button
+                @click.prevent="onClickRemoveFolder"
+                :disabled="!canDeleteFolder()"
+                size="small"
+              >
+                <i class="fa fa-fw fa-times"></i> Delete
+              </el-button>
+              <el-button @click.prevent="onClickRefreshFolder" size="small">
+                <i class="fa fa-fw fa-sync"></i> Refresh
+              </el-button>
+            </el-button-group>
+          </el-row>
+
           <div style="overflow: auto">
             <v-jstree
               ref="tree1"
@@ -34,43 +37,41 @@
           </div>
         </div>
         <div class="col">
-          <div>
-            <button class="btn btn-info btn-sm" @click="onClickAddFile()">
-              <i class="fa fa-fw fa-plus"></i> Add files
-            </button>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label
-                class="btn btn-info btn-sm"
-                @click="fileViewMode='list'"
-                :class="{active:fileViewMode=='list'}"
-              >
-                <input type="radio" name="fileViewMode" />
-                <i class="fa fa-fw fa-list"></i>
-              </label>
-              <label
-                class="btn btn-info btn-sm"
-                @click="fileViewMode='grid'"
-                :class="{active:fileViewMode=='grid'}"
-              >
-                <input type="radio" name="fileViewMode" />
-                <i class="fa fa-fw fa-th"></i>
-              </label>
-            </div>
-            <button
-              class="btn btn-info btn-sm"
-              @click="onClickDownloadFiles()"
-              :disabled="selectedFiles.length==0"
-            >
-              <i class="fa fa-fw fa-download"></i> Download files
-            </button>
-            <button
-              class="btn btn-danger btn-sm"
-              @click="onClickDeleteFiles()"
-              :disabled="selectedFiles.length==0"
-            >
-              <i class="fa fa-fw fa-times"></i> Delete files
-            </button>
-          </div>
+          <el-row>
+            <el-col>
+              <el-button-group>
+                <el-button size="small" @click="onClickAddFile()">
+                  <i class="fa fa-fw fa-plus"></i> Add files
+                </el-button>
+
+                <el-button
+                  size="small"
+                  @click="onClickDownloadFiles()"
+                  :disabled="selectedFiles.length==0"
+                >
+                  <i class="fa fa-fw fa-download"></i> Download files
+                </el-button>
+                <el-button
+                  type="danger"
+                  size="small"
+                  @click="onClickDeleteFiles()"
+                  :disabled="selectedFiles.length==0"
+                >
+                  <i class="fa fa-fw fa-times"></i> Delete files
+                </el-button>
+
+                <el-radio-group size="small" v-model="fileViewMode">
+                  <el-radio-button label="list">
+                    <i class="fa fa-fw fa-list"></i>
+                  </el-radio-button>
+                  <el-radio-button label="grid">
+                    <i class="fa fa-fw fa-th"></i>
+                  </el-radio-button>
+                </el-radio-group>
+
+              </el-button-group>
+            </el-col>
+          </el-row>
           <file-list-view
             ref="fileListView"
             v-if="fileViewMode=='list'"
@@ -119,13 +120,16 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 export default {
   name: "app",
   components: {
-
     "upload-file-dialog": UploadFileDialog,
     "file-list-view": FileListView,
     "file-grid-view": FileGridView
   },
   data() {
     return {
+      props: {
+        label: "name",
+        isLeaf: "isLeaf"
+      },
       token: "",
       payload: {},
       files: [],
@@ -172,6 +176,30 @@ export default {
     }
   },
   methods: {
+    getTreeItem2(arr) {
+      var items = [];
+      for (var a of arr) {
+        var item = {};
+        item.name = a.name;
+        item.pathname = a.pathname;
+        items.push(item);
+      }
+      return items;
+    },
+    async loadNode(node, resolve) {
+      if (node.level === 0) {
+        return resolve([{ name: "/", pathname: "/", isLeaf: false }]);
+      }
+      let data = await this.api.listDirectory(node.data.pathname);
+      data = data.map(d => {
+        return {
+          name: d.name,
+          pathname: d.pathname,
+          isLeaf: false
+        };
+      });
+      return resolve(data);
+    },
     canDeleteFolder() {
       var node = this.getSelectedNode();
       if (!node) return false;
@@ -377,6 +405,7 @@ export default {
           let folders = await this.api.listAllDirecotry(path);
           console.log(folders);
           children = this.getTreeItem(folders);
+          console.log("children", children);
         } catch (e) {
           alert(e);
         }

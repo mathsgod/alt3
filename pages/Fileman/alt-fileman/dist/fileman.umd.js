@@ -28083,12 +28083,12 @@ var e = {
 window.jsonToGraphQLQuery = lib["jsonToGraphQLQuery"];
 window.VariableType = lib["VariableType"];
 /* harmony default export */ var vue_gql = (e);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b3422018-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=909652c4&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b3422018-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=7840c46e&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"app"}},[_c('div',{staticClass:"container-fluid"},[_c('div',{staticClass:"row"},[_c('div',{staticClass:"col-md-3"},[_c('div',[_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickCreateFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-plus"}),_vm._v(" Create ")]),_c('button',{staticClass:"btn btn-warning btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickRenameFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-pen"}),_vm._v(" Rename ")]),_c('button',{staticClass:"btn btn-danger btn-sm",attrs:{"disabled":!_vm.canDeleteFolder()},on:{"click":function($event){$event.preventDefault();return _vm.onClickRemoveFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete ")]),_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){$event.preventDefault();return _vm.onClickRefreshFolder($event)}}},[_c('i',{staticClass:"fa fa-fw fa-sync"}),_vm._v(" Refresh ")])]),_c('div',{staticStyle:{"overflow":"auto"}},[_c('v-jstree',{ref:"tree1",attrs:{"data":_vm.items1,"show-checkbox":"","allow-batch":"","whole-row":"","async":_vm.asyncLoad},on:{"item-click":_vm.onClickDirectory}})],1)]),_c('div',{staticClass:"col"},[_c('div',[_c('button',{staticClass:"btn btn-info btn-sm",on:{"click":function($event){return _vm.onClickAddFile()}}},[_c('i',{staticClass:"fa fa-fw fa-plus"}),_vm._v(" Add files ")]),_c('div',{staticClass:"btn-group btn-group-toggle",attrs:{"data-toggle":"buttons"}},[_c('label',{staticClass:"btn btn-info btn-sm",class:{active:_vm.fileViewMode=='list'},on:{"click":function($event){_vm.fileViewMode='list'}}},[_c('input',{attrs:{"type":"radio","name":"fileViewMode"}}),_c('i',{staticClass:"fa fa-fw fa-list"})]),_c('label',{staticClass:"btn btn-info btn-sm",class:{active:_vm.fileViewMode=='grid'},on:{"click":function($event){_vm.fileViewMode='grid'}}},[_c('input',{attrs:{"type":"radio","name":"fileViewMode"}}),_c('i',{staticClass:"fa fa-fw fa-th"})])]),_c('button',{staticClass:"btn btn-info btn-sm",attrs:{"disabled":_vm.selectedFiles.length==0},on:{"click":function($event){return _vm.onClickDownloadFiles()}}},[_c('i',{staticClass:"fa fa-fw fa-download"}),_vm._v(" Download files ")]),_c('button',{staticClass:"btn btn-danger btn-sm",attrs:{"disabled":_vm.selectedFiles.length==0},on:{"click":function($event){return _vm.onClickDeleteFiles()}}},[_c('i',{staticClass:"fa fa-fw fa-times"}),_vm._v(" Delete files ")])]),(_vm.fileViewMode=='list')?_c('file-list-view',{ref:"fileListView",attrs:{"api":_vm.api,"files":_vm.files},on:{"select-file":_vm.onSelectFile,"download-file":_vm.downloadFile,"remove-file":_vm.removeFile,"selected-files":_vm.onSelectedFiles,"rename-file":_vm.renameFile}}):_vm._e(),(_vm.fileViewMode=='grid')?_c('file-grid-view',{attrs:{"api":_vm.api,"files":_vm.files},on:{"select-file":_vm.onSelectFile,"download-file":_vm.downloadFile,"remove-file":_vm.removeFile}}):_vm._e()],1)]),_vm._m(0)]),_c('upload-file-dialog',{ref:"upload_file_dialog",attrs:{"api":_vm.api},on:{"files-uploaded":_vm.reloadFilesContent}})],1)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('footer',{staticClass:"main-footer unselectable"},[_c('div',{staticClass:"float-right d-none d-sm-inline"},[_vm._v("1.0.0")]),_c('strong',[_vm._v(" Hostlink fileman 著作權 © 2020 "),_c('a',{attrs:{"href":"https://www.hostlink.com.hk","target":"_blank"}},[_vm._v("HostLink")]),_vm._v(". ")]),_vm._v(" 版權所有. ")])}]
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=909652c4&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=7840c46e&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
 var es_array_iterator = __webpack_require__("e260");
@@ -28263,10 +28263,6 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-// EXTERNAL MODULE: ./node_modules/vue-jstree/dist/vue-jstree.js
-var vue_jstree = __webpack_require__("d3c8");
-var vue_jstree_default = /*#__PURE__*/__webpack_require__.n(vue_jstree);
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"b3422018-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/UploadFileDialog.vue?vue&type=template&id=c899b930&
 var UploadFileDialogvue_type_template_id_c899b930_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"modal",attrs:{"id":"exampleModal","tabindex":"-1","role":"dialog","aria-labelledby":"exampleModalLabel","aria-hidden":"true"}},[_c('div',{staticClass:"modal-dialog modal-dialog-centered modal-lg",attrs:{"role":"document"}},[_c('div',{staticClass:"modal-content"},[_vm._m(0),_c('div',{staticClass:"modal-body"},[_c('table',{staticClass:"table table-sm table-hover"},[_vm._m(1),_c('tbody',_vm._l((_vm.items),function(item,key){return _c('tr',{key:key},[_c('td',[_c('button',{staticClass:"btn btn-sm btn-danger",on:{"click":function($event){$event.preventDefault();_vm.items=_vm.items.filter(function (i){ return i!=item; })}}},[_c('i',{staticClass:"fa fa-fw fa-times"})])]),_c('td',{domProps:{"textContent":_vm._s(item.file.name)}}),_c('td',{domProps:{"textContent":_vm._s(item.file.size)}}),_c('td',[_c('div',{staticClass:"progress"},[_c('div',{staticClass:"progress-bar progress-bar-striped",class:_vm.getProgressClass(item),style:(_vm.getProgressStyle(item)),attrs:{"role":"progressbar"}})])])])}),0)]),_c('div',{staticClass:"dropzone",attrs:{"id":"dropzone"},on:{"drop":function($event){return _vm.dropFile($event)},"dragover":function($event){$event.preventDefault();},"click":_vm.clickDrop}},[_vm._m(2)])]),_c('div',{staticClass:"modal-footer"},[_c('button',{staticClass:"btn btn-sm btn-secondary",attrs:{"type":"button","data-dismiss":"modal"}},[_vm._v("Cancel")]),_c('button',{staticClass:"btn btn-sm btn-primary",attrs:{"type":"button","disabled":this.items.length==0},on:{"click":function($event){$event.preventDefault();return _vm.uploadFile($event)}}},[_c('i',{staticClass:"fa fa-fw fa-upload"}),_vm._v(" Upload ")])])])])])}
 var UploadFileDialogvue_type_template_id_c899b930_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"modal-header"},[_c('h5',{staticClass:"modal-title",attrs:{"id":"exampleModalLabel"}},[_vm._v("Upload files...")]),_c('button',{staticClass:"close",attrs:{"type":"button","data-dismiss":"modal","aria-label":"Close"}},[_c('span',{attrs:{"aria-hidden":"true"}},[_vm._v("×")])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('thead',[_c('tr',[_c('th'),_c('th',[_vm._v("Name")]),_c('th',[_vm._v("Size")]),_c('th',{staticClass:"col-md-1"})])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"message"},[_c('i',{staticClass:"fa fa-fw fa-cloud-upload-alt"}),_vm._v(" Drag & Drop here or click ")])}]
@@ -33521,12 +33517,9 @@ var FileGridView_component = normalizeComponent(
 
 
 
-
 /* harmony default export */ var Appvue_type_script_lang_js_ = ({
   name: "app",
   components: {
-    //  HelloWorld,
-    VJstree: vue_jstree_default.a,
     "upload-file-dialog": UploadFileDialog,
     "file-list-view": FileListView,
     "file-grid-view": FileGridView
@@ -33563,33 +33556,38 @@ var FileGridView_component = normalizeComponent(
               _this.source = url.searchParams.get("source");
               _this.type = url.searchParams.get("type");
 
-              if (!_this.token) {
-                alert("token not found");
+              if (_this.token) {
+                _context.next = 7;
+                break;
               }
 
-              _context.prev = 5;
+              alert("token not found");
+              return _context.abrupt("return");
+
+            case 7:
+              _context.prev = 7;
               _this.payload = jwt_decode_lib_default()(_this.token);
               console.log(_this.payload);
-              _context.next = 14;
+              _context.next = 16;
               break;
 
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context["catch"](5);
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](7);
               alert(_context.t0);
               return _context.abrupt("return");
 
-            case 14:
+            case 16:
               _this.api = new api_API(_this.payload.api, _this.token);
               _this.elementId = url.searchParams.get("id");
               _this.init_value = url.searchParams.get("value");
 
-            case 17:
+            case 19:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[5, 10]]);
+      }, _callee, null, [[7, 12]]);
     }))();
   },
   computed: {
@@ -34125,7 +34123,7 @@ var FileGridView_component = normalizeComponent(
                 console.log("async load value", value);
 
                 if (oriNode.data.value) {
-                  _context14.next = 21;
+                  _context14.next = 22;
                   break;
                 }
 
@@ -34139,15 +34137,16 @@ var FileGridView_component = normalizeComponent(
                 folders = _context14.sent;
                 console.log(folders);
                 children = _this14.getTreeItem(folders);
-                _context14.next = 16;
+                console.log("children", children);
+                _context14.next = 17;
                 break;
 
-              case 13:
-                _context14.prev = 13;
+              case 14:
+                _context14.prev = 14;
                 _context14.t0 = _context14["catch"](5);
                 alert(_context14.t0);
 
-              case 16:
+              case 17:
                 resolve([{
                   text: "/",
                   value: "/",
@@ -34158,31 +34157,31 @@ var FileGridView_component = normalizeComponent(
                   children: children,
                   opened: true
                 }]);
-                _context14.next = 19;
+                _context14.next = 20;
                 return _this14.api.listFile(path);
 
-              case 19:
+              case 20:
                 _this14.files = _context14.sent;
                 return _context14.abrupt("return");
 
-              case 21:
-                _context14.prev = 21;
-                _context14.next = 24;
+              case 22:
+                _context14.prev = 22;
+                _context14.next = 25;
                 return _this14.api.listDirectory(value);
 
-              case 24:
+              case 25:
                 data = _context14.sent;
                 console.log(data);
-                _context14.next = 32;
+                _context14.next = 33;
                 break;
 
-              case 28:
-                _context14.prev = 28;
-                _context14.t1 = _context14["catch"](21);
+              case 29:
+                _context14.prev = 29;
+                _context14.t1 = _context14["catch"](22);
                 alert(_context14.t1);
                 return _context14.abrupt("return");
 
-              case 32:
+              case 33:
                 data = data.map(function (d) {
                   return {
                     text: d.name,
@@ -34197,12 +34196,12 @@ var FileGridView_component = normalizeComponent(
                 console.log(data);
                 resolve(data);
 
-              case 35:
+              case 36:
               case "end":
                 return _context14.stop();
             }
           }
-        }, _callee14, null, [[5, 13], [21, 28]]);
+        }, _callee14, null, [[5, 14], [22, 29]]);
       }))();
     }
   }
@@ -35791,6 +35790,10 @@ if (typeof window !== 'undefined' && window.Vue) {
 /* harmony default export */ var vue_resource_esm = (vue_resource_esm_plugin);
 
 
+// EXTERNAL MODULE: ./node_modules/vue-jstree/dist/vue-jstree.js
+var vue_jstree = __webpack_require__("d3c8");
+var vue_jstree_default = /*#__PURE__*/__webpack_require__.n(vue_jstree);
+
 // CONCATENATED MODULE: ./src/main.js
  //window.Vue = Vue;
 
@@ -35812,6 +35815,8 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vue_gql);
 
 
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vue_resource_esm);
+
+external_commonjs_vue_commonjs2_vue_root_Vue_default.a.component("v-jstree", vue_jstree_default.a);
 /*
 //Vue.config.productionTip = false;
 //Vue.use(VueResource);
