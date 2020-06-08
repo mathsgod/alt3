@@ -90,6 +90,7 @@ class RTResponse implements JsonSerializable
 
     public function addEdit()
     {
+        $that=$this;
         $c = new Column();
         $c->title = "";
         $c->type = "html";
@@ -97,7 +98,17 @@ class RTResponse implements JsonSerializable
         $c->name = "__edit__";
         $c->className[] = "text-center";
         $c->width = "1px";
-        $c->descriptor[] = function ($obj) {
+        $c->descriptor[] = function ($obj)use($that) {
+            if(is_array($obj)){
+                if($obj["canUpdate"]){
+                    $uri=$that->model."/".$obj[$that->key]."/v";
+                    $a = html("a")->class("btn btn-xs btn-warning text-white")->href($obj->uri("ae"));
+                    $a->i->class("fa fa-pencil-alt fa-fw");
+                    return $a;
+                }
+                return;
+            }
+
             if (!$obj->canUpdate()) {
                 return;
             }
@@ -111,6 +122,7 @@ class RTResponse implements JsonSerializable
 
     public function addView()
     {
+        $that=$this;
         $c = new Column();
         $c->title = "";
         $c->type = "html";
@@ -118,7 +130,17 @@ class RTResponse implements JsonSerializable
         $c->name = "__view__";
         $c->className[] = "text-center";
         $c->width = "1px";
-        $c->descriptor[] = function ($obj) {
+        $c->descriptor[] = function ($obj)use($that) {
+
+            if(is_array($obj)){
+                if($obj["canView"]){
+                    $uri=$that->model."/".$obj[$that->key]."/v";
+                    $a = html("a")->class("btn btn-xs btn-info")->href($uri);
+                    $a->i->class("fa fa-search fa-fw");
+                    return $a;
+                }
+                return ;
+            }
             if (!$obj->canRead()) {
                 return;
             }
@@ -141,6 +163,13 @@ class RTResponse implements JsonSerializable
         $c->width = "1px";
         $c->className[] = "text-center";
         $c->descriptor[] = function ($obj) {
+            if(is_array($obj)){
+                if($obj["canView"]){
+                    return $that->model."/".$obj[$that->key];
+                }
+                return ;
+            }
+
             if (!$obj->canDelete()) {
                 return;
             }
