@@ -101,8 +101,8 @@ class RTResponse implements JsonSerializable
         $c->descriptor[] = function ($obj)use($that) {
             if(is_array($obj)){
                 if($obj["canUpdate"]){
-                    $uri=$that->model."/".$obj[$that->key]."/v";
-                    $a = html("a")->class("btn btn-xs btn-warning text-white")->href($obj->uri("ae"));
+                    $uri=$that->model."/".$obj[$that->key]."/ae";
+                    $a = html("a")->class("btn btn-xs btn-warning text-white")->href($uri);
                     $a->i->class("fa fa-pencil-alt fa-fw");
                     return $a;
                 }
@@ -219,14 +219,17 @@ class RTResponse implements JsonSerializable
         }
 
 
-
         $data = [];
         foreach ($source as $obj) {
             $d = [];
 
             $d["__row__"] = $this->row->getData($obj);
 
-            $object_vars = get_object_vars($obj);
+            if (is_array($obj)) {
+                $object_vars = $obj;
+            } else {
+                $object_vars = get_object_vars($obj);
+            }
 
             foreach ($this->request["columns"] as $k => $c) {
                 try {
@@ -300,7 +303,7 @@ class RTResponse implements JsonSerializable
             } elseif ($column->sortCallback) {
                 $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
             } else {
-                $source->orderBy($o["name"] . " " . $o["dir"]);
+                $source->orderBy([$o["name"]=>$o["dir"]]);
             }
         }
 
