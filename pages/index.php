@@ -1,5 +1,4 @@
-
-<?
+<?php
 class _index extends R\Page
 {
     public function get()

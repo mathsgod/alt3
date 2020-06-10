@@ -1,5 +1,4 @@
-<?
-
+<?php
 use App\User;
 
 class System_example_datatables extends ALT\Page

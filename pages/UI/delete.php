@@ -1,5 +1,4 @@
-<?
-
+<?php
 class UI_delete extends App\Page
 {
 

@@ -1,5 +1,4 @@
-<?
-
+<?php
 class UserLog_truncate extends App\Page
 {
     public function get()

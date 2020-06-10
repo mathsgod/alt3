@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Type;
 
 use Exception;

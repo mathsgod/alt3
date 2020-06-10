@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App;
 
 class Node_Trans extends \Twig_Extensions_Node_Trans

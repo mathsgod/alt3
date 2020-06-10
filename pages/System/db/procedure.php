@@ -1,5 +1,4 @@
-<?
-class System_db_procedure extends ALT\Page
+<?phpclass System_db_procedure extends ALT\Page
 {
     public function get()
     {

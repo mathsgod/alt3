@@ -1,5 +1,4 @@
-<?
-
+<?php
 use App\EventLog;
 
 class EventLog_truncate extends App\Page

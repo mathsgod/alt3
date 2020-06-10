@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_example_grid extends ALT\GridPage
 {
     public function get()

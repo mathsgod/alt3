@@ -1,5 +1,4 @@
-<?
-use App\FTP;
+<?phpuse App\FTP;
 
 class Module_install extends ALT\Page
 {

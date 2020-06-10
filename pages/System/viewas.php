@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_viewas extends ALT\Page
 {
     public function get($user_id, $ref)

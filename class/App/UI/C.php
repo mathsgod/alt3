@@ -1,4 +1,4 @@
-<?
+<?php
 //column class for table
 namespace App\UI;
 

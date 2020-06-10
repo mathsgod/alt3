@@ -1,4 +1,4 @@
-<?
+<?php
 
 class _access_deny extends ALT\Page
 {

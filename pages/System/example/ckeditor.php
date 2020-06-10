@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_example_ckeditor extends ALT\Page
 {
     public function get()

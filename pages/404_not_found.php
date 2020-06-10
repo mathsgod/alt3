@@ -1,4 +1,4 @@
-<?
+<?php
 
 class _404_not_found extends ALT\Page
 {

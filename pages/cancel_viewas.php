@@ -1,4 +1,4 @@
-<?
+<?php
 
 class _cancel_viewas extends App\Page
 {

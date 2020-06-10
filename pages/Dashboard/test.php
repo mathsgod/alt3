@@ -1,5 +1,4 @@
-<?
-
+<?php
 
 
 class Dashboard_test extends ALT\Page

@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_example_alert extends ALT\Page
 {
     public function get()

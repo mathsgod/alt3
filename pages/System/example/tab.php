@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_example_tab extends ALT\Page
 {
     public function get()

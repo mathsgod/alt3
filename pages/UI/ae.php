@@ -1,5 +1,4 @@
-<?
-
+<?php
 class UI_ae extends ALT\Page
 {
 	public function post()

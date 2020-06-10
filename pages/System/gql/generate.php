@@ -1,5 +1,4 @@
-<?
-
+<?php
 
 class System_gql_generate extends ALT\Page
 {

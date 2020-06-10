@@ -47,8 +47,7 @@ class ACL extends Model
         $func = "_ACL_func_" . $this->acl_id;
         $eval = <<<EOT
 function {$func}(){
-    ?>{$this->code}<?
-}
+    ?>{$this->code}<?php}
 EOT;
         eval($eval);
 

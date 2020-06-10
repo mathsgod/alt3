@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\UI;
 
 use P\HTMLDivElement;

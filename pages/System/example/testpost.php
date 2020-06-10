@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_example_testpost extends ALT\Page
 {
     public function post()

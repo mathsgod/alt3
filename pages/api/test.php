@@ -1,4 +1,4 @@
-<?
+<?php
 
 class api_test extends ALT\Page{
     public function get(){

@@ -1,5 +1,4 @@
-<?
-class System_example_createT extends ALT\Page
+<?phpclass System_example_createT extends ALT\Page
 {
     public function post()
     {

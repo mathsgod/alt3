@@ -1,5 +1,4 @@
-<?
-
+<?php
 class EventLog_badge extends App\Page
 {
     public function get()

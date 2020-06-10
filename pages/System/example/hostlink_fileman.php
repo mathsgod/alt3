@@ -1,5 +1,4 @@
-<?
-
+<?php
 use Firebase\JWT\JWT;
 
 class System_example_hostlink_fileman extends ALT\Page

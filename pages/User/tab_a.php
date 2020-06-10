@@ -1,5 +1,4 @@
-<?
-
+<?php
 class User_tab_a extends App\Page
 {
     public function get()

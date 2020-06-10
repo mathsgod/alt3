@@ -1,4 +1,4 @@
-<?
+<?php
 
 $db_scheme = json_decode(file_get_contents(__DIR__ . "/db_schema.json"), true);
 

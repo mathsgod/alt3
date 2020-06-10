@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\UI;
 
 class Element  extends \P\HTMLElement

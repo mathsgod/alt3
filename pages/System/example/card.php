@@ -1,5 +1,4 @@
-<?
-
+<?php
 class System_example_card extends ALT\Page
 {
     public function get()

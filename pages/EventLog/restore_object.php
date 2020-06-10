@@ -1,5 +1,4 @@
-<?
-
+<?php
 class EventLog_restore_object extends App\Page
 {
     public function get()
