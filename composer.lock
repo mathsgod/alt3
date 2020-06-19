@@ -513,17 +513,11 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/p-query.git",
-                "reference": "8a736df1566cd8befca174960a61f4f52c405937"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/p-query/mathsgod-p-query-2.2.1-ba0f39.zip",
-                "reference": "8a736df1566cd8befca174960a61f4f52c405937",
-                "shasum": "8e4a5da71c2c9fbd0b8584647008c58ec36ecc43"
+                "reference": "e87629052414cf54e1a807061d345473559de81c"
             },
             "require": {
                 "php": ">=7.0",
@@ -541,8 +535,13 @@
                     "function/function.php"
                 ]
             },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
+            },
             "license": [
-                "proprietary"
+                "MIT"
             ],
             "authors": [
                 {
@@ -550,8 +549,8 @@
                     "email": "mathsgod@yahoo.com"
                 }
             ],
-            "description": "Raymond php html library",
-            "time": "2019-12-06T10:03:03+00:00"
+            "description": "Using jQuery liked method to parse html by using php",
+            "time": "2020-06-19T02:44:34+00:00"
         },
         {
             "name": "mathsgod/r",
