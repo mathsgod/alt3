@@ -8,14 +8,16 @@ class System_alter_table_column_utf8 extends App\Page
             foreach ($table as $t) {
                 foreach ($this->app->db->query("describe `$t`") as $row) {
                     if (strtolower(substr($row["Type"], 0, 7)) == "varchar" || strtolower($row["Type"]) == "text" || strtolower($row["Type"]) == "longtext") {
-                        $this->alert->info("ALTER TABLE  `$t` CHANGE COLUMN `{$row[Field]}` `{$row[Field]}` {$row[Type]} NULL DEFAULT NULL;");
+                        $field = $row["Field"];
+                        $type = $row["Type"];
+                        $sql = "ALTER TABLE  `$t` CHANGE COLUMN `{$field}` `{$field}` {$type} NULL DEFAULT NULL;";
+                        $this->alert->info($sql);
                         try {
-                            $this->app->db->exec("ALTER TABLE  `$t` CHANGE COLUMN `{$row[Field]}` `{$row[Field]}` {$row[Type]} NULL DEFAULT NULL;");
+                            $this->app->db->exec($sql);
                         } catch (Exception $e) {
-                            $this->alert->error($e->getMessage());
+                            $this->alert->danger($e->getMessage());
                         }
                     }
-
                 }
             }
         }
