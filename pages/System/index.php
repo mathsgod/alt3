@@ -9,6 +9,7 @@ class System_index extends ALT\Page
 
         $list = html("ul")->class("list-group");
         $list->li->class("list-group-item")->a->href("System/composer")->text("Composer");
+        $list->li->class("list-group-item")->a->href("System/alter_table_column_utf8")->text("Alter table column");
         $list->li->class("list-group-item")->a->href("System/alter_table_utf8")->text("Alter table charset");
         $list->li->class("list-group-item")->a->href('System/tlscheck')->text("Check TLS version");
         $list->li->class("list-group-item")->a->href("System/db_process")->text("Show DB Process");
