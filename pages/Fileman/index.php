@@ -35,7 +35,7 @@ class Fileman_index extends App\Page
         $payload = [
             "iat" => time(),
             "exp" => time() + 3600,
-            "root" =>  $document_root . "/uploads",
+            "root" =>  $document_root . $config["basepath"],
             "api" => $this->app->base_path . "/Fileman/api/",
             "url" => $config["basepath"]
         ];
