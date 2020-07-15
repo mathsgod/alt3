@@ -1,13 +1,20 @@
 directive @hasRole on FIELD_DEFINITION
 scalar JSON
 
+type Query{
+    me:Me
+    credentialRequestOptions(username:String!):String
+    UserGroup(usergroup_id:Int!):UserGroup
+    UserGroups:[UserGroup]
+    test:String
+}
+
 type Mutation{
-    
     login(username:String!,password:String!,code:String):Me
     loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
     forgotPassword(username:String!,email:String!):Boolean
-    updateMyInfo(first_name:String!,last_name:String,phone:String,email:String!):Me @hasRole(role:[Administrators,Power Users,Users])
+    updateMyInfo(data:MyInfoInput):Boolean @hasRole(role:[Administrators,Power Users,Users])
     resetPassword(new_password:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     updateFavoriteSequence(id:[Int!]!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     addFavorite(label:String!,link:String):Boolean @hasRole(role:[Administrators,Power Users,Users])
@@ -19,19 +26,23 @@ type Mutation{
     sidebarNavRemoveClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
 }
 
-type Query{
-    me:Me
-    credentialRequestOptions(username:String!):String
-    UserGroup(usergroup_id:Int!):UserGroup
-    UserGroups:[UserGroup]
-    test:String
+input MyInfoInput{
+    first_name:String
+    last_name:String
+    phone:String
+    email:String
 }
+
+
+
 
 type Me{
     user_id:Int
     username:String
     first_name:String
     last_name:String
+    phone:String
+    email:String
     group:[UserGroup]
     credentialCreationOptions:String
     registrationWebAuthn(attestion:String!):Boolean

@@ -1,7 +1,7 @@
 <script src="{{composer_base}}/vendor/mathsgod/r-webauthn/dist/main.js"></script>
 
-<div class="row">
-    <div class="col-md-3" id="div1">
+<div class="row" id="div1">
+    <div class="col-md-3">
 
         <div class="card card-primary card-outline">
             <div class="card-body box-profile">
@@ -13,111 +13,125 @@
 
                 <p class="text-muted text-center">{{usergroup|join(',',' and ')}}</p>
 
-                <button class="btn btn-primary btn-block" @click="onResetPassword">{{'Reset passsword'|trans}}</button>
+                <button class="btn btn-primary btn-block"
+                    @click="resetDialogVisible=true">{{'Reset passsword'|trans}}</button>
                 <a class="btn btn-primary btn-block" href="User/2step">{{'2 step verfication'|trans}}</a>
                 <a class="btn btn-primary btn-block" href="User/2step_whitelist">2 step verfication ip white list</a>
                 <button class="btn btn-primary btn-block" @click="createWebAuthn">Web Authentication</button>
             </div>
             <!-- /.card-body -->
         </div>
+
+        <el-dialog title="Reset password" :visible.sync="resetDialogVisible">
+            <el-form ref="form" :model="form" method="POST" label-width="auto">
+                <el-form-item label="New password" prop="password" :rules="[
+                    {required:true,trigger:'change'},
+                    {min:6}
+                ]">
+                    <el-input v-model="form.password" name="password" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="Retype password" prop="password2" :rules="[
+                    {validator:validatePass2,trigger:'blue'}
+                ]">
+                    <el-input v-model="form.password2" show-password></el-input>
+                </el-form-item>
+
+
+            </el-form>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button type="success" icon="fa fa-check" @click="onSubmit"> Submit</el-button>
+            </span>
+        </el-dialog>
     </div>
 
     <div class="col">
-        {{user_update_box|raw}}
+        <card primary outline>
+            <card-body>
+                <el-form label-width="auto" :model="userForm" ref="userForm" v-loading="userFormLoading">
+                    <el-form-item label="First name" prop="first_name" :rules="[{required:true,trigger:'change'}]">
+                        <el-input v-model="userForm.first_name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Last name" prop="last_name">
+                        <el-input v-model="userForm.last_name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Phone" prop="phone">
+                        <el-input v-model="userForm.phone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Email" prop="email" :rules="[{required:true,trigger:'change'}]">
+                        <el-input v-model="userForm.email"></el-input>
+                    </el-form-item>
+                </el-form>
+            </card-body>
+            <card-footer>
+                <el-button icon="fa fa-check" type="success" @click="onSubmitUserForm"> Submit</el-button>
+            </card-footer>
+        </card>
         {{userlog|raw}}
         {{eventlog|raw}}
+
     </div>
 </div>
-
-<template id="reset-password">
-    <div>
-        <form ref="form1">
-            <div class="form-group">
-                <label class="col-form-label">New password</label>
-                <input class="form-control" type="password" id="p1" required v-model="password" />
-            </div>
-            <div class="form-group">
-                <label class="col-form-label">Retype password</label>
-                <input class="form-control" type="password" id="p2" required />
-            </div>
-        </form>
-
-    </div>
-</template>
-
-<script>
-
-    var resetPasswordDialog;
-    document.addEventListener("DOMContentLoaded", () => {
-        resetPasswordDialog = new VueDialog({
-            el: document.getElementById("reset-password"),
-            title: "Reset password",
-            init() {
-                $(this.$refs.form1).validate();
-
-                $("#p2").rules("add", {
-                    equalTo: "#p1"
-                });
-            },
-            data() {
-                return {
-                    password: ""
-                };
-            }, buttons: {
-                submit: {
-                    label: "Submit",
-                    className: "btn btn-success",
-                    async callback(v) {
-                        if (!$(this.$refs.form1).valid()) {
-                            return false;
-                        }
-
-                        var resp = await this.$gql.mutation("api", {
-                            resetPassword: {
-                                __args: {
-                                    new_password: this.password
-                                }
-                            }
-                        });
-                        resp = resp.data;
-                        if (resp.error) {
-                            Swal.fire({
-                                type: 'error',
-                                position: 'top-end',
-                                toast: true,
-                                showConfirmButton: false,
-                                timer: 3000,
-                                title: resp.error.message
-                            });
-
-                            return;
-                        }
-                        if (resp.data.resetPassword) {
-                            Swal.fire({
-                                type: "success",
-                                title: "Password updated",
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
-                        }
-
-                    }
-                }
-            }
-        });
-    });
-
-
-
-</script>
-
 
 <script>
     var vm = new Vue({
         el: "#div1",
+        data: {
+            resetDialogVisible: false,
+            form: {},
+            userForm: {},
+            userFormLoading: true
+        },
+        async created() {
+
+            var resp = await this.$app.query({
+                me: {
+                    first_name: true,
+                    last_name: true,
+                    phone: true,
+                    email: true
+                }
+            });
+            this.userForm = resp.data.me;
+            this.userFormLoading = false;
+        },
         methods: {
-            onResetPassword() {
-                resetPasswordDialog.open();
+            async onSubmitUserForm() {
+                await this.$refs.userForm.validate();
+                await this.$app.updateMyInfo(this.userForm);
+                await this.$message("User info updated");
+
+            },
+            validatePass2(rule, value, callback) {
+                if (value === '') {
+                    callback(new Error('Please input the password again'));
+                } else if (value !== this.form.password) {
+                    callback(new Error('Two inputs don\'t match!'));
+                } else {
+                    callback();
+                }
+            },
+            async onSubmit() {
+                try {
+                    await this.$refs.form.validate();
+
+                    var resp = await this.$gql.mutation("api", {
+                        resetPassword: {
+                            __args: {
+                                new_password: this.form.password
+                            }
+                        }
+                    });
+
+                    resp = resp.data;
+                    if (resp.data.resetPassword) {
+                        this.form = {};
+                        this.$message("password updated");
+                        this.resetDialogVisible = false;
+                    }
+                } catch (e) {
+
+                }
             },
             createWebAuthn() {
                 this.$gql.query("api", {

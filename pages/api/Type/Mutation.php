@@ -127,7 +127,7 @@ class Mutation
     public function updateMyInfo($root, $args, $app)
     {
         $user = $app->user;
-        $user->bind($args);
+        $user->bind($args["data"]);
         $user->save();
         return $app;
     }

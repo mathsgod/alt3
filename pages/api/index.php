@@ -5,6 +5,11 @@ use GraphQL\Error\Error;
 
 class api_index extends R\Page
 {
+    public function get()
+    {
+        $this->write("api");
+    }
+
     public function post()
     {
         $directiveResolvers = [
@@ -40,7 +45,7 @@ class api_index extends R\Page
 
         $loader->addPsr4("Type\\", __DIR__ . DIRECTORY_SEPARATOR . "Type");
         $loader->register(true);
-        
+
         try {
             $schema = Schema::Build(file_get_contents(__DIR__ . "/schema.gql"), $this->app);
         } catch (Exception $e) {
