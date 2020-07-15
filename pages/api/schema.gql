@@ -33,9 +33,6 @@ input MyInfoInput{
     email:String
 }
 
-
-
-
 type Me{
     user_id:Int
     username:String
@@ -47,11 +44,29 @@ type Me{
     credentialCreationOptions:String
     registrationWebAuthn(attestion:String!):Boolean
     jwt:String
+    UserLog(limit:Int=10):[UserLog]
+    EventLog(limit:Int=10):[EventLog]
+}
+
+type UserLog{
+    login_time:String
+    logout_time:String
+    ip:String
+    result:String
 }
 
 type UserGroup{
     name:String
     addUser(user_id:Int!):Boolean
     removeUser(user_id:Int!):Boolean
+}
+
+type EventLog{
+    eventlog_id:Int
+    class:String
+    object_id:Int
+    action:String
+    created_time:String
+
 }
 

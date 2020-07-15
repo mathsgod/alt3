@@ -39,9 +39,9 @@ class User_profile extends ALT\Page
         $this->data["usergroup"] = $this->app->user->UserGroup()->map(function ($ug) {
             return (string) $ug;
         });
-        $this->data["user_update_box"] = $this->getUpdateBox();
-        $this->data["userlog"] = $this->getUserLogBox();
-        $this->data["eventlog"] = $this->getUserActionBox();
+        //        $this->data["user_update_box"] = $this->getUpdateBox();
+        //      $this->data["userlog"] = $this->getUserLogBox();
+        //    $this->data["eventlog"] = $this->getUserActionBox();
         $this->data["composer_base"] = $this->app->pathinfo()["composer_base"];
     }
 

@@ -1,5 +1,9 @@
 <?php
+
 namespace Type;
+
+use App\UserLog;
+use App\EventLog;
 
 class Me
 {
@@ -20,5 +24,19 @@ class Me
         $user->credential = json_encode($weba->register(json_decode($args["attestion"])));
         $user->save();
         return true;
+    }
+
+    public function UserLog($user, $args, $app)
+    {
+        return UserLog::Query([
+            "user_id" => $user->user_id
+        ])->limit($args["limit"])->orderBy(["userlog_id" => "desc"]);
+    }
+
+    public function EventLog($user, $args, $app)
+    {
+        return EventLog::Query([
+            "user_id" => $user->user_id
+        ])->limit($args["limit"])->orderBy(["eventlog_id" => "desc"]);
     }
 }

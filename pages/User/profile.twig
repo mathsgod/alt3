@@ -45,10 +45,10 @@
         </el-dialog>
     </div>
 
-    <div class="col">
-        <card primary outline>
+    <div class="col-md-9">
+        <card primary outline :loading="loading">
             <card-body>
-                <el-form label-width="auto" :model="userForm" ref="userForm" v-loading="userFormLoading">
+                <el-form label-width="auto" :model="userForm" ref="userForm">
                     <el-form-item label="First name" prop="first_name" :rules="[{required:true,trigger:'change'}]">
                         <el-input v-model="userForm.first_name"></el-input>
                     </el-form-item>
@@ -67,8 +67,30 @@
                 <el-button icon="fa fa-check" type="success" @click="onSubmitUserForm"> Submit</el-button>
             </card-footer>
         </card>
-        {{userlog|raw}}
-        {{eventlog|raw}}
+
+        <card primary outline :loading="loading">
+            <card-header>User log</card-header>
+            <card-body>
+                <el-table :data="me.UserLog" size="mini">
+                    <el-table-column label="Login time" prop="login_time"></el-table-column>
+                    <el-table-column label="Logout time" prop="logout_time"></el-table-column>
+                    <el-table-column label="IP address" prop="ip"></el-table-column>
+                    <el-table-column label="Result" prop="result"></el-table-column>
+                </el-table>
+            </card-body>
+        </card>
+
+        <card primary outline :loading="loading" size="mini">
+            <card-header>Event log</card-header>
+            <card-body>
+                <el-table :data="me.EventLog">
+                    <el-table-column label="ID" prop="eventlog_id"></el-table-column>
+                    <el-table-column label="Class" prop="class"></el-table-column>
+                    <el-table-column label="Action" prop="action"></el-table-column>
+                    <el-table-column label="Created time" prop="created_time"></el-table-column>
+                </el-table>
+            </card-body>
+        </card>
 
     </div>
 </div>
@@ -80,7 +102,8 @@
             resetDialogVisible: false,
             form: {},
             userForm: {},
-            userFormLoading: true
+            loading: true,
+            me: {}
         },
         async created() {
 
@@ -89,11 +112,31 @@
                     first_name: true,
                     last_name: true,
                     phone: true,
-                    email: true
+                    email: true,
+                    UserLog: {
+                        login_time: true,
+                        logout_time: true,
+                        ip: true,
+                        result: true,
+                    },
+                    EventLog: {
+                        eventlog_id: true,
+                        class: true,
+                        object_id: true,
+                        action: true,
+                        created_time: true
+                    }
                 }
             });
-            this.userForm = resp.data.me;
-            this.userFormLoading = false;
+            this.me = resp.data.me;
+            this.userForm = {
+                first_name: resp.data.me.first_name,
+                last_name: resp.data.me.last_name,
+                phone: resp.data.me.phone,
+                email: resp.data.me.email
+            };
+
+            this.loading = false;
         },
         methods: {
             async onSubmitUserForm() {
