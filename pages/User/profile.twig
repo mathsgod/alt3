@@ -69,7 +69,7 @@
         </card>
 
         <card primary outline :loading="loading">
-            <card-header>User log</card-header>
+            <card-header title="User log"></card-header>
             <card-body>
                 <el-table :data="me.UserLog" size="mini">
                     <el-table-column label="Login time" prop="login_time"></el-table-column>
@@ -81,7 +81,7 @@
         </card>
 
         <card primary outline :loading="loading" size="mini">
-            <card-header>Event log</card-header>
+            <card-header title="Event log"></card-header>
             <card-body>
                 <el-table :data="me.EventLog">
                     <el-table-column label="ID" prop="eventlog_id"></el-table-column>

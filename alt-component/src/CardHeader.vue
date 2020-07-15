@@ -1,7 +1,8 @@
 <template>
   <div class="card-header">
     <slot></slot>
-    <slot name="title"></slot>
+    <slot name="title" v-if="!title"></slot>
+    <div class="card-title" v-else v-text="title"></div>
 
     <div class="card-tools">
       <slot name="tools"></slot>
@@ -27,6 +28,7 @@
 <script>
 export default {
   name: "card-header",
+  props: ["title"],
   data() {
     return {
       pinable: false,
