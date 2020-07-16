@@ -80,6 +80,7 @@ class Table extends HTMLTableElement
                 if ($getter instanceof \Closure) {
                     p($cell)->html(call_user_func_array($getter, [$obj, $k]));
                 } else {
+                    $cell->setAttribute("data-name",$getter);
                     p($cell)->text(Func::_($getter)->call($obj));
                 }
             }

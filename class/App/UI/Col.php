@@ -113,7 +113,7 @@ class Col extends HTMLElement
     {
         foreach ($this->cell as $cell) {
             if ($object = p($cell)->data("object")) {
-                $field = p($cell)->attr("data-field");
+                $field = p($cell)->attr("data-name");
                 $next_obj = \My\Func::_($field)->call($object);
                 if (is_object($next_obj)) {
                     $object = $next_obj;
