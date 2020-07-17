@@ -433,7 +433,7 @@ HTML
             $p[] = $textarea[0];
             $this->c_tpl[] = $textarea[0];
             $this->setAttribute("c-tpl", $this->c_tpl);
-            $p->on("change", function () {
+            p($textarea[0])->on("change", function () {
                 $this->setAttribute("c-tpl",  $this->c_tpl);
             });
         }
@@ -571,7 +571,7 @@ HTML
 
     public function ws($value = "pre")
     {
-        $this->css("white-space", $value);
+        p($this)->css("white-space", $value);
         return $this;
     }
 
