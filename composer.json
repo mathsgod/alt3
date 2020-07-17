@@ -33,7 +33,6 @@
     "require": {
         "php": ">=7.0",
         "mathsgod/r": "^3.0",
-        "mathsgod/r-db": "^3.1",
         "twig/twig": "^2.12",
         "firebase/php-jwt": "^5.0",
         "twig/extensions": "^1.5",
@@ -49,7 +48,8 @@
         "mathsgod/gql-php-generator": "^1.0",
         "mathsgod/r-webauthn": "^1.0",
         "mathsgod/date": "^1.0",
-        "mathsgod/hostlink-fileman": "^2.0"
+        "mathsgod/hostlink-fileman": "^2.0",
+        "mathsgod/r-db": "^3.5"
     },
     "require-dev": {
         "box/spout": "^2.7",
