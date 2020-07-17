@@ -61,7 +61,7 @@
         "kevinchappell/form-builder": "^3.4"
     },
     "suggest": {
-        "phpoffice/phpexcel": "phpoffice",
+        "phpoffice/phpspreadsheet": "phpoffice/phpspreadsheet",
         "phpunit/phpunit": "phpunit",
         "monolog/monolog": "Allows more advanced logging of the application flow",
         "corejavascript/typeahead.js": "fast and fully-featured autocomplete library"
