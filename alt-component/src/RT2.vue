@@ -413,7 +413,10 @@ export default {
           method: col.searchMethod
         });
       }
-      const params = window.$.param({ search });
+      const params = window.$.param({
+        _rt_request: 1,
+        search
+      });
 
       window.open(`${xlsx.url}?${params}`, "_blank");
     },

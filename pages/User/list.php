@@ -2,6 +2,7 @@
 
 use App\UI\RTResponse;
 use App\User;
+use R\Psr7\Request;
 
 class User_list extends App\Page
 {
@@ -49,10 +50,16 @@ class User_list extends App\Page
         return $rt;
     }
 
-    public function getXLSX($search)
+    public function getXLSX($request)
     {
-        outP($search);
+        outp($request);
+        die();
+
+        //$req->setDataSource(App\User::Query());
+
         
+        //outP($search);
+
 
         $xls = new App\XLSX(App\User::Query());
         $xls->add("Username", "username");

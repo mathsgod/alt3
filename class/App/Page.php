@@ -196,6 +196,11 @@ class Page extends \R\Page
             $request = $request->withQueryParams(["rt" => $rt]);
         }
 
+        if($request->getQueryParams()["_rt_request"]){
+            $rt = new UI\RTRequest($this->request);
+            $request = $request->withQueryParams(["request" => $rt]);
+        }
+
         if ($request->isAccept("text/html") && $request->getMethod() == "get") {
             $file = $route->file;
             $pi = pathinfo($file);
@@ -218,10 +223,14 @@ class Page extends \R\Page
 
         $content = "";
 
-
         if ($request->getQueryParams()["_rt"]) {
             return $response;
         }
+
+        if ($request->getQueryParams()["_rt_request"]) {
+            return $response;
+        }
+
 
         foreach ($request->getHeader("Accept") as $accept) {
             list($media,) = explode(",", $accept);
