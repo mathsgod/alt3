@@ -847,6 +847,35 @@
             "Extra": ""
         }
     ],
+    "DynamicPage": [
+        {
+            "Field": "dynamicpage_id",
+            "Type": "int(10) unsigned",
+            "Null": "NO",
+            "Key": "PRI",
+            "Default": null,
+            "Extra": "auto_increment"
+        },
+        {
+            "Field": "name",
+            "Type": "varchar(255)",
+            "Null": "NO",
+            "Key": "MUL",
+            "Default": null
+        },
+        {
+            "Field": "path",
+            "Type": "varchar(255)",
+            "Null": "YES",
+            "Default": null
+        },
+        {
+            "Field": "data",
+            "Type": "json",
+            "Null": "YES",
+            "Default": null
+        }
+    ],
     "UserLog": [
         {
             "Field": "userlog_id",

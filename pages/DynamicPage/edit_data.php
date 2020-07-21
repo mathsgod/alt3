@@ -5,7 +5,7 @@ class DynamicPage_edit_data extends ALT\Page
     public function post()
     {
 
-        
+
         $obj = $this->object();
         $obj->data = $_POST;
         $obj->save();
@@ -15,8 +15,7 @@ class DynamicPage_edit_data extends ALT\Page
     public function get()
     {
         $obj = $this->object();
-
-        $path = $this->app->document_root . "/pages/" . $obj->path;
+        $path = $this->app->document_root . "/" . $obj->path;
         $code = file_get_contents($path);
 
         $ext = new Twig\Dynamic\Extension();
