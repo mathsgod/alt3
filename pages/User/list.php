@@ -44,9 +44,7 @@ class User_list extends App\Page
         //$rt->selectable = true;
         $rt->cellUrl = "User";
 
-
-        $rt->addXLSX("XLSX", [$this, "getXLSX"]);
-
+        $rt->addDropdown("XLSX", [$this, "getXLSX"]);
 
         return $rt;
     }
@@ -54,9 +52,12 @@ class User_list extends App\Page
     public function getXLSX(RTRequest $request)
     {
         $request->setDataSource(App\User::Query());
-        $xls = new App\XLSX(App\User::Query());
+        $xls = new App\XLSX($request->data());
         $xls->add("Username", "username");
-        $xls->add("ID", "user_id");
+        $xls->add("First name", "first_name");
+        $xls->add("Last name", "last_name");
+        $xls->add("Phone", "phone");
+        $xls->add("email", "email");
         $xls->render();
     }
 

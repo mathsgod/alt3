@@ -1,7 +1,4 @@
 <?php
-
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
 class User_test extends App\Page
 {
     public $_a = [1, 2];
@@ -15,7 +12,7 @@ class User_test extends App\Page
 
     public function get()
     {
-        $xls = new App\XLSX(App\User::Query());
+        $xls = new App\XLSX(App\User::Query()->toArray());
         $xls->add("Username", "username");
         $xls->add("ID", "user_id");
         $xls->render();

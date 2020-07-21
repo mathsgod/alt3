@@ -17,9 +17,8 @@ class RT2 extends Element
 
     public $_page = null;
     public $buttons = [];
-    public $exports = [];
     public $order = [];
-    public $xlsx = [];
+    public $dropdown = [];
 
     public function __construct(\App\Page $page, array $config = [])
     {
@@ -99,10 +98,10 @@ class RT2 extends Element
         return $c;
     }
 
-    public function addXLSX(string $label = "XLSX", array $url)
+    public function addDropdown(string $label, array $url)
     {
         $url = (string) $url[0]->path() . "/" . $url[1];
-        $this->xlsx[] = ["label" => $label, "url" => $url];
+        $this->dropdown[] = ["label" => $label, "url" => $url];
     }
 
     public function __toString()
@@ -115,9 +114,8 @@ class RT2 extends Element
         $this->setAttribute(":page-length", $this->pageLength);
         $this->setAttribute(":selectable", $this->selectable ? "true" : "false");
         $this->setAttribute(":buttons", $this->buttons);
-        $this->setAttribute(":exports", $this->exports);
+        $this->setAttribute(":dropdown", $this->dropdown);
         $this->setAttribute(":order", $this->order);
-        $this->setAttribute(":xlsx", $this->xlsx);
         return parent::__toString();
     }
 

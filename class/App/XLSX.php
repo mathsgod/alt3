@@ -37,6 +37,8 @@ class XLSX
         $sheet = $ss->setActiveSheetIndex(0);
 
         $sheet->fromArray($this->columns->column("label")->all());
+        $sheet->getStyle('A1:' . $sheet->getHighestColumn() . '1')->getFont()->setBold(true);
+
 
         $i = 2;
         foreach ($this->source as $data) {
@@ -49,8 +51,13 @@ class XLSX
                     $row[] = var_get($data, $getter);
                 }
             }
+
             $sheet->fromArray($row, null, "A$i");
             $i++;
+        }
+
+        for ($i = 'A'; $i !=  $sheet->getHighestColumn(); $i++) {
+            $sheet->getColumnDimension($i)->setAutoSize(true);
         }
         return $ss;
     }
@@ -68,9 +75,10 @@ class XLSX
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
         header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-        header('Pragma: public'); // HTTP/1.0
+        header('Pragma: public'); // HTTP/1.0 
 
         $writer = IOFactory::createWriter($this->getSpreadsheet(), 'Xlsx');
         $writer->save('php://output');
+        die();
     }
 }

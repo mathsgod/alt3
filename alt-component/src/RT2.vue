@@ -94,7 +94,7 @@ table.rt > thead button.multiselect {
         </button>
       </div>
 
-      <div class="dropdown" v-if="hasExport()">
+      <!-- div class="dropdown" v-if="hasExport()">
         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
           Export
           <span class="caret"></span>
@@ -107,9 +107,9 @@ table.rt > thead button.multiselect {
             <a href="#" @click.prevent="exportFile('csv')">CSV</a>
           </li>
         </ul>
-      </div>
+      </div -->
 
-      <div class="dropdown" v-if="xlsx.length>0">
+      <div class="dropdown" v-if="dropdown.length>0">
         <el-dropdown>
           <el-button>
             Export
@@ -117,7 +117,7 @@ table.rt > thead button.multiselect {
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
-              v-for="(x,index) in xlsx"
+              v-for="(x,index) in dropdown"
               :key="index"
               v-text="x.label"
               @click.native="clickExport(x)"
@@ -170,15 +170,9 @@ export default {
         return [];
       }
     },
-    exports: {
+    dropdown: {
       type: Array,
       default: () => {
-        return [];
-      }
-    },
-    xlsx: {
-      type: Array,
-      default() {
         return [];
       }
     }
@@ -438,7 +432,7 @@ export default {
       eval(e);
     },
     hasExport() {
-      return this.exports.count > 0;
+      return this.export.count > 0;
     },
     exportFile(type) {
       this.local.draw++;

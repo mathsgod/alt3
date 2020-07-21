@@ -50,7 +50,8 @@
         "mathsgod/date": "^1.0",
         "mathsgod/hostlink-fileman": "^2.0",
         "mathsgod/r-db": "^3.5",
-        "mathsgod/php-util": "^1.0"
+        "mathsgod/php-util": "^1.0",
+        "phpoffice/phpspreadsheet": "^1.8"
     },
     "require-dev": {
         "box/spout": "^2.7",
@@ -59,8 +60,7 @@
         "sepia/po-parser": "^5.1",
         "ckeditor/ckeditor": "^4.13",
         "corejavascript/typeahead.js": "^1.3",
-        "kevinchappell/form-builder": "^3.4",
-        "phpoffice/phpspreadsheet": "^1.8"
+        "kevinchappell/form-builder": "^3.4"
     },
     "suggest": {
         "phpoffice/phpspreadsheet": "phpoffice/phpspreadsheet",
