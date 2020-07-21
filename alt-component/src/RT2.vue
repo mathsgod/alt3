@@ -109,6 +109,23 @@ table.rt > thead button.multiselect {
         </ul>
       </div>
 
+      <div class="dropdown" v-if="xlsx.length>0">
+        <el-dropdown>
+          <el-button>
+            Export
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="(x,index) in xlsx"
+              :key="index"
+              v-text="x.label"
+              @click.native="clickExport(x)"
+            ></el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
       <div class="btn-group">
         <button
           v-for="(button,index) in buttons | isBottomButton"
@@ -156,6 +173,12 @@ export default {
     exports: {
       type: Array,
       default: () => {
+        return [];
+      }
+    },
+    xlsx: {
+      type: Array,
+      default() {
         return [];
       }
     }
@@ -377,6 +400,23 @@ export default {
     }
   },
   methods: {
+    clickExport(xlsx) {
+      var search = [];
+      for (var col of this.columns) {
+        if (!this.local.search[col.name]) {
+          continue;
+        }
+
+        search.push({
+          name: col.name,
+          value: this.local.search[col.name],
+          method: col.searchMethod
+        });
+      }
+      const params = window.$.param({ search });
+
+      window.open(`${xlsx.url}?${params}`, "_blank");
+    },
     clearChecked(name) {
       //var d = [];
       this.storage.rows[name] = {};

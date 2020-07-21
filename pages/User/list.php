@@ -43,8 +43,24 @@ class User_list extends App\Page
         $rt->cellUrl = "User";
 
 
+        $rt->addXLSX("XLSX", [$this, "getXLSX"]);
+
+
         return $rt;
     }
+
+    public function getXLSX($search)
+    {
+        outP($search);
+        
+
+        $xls = new App\XLSX(App\User::Query());
+        $xls->add("Username", "username");
+        $xls->add("ID", "user_id");
+   //     $xls->render();
+    }
+
+
     public function get()
     {
 

@@ -19,6 +19,7 @@ class RT2 extends Element
     public $buttons = [];
     public $exports = [];
     public $order = [];
+    public $xlsx = [];
 
     public function __construct(\App\Page $page, array $config = [])
     {
@@ -98,6 +99,12 @@ class RT2 extends Element
         return $c;
     }
 
+    public function addXLSX(string $label = "XLSX", array $url)
+    {
+        $url = (string) $url[0]->path() . "/" . $url[1];
+        $this->xlsx[] = ["label" => $label, "url" => $url];
+    }
+
     public function __toString()
     {
         $this->setAttribute(":columns", $this->columns);
@@ -110,6 +117,7 @@ class RT2 extends Element
         $this->setAttribute(":buttons", $this->buttons);
         $this->setAttribute(":exports", $this->exports);
         $this->setAttribute(":order", $this->order);
+        $this->setAttribute(":xlsx", $this->xlsx);
         return parent::__toString();
     }
 
