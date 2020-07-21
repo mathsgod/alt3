@@ -3,7 +3,6 @@
 namespace App;
 
 use PHP\Util\Lists;
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -36,10 +35,12 @@ class XLSX
         // Create new Spreadsheet object
         $ss = new Spreadsheet();
         $sheet = $ss->setActiveSheetIndex(0);
+
         $sheet->fromArray($this->columns->column("label")->all());
 
         $i = 2;
         foreach ($this->source as $data) {
+
             $row = [];
             foreach ($this->columns->column("getter") as $getter) {
                 if (is_callable($getter)) {
@@ -51,13 +52,11 @@ class XLSX
             $sheet->fromArray($row, null, "A$i");
             $i++;
         }
-
         return $ss;
     }
 
     public function render()
     {
-
         // Redirect output to a client’s web browser (Xlsx)
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $this->filename . '"');

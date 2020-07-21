@@ -1,5 +1,6 @@
 <?php
 
+use App\UI\RTRequest;
 use App\UI\RTResponse;
 use App\User;
 use R\Psr7\Request;
@@ -50,21 +51,13 @@ class User_list extends App\Page
         return $rt;
     }
 
-    public function getXLSX($request)
+    public function getXLSX(RTRequest $request)
     {
-        outp($request);
-        die();
-
-        //$req->setDataSource(App\User::Query());
-
-        
-        //outP($search);
-
-
+        $request->setDataSource(App\User::Query());
         $xls = new App\XLSX(App\User::Query());
         $xls->add("Username", "username");
         $xls->add("ID", "user_id");
-   //     $xls->render();
+        $xls->render();
     }
 
 

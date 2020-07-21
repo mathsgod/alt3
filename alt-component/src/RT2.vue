@@ -401,13 +401,13 @@ export default {
   },
   methods: {
     clickExport(xlsx) {
-      var search = [];
+      var filter = [];
       for (var col of this.columns) {
         if (!this.local.search[col.name]) {
           continue;
         }
 
-        search.push({
+        filter.push({
           name: col.name,
           value: this.local.search[col.name],
           method: col.searchMethod
@@ -415,7 +415,7 @@ export default {
       }
       const params = window.$.param({
         _rt_request: 1,
-        search
+        filter
       });
 
       window.open(`${xlsx.url}?${params}`, "_blank");

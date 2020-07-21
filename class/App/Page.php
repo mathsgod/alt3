@@ -197,7 +197,7 @@ class Page extends \R\Page
         }
 
         if($request->getQueryParams()["_rt_request"]){
-            $rt = new UI\RTRequest($this->request);
+            $rt = new UI\RTRequest($request);
             $request = $request->withQueryParams(["request" => $rt]);
         }
 
