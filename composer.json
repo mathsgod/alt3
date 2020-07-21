@@ -58,7 +58,8 @@
         "sepia/po-parser": "^5.1",
         "ckeditor/ckeditor": "^4.13",
         "corejavascript/typeahead.js": "^1.3",
-        "kevinchappell/form-builder": "^3.4"
+        "kevinchappell/form-builder": "^3.4",
+        "phpoffice/phpspreadsheet": "^1.8"
     },
     "suggest": {
         "phpoffice/phpspreadsheet": "phpoffice/phpspreadsheet",

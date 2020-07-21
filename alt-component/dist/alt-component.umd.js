@@ -71209,9 +71209,9 @@ var objectSpread2 = __webpack_require__("5530");
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
 
-// CONCATENATED MODULE: ./node_modules/vue-i18n/dist/vue-i18n.esm.js
+// CONCATENATED MODULE: ../node_modules/vue-i18n/dist/vue-i18n.esm.js
 /*!
- * vue-i18n v8.17.6 
+ * vue-i18n v8.17.3 
  * (c) 2020 kazuya kawaguchi
  * Released under the MIT License.
  */
@@ -71260,18 +71260,8 @@ function error (msg, err) {
   }
 }
 
-var isArray = Array.isArray;
-
 function isObject (obj) {
   return obj !== null && typeof obj === 'object'
-}
-
-function isBoolean (val) {
-  return typeof val === 'boolean'
-}
-
-function isString (val) {
-  return typeof val === 'string'
 }
 
 var vue_i18n_esm_toString = Object.prototype.toString;
@@ -71320,10 +71310,6 @@ function remove (arr, item) {
       return arr.splice(index, 1)
     }
   }
-}
-
-function includes (arr, item) {
-  return !!~arr.indexOf(item)
 }
 
 var vue_i18n_esm_hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -71553,6 +71539,8 @@ var mixin = {
         self._localeWatcher();
         delete self._localeWatcher;
       }
+
+      self._i18n = null;
     });
   }
 };
@@ -71564,8 +71552,7 @@ var interpolationComponent = {
   functional: true,
   props: {
     tag: {
-      type: [String, Boolean],
-      default: 'span'
+      type: String
     },
     path: {
       type: String,
@@ -71602,7 +71589,7 @@ var interpolationComponent = {
         : params
     );
 
-    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
+    var tag = props.tag || 'span';
     return tag ? h(tag, data, children) : children
   }
 };
@@ -71665,7 +71652,7 @@ var numberComponent = {
   functional: true,
   props: {
     tag: {
-      type: [String, Boolean],
+      type: String,
       default: 'span'
     },
     value: {
@@ -71694,7 +71681,7 @@ var numberComponent = {
     var key = null;
     var options = null;
 
-    if (isString(props.format)) {
+    if (typeof props.format === 'string') {
       key = props.format;
     } else if (isObject(props.format)) {
       if (props.format.key) {
@@ -71705,7 +71692,7 @@ var numberComponent = {
       options = Object.keys(props.format).reduce(function (acc, prop) {
         var obj;
 
-        if (includes(numberFormatKeys, prop)) {
+        if (numberFormatKeys.includes(prop)) {
           return Object.assign({}, acc, ( obj = {}, obj[prop] = props.format[prop], obj ))
         }
         return acc
@@ -71722,14 +71709,11 @@ var numberComponent = {
       return slot ? slot(( obj = {}, obj[part.type] = part.value, obj.index = index, obj.parts = parts, obj )) : part.value
     });
 
-    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
-    return tag
-      ? h(tag, {
-        attrs: data.attrs,
-        'class': data['class'],
-        staticClass: data.staticClass
-      }, values)
-      : values
+    return h(props.tag, {
+      attrs: data.attrs,
+      'class': data['class'],
+      staticClass: data.staticClass
+    }, values)
   }
 };
 
@@ -71827,7 +71811,7 @@ function parseValue (value) {
   var args;
   var choice;
 
-  if (isString(value)) {
+  if (typeof value === 'string') {
     path = value;
   } else if (isPlainObject(value)) {
     path = value.path;
@@ -72400,7 +72384,7 @@ VueI18n.prototype._checkLocaleMessage = function _checkLocaleMessage (locale, le
           paths.pop();
         }
       });
-    } else if (isString(message)) {
+    } else if (typeof message === 'string') {
       var ret = htmlTagMatcher.test(message);
       if (ret) {
         var msg = "Detected HTML in message '" + message + "' of keypath '" + (paths.join('')) + "' at '" + locale + "'. Consider component interpolation with '<i18n>' to avoid XSS. See https://bit.ly/2ZqJzkp";
@@ -72518,7 +72502,7 @@ VueI18n.prototype._warnDefault = function _warnDefault (locale, key, result, vm,
   if (!isNull(result)) { return result }
   if (this._missing) {
     var missingRet = this._missing.apply(null, [locale, key, vm, values]);
-    if (isString(missingRet)) {
+    if (typeof missingRet === 'string') {
       return missingRet
     }
   } else {
@@ -72572,7 +72556,7 @@ VueI18n.prototype._interpolate = function _interpolate (
     /* istanbul ignore else */
     if (isPlainObject(message)) {
       ret = message[key];
-      if (!isString(ret)) {
+      if (typeof ret !== 'string') {
         if (false) {}
         return null
       }
@@ -72581,7 +72565,7 @@ VueI18n.prototype._interpolate = function _interpolate (
     }
   } else {
     /* istanbul ignore else */
-    if (isString(pathRet)) {
+    if (typeof pathRet === 'string') {
       ret = pathRet;
     } else {
       if (false) {}
@@ -72626,7 +72610,7 @@ VueI18n.prototype._link = function _link (
     // Remove the leading @:, @.case: and the brackets
     var linkPlaceholder = link.replace(linkPrefix, '').replace(bracketsMatcher, '');
 
-    if (includes(visitedLinkStack, linkPlaceholder)) {
+    if (visitedLinkStack.includes(linkPlaceholder)) {
       if (false) {}
       return ret
     }
@@ -72681,12 +72665,12 @@ VueI18n.prototype._render = function _render (message, interpolateMode, values, 
 
   // if interpolateMode is **not** 'string' ('row'),
   // return the compiled data (e.g. ['foo', VNode, 'bar']) with formatter
-  return interpolateMode === 'string' && !isString(ret) ? ret.join('') : ret
+  return interpolateMode === 'string' && typeof ret !== 'string' ? ret.join('') : ret
 };
 
 VueI18n.prototype._appendItemToChain = function _appendItemToChain (chain, item, blocks) {
   var follow = false;
-  if (!includes(chain, item)) {
+  if (!chain.includes(item)) {
     follow = true;
     if (item) {
       follow = item[item.length - 1] !== '!';
@@ -72713,11 +72697,9 @@ VueI18n.prototype._appendLocaleToChain = function _appendLocaleToChain (chain, l
 
 VueI18n.prototype._appendBlockToChain = function _appendBlockToChain (chain, block, blocks) {
   var follow = true;
-  for (var i = 0; (i < block.length) && (isBoolean(follow)); i++) {
+  for (var i = 0; (i < block.length) && (typeof follow === 'boolean'); i++) {
     var locale = block[i];
-    if (isString(locale)) {
-      follow = this._appendLocaleToChain(chain, locale, blocks);
-    }
+    follow = this._appendLocaleToChain(chain, locale, blocks);
   }
   return follow
 };
@@ -72740,7 +72722,7 @@ VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLoc
     var block = [start];
 
     // while any intervening block found
-    while (isArray(block)) {
+    while (Array.isArray(block)) {
       block = this._appendBlockToChain(
         chain,
         block,
@@ -72750,9 +72732,9 @@ VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLoc
 
     // last block defined by default
     var defaults;
-    if (isArray(fallbackLocale)) {
+    if (Array.isArray(fallbackLocale)) {
       defaults = fallbackLocale;
-    } else if (isObject(fallbackLocale)) {
+    } else if (fallbackLocale instanceof Object) {
       if (fallbackLocale['default']) {
         defaults = fallbackLocale['default'];
       } else {
@@ -72763,7 +72745,7 @@ VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLoc
     }
 
     // convert defaults to array
-    if (isString(defaults)) {
+    if (typeof defaults === 'string') {
       block = [defaults];
     } else {
       block = defaults;
@@ -72857,7 +72839,7 @@ VueI18n.prototype.i = function i (key, locale, values) {
   /* istanbul ignore if */
   if (!key) { return '' }
 
-  if (!isString(locale)) {
+  if (typeof locale !== 'string') {
     locale = this.locale;
   }
 
@@ -72889,7 +72871,7 @@ VueI18n.prototype._tc = function _tc (
 
 VueI18n.prototype.fetchChoice = function fetchChoice (message, choice) {
   /* istanbul ignore if */
-  if (!message && !isString(message)) { return null }
+  if (!message && typeof message !== 'string') { return null }
   var choices = message.split('|');
 
   choice = this.getChoiceIndex(choice, choices.length);
@@ -72969,24 +72951,10 @@ VueI18n.prototype.getDateTimeFormat = function getDateTimeFormat (locale) {
 
 VueI18n.prototype.setDateTimeFormat = function setDateTimeFormat (locale, format) {
   this._vm.$set(this._vm.dateTimeFormats, locale, format);
-  this._clearDateTimeFormat(locale, format);
 };
 
 VueI18n.prototype.mergeDateTimeFormat = function mergeDateTimeFormat (locale, format) {
   this._vm.$set(this._vm.dateTimeFormats, locale, merge(this._vm.dateTimeFormats[locale] || {}, format));
-  this._clearDateTimeFormat(locale, format);
-};
-
-VueI18n.prototype._clearDateTimeFormat = function _clearDateTimeFormat (locale, format) {
-  for (var key in format) {
-    var id = locale + "__" + key;
-
-    if (!this._dateTimeFormatters.hasOwnProperty(id)) {
-      continue
-    }
-
-    delete this._dateTimeFormatters[id];
-  }
 };
 
 VueI18n.prototype._localizeDateTime = function _localizeDateTime (
@@ -72999,20 +72967,11 @@ VueI18n.prototype._localizeDateTime = function _localizeDateTime (
   var _locale = locale;
   var formats = dateTimeFormats[_locale];
 
-  var chain = this._getLocaleChain(locale, fallback);
-  for (var i = 0; i < chain.length; i++) {
-    var current = _locale;
-    var step = chain[i];
-    formats = dateTimeFormats[step];
-    _locale = step;
-    // fallback locale
-    if (isNull(formats) || isNull(formats[key])) {
-      if (step !== locale && "production" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to '" + step + "' datetime formats from '" + current + "' datetime formats."));
-      }
-    } else {
-      break
-    }
+  // fallback locale
+  if (isNull(formats) || isNull(formats[key])) {
+    if (false) {}
+    _locale = fallback;
+    formats = dateTimeFormats[_locale];
   }
 
   if (isNull(formats) || isNull(formats[key])) {
@@ -73056,7 +73015,7 @@ VueI18n.prototype.d = function d (value) {
   var key = null;
 
   if (args.length === 1) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     } else if (isObject(args[0])) {
       if (args[0].locale) {
@@ -73067,10 +73026,10 @@ VueI18n.prototype.d = function d (value) {
       }
     }
   } else if (args.length === 2) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     }
-    if (isString(args[1])) {
+    if (typeof args[1] === 'string') {
       locale = args[1];
     }
   }
@@ -73115,20 +73074,11 @@ VueI18n.prototype._getNumberFormatter = function _getNumberFormatter (
   var _locale = locale;
   var formats = numberFormats[_locale];
 
-  var chain = this._getLocaleChain(locale, fallback);
-  for (var i = 0; i < chain.length; i++) {
-    var current = _locale;
-    var step = chain[i];
-    formats = numberFormats[step];
-    _locale = step;
-    // fallback locale
-    if (isNull(formats) || isNull(formats[key])) {
-      if (step !== locale && "production" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to '" + step + "' number formats from '" + current + "' number formats."));
-      }
-    } else {
-      break
-    }
+  // fallback locale
+  if (isNull(formats) || isNull(formats[key])) {
+    if (false) {}
+    _locale = fallback;
+    formats = numberFormats[_locale];
   }
 
   if (isNull(formats) || isNull(formats[key])) {
@@ -73184,7 +73134,7 @@ VueI18n.prototype.n = function n (value) {
   var options = null;
 
   if (args.length === 1) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     } else if (isObject(args[0])) {
       if (args[0].locale) {
@@ -73198,17 +73148,17 @@ VueI18n.prototype.n = function n (value) {
       options = Object.keys(args[0]).reduce(function (acc, key) {
           var obj;
 
-        if (includes(numberFormatKeys, key)) {
+        if (numberFormatKeys.includes(key)) {
           return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
         }
         return acc
       }, null);
     }
   } else if (args.length === 2) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     }
-    if (isString(args[1])) {
+    if (typeof args[1] === 'string') {
       locale = args[1];
     }
   }
@@ -73259,7 +73209,7 @@ Object.defineProperty(VueI18n, 'availabilities', {
 });
 
 VueI18n.install = install;
-VueI18n.version = '8.17.6';
+VueI18n.version = '8.17.3';
 
 /* harmony default export */ var vue_i18n_esm = (VueI18n);
 
