@@ -155,6 +155,7 @@ class RTResponse implements JsonSerializable
 
     public function addDel()
     {
+
         $c = new Column();
         $c->title = "";
         $c->type = "delete";
@@ -162,7 +163,8 @@ class RTResponse implements JsonSerializable
         $c->name = "__del__";
         $c->width = "1px";
         $c->className[] = "text-center";
-        $c->descriptor[] = function ($obj) {
+        $that = $this;
+        $c->descriptor[] = function ($obj) use ($that) {
             if (is_array($obj)) {
                 if ($obj["canView"]) {
                     return $that->model . "/" . $obj[$that->key];
