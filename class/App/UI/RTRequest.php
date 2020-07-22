@@ -30,7 +30,12 @@ class RTRequest
             switch ($filter["method"]) {
                 case "like":
                     $name = $filter["name"];
-                    $source->where("$name like :$name", [$name => "%".$filter["value"]."%"]);
+                    $source->where("$name like :$name", [$name => "%" . $filter["value"] . "%"]);
+                    break;
+                case "equal":
+                    $name = $filter["name"];
+                    $source->filter([$name => $filter["value"]]);
+                    break;
             }
         }
         return $source;
