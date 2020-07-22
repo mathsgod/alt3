@@ -101,10 +101,10 @@ class RT2 extends Element
     /**
      * @param array|string $url
      */
-    public function addDropdown(string $label, $url)
+    public function addDropdown(string $label, $url, array $param = [])
     {
         if (is_array($url)) {
-            $url = (string) $url[0]->path() . "/" . $url[1];
+            $url = (string) $url[0]->path() . "/" . $url[1] . "?" . http_build_query($param);
         }
 
         $this->dropdown[] = ["label" => $label, "url" => $url];

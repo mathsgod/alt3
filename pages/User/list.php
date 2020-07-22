@@ -16,19 +16,14 @@ class User_list extends App\Page
         $rt->addDel();
         $rt->add("Username", "username")->ss();
         $rt->add("User group", "usergroup_id")->searchMultiple(App\UserGroup::Query());
-        /*function ($obj) {
-            return $obj->UserGroup()->implode(",");
-        })->searchOption(App\UserGroup::find(), null, "usergroup_id")->searchCallback(function ($v) {
-            return ["user_id in (select user_id from UserList where usergroup_id=?)", $v];
-        });*/
         $rt->add("First name", "first_name")->ss();
         $rt->add("Last name", "last_name")->ss();
         $rt->add("Phone", "phone")->ss()->editable();
         $rt->add("Email", "email")->ss(); //->overflow("hidden");
         $rt->add("Status", "status")->sort()->searchOption(User::STATUS);
+
         //        $rt->add("Status", "Status()")->index("status")->sort()->searchOption(User::$_Status);
         // $rt->add("Expiry date", "expiry_date")->sort()->searchDateRange();
-        //$rt->add("Expiry date", "expiry_date")->sort()->searchDate();
         $rt->add("Join date", "join_date")->sort()->searchDate();
         $rt->add("Language", "language")->sort();
 
@@ -44,13 +39,17 @@ class User_list extends App\Page
         //$rt->selectable = true;
         $rt->cellUrl = "User";
 
-        $rt->addDropdown("XLSX", [$this, "getXLSX"]);
+        $rt->addDropdown("XLSX", [$this, "getXLSX"], $_GET);
         return $rt;
     }
 
     public function getXLSX(RTRequest $request)
     {
-        $request->setDataSource(App\User::Query());
+        $query = App\User::Query();
+        if ($_GET['t'] >= 0) {
+            $query->filter(["status" => $_GET["t"]]);
+        }
+        $request->setDataSource($query);
 
         $request->setSearchCallback("usergroup_id", function ($v) {
             $usergroup_id = implode(",", $v);
@@ -65,7 +64,6 @@ class User_list extends App\Page
         $xls->add("email", "email");
         $xls->render();
     }
-
 
     public function get()
     {

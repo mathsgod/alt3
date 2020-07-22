@@ -107,7 +107,7 @@ table.rt > thead button.multiselect {
             <a href="#" @click.prevent="exportFile('csv')">CSV</a>
           </li>
         </ul>
-      </div -->
+      </div-->
 
       <div class="dropdown" v-if="dropdown.length>0">
         <el-dropdown>
@@ -407,12 +407,21 @@ export default {
           method: col.searchMethod
         });
       }
+
+      var url = xlsx.url;
+      if (url.indexOf("?") === -1) {
+        url += "?";
+      } else {
+        url += "&";
+      }
+
       const params = window.$.param({
         _rt_request: 1,
         filter
       });
+      url += params;
 
-      window.open(`${xlsx.url}?${params}`, "_blank");
+      window.open(url, "_blank");
     },
     clearChecked(name) {
       //var d = [];
