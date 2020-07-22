@@ -51,6 +51,12 @@ class User_list extends App\Page
     public function getXLSX(RTRequest $request)
     {
         $request->setDataSource(App\User::Query());
+
+        $request->setSearchCallback("usergroup_id", function ($v) {
+            $usergroup_id = implode(",", $v);
+            return ["user_id in (select user_id from UserList where usergroup_id in ($usergroup_id))"];
+        });
+
         $xls = new App\XLSX($request->data());
         $xls->add("Username", "username");
         $xls->add("First name", "first_name");
