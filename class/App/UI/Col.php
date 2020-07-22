@@ -366,6 +366,7 @@ HTML
 
     public function ckeditor($field)
     {
+        $p = new \P\Query();
         $app = $this->page->app;
         $fileman_path = $app->base_path . "/Fileman/?token=";
 
@@ -391,7 +392,9 @@ HTML
 
         foreach ($this->cell as $cell) {
             try {
-                $textarea = p("textarea")->appendTo($cell);
+                $cke=new CKEditor();
+                $textarea=p($cke)->appendTo($cell);
+                
                 $textarea->attr("is", "ckeditor");
                 $textarea->attr('data-field', $field);
                 $textarea->attr('name', $field);
@@ -408,14 +411,10 @@ HTML
                         call_user_func($this->callback, $object, $textarea[0]);
                     }
                 }
-
-
-
                 $textarea->attr(":config", json_encode([
                     "filebrowserImageBrowseUrl" => $fileman_path . "&source=ckeditor&type=image",
                     "filebrowserBrowseUrl" => $fileman_path . "&source=ckeditor"
                 ]));
-
 
                 $p[] = $textarea[0];
             } catch (Exception $e) {

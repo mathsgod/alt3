@@ -1,17 +1,28 @@
 <?php
-class User_test extends App\Page
+class User_test extends ALT\Page
 {
-    public $_a = [1, 2];
-
-    public function post()
-    {
-
-        outp($_POST);
-        die();
-    }
-
     public function get()
     {
+
+        $this->addLib("ckeditor/ckeditor");
+        $e = $this->createE(["a" => "A", "b" => "B"]);
+
+        $ckeditor = $e->add("CKEDITOR 1")->ckeditor("a")[0];
+        $ckeditor->addConfig("customConfig", "https://cdn.hostlink.com.hk/ckeditor_config_height.js");
+
+
+        $ckeditor = $e->add("CKEDITOR 1")->ckeditor("b");
+        $config = json_decode($ckeditor->attr(":config"), true);
+        $config["customConfig"] = "https://cdn.hostlink.com.hk/ckeditor_config_height.js";
+        $ckeditor->attr(":config", json_encode($config));
+
+        $this->write($e);
+
+
+
+
+        return;
+
         $xls = new App\XLSX(App\User::Query()->toArray());
         $xls->add("Username", "username");
         $xls->add("ID", "user_id");

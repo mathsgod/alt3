@@ -38,8 +38,7 @@ export default {
     if (typeof window.CKEDITOR != "undefined") {
       var CKEDITOR = window.CKEDITOR;
       //var base = $("base").attr("href");
-      CKEDITOR.config = { ...CKEDITOR.config, ...this.config };
-      CKEDITOR.replace(this.$el);
+      CKEDITOR.replace(this.$el, this.config);
     }
   }
 };
