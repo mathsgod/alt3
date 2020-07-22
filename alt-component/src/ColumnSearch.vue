@@ -14,12 +14,20 @@
       v-model="search"
       @keyup.enter="doSearch()"
     />
-    <input
+    <el-date-picker
+      style="max-width:220px"
       v-if="searchable && searchType=='date'"
-      class="form-control form-control-sm search"
-      value
-      ref="search"
-    />
+      v-model="search"
+      type="daterange"
+      unlink-panels
+      range-separator="~"
+      start-placeholder="Start date"
+      end-placeholder="End date"
+      :picker-options="pickerOptions"
+      @change="doSearch()"
+      format="yyyy-MM-dd"
+      value-format="yyyy-MM-dd"
+    ></el-date-picker>
 
     <select
       v-if="searchable && searchType=='select' && !searchOptGroup"
@@ -31,55 +39,11 @@
       <option></option>
       <option v-for="(o,key) in searchOption" v-bind:value="o.value" v-text="o.label" :key="key"></option>
     </select>
-
-    <!-- select
-      v-if="searchable && searchType=='select' && searchOptGroup"
-      class="form-control form-control-sm search"
-      ref="search"
-      v-model="search"
-      v-on:change="doSearch()"
-    >
-      <option></option>
-      <optgroup v-for="(label,group) in searchOptGroup" v-bind:label="label" :key="group">
-        <option
-          v-for="(o,key) in searchOption"
-          v-bind:value="o.value"
-          v-text="o.label"
-          v-if="o.group==group"
-          :key="key"
-        ></option>
-      </optgroup>
-    </select -->
-
-    <!-- select
-      v-if="searchable && searchType=='multiselect'"
-      v-bind:multiple="searchMultiple"
-      class="form-control form-control-sm search"
-      ref="search"
-    >
-      <option v-if="!searchMultiple" value>None selected</option>
-
-      <option
-        v-if="!searchOptGroup"
-        v-for="o in searchOption"
-        v-bind:value="o.value"
-        v-text="o.label"
-      ></option>
-
-      <optgroup v-if="searchOptGroup" v-for="(label,group) in searchOptGroup" v-bind:label="label" :key="group">
-        <option
-          v-for="o in searchOption"
-          v-bind:value="o.value"
-          v-text="o.label"
-          v-if="o.group==group"
-        ></option>
-      </optgroup>
-    </select -->
   </td>
 </template>
 <script>
-var moment=window.moment;
-var $=window.$;
+//var moment = window.moment;
+var $ = window.$;
 export default {
   name: "alt-column-search",
   props: {
@@ -93,13 +57,41 @@ export default {
   },
   data() {
     return {
-      search: ""
+      search: "",
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "Last week",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "Last month",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "Last 3 months",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ]
+      }
     };
   },
   mounted() {
-    if (this.searchType == "text") {
-      //console.log(this.$refs.search);
-    }
     if (this.searchType == "multiselect") {
       var search = $(this.$refs.search);
       search.multiselect({
@@ -110,110 +102,12 @@ export default {
       search.on("change", () => {
         this.$emit("search", this.name, search.val());
       });
-
-      return;
-    }
-    if (this.searchType == "date") {
-      let search = $(this.$refs.search);
-      search.keypress(e => {
-        if (e.which == 13) {
-          let v = this.$refs.search.value;
-          if (v == "") {
-            this.search = "";
-            this.doSearch();
-          } else if (v.indexOf("to") >= 0) {
-            var s = {};
-            //range
-            let a = v.split("to");
-            s.from = a[0].trim();
-            s.to = a[1].trim();
-            this.search = s;
-            this.doSearch();
-          } else {
-            let s = {};
-            s.from = v;
-            s.to = v;
-            this.search = s;
-            this.doSearch();
-          }
-        }
-      });
-
-      search.daterangepicker({
-        //singleDatePicker: true,
-        opens: "center",
-        showDropdowns: true,
-        //"autoApply": true,
-        autoUpdateInput: false,
-        locale: {
-          format: "YYYY-MM-DD",
-          cancelLabel: "Clear"
-        },
-        ranges: {
-          Today: [moment(), moment()],
-          Yesterday: [
-            moment().subtract(1, "days"),
-            moment().subtract(1, "days")
-          ],
-          "Last 7 Days": [moment().subtract(6, "days"), moment()],
-          "Last 30 Days": [moment().subtract(29, "days"), moment()],
-          "This Month": [moment().startOf("month"), moment().endOf("month")],
-          "Last Month": [
-            moment()
-              .subtract(1, "month")
-              .startOf("month"),
-            moment()
-              .subtract(1, "month")
-              .endOf("month")
-          ],
-          "This Year": [moment().startOf("year"), moment().endOf("year")],
-          "Last Year": [
-            moment()
-              .subtract(1, "year")
-              .startOf("year"),
-            moment()
-              .subtract(1, "year")
-              .endOf("year")
-          ]
-        }
-      });
-
-      search.on("apply.daterangepicker", (ev, picker) => {
-        console.log("update");
-
-        if (
-          picker.startDate.format("YYYY-MM-DD") ==
-          picker.endDate.format("YYYY-MM-DD")
-        ) {
-          search.val(picker.startDate.format("YYYY-MM-DD"));
-        } else {
-          search.val(
-            picker.startDate.format("YYYY-MM-DD") +
-              " to " +
-              picker.endDate.format("YYYY-MM-DD")
-          );
-        }
-
-        var s = {};
-        s.from = picker.startDate.format("YYYY-MM-DD");
-        s.to = picker.endDate.format("YYYY-MM-DD");
-
-        this.search = s;
-        this.doSearch();
-      });
-
-      search.on("cancel.daterangepicker", (/*ev, picker*/) => {
-        search.val("");
-        this.search = "";
-        this.doSearch();
-      });
     }
   },
   methods: {
     doSearch() {
       this.$emit("search", [this.name, this.search]);
     }
-
   }
 };
 </script>

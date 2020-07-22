@@ -6070,26 +6070,6 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 
 /***/ }),
 
-/***/ "498a":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__("23e7");
-var $trim = __webpack_require__("58a8").trim;
-var forcedStringTrimMethod = __webpack_require__("c8d2");
-
-// `String.prototype.trim` method
-// https://tc39.github.io/ecma262/#sec-string.prototype.trim
-$({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
-  trim: function trim() {
-    return $trim(this);
-  }
-});
-
-
-/***/ }),
-
 /***/ "4a55":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -57823,15 +57803,12 @@ var es_array_filter = __webpack_require__("4de4");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.some.js
 var es_array_some = __webpack_require__("45fc");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d0e2eda6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ColumnSearch.vue?vue&type=template&id=63b1ef5a&
-var ColumnSearchvue_type_template_id_63b1ef5a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('td',[(_vm.searchable && _vm.searchType=='text')?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],staticClass:"form-control form-control-sm search",attrs:{"type":"search"},domProps:{"value":(_vm.search)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.doSearch()},"input":function($event){if($event.target.composing){ return; }_vm.search=$event.target.value}}}):_vm._e(),(_vm.searchable && _vm.searchType=='equal')?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],staticClass:"form-control form-control-sm search",attrs:{"type":"search"},domProps:{"value":(_vm.search)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.doSearch()},"input":function($event){if($event.target.composing){ return; }_vm.search=$event.target.value}}}):_vm._e(),(_vm.searchable && _vm.searchType=='date')?_c('input',{ref:"search",staticClass:"form-control form-control-sm search",attrs:{"value":""}}):_vm._e(),(_vm.searchable && _vm.searchType=='select' && !_vm.searchOptGroup)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],ref:"search",staticClass:"form-control form-control-sm search",on:{"change":[function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.search=$event.target.multiple ? $$selectedVal : $$selectedVal[0]},function($event){return _vm.doSearch()}]}},[_c('option'),_vm._l((_vm.searchOption),function(o,key){return _c('option',{key:key,domProps:{"value":o.value,"textContent":_vm._s(o.label)}})})],2):_vm._e()])}
-var ColumnSearchvue_type_template_id_63b1ef5a_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d0e2eda6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ColumnSearch.vue?vue&type=template&id=0d07c896&
+var ColumnSearchvue_type_template_id_0d07c896_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('td',[(_vm.searchable && _vm.searchType=='text')?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],staticClass:"form-control form-control-sm search",attrs:{"type":"search"},domProps:{"value":(_vm.search)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.doSearch()},"input":function($event){if($event.target.composing){ return; }_vm.search=$event.target.value}}}):_vm._e(),(_vm.searchable && _vm.searchType=='equal')?_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],staticClass:"form-control form-control-sm search",attrs:{"type":"search"},domProps:{"value":(_vm.search)},on:{"keyup":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.doSearch()},"input":function($event){if($event.target.composing){ return; }_vm.search=$event.target.value}}}):_vm._e(),(_vm.searchable && _vm.searchType=='date')?_c('el-date-picker',{staticStyle:{"max-width":"220px"},attrs:{"type":"daterange","unlink-panels":"","range-separator":"~","start-placeholder":"Start date","end-placeholder":"End date","picker-options":_vm.pickerOptions,"format":"yyyy-MM-dd","value-format":"yyyy-MM-dd"},on:{"change":function($event){return _vm.doSearch()}},model:{value:(_vm.search),callback:function ($$v) {_vm.search=$$v},expression:"search"}}):_vm._e(),(_vm.searchable && _vm.searchType=='select' && !_vm.searchOptGroup)?_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.search),expression:"search"}],ref:"search",staticClass:"form-control form-control-sm search",on:{"change":[function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.search=$event.target.multiple ? $$selectedVal : $$selectedVal[0]},function($event){return _vm.doSearch()}]}},[_c('option'),_vm._l((_vm.searchOption),function(o,key){return _c('option',{key:key,domProps:{"value":o.value,"textContent":_vm._s(o.label)}})})],2):_vm._e()],1)}
+var ColumnSearchvue_type_template_id_0d07c896_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/ColumnSearch.vue?vue&type=template&id=63b1ef5a&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.index-of.js
-var es_array_index_of = __webpack_require__("c975");
+// CONCATENATED MODULE: ./src/ColumnSearch.vue?vue&type=template&id=0d07c896&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__("b0c0");
@@ -57842,19 +57819,10 @@ var es_regexp_exec = __webpack_require__("ac1f");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.search.js
 var es_string_search = __webpack_require__("841c");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
-var es_string_split = __webpack_require__("1276");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.trim.js
-var es_string_trim = __webpack_require__("498a");
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/ColumnSearch.vue?vue&type=script&lang=js&
 
 
 
-
-
-
 //
 //
 //
@@ -57934,7 +57902,15 @@ var es_string_trim = __webpack_require__("498a");
 //
 //
 //
-var moment = window.moment;
+//
+//
+//
+//
+//
+//
+//
+//
+//var moment = window.moment;
 var $ = window.$;
 /* harmony default export */ var ColumnSearchvue_type_script_lang_js_ = ({
   name: "alt-column-search",
@@ -57949,7 +57925,34 @@ var $ = window.$;
   },
   data: function data() {
     return {
-      search: ""
+      search: "",
+      pickerOptions: {
+        shortcuts: [{
+          text: "Last week",
+          onClick: function onClick(picker) {
+            var end = new Date();
+            var start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit("pick", [start, end]);
+          }
+        }, {
+          text: "Last month",
+          onClick: function onClick(picker) {
+            var end = new Date();
+            var start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit("pick", [start, end]);
+          }
+        }, {
+          text: "Last 3 months",
+          onClick: function onClick(picker) {
+            var end = new Date();
+            var start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit("pick", [start, end]);
+          }
+        }]
+      }
     };
   },
   mounted: function mounted() {
@@ -57969,39 +57972,33 @@ var $ = window.$;
       });
       return;
     }
-
+    /* 
     if (this.searchType == "date") {
-      var _search = $(this.$refs.search);
-
-      _search.keypress(function (e) {
+      let search = $(this.$refs.search);
+      search.keypress(e => {
         if (e.which == 13) {
-          var v = _this.$refs.search.value;
-
+          let v = this.$refs.search.value;
           if (v == "") {
-            _this.search = "";
-
-            _this.doSearch();
+            this.search = "";
+            this.doSearch();
           } else if (v.indexOf("to") >= 0) {
-            var s = {}; //range
-
-            var a = v.split("to");
+            var s = {};
+            //range
+            let a = v.split("to");
             s.from = a[0].trim();
             s.to = a[1].trim();
-            _this.search = s;
-
-            _this.doSearch();
+            this.search = s;
+            this.doSearch();
           } else {
-            var _s = {};
-            _s.from = v;
-            _s.to = v;
-            _this.search = _s;
-
-            _this.doSearch();
+            let s = {};
+            s.from = v;
+            s.to = v;
+            this.search = s;
+            this.doSearch();
           }
         }
       });
-
-      _search.daterangepicker({
+        search.daterangepicker({
         //singleDatePicker: true,
         opens: "center",
         showDropdowns: true,
@@ -58013,43 +58010,59 @@ var $ = window.$;
         },
         ranges: {
           Today: [moment(), moment()],
-          Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+          Yesterday: [
+            moment().subtract(1, "days"),
+            moment().subtract(1, "days")
+          ],
           "Last 7 Days": [moment().subtract(6, "days"), moment()],
           "Last 30 Days": [moment().subtract(29, "days"), moment()],
           "This Month": [moment().startOf("month"), moment().endOf("month")],
-          "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+          "Last Month": [
+            moment()
+              .subtract(1, "month")
+              .startOf("month"),
+            moment()
+              .subtract(1, "month")
+              .endOf("month")
+          ],
           "This Year": [moment().startOf("year"), moment().endOf("year")],
-          "Last Year": [moment().subtract(1, "year").startOf("year"), moment().subtract(1, "year").endOf("year")]
+          "Last Year": [
+            moment()
+              .subtract(1, "year")
+              .startOf("year"),
+            moment()
+              .subtract(1, "year")
+              .endOf("year")
+          ]
         }
       });
-
-      _search.on("apply.daterangepicker", function (ev, picker) {
+        search.on("apply.daterangepicker", (ev, picker) => {
         console.log("update");
-
-        if (picker.startDate.format("YYYY-MM-DD") == picker.endDate.format("YYYY-MM-DD")) {
-          _search.val(picker.startDate.format("YYYY-MM-DD"));
+          if (
+          picker.startDate.format("YYYY-MM-DD") ==
+          picker.endDate.format("YYYY-MM-DD")
+        ) {
+          search.val(picker.startDate.format("YYYY-MM-DD"));
         } else {
-          _search.val(picker.startDate.format("YYYY-MM-DD") + " to " + picker.endDate.format("YYYY-MM-DD"));
+          search.val(
+            picker.startDate.format("YYYY-MM-DD") +
+              " to " +
+              picker.endDate.format("YYYY-MM-DD")
+          );
         }
-
-        var s = {};
+          var s = {};
         s.from = picker.startDate.format("YYYY-MM-DD");
         s.to = picker.endDate.format("YYYY-MM-DD");
-        _this.search = s;
-
-        _this.doSearch();
+          this.search = s;
+        this.doSearch();
       });
-
-      _search.on("cancel.daterangepicker", function ()
-      /*ev, picker*/
-      {
-        _search.val("");
-
-        _this.search = "";
-
-        _this.doSearch();
+        search.on("cancel.daterangepicker", () => {
+        search.val("");
+        this.search = "";
+        this.doSearch();
       });
-    }
+    } */
+
   },
   methods: {
     doSearch: function doSearch() {
@@ -58072,8 +58085,8 @@ var componentNormalizer = __webpack_require__("2877");
 
 var component = Object(componentNormalizer["a" /* default */])(
   src_ColumnSearchvue_type_script_lang_js_,
-  ColumnSearchvue_type_template_id_63b1ef5a_render,
-  ColumnSearchvue_type_template_id_63b1ef5a_staticRenderFns,
+  ColumnSearchvue_type_template_id_0d07c896_render,
+  ColumnSearchvue_type_template_id_0d07c896_staticRenderFns,
   false,
   null,
   null,
@@ -64714,25 +64727,6 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
-
-
-/***/ }),
-
-/***/ "c8d2":
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__("d039");
-var whitespaces = __webpack_require__("5899");
-
-var non = '\u200B\u0085\u180E';
-
-// check that a method works with the correct list
-// of whitespaces and has a correct name
-module.exports = function (METHOD_NAME) {
-  return fails(function () {
-    return !!whitespaces[METHOD_NAME]() || non[METHOD_NAME]() != non || whitespaces[METHOD_NAME].name !== METHOD_NAME;
-  });
-};
 
 
 /***/ }),
@@ -71517,9 +71511,9 @@ var objectSpread2 = __webpack_require__("5530");
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
 
-// CONCATENATED MODULE: ./node_modules/vue-i18n/dist/vue-i18n.esm.js
+// CONCATENATED MODULE: ../node_modules/vue-i18n/dist/vue-i18n.esm.js
 /*!
- * vue-i18n v8.17.6 
+ * vue-i18n v8.17.3 
  * (c) 2020 kazuya kawaguchi
  * Released under the MIT License.
  */
@@ -71568,18 +71562,8 @@ function error (msg, err) {
   }
 }
 
-var isArray = Array.isArray;
-
 function isObject (obj) {
   return obj !== null && typeof obj === 'object'
-}
-
-function isBoolean (val) {
-  return typeof val === 'boolean'
-}
-
-function isString (val) {
-  return typeof val === 'string'
 }
 
 var vue_i18n_esm_toString = Object.prototype.toString;
@@ -71628,10 +71612,6 @@ function remove (arr, item) {
       return arr.splice(index, 1)
     }
   }
-}
-
-function includes (arr, item) {
-  return !!~arr.indexOf(item)
 }
 
 var vue_i18n_esm_hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -71861,6 +71841,8 @@ var mixin = {
         self._localeWatcher();
         delete self._localeWatcher;
       }
+
+      self._i18n = null;
     });
   }
 };
@@ -71872,8 +71854,7 @@ var interpolationComponent = {
   functional: true,
   props: {
     tag: {
-      type: [String, Boolean],
-      default: 'span'
+      type: String
     },
     path: {
       type: String,
@@ -71910,7 +71891,7 @@ var interpolationComponent = {
         : params
     );
 
-    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
+    var tag = props.tag || 'span';
     return tag ? h(tag, data, children) : children
   }
 };
@@ -71973,7 +71954,7 @@ var numberComponent = {
   functional: true,
   props: {
     tag: {
-      type: [String, Boolean],
+      type: String,
       default: 'span'
     },
     value: {
@@ -72002,7 +71983,7 @@ var numberComponent = {
     var key = null;
     var options = null;
 
-    if (isString(props.format)) {
+    if (typeof props.format === 'string') {
       key = props.format;
     } else if (isObject(props.format)) {
       if (props.format.key) {
@@ -72013,7 +71994,7 @@ var numberComponent = {
       options = Object.keys(props.format).reduce(function (acc, prop) {
         var obj;
 
-        if (includes(numberFormatKeys, prop)) {
+        if (numberFormatKeys.includes(prop)) {
           return Object.assign({}, acc, ( obj = {}, obj[prop] = props.format[prop], obj ))
         }
         return acc
@@ -72030,14 +72011,11 @@ var numberComponent = {
       return slot ? slot(( obj = {}, obj[part.type] = part.value, obj.index = index, obj.parts = parts, obj )) : part.value
     });
 
-    var tag = (!!props.tag && props.tag !== true) || props.tag === false ? props.tag : 'span';
-    return tag
-      ? h(tag, {
-        attrs: data.attrs,
-        'class': data['class'],
-        staticClass: data.staticClass
-      }, values)
-      : values
+    return h(props.tag, {
+      attrs: data.attrs,
+      'class': data['class'],
+      staticClass: data.staticClass
+    }, values)
   }
 };
 
@@ -72135,7 +72113,7 @@ function parseValue (value) {
   var args;
   var choice;
 
-  if (isString(value)) {
+  if (typeof value === 'string') {
     path = value;
   } else if (isPlainObject(value)) {
     path = value.path;
@@ -72708,7 +72686,7 @@ VueI18n.prototype._checkLocaleMessage = function _checkLocaleMessage (locale, le
           paths.pop();
         }
       });
-    } else if (isString(message)) {
+    } else if (typeof message === 'string') {
       var ret = htmlTagMatcher.test(message);
       if (ret) {
         var msg = "Detected HTML in message '" + message + "' of keypath '" + (paths.join('')) + "' at '" + locale + "'. Consider component interpolation with '<i18n>' to avoid XSS. See https://bit.ly/2ZqJzkp";
@@ -72826,7 +72804,7 @@ VueI18n.prototype._warnDefault = function _warnDefault (locale, key, result, vm,
   if (!isNull(result)) { return result }
   if (this._missing) {
     var missingRet = this._missing.apply(null, [locale, key, vm, values]);
-    if (isString(missingRet)) {
+    if (typeof missingRet === 'string') {
       return missingRet
     }
   } else {
@@ -72880,7 +72858,7 @@ VueI18n.prototype._interpolate = function _interpolate (
     /* istanbul ignore else */
     if (isPlainObject(message)) {
       ret = message[key];
-      if (!isString(ret)) {
+      if (typeof ret !== 'string') {
         if (false) {}
         return null
       }
@@ -72889,7 +72867,7 @@ VueI18n.prototype._interpolate = function _interpolate (
     }
   } else {
     /* istanbul ignore else */
-    if (isString(pathRet)) {
+    if (typeof pathRet === 'string') {
       ret = pathRet;
     } else {
       if (false) {}
@@ -72934,7 +72912,7 @@ VueI18n.prototype._link = function _link (
     // Remove the leading @:, @.case: and the brackets
     var linkPlaceholder = link.replace(linkPrefix, '').replace(bracketsMatcher, '');
 
-    if (includes(visitedLinkStack, linkPlaceholder)) {
+    if (visitedLinkStack.includes(linkPlaceholder)) {
       if (false) {}
       return ret
     }
@@ -72989,12 +72967,12 @@ VueI18n.prototype._render = function _render (message, interpolateMode, values, 
 
   // if interpolateMode is **not** 'string' ('row'),
   // return the compiled data (e.g. ['foo', VNode, 'bar']) with formatter
-  return interpolateMode === 'string' && !isString(ret) ? ret.join('') : ret
+  return interpolateMode === 'string' && typeof ret !== 'string' ? ret.join('') : ret
 };
 
 VueI18n.prototype._appendItemToChain = function _appendItemToChain (chain, item, blocks) {
   var follow = false;
-  if (!includes(chain, item)) {
+  if (!chain.includes(item)) {
     follow = true;
     if (item) {
       follow = item[item.length - 1] !== '!';
@@ -73021,11 +72999,9 @@ VueI18n.prototype._appendLocaleToChain = function _appendLocaleToChain (chain, l
 
 VueI18n.prototype._appendBlockToChain = function _appendBlockToChain (chain, block, blocks) {
   var follow = true;
-  for (var i = 0; (i < block.length) && (isBoolean(follow)); i++) {
+  for (var i = 0; (i < block.length) && (typeof follow === 'boolean'); i++) {
     var locale = block[i];
-    if (isString(locale)) {
-      follow = this._appendLocaleToChain(chain, locale, blocks);
-    }
+    follow = this._appendLocaleToChain(chain, locale, blocks);
   }
   return follow
 };
@@ -73048,7 +73024,7 @@ VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLoc
     var block = [start];
 
     // while any intervening block found
-    while (isArray(block)) {
+    while (Array.isArray(block)) {
       block = this._appendBlockToChain(
         chain,
         block,
@@ -73058,9 +73034,9 @@ VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLoc
 
     // last block defined by default
     var defaults;
-    if (isArray(fallbackLocale)) {
+    if (Array.isArray(fallbackLocale)) {
       defaults = fallbackLocale;
-    } else if (isObject(fallbackLocale)) {
+    } else if (fallbackLocale instanceof Object) {
       if (fallbackLocale['default']) {
         defaults = fallbackLocale['default'];
       } else {
@@ -73071,7 +73047,7 @@ VueI18n.prototype._getLocaleChain = function _getLocaleChain (start, fallbackLoc
     }
 
     // convert defaults to array
-    if (isString(defaults)) {
+    if (typeof defaults === 'string') {
       block = [defaults];
     } else {
       block = defaults;
@@ -73165,7 +73141,7 @@ VueI18n.prototype.i = function i (key, locale, values) {
   /* istanbul ignore if */
   if (!key) { return '' }
 
-  if (!isString(locale)) {
+  if (typeof locale !== 'string') {
     locale = this.locale;
   }
 
@@ -73197,7 +73173,7 @@ VueI18n.prototype._tc = function _tc (
 
 VueI18n.prototype.fetchChoice = function fetchChoice (message, choice) {
   /* istanbul ignore if */
-  if (!message && !isString(message)) { return null }
+  if (!message && typeof message !== 'string') { return null }
   var choices = message.split('|');
 
   choice = this.getChoiceIndex(choice, choices.length);
@@ -73277,24 +73253,10 @@ VueI18n.prototype.getDateTimeFormat = function getDateTimeFormat (locale) {
 
 VueI18n.prototype.setDateTimeFormat = function setDateTimeFormat (locale, format) {
   this._vm.$set(this._vm.dateTimeFormats, locale, format);
-  this._clearDateTimeFormat(locale, format);
 };
 
 VueI18n.prototype.mergeDateTimeFormat = function mergeDateTimeFormat (locale, format) {
   this._vm.$set(this._vm.dateTimeFormats, locale, merge(this._vm.dateTimeFormats[locale] || {}, format));
-  this._clearDateTimeFormat(locale, format);
-};
-
-VueI18n.prototype._clearDateTimeFormat = function _clearDateTimeFormat (locale, format) {
-  for (var key in format) {
-    var id = locale + "__" + key;
-
-    if (!this._dateTimeFormatters.hasOwnProperty(id)) {
-      continue
-    }
-
-    delete this._dateTimeFormatters[id];
-  }
 };
 
 VueI18n.prototype._localizeDateTime = function _localizeDateTime (
@@ -73307,20 +73269,11 @@ VueI18n.prototype._localizeDateTime = function _localizeDateTime (
   var _locale = locale;
   var formats = dateTimeFormats[_locale];
 
-  var chain = this._getLocaleChain(locale, fallback);
-  for (var i = 0; i < chain.length; i++) {
-    var current = _locale;
-    var step = chain[i];
-    formats = dateTimeFormats[step];
-    _locale = step;
-    // fallback locale
-    if (isNull(formats) || isNull(formats[key])) {
-      if (step !== locale && "production" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to '" + step + "' datetime formats from '" + current + "' datetime formats."));
-      }
-    } else {
-      break
-    }
+  // fallback locale
+  if (isNull(formats) || isNull(formats[key])) {
+    if (false) {}
+    _locale = fallback;
+    formats = dateTimeFormats[_locale];
   }
 
   if (isNull(formats) || isNull(formats[key])) {
@@ -73364,7 +73317,7 @@ VueI18n.prototype.d = function d (value) {
   var key = null;
 
   if (args.length === 1) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     } else if (isObject(args[0])) {
       if (args[0].locale) {
@@ -73375,10 +73328,10 @@ VueI18n.prototype.d = function d (value) {
       }
     }
   } else if (args.length === 2) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     }
-    if (isString(args[1])) {
+    if (typeof args[1] === 'string') {
       locale = args[1];
     }
   }
@@ -73423,20 +73376,11 @@ VueI18n.prototype._getNumberFormatter = function _getNumberFormatter (
   var _locale = locale;
   var formats = numberFormats[_locale];
 
-  var chain = this._getLocaleChain(locale, fallback);
-  for (var i = 0; i < chain.length; i++) {
-    var current = _locale;
-    var step = chain[i];
-    formats = numberFormats[step];
-    _locale = step;
-    // fallback locale
-    if (isNull(formats) || isNull(formats[key])) {
-      if (step !== locale && "production" !== 'production' && !this._isSilentTranslationWarn(key) && !this._isSilentFallbackWarn(key)) {
-        warn(("Fall back to '" + step + "' number formats from '" + current + "' number formats."));
-      }
-    } else {
-      break
-    }
+  // fallback locale
+  if (isNull(formats) || isNull(formats[key])) {
+    if (false) {}
+    _locale = fallback;
+    formats = numberFormats[_locale];
   }
 
   if (isNull(formats) || isNull(formats[key])) {
@@ -73492,7 +73436,7 @@ VueI18n.prototype.n = function n (value) {
   var options = null;
 
   if (args.length === 1) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     } else if (isObject(args[0])) {
       if (args[0].locale) {
@@ -73506,17 +73450,17 @@ VueI18n.prototype.n = function n (value) {
       options = Object.keys(args[0]).reduce(function (acc, key) {
           var obj;
 
-        if (includes(numberFormatKeys, key)) {
+        if (numberFormatKeys.includes(key)) {
           return Object.assign({}, acc, ( obj = {}, obj[key] = args[0][key], obj ))
         }
         return acc
       }, null);
     }
   } else if (args.length === 2) {
-    if (isString(args[0])) {
+    if (typeof args[0] === 'string') {
       key = args[0];
     }
-    if (isString(args[1])) {
+    if (typeof args[1] === 'string') {
       locale = args[1];
     }
   }
@@ -73567,7 +73511,7 @@ Object.defineProperty(VueI18n, 'availabilities', {
 });
 
 VueI18n.install = install;
-VueI18n.version = '8.17.6';
+VueI18n.version = '8.17.3';
 
 /* harmony default export */ var vue_i18n_esm = (VueI18n);
 

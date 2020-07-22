@@ -339,17 +339,19 @@ class RTResponse implements JsonSerializable
              
                 } elseif ($c["searchMethod"] == "date") {
 
-                    if ($value["from"] == $value["to"]) {
+                    $from=$value[0];
+                    $to=$value[1];
+                    if ($from == $to) {
                         $field = $c["name"];
                         $name = ":" . $field;
-                        $source->where("date(`$field`) = $name", [$name => $value["from"]]);
+                        $source->where("date(`$field`) = $name", [$name => $from]);
                     } else {
                         $field = $c["name"];
                         $field_from = ":" . $field . "_from";
                         $field_to = ":" . $field . "_to";
                         $source->where("date(`$field`) between $field_from and $field_to", [
-                            $field_from => $value["from"],
-                            $field_to => $value["to"]
+                            $field_from => $from,
+                            $field_to => $to
                         ]);
                     }
                 }

@@ -29,7 +29,7 @@ class User_list extends App\Page
         //        $rt->add("Status", "Status()")->index("status")->sort()->searchOption(User::$_Status);
         // $rt->add("Expiry date", "expiry_date")->sort()->searchDateRange();
         //$rt->add("Expiry date", "expiry_date")->sort()->searchDate();
-        //$rt->add("Join date", "join_date")->sort()->searchDate();
+        $rt->add("Join date", "join_date")->sort()->searchDate();
         $rt->add("Language", "language")->sort();
 
         $rt->add("Online", "isonline");
