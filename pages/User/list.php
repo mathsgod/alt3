@@ -45,7 +45,6 @@ class User_list extends App\Page
         $rt->cellUrl = "User";
 
         $rt->addDropdown("XLSX", [$this, "getXLSX"]);
-
         return $rt;
     }
 
