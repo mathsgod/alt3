@@ -90,7 +90,7 @@ class RTResponse implements JsonSerializable
 
     public function addEdit()
     {
-        $that=$this;
+        $that = $this;
         $c = new Column();
         $c->title = "";
         $c->type = "html";
@@ -98,10 +98,10 @@ class RTResponse implements JsonSerializable
         $c->name = "__edit__";
         $c->className[] = "text-center";
         $c->width = "1px";
-        $c->descriptor[] = function ($obj)use($that) {
-            if(is_array($obj)){
-                if($obj["canUpdate"]){
-                    $uri=$that->model."/".$obj[$that->key]."/ae";
+        $c->descriptor[] = function ($obj) use ($that) {
+            if (is_array($obj)) {
+                if ($obj["canUpdate"]) {
+                    $uri = $that->model . "/" . $obj[$that->key] . "/ae";
                     $a = html("a")->class("btn btn-xs btn-warning text-white")->href($uri);
                     $a->i->class("fa fa-pencil-alt fa-fw");
                     return $a;
@@ -122,7 +122,7 @@ class RTResponse implements JsonSerializable
 
     public function addView()
     {
-        $that=$this;
+        $that = $this;
         $c = new Column();
         $c->title = "";
         $c->type = "html";
@@ -130,16 +130,16 @@ class RTResponse implements JsonSerializable
         $c->name = "__view__";
         $c->className[] = "text-center";
         $c->width = "1px";
-        $c->descriptor[] = function ($obj)use($that) {
+        $c->descriptor[] = function ($obj) use ($that) {
 
-            if(is_array($obj)){
-                if($obj["canView"]){
-                    $uri=$that->model."/".$obj[$that->key]."/v";
+            if (is_array($obj)) {
+                if ($obj["canView"]) {
+                    $uri = $that->model . "/" . $obj[$that->key] . "/v";
                     $a = html("a")->class("btn btn-xs btn-info")->href($uri);
                     $a->i->class("fa fa-search fa-fw");
                     return $a;
                 }
-                return ;
+                return;
             }
             if (!$obj->canRead()) {
                 return;
@@ -163,11 +163,11 @@ class RTResponse implements JsonSerializable
         $c->width = "1px";
         $c->className[] = "text-center";
         $c->descriptor[] = function ($obj) {
-            if(is_array($obj)){
-                if($obj["canView"]){
-                    return $that->model."/".$obj[$that->key];
+            if (is_array($obj)) {
+                if ($obj["canView"]) {
+                    return $that->model . "/" . $obj[$that->key];
                 }
-                return ;
+                return;
             }
 
             if (!$obj->canDelete()) {
@@ -215,7 +215,7 @@ class RTResponse implements JsonSerializable
 
         if ($this->page) {
             $source->limit($this->length);
-            $source->offset($this->length * ($this->page-1));
+            $source->offset($this->length * ($this->page - 1));
         }
 
 
@@ -303,10 +303,9 @@ class RTResponse implements JsonSerializable
             } elseif ($column->sortCallback) {
                 $source->orderBy(call_user_func($column->sortCallback) . " " . $o["dir"]);
             } else {
-                $source->orderBy([$o["name"]=>$o["dir"]]);
+                $source->orderBy([$o["name"] => $o["dir"]]);
             }
         }
-
 
         foreach ($this->request["columns"] as $k => $c) {
             $column = $this->_columns[$c["name"]];
@@ -315,32 +314,30 @@ class RTResponse implements JsonSerializable
             if ($value !== null && $value !== "") {
 
                 if ($column->searchCallback) {
-                    $w = [];
-                    $w[] = call_user_func($column->searchCallback, $value);
-                    $source->where($w);
+                    $source->where(call_user_func($column->searchCallback, $value));
                     continue;
                 }
 
                 if ($c["searchMethod"] == "multiple") {
                     $field = $c["name"];
                     $s = [];
+                    $p = [];
                     foreach ($value as $k) {
-                        $s[] = "?";
+                        $s[] = "?{$field}_{$k}";
+                        $p["{$field}_{$k}"] = $k;
                     }
-                    $w = [];
-                    $w[] = ["$field in (" . implode(",", $s) . ")", $value];
-                    $source->where($w);
+
+                    $source->where("$field in (" . implode(",", $s) . ")", $p);
                     continue;
                 } elseif ($c["searchMethod"] == "like") {
                     $name = ":" . $c["name"];
                     $source->where($c["name"] . " like $name", [$name => "%$value%"]);
                 } elseif ($c["searchMethod"] == "equal") {
                     $source->filter([$c["name"] => $value]);
-             
                 } elseif ($c["searchMethod"] == "date") {
 
-                    $from=$value[0];
-                    $to=$value[1];
+                    $from = $value[0];
+                    $to = $value[1];
                     if ($from == $to) {
                         $field = $c["name"];
                         $name = ":" . $field;

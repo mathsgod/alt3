@@ -14,8 +14,9 @@
       v-model="search"
       @keyup.enter="doSearch()"
     />
+
     <el-date-picker
-      style="max-width:220px"
+      style="max-width:250px"
       v-if="searchable && searchType=='date'"
       v-model="search"
       type="daterange"
@@ -29,21 +30,32 @@
       value-format="yyyy-MM-dd"
     ></el-date-picker>
 
-    <select
-      v-if="searchable && searchType=='select' && !searchOptGroup"
-      class="form-control form-control-sm search"
-      ref="search"
+    <el-select
+      style="width:100%"
+      v-if="searchable && searchType=='multiselect'"
       v-model="search"
-      v-on:change="doSearch()"
+      clearable
+      filterable
+      multiple
+      collapse-tags
+      @change="doSearch()"
     >
-      <option></option>
-      <option v-for="(o,key) in searchOption" v-bind:value="o.value" v-text="o.label" :key="key"></option>
-    </select>
+      <el-option v-for="(o,key) in searchOption" :key="key" :label="o.label" :value="o.value"></el-option>
+    </el-select>
+
+    <el-select
+      style="width:100%"
+      v-if="searchable && searchType=='select' && !searchOptGroup"
+      v-model="search"
+      clearable
+      filterable
+      @change="doSearch()"
+    >
+      <el-option v-for="(o,key) in searchOption" :key="key" :label="o.label" :value="o.value"></el-option>
+    </el-select>
   </td>
 </template>
 <script>
-//var moment = window.moment;
-var $ = window.$;
 export default {
   name: "alt-column-search",
   props: {
@@ -92,7 +104,7 @@ export default {
     };
   },
   mounted() {
-    if (this.searchType == "multiselect") {
+    /*  if (this.searchType == "multiselect") {
       var search = $(this.$refs.search);
       search.multiselect({
         enableFiltering: true,
@@ -102,7 +114,7 @@ export default {
       search.on("change", () => {
         this.$emit("search", this.name, search.val());
       });
-    }
+    }*/
   },
   methods: {
     doSearch() {

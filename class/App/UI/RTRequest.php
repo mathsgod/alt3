@@ -36,6 +36,22 @@ class RTRequest
                     $name = $filter["name"];
                     $source->filter([$name => $filter["value"]]);
                     break;
+                case "date":
+                    $name = $filter["name"];
+                    $value = $filter["value"];
+                    $from = $value[0];
+                    $to = $value[1];
+                    if ($from == $to) {
+                        $source->where("date(`$name`) = :$name", [$name => $from]);
+                    } else {
+                        $field_from = ":" . $name . "_from";
+                        $field_to = ":" . $name . "_to";
+                        $source->where("date(`$name`) between $field_from and $field_to", [
+                            $field_from => $from,
+                            $field_to => $to
+                        ]);
+                    }
+                    break;
             }
         }
         return $source;
