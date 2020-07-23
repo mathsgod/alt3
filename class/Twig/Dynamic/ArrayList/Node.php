@@ -22,7 +22,7 @@ class Node extends \Twig\Node\Node
         $compiler
             ->addDebugInfo($this)
             //->raw("echo strtoupper('$name')")
-            ->raw("echo \Twig\Dynamic\Text\Node::Render('$name')")
+            ->raw("echo \Twig\Dynamic\ArrayList\Node::Render('$name')")
             //->subcompile($this->getNode("type"))
             ->raw(";\n");
     }
@@ -30,7 +30,7 @@ class Node extends \Twig\Node\Node
     public static function Render($name)
     {
         $data = \Twig\Dynamic\Extension::$Data;
-
+ 
         return $data[$name];
     }
 }

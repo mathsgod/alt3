@@ -390,6 +390,7 @@ class App extends \R\App
             $twig["environment"] = new \Twig\Environment($twig["loader"], $config);
             $twig["environment"]->addExtension(new \Twig_Extensions_Extension_I18n());
             //$twig["environment"]->addExtension(new TwigI18n());
+            $twig["environment"]->addExtension(new \Twig\Dynamic\Extension());
 
             $_this = $this;
             $twig["environment"]->addFilter(new \Twig\TwigFilter('trans', function ($str) use ($_this) {
