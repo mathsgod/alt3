@@ -21,16 +21,7 @@ class Node extends \Twig\Node\Node
         $name = $type->getAttribute("value");
         $compiler
             ->addDebugInfo($this)
-            //->raw("echo strtoupper('$name')")
-            ->raw("echo \Twig\Dynamic\Text\Node::Render('$name')")
-            //->subcompile($this->getNode("type"))
+            ->write('echo $context[\'' . $name . '\']')
             ->raw(";\n");
-    }
-
-    public static function Render($name)
-    {
-        $data = \Twig\Dynamic\Extension::$Data;
-
-        return $data[$name];
     }
 }

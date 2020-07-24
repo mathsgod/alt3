@@ -6,7 +6,11 @@ class DynamicPage_test extends ALT\Page
     {
         $dp = DynamicPage::_("a");
 
-        outp($dp->data);
-        Twig\Dynamic\Extension::SetData($dp->data);
+
+        $this->data["b"] = "bbb";
+        $this->data["a"] = "hello";
+
+        $this->data["list1"] = $dp->data["list1"];
+        //Twig\Dynamic\Extension::SetData($dp->data);
     }
 }

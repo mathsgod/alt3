@@ -19,18 +19,35 @@ class Node extends \Twig\Node\Node
 
         $type = $this->getNode("type");
         $name = $type->getAttribute("value");
-        $compiler
-            ->addDebugInfo($this)
-            //->raw("echo strtoupper('$name')")
-            ->raw("echo \Twig\Dynamic\ArrayList\Node::Render('$name')")
-            //->subcompile($this->getNode("type"))
-            ->raw(";\n");
-    }
 
-    public static function Render($name)
-    {
-        $data = \Twig\Dynamic\Extension::$Data;
- 
-        return $data[$name];
+
+        $compiler->addDebugInfo($this)
+
+            ->write("\$context['_parent'] = \$context;\n")
+            ->write("\$context['_seq'] = \$context['$name'];\n");
+
+        $compiler
+            ->write("foreach (\$context['_seq'] as \$context['_child']){")
+            ->indent()
+
+            ->subcompile($this->getNode('body'))
+            ->outdent()
+            ->write("}\n");
+
+
+            /*
+
+        $compiler->write("\$_parent = \$context['_parent'];\n");
+
+        // remove some "private" loop variables (needed for nested loops)
+        $compiler->write('unset($context[\'_seq\'], $context[\'_parent\'], $context[\'loop\']);' . "\n");
+
+        // keep the values set in the inner context for variables defined in the outer context
+        $compiler->write("\$context = array_intersect_key(\$context, \$_parent) + \$_parent;\n");
+*/
+
+
+        outp($compiler->getSource());
+        die();
     }
 }

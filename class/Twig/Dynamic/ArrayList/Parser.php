@@ -2,16 +2,21 @@
 
 namespace Twig\Dynamic\ArrayList;
 
+use Exception;
 use Twig\Node\BodyNode;
 
 class Parser extends \Twig\TokenParser\AbstractTokenParser
 {
     public function parse(\Twig\Token $token)
     {
+        $lineno = $token->getLine();
+
         $parser = $this->parser;
         $stream = $parser->getStream();
 
+
         $value = $parser->getExpressionParser()->parseExpression();
+
         $stream->expect(\Twig\Token::BLOCK_END_TYPE);
 
         $continue = true;
@@ -20,7 +25,8 @@ class Parser extends \Twig\TokenParser\AbstractTokenParser
         $body_node = [];
 
         while ($continue) {
-            $body = $this->parser->subparse([$this, "decideEnd"]);
+            $body_node[] = $this->parser->subparse([$this, "decideEnd"]);
+
 
             $token = $stream->next();
             $tag = $token->getValue();
@@ -35,7 +41,6 @@ class Parser extends \Twig\TokenParser\AbstractTokenParser
                     $body_node[] = $text_node;
                     $stream->expect(\Twig\Token::BLOCK_END_TYPE);
                     break;
-                    
             }
         }
 

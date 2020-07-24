@@ -3,6 +3,7 @@
 namespace Twig\Dynamic;
 
 use Twig\Node\BodyNode;
+use Twig\Node\PrintNode;
 
 class Extension extends \Twig\Extension\AbstractExtension
 {
@@ -11,6 +12,11 @@ class Extension extends \Twig\Extension\AbstractExtension
     public function getTokenParsers()
     {
         return [new Text\Parser(), new Image\Parser(), new ArrayList\Parser()];
+    }
+
+    public function getFilters()
+    {
+        return [new Text\Filter()];
     }
 
     public function parse(string $code)
@@ -22,9 +28,15 @@ class Extension extends \Twig\Extension\AbstractExtension
         $stream = $env->tokenize(new \Twig\Source($code, "code"));
         $node = $env->parse($stream);
 
+
         $nodes = $this->filterNodes($node);
 
         foreach ($nodes as $n) {
+
+            if ($n instanceof PrintNode) {
+                print_r($n);
+                die();
+            }
             if ($n instanceof ArrayList\Node) {
                 $r = [
                     "type" => "list",
@@ -80,6 +92,11 @@ class Extension extends \Twig\Extension\AbstractExtension
         $ret = [];
 
         foreach ($node as $n) {
+            if($n instanceof PrintNode){
+                $ret[] = $n;
+                continue;
+            }
+
             if ($n instanceof Image\Node) {
                 $ret[] = $n;
                 continue;

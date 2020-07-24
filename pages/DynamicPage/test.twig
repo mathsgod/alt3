@@ -1,10 +1,8 @@
-Test Page
-{% text "a" %}
+list start
 
+{% for l in list1 %}
+    {{l}}
+{% endfor %}
 {% list "list1" %}
-
-<div>
-{% text "input1" %}
-</div>
-
+<div>abc{% text "list1.input1" %}xyz</div>
 {% endlist %}
