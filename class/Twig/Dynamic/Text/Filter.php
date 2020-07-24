@@ -11,8 +11,8 @@ class Filter extends TwigFilter
         parent::__construct("text", [$this, "callback"]);
     }
 
-    public function callback()
+    public function callback($value)
     {
-        return "aaa";
+        return $value;
     }
 }

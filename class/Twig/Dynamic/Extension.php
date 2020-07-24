@@ -35,9 +35,14 @@ class Extension extends \Twig\Extension\AbstractExtension
 
             if ($n instanceof PrintNode) {
                 $expr = $n->getNode("expr");
-                $n = $expr->getNode("node");
-                print_r($n);
-                die();
+                $n = $expr->getNode("node")->getNode("filter");
+
+                if ($n->getAttribute("value") == "text") {
+                    $rets[] = [
+                        "type" => "text",
+                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
+                    ];
+                }
             }
             if ($n instanceof ArrayList\Node) {
                 $r = [
