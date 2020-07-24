@@ -34,6 +34,8 @@ class Extension extends \Twig\Extension\AbstractExtension
         foreach ($nodes as $n) {
 
             if ($n instanceof PrintNode) {
+                $expr = $n->getNode("expr");
+                $n = $expr->getNode("node");
                 print_r($n);
                 die();
             }
@@ -92,7 +94,7 @@ class Extension extends \Twig\Extension\AbstractExtension
         $ret = [];
 
         foreach ($node as $n) {
-            if($n instanceof PrintNode){
+            if ($n instanceof PrintNode) {
                 $ret[] = $n;
                 continue;
             }

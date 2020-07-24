@@ -316,7 +316,8 @@ class RTResponse implements JsonSerializable
             if ($value !== null && $value !== "") {
 
                 if ($column->searchCallback) {
-                    $source->where(call_user_func($column->searchCallback, $value));
+                    $c = call_user_func($column->searchCallback, $value);
+                    $source->where($c[0], $c[1]);
                     continue;
                 }
 
