@@ -3,6 +3,8 @@
 namespace Twig\Dynamic;
 
 use Twig\Node\BodyNode;
+use Twig\Node\ForNode;
+use Twig\Node\Node;
 use Twig\Node\PrintNode;
 
 class Extension extends \Twig\Extension\AbstractExtension
@@ -16,7 +18,35 @@ class Extension extends \Twig\Extension\AbstractExtension
 
     public function getFilters()
     {
-        return [new Text\Filter()];
+        return [new Text\Filter(), new Image\Filter(), new ArrayList\Filter()];
+    }
+
+    private function findResult(Node $node)
+    {
+        $nodes = $this->filterNodes($node);
+        $rets = [];
+
+        foreach ($nodes as $n) {
+            if ($n instanceof PrintNode) {
+                $expr = $n->getNode("expr");
+                $filter = $expr->getNode("node")->getNode("filter");;
+
+                if ($filter->getAttribute("value") == "text") {
+                    $rets[] = [
+                        "type" => "text",
+                        "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
+                    ];
+                }
+
+                if ($filter->getAttribute("value") == "image") {
+                    $rets[] = [
+                        "type" => "image",
+                        "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
+                    ];
+                }
+            }
+        }
+        return $rets;
     }
 
     public function parse(string $code)
@@ -33,6 +63,20 @@ class Extension extends \Twig\Extension\AbstractExtension
 
         foreach ($nodes as $n) {
 
+
+            if ($n instanceof ForNode) {
+
+                if ($n->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
+
+                    $r = $this->findResult($n->getNode("body"));
+                    $rets[] = [
+                        "type" => "list",
+                        "name" => $n->getNode("seq")->getNode("node")->getAttribute("name"),
+                        "body" => $r
+                    ];
+                }
+            }
+
             if ($n instanceof PrintNode) {
                 $expr = $n->getNode("expr");
                 $n = $expr->getNode("node")->getNode("filter");
@@ -43,7 +87,16 @@ class Extension extends \Twig\Extension\AbstractExtension
                         "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
                     ];
                 }
+
+                if ($n->getAttribute("value") == "image") {
+                    $rets[] = [
+                        "type" => "image",
+                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
+                    ];
+                }
             }
+
+
             if ($n instanceof ArrayList\Node) {
                 $r = [
                     "type" => "list",
@@ -99,6 +152,11 @@ class Extension extends \Twig\Extension\AbstractExtension
         $ret = [];
 
         foreach ($node as $n) {
+            if ($n instanceof ForNode) {
+                $ret[] = $n;
+                continue;
+            }
+
             if ($n instanceof PrintNode) {
                 $ret[] = $n;
                 continue;

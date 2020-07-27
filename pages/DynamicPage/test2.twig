@@ -1,3 +1,17 @@
 {{hello|text}}
+{{abc|image}}
 
-{{image1|image}}
+
+
+{% for row in rows|list %}
+
+<div>
+    Input:{{row.input1|text}} <br>
+    Image: {{row.image1|image}}
+    <hr />
+
+</div>
+
+
+
+{% endfor %}

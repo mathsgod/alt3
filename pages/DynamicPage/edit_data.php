@@ -4,31 +4,38 @@ class DynamicPage_edit_data extends ALT\Page
 {
     public function post()
     {
-        $data = [];
-        foreach ($_POST as $k => $v) {
-            if (is_array($v)) {
 
-                $arr = [];
-                foreach ($v["c"] as $a) {
-                    $arr[] = $a;
-                }
+        $data = $this->request->getParsedBody();
 
-                foreach ($v["u"] as $a) {
-                    $arr[] = $a;
-                }
-                $data[$k] = $arr;
-            } else {
-                $data[$k] = $v;
-            }
-        }
         $obj = $this->object();
         $obj->data = $data;
+
         $obj->save();
-        $this->redirect();
+
+        return ["data" => true];
+    }
+
+    public function structure()
+    {
+
+        $obj = $this->object();
+        $path = $this->app->document_root . "/" . $obj->path;
+        $code = file_get_contents($path);
+
+        $ext = new Twig\Dynamic\Extension();
+
+        $ret = $ext->parse($code);
+
+        return $ret;
+    }
+    public function data()
+    {
+        return $this->object()->data;
     }
 
     public function get()
     {
+        return;
         $obj = $this->object();
         $path = $this->app->document_root . "/" . $obj->path;
         $code = file_get_contents($path);
@@ -55,7 +62,14 @@ class DynamicPage_edit_data extends ALT\Page
                     $table = $that->createT($d[$t["name"]]);
                     $table->formCreate(["name" => $t["name"]]);
                     foreach ($t["body"] as $c) {
-                        $table->add($c["name"])->input($c["name"]);
+                        switch ($c["type"]) {
+                            case "text":
+                                $table->add($c["name"])->input($c["name"]);
+                                break;
+                            case "image":
+                                $table->add($c["name"])->fileman($c["name"]);
+                                break;
+                        }
                     }
                     return $table;
                 });

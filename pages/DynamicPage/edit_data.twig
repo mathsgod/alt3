@@ -1,0 +1,92 @@
+<div id="div1">
+    <card>
+        <card-body>
+            <table class="table">
+                <tbody>
+                    <tr v-for="s in structure">
+                        <th v-text="s.name"></th>
+                        <td>
+                            <el-input v-if="s.type=='text'" v-model="data[s.name]"></el-input>
+                            <input v-if="s.type=='image'" v-model="data[s.name]" is="fileman" :name="s.name"
+                                :data-field="s.name" url="/alt3/Fileman/?token=" />
+
+                            <div v-if="s.type=='list'">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                <el-button size="mini" type="primary" icon="fa fa-plus" @click="
+                                                data[s.name].push({})
+                                                "></el-button>
+                                            </td>
+                                            <td v-for="b in s.body" v-text="b.name"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(d,i) in data[s.name]" :key="i">
+                                            <td>
+                                                <el-button size="mini" type="danger" icon="fa fa-minus" @click="
+                                                data[s.name].splice(i,1)
+                                                "></el-button>
+                                            </td>
+                                            <td v-for="(b,i) in s.body">
+                                                <el-input v-model="d[b.name]" v-if="b.type=='text'"></el-input>
+
+                                                <input v-if="b.type=='image'" v-model="d[b.name]" is="fileman"
+                                                    :name="`s.name_${i}`" :data-field="`s.name_${i}`"
+                                                    url="/alt3/Fileman/?token=" />
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </card-body>
+
+        <card-footer>
+            <el-button @click="submit">Submit</el-button>
+        </card-footer>
+
+    </card>
+</div>
+
+<script>
+    new Vue({
+        el: "#div1",
+        data: {
+            structure: [],
+            data: []
+        },
+        async created() {
+            var resp = await this.$http.get(window.self.location + "/data");
+            this.data = resp.data;
+            var resp = await this.$http.get(window.self.location + "/structure");
+            this.structure = resp.data;
+        },
+        methods: {
+            async submit() {
+                var resp = await this.$http.post(window.self.location.href, this.data);
+                resp = resp.data;
+
+                if (resp.data) {
+                    window.history.back();
+                } else {
+                    alert("error");
+                }
+
+            }
+        }
+    });
+</script>
