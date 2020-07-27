@@ -12,41 +12,7 @@
                                 :data-field="s.name" url="Fileman/?token=" />
 
                             <div v-if="s.type=='list'">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <td>
-                                                <el-button size="mini" type="primary" icon="fa fa-plus" @click="
-                                                data[s.name].push({})
-                                                "></el-button>
-                                            </td>
-                                            <td v-for="b in s.body" v-text="b.name"></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(d,i) in data[s.name]" :key="i">
-                                            <td>
-                                                <el-button size="mini" type="danger" icon="fa fa-minus" @click="
-                                                data[s.name].splice(i,1)
-                                                "></el-button>
-                                            </td>
-                                            <td v-for="(b,i) in s.body">
-                                                <el-input v-model="d[b.name]" v-if="b.type=='text'"
-                                                    v-bind="b.attributes" autosize type="textarea" show-word-limit>
-                                                </el-input>
-
-                                                <input v-if="b.type=='image'" v-model="d[b.name]" is="fileman"
-                                                    :name="`s.name_${i}`" :data-field="`s.name_${i}`"
-                                                    url="Fileman/?token=" />
-
-                                            </td>
-
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
-
+                                <dynamic-page-table :structure="s.body" :data.sync="data[s.name]"></dynamic-page-table>
                             </div>
 
                         </td>
@@ -66,6 +32,8 @@
 </div>
 
 <script>
+
+    Vue.component("dynamic-page-table", httpVueLoader("components/dynamic-page-table.vue"));
     new Vue({
         el: "#div1",
         data: {
@@ -76,7 +44,12 @@
             var resp = await this.$http.get(window.self.location + "/data");
             this.data = resp.data;
             var resp = await this.$http.get(window.self.location + "/structure");
+            if (resp.data.error) {
+                alert(resp.data.error.message);
+                return;
+            }
             this.structure = resp.data;
+            
         },
         methods: {
             async submit() {

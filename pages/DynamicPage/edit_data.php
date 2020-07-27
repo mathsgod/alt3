@@ -32,5 +32,24 @@ class DynamicPage_edit_data extends ALT\Page
     public function data()
     {
         return $this->object()->data;
+
+        foreach ($this->structure() as $s) {
+            if ($s["type"] == "list") {
+                $data[$s["name"]] = $data[$s["name"]] ?? [];
+
+                foreach ($s["body"] as $t) {
+                    if ($t["type"] == "list") {
+                        foreach ($data[$s["name"]] as &$d) {
+                            $d[$t["name"]] = $d[$t["name"]] ?? [];
+                        }
+
+
+
+                        //$data[$s["name"]][$t["name"]] = $data[$s["name"]][$t["name"]] ?? [];
+                    }
+                }
+            }
+        }
+        return $data;
     }
 }
