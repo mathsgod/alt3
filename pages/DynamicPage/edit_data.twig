@@ -8,7 +8,7 @@
                         <td>
                             <el-input v-if="s.type=='text'" v-model="data[s.name]"></el-input>
                             <input v-if="s.type=='image'" v-model="data[s.name]" is="fileman" :name="s.name"
-                                :data-field="s.name" url="/alt3/Fileman/?token=" />
+                                :data-field="s.name" url="Fileman/?token=" />
 
                             <div v-if="s.type=='list'">
                                 <table class="table">
@@ -34,7 +34,7 @@
 
                                                 <input v-if="b.type=='image'" v-model="d[b.name]" is="fileman"
                                                     :name="`s.name_${i}`" :data-field="`s.name_${i}`"
-                                                    url="/alt3/Fileman/?token=" />
+                                                    url="Fileman/?token=" />
 
                                             </td>
 
