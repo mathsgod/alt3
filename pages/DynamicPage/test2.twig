@@ -1,1 +1,12 @@
-{{hello|text({maxlength:30,minlength:10})}}
+{{hello|text({maxlength:30})}}
+
+
+{{abc|image}}
+
+{% for row in rows|list %}
+<div>
+    Input:{{row.input1|text({maxlength:10})}} <br>
+    Image: {{row.image1|image}}
+    <hr />
+</div>
+{% endfor %}

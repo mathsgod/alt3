@@ -32,9 +32,24 @@ class Extension extends \Twig\Extension\AbstractExtension
                 $filter = $expr->getNode("node")->getNode("filter");;
 
                 if ($filter->getAttribute("value") == "text") {
+                    $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
+
+                    $arg_name = null;
+                    $args = [];
+                    foreach ($arguments_node[0] as $arg) {
+
+                        if (is_null($arg_name)) {
+                            $arg_name = $arg->getAttribute("value");
+                            continue;
+                        }
+
+                        $args[$arg_name] = $arg->getAttribute("value");
+                        $arg_name = null;
+                    }
                     $rets[] = [
                         "type" => "text",
-                        "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
+                        "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value"),
+                        "attributes" => $args
                     ];
                 }
 
