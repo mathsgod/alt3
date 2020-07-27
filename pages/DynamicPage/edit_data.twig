@@ -1,12 +1,12 @@
 <div id="div1">
     <card>
         <card-body>
-            <table class="table">
+            <table class="table table-hover">
                 <tbody>
                     <tr v-for="s in structure">
                         <th v-text="s.name"></th>
                         <td>
-                            <el-input v-if="s.type=='text'" v-model="data[s.name]"></el-input>
+                            <el-input v-if="s.type=='text'" v-model="data[s.name]" autosize type="textarea" v-bind="s.attributes" show-word-limit></el-input>
                             <input v-if="s.type=='image'" v-model="data[s.name]" is="fileman" :name="s.name"
                                 :data-field="s.name" url="Fileman/?token=" />
 
@@ -30,7 +30,8 @@
                                                 "></el-button>
                                             </td>
                                             <td v-for="(b,i) in s.body">
-                                                <el-input v-model="d[b.name]" v-if="b.type=='text'"></el-input>
+                                                <el-input v-model="d[b.name]" v-if="b.type=='text'" autosize
+                                                    type="textarea"></el-input>
 
                                                 <input v-if="b.type=='image'" v-model="d[b.name]" is="fileman"
                                                     :name="`s.name_${i}`" :data-field="`s.name_${i}`"
@@ -56,7 +57,7 @@
         </card-body>
 
         <card-footer>
-            <el-button @click="submit">Submit</el-button>
+            <el-button type="success" @click="submit">Submit</el-button>
         </card-footer>
 
     </card>

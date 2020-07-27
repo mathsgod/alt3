@@ -58,14 +58,13 @@ class Extension extends \Twig\Extension\AbstractExtension
         $stream = $env->tokenize(new \Twig\Source($code, "code"));
         $node = $env->parse($stream);
 
-
         $nodes = $this->filterNodes($node);
+
 
         foreach ($nodes as $n) {
 
 
             if ($n instanceof ForNode) {
-
                 if ($n->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
 
                     $r = $this->findResult($n->getNode("body"));
@@ -82,9 +81,27 @@ class Extension extends \Twig\Extension\AbstractExtension
                 $n = $expr->getNode("node")->getNode("filter");
 
                 if ($n->getAttribute("value") == "text") {
+
+                    $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
+
+                    $arg_name = null;
+                    $args = [];
+                    foreach ($arguments_node[0] as $arg) {
+
+                        if (is_null($arg_name)) {
+                            $arg_name = $arg->getAttribute("value");
+                            continue;
+                        }
+
+                        $args[$arg_name] = $arg->getAttribute("value");
+                        $arg_name = null;
+                    }
+
+
                     $rets[] = [
                         "type" => "text",
-                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
+                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
+                        "attributes" => $args
                     ];
                 }
 

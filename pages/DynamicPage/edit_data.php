@@ -28,6 +28,7 @@ class DynamicPage_edit_data extends ALT\Page
 
         return $ret;
     }
+
     public function data()
     {
         return $this->object()->data;
