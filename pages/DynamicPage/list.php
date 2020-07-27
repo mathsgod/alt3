@@ -18,7 +18,7 @@ class DynamicPage_list extends App\Page
     }
     public function ds($rt)
     {
-        $rt->source = DynamicPage::Query();
+        $rt->source = App\DynamicPage::Query();
         $rt->add("input", function ($o) {
             return html("a")->href($o->uri("edit_data"))->class("btn btn-primary btn-xs")->text('input');
         })->type = "html";

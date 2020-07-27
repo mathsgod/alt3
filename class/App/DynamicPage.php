@@ -1,14 +1,16 @@
 <?php
 
+namespace App;
+
 //Created by Raymond Chong
 //Date: 2020-06-26
-class DynamicPage extends App\Model
+class DynamicPage extends Model
 {
     public static function _(string $name)
     {
         return self::Query(["name" => $name])->first();
     }
-/*
+    /*
     public function content()
     {
         $loader = new \Twig\Loader\FilesystemLoader(self::$_app->document_root);
