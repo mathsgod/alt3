@@ -154,6 +154,9 @@ class Extension extends \Twig\Extension\AbstractExtension
 
         if ($node->getNode("seq")->hasNode("filter") && $node->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
 
+            outp($node);
+            die();
+
 
             $r = $this->findForBody($node->getNode("body"));
 
