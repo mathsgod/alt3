@@ -127,6 +127,7 @@ export default {
           item.loaded = e.loaded;
           item.total = e.total;
           this.$forceUpdate();
+            
           console.log("onprogress", item, e);
         }
       });
@@ -135,6 +136,7 @@ export default {
         item.end = true;
         this.$forceUpdate();
         console.log("onloadend", item);
+        this.$emit("files-uploaded");
       };
 
       var formData = new FormData();
@@ -152,9 +154,8 @@ export default {
         promise.push(p);
       }
 
-      Promise.all(promise).then(values => {
-        this.$emit("files-uploaded", values);
-      });
+      await Promise.all(promise);
+      this.$emit("files-uploaded");
     },
     open(path, type) {
       this.path = path;

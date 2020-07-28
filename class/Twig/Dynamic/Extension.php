@@ -153,10 +153,11 @@ class Extension extends \Twig\Extension\AbstractExtension
         $rets = [];
 
         if ($node->getNode("seq")->hasNode("filter") && $node->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
-
-            outp($node);
+            
+            
+            //filter all 
+            outP($node);
             die();
-
 
             $r = $this->findForBody($node->getNode("body"));
 
