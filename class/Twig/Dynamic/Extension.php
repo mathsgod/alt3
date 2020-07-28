@@ -2,6 +2,7 @@
 
 namespace Twig\Dynamic;
 
+use GraphQL\Utils\FindBreakingChanges;
 use Twig\Node\BodyNode;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\ForNode;
@@ -33,14 +34,28 @@ class Extension extends \Twig\Extension\AbstractExtension
                 $filter = $expr->getNode("node")->getNode("filter");
 
                 if (!$expr->getNode("node")->getNode("node")->hasAttribute("name")) continue;
-                if ($filter->getAttribute("value") == "text") {
-                    $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                    $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                    $rets[] = [
-                        "type" => "text",
-                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
-                        "attributes" => $args
-                    ];
+
+                switch ($filter->getAttribute("value")) {
+                    case "text":
+                        $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
+                        $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
+                        $rets[] = [
+                            "type" => "text",
+                            "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
+                            "attributes" => $args
+                        ];
+                        break;
+                    case "image":
+                        $rets[] = [
+                            "type" => "image",
+                            "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
+                        ];
+                        break;
+                }
+            }
+            if ($n instanceof ForNode) {
+                foreach ($this->findNonChildInFor($n->getNode("body")) as $non_child) {
+                    $rets[] = $non_child;
                 }
             }
         }
@@ -107,6 +122,30 @@ class Extension extends \Twig\Extension\AbstractExtension
         return $rets;
     }
 
+    private function parsePrintNode(PrintNode $node): array
+    {
+        $expr = $node->getNode("expr");
+        $filter = $expr->getNode("node")->getNode("filter");
+
+        switch ($filter->getAttribute("value")) {
+            case "text":
+                $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
+                $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
+                return  [
+                    "type" => "text",
+                    "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
+                    "attributes" => $args
+                ];
+                break;
+            case "image":
+                return [
+                    "type" => "image",
+                    "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
+                ];
+                break;
+        }
+    }
+
     /**
      * parse the twig structure
      */
@@ -139,25 +178,7 @@ class Extension extends \Twig\Extension\AbstractExtension
             }
 
             if ($n instanceof PrintNode) {
-                $expr = $n->getNode("expr");
-                $n = $expr->getNode("node")->getNode("filter");
-
-                if ($n->getAttribute("value") == "text") {
-                    $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                    $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                    $rets[] = [
-                        "type" => "text",
-                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
-                        "attributes" => $args
-                    ];
-                }
-
-                if ($n->getAttribute("value") == "image") {
-                    $rets[] = [
-                        "type" => "image",
-                        "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
-                    ];
-                }
+                $rets[] = $this->parsePrintNode($n);
             }
 
 

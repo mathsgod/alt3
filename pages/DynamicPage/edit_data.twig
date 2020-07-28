@@ -12,7 +12,7 @@
                                 :data-field="s.name" url="Fileman/?token=" />
 
                             <div v-if="s.type=='list'">
-                                <dynamic-page-table :structure="s.body" :data.sync="data[s.name]"></dynamic-page-table>
+                                <dynamic-page-table :structure="s.body" :data="data[s.name]" @add="data[s.name].push($event)"></dynamic-page-table>
                             </div>
 
                         </td>
@@ -38,18 +38,24 @@
         el: "#div1",
         data: {
             structure: [],
-            data: []
+            data:null,
         },
         async created() {
             var resp = await this.$http.get(window.self.location + "/data");
-            this.data = resp.data;
+            this.data = resp.data||{};
+            
             var resp = await this.$http.get(window.self.location + "/structure");
             if (resp.data.error) {
                 alert(resp.data.error.message);
                 return;
             }
             this.structure = resp.data;
-            
+
+            for(s of this.structure) {
+                if(s.type=="list"){
+                    this.data[s.name]=this.data[s.name]||[];
+                }
+            }
         },
         methods: {
             async submit() {

@@ -21,6 +21,7 @@
             autosize
             type="textarea"
             show-word-limit
+            @input="$forceUpdate()"
           ></el-input>
 
           <input
@@ -33,7 +34,12 @@
           />
 
           <div v-if="b.type=='list'">
-            <dynamic-page-table :structure="b.body" :data.sync="data[b.name]"></dynamic-page-table>
+            <dynamic-page-table
+              ref="dpt"
+              :structure="b.body"
+              :data="d[b.name]"
+              @add="d[b.name].push($event)"
+            ></dynamic-page-table>
           </div>
         </td>
       </tr>
@@ -46,15 +52,8 @@ module.exports = {
     data: Array,
     structure: Array,
   },
-  created() {
-    console.log("data", this.data);
-    for (b of this.structure) {
-      if (b.type == "list") {
-        this.data[b.name] = this.data[b.name] ?? [];
-        console.log(this.data);
-      }
-    }
-  },
+  watch: {},
+  created() {},
   methods: {
     onClickDel(i) {
       this.data.splice(i, 1);
@@ -70,7 +69,7 @@ module.exports = {
           d[b.name] = "";
         }
       }
-      this.data.push(d);
+      this.$emit("add", d);
       this.$forceUpdate();
     },
   },
