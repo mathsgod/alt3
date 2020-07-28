@@ -1,39 +1,5 @@
-{{a1|text}}
-{{a2|image}}
-
-
-{% for a in b %}
-    {{hello3|text}}
-{% endfor %}
-
-
-
-{% for row in rows|list %}
-
-
-
-
-<div>
-    {{row.input1|text}}:
-    <br/>
-
-    <ul>
-
-    {% for r2 in row.arr|list %}
-
-        
-
-    <li>
-
-    {{hello|text}}
-
-
-        {{r2.input1|text}}
-        {{r2.image2|image}}
-
-    </li>
-
+{% for a1 in arr1|list %}
+    {% for row in rows %}
+        {{a1.input2|text}}
     {% endfor %}
-    </ul>
-</div>
 {% endfor %}

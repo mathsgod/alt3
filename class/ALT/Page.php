@@ -85,6 +85,10 @@ class Page extends \App\Page
                 $this->master->data["custom_js"][] = "js/" . basename($js);
             }
 
+            foreach (glob($pi["cms_root"] . "/css/*.css") as $js) {
+                $this->master->data["custom_css"][] = "css/" . basename($js);
+            }
+
             if (is_readable($pi["cms_root"] . "/AdminLTE/custom-header.html")) {
                 $this->master->data["custom_header"] = file_get_contents($pi["cms_root"] . "/AdminLTE/custom-header.html");
             }

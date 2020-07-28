@@ -176,6 +176,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {% endfor %}
 
 
+    <!-- custom css -->
+    {% for css in custom_css %}
+    <link rel="stylesheet" type="text/css" href="{{css}}" />
+    {% endfor %}
+
 
     <script src="{{system_base}}/src/jquery.ajaxbox.js" defer></script>
 </head>

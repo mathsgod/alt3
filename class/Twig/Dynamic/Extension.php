@@ -32,30 +32,18 @@ class Extension extends \Twig\Extension\AbstractExtension
                 $expr = $n->getNode("expr");
                 if (!$expr->getNode("node")->hasNode("filter")) continue;
                 $filter = $expr->getNode("node")->getNode("filter");
-
                 if (!$expr->getNode("node")->getNode("node")->hasAttribute("name")) continue;
 
-                switch ($filter->getAttribute("value")) {
-                    case "text":
-                        $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                        $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                        $rets[] = [
-                            "type" => "text",
-                            "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
-                            "attributes" => $args
-                        ];
-                        break;
-                    case "image":
-                        $rets[] = [
-                            "type" => "image",
-                            "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
-                        ];
-                        break;
-                }
+                $rets[] = $this->parsePrintNode($n);
             }
             if ($n instanceof ForNode) {
-                foreach ($this->findNonChildInFor($n->getNode("body")) as $non_child) {
-                    $rets[] = $non_child;
+
+                foreach ($this->findForBody($n->getNode("body")) as $child) {
+                    $rets[] = $child;
+                }
+
+                foreach ($this->findNonChildInFor($n->getNode("body")) as $child) {
+                    $rets[] = $child;
                 }
             }
         }
@@ -79,12 +67,18 @@ class Extension extends \Twig\Extension\AbstractExtension
         return $args;
     }
 
-    private function findForBody(Node $node)
+    private function findForBody(Node $node): array
     {
-        $nodes = $this->filterNodes($node);
-        $rets = [];
 
-        foreach ($nodes as $n) {
+        $nodes = iterator_to_array($node);
+
+        //$nodes = $this->filterNodes($node);
+        $rets = [
+            "global" => [],
+            "body" => []
+        ];
+
+        foreach ($nodes[0] as $n) {
             if ($n instanceof ForNode) {
 
                 $rets[] = [
@@ -95,23 +89,28 @@ class Extension extends \Twig\Extension\AbstractExtension
             }
 
             if ($n instanceof PrintNode) {
+
                 $expr = $n->getNode("expr");
+                if (!$expr->getNode("node")->getNode("node")->hasNode("attribute")) {
+                    $rets["global"][] = $this->parsePrintNode($n);
+                    continue;
+                }
+
                 $filter = $expr->getNode("node")->getNode("filter");
 
                 switch ($filter->getAttribute("value")) {
                     case "text":
-                        if (!$expr->getNode("node")->getNode("node")->hasNode("attribute")) continue;
 
                         $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
                         $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                        $rets[] = [
+                        $rets["body"][] = [
                             "type" => "text",
                             "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value"),
                             "attributes" => $args
                         ];
                         break;
                     case "image":
-                        $rets[] = [
+                        $rets["body"][] = [
                             "type" => "image",
                             "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
                         ];
@@ -147,6 +146,45 @@ class Extension extends \Twig\Extension\AbstractExtension
     }
 
     /**
+     * parse ForNode and return array of result
+     */
+    public function parseForNode(ForNode $node): array
+    {
+        $rets = [];
+
+        if ($node->getNode("seq")->hasNode("filter") && $node->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
+
+
+            $r = $this->findForBody($node->getNode("body"));
+
+            foreach ($r["global"] as $child) {
+                $rets[] = $child;
+            }
+
+            $rets[] = [
+                "type" => "list",
+                "name" => $node->getNode("seq")->getNode("node")->getAttribute("name"),
+                "body" => $r["body"]
+            ];
+        } else {
+            foreach ($node->getNode("body") as $node) {
+                foreach ($node as $n) {
+                    if ($n instanceof ForNode) {
+                        foreach ($this->parseForNode($n) as $child) {
+                            $rets[] = $child;
+                        }
+                    }
+
+                    if ($n instanceof PrintNode) {
+                        $rets[] = $this->parsePrintNode($n);
+                    }
+                }
+            }
+        }
+        return $rets;
+    }
+
+    /**
      * parse the twig structure
      */
     public function parse(string $code): array
@@ -162,18 +200,8 @@ class Extension extends \Twig\Extension\AbstractExtension
         $rets = [];
         foreach ($nodes as $n) {
             if ($n instanceof ForNode) {
-                if ($n->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
-                    foreach ($this->findNonChildInFor($n->getNode("body")) as $non_child) {
-                        $rets[] = $non_child;
-                    }
-
-                    $r = $this->findForBody($n->getNode("body"));
-
-                    $rets[] = [
-                        "type" => "list",
-                        "name" => $n->getNode("seq")->getNode("node")->getAttribute("name"),
-                        "body" => $r
-                    ];
+                foreach ($this->parseForNode($n) as $res) {
+                    $rets[] = $res;
                 }
             }
 
@@ -238,7 +266,6 @@ class Extension extends \Twig\Extension\AbstractExtension
 
         foreach ($node as $n) {
             if ($n instanceof ForNode) {
-                if (!$n->getNode("seq")->hasNode("filter")) continue;
                 $ret[] = $n;
                 continue;
             }
