@@ -304,13 +304,16 @@ class Extension extends \Twig\Extension\AbstractExtension
 
     public function getFilter(Node $node)
     {
-        foreach($node as $n){
-            if($n instanceof FilterExpression){
-                
-
+        foreach ($node as $n) {
+            if ($n instanceof FilterExpression) {
+                $filter = $n->getNode("filter");
+                $value = $filter->getAttribute("value");
+                if ($value == "text" || $value == "image") {
+                    return $n;
+                }
             }
+            return $this->getFilter($node);
         }
-        $expr = $node->getNode("expr");
     }
 
     /**
