@@ -145,6 +145,73 @@ class Extension extends \Twig\Extension\AbstractExtension
         }
     }
 
+    public function findAllPrintNode(Node $node, string $value_target): array
+    {
+        $rets = [];
+
+        foreach ($node as $n) {
+            if ($n instanceof PrintNode) {
+                $node = $n->getNode("expr")->getNode("node");
+                if (!$node->hasNode("filter")) continue; //normal print node
+                $name_expression = $node->getNode("node");
+                if ($name_expression->hasNode("node")) {
+                    if ($name_expression->getNode("node")->getAttribute("name") == $value_target) {
+                        $rets[] = $n;
+
+                        continue;
+                    }
+                }
+            }
+
+            foreach ($this->findAllPrintNode($n, $value_target) as $n) {
+                $rets[] = $n;
+            }
+        }
+        return $rets;
+    }
+
+    public function parseForNodeBody(ForNode $node): array
+    {
+        $value_target = $node->getNode("value_target")->getAttribute("name");
+
+        $body = iterator_to_array($node->getNode("body"))[0];
+        $rets = [];
+
+        foreach ($this->findAllPrintNode($body, $value_target) as $n) {
+            $node = $n->getNode("expr")->getNode("node");
+
+
+            if (!$node->hasNode("filter")) continue; //normal print node
+
+            $name_expression = $node->getNode("node");
+            if ($name_expression->hasNode("node")) {
+                if ($name_expression->getNode("node")->getAttribute("name") == $value_target) {
+                    $rets[] = [
+                        "type" => "text",
+                        "name" => $name_expression->getNode("attribute")->getAttribute("value")
+                    ];
+                }
+            }
+        }
+
+        foreach ($body as $n) {
+
+            if ($n instanceof ForNode) {
+                $seq = $n->getNode("seq");
+                $name_expression = $seq->getNode("node")->getNode("node");
+                if ($name_expression->getAttribute("name") == $value_target) {
+                    $rets[] = [
+                        "type" => "list",
+                        "name" => $seq->getNode("node")->getNode("attribute")->getAttribute("value"),
+                        "body" => $this->parseForNodeBody($n)
+                    ];
+                }
+            }
+        }
+
+        return $rets;
+    }
+
     /**
      * parse ForNode and return array of result
      */
@@ -152,39 +219,46 @@ class Extension extends \Twig\Extension\AbstractExtension
     {
         $rets = [];
 
-        if ($node->getNode("seq")->hasNode("filter") && $node->getNode("seq")->getNode("filter")->getAttribute("value") == "list") {
-            
-            
-            //filter all 
-            outP($node);
-            die();
-
-            $r = $this->findForBody($node->getNode("body"));
-
-            foreach ($r["global"] as $child) {
-                $rets[] = $child;
-            }
+        $seq = $node->getNode("seq");
+        if ($seq->hasNode("filter") && $seq->getNode("filter")->getAttribute("value") == "list") {
 
             $rets[] = [
                 "type" => "list",
-                "name" => $node->getNode("seq")->getNode("node")->getAttribute("name"),
-                "body" => $r["body"]
+                "name" => $seq->getNode("node")->getAttribute("name"),
+                "body" =>  $this->parseForNodeBody($node)
             ];
         } else {
-            foreach ($node->getNode("body") as $node) {
-                foreach ($node as $n) {
-                    if ($n instanceof ForNode) {
-                        foreach ($this->parseForNode($n) as $child) {
-                            $rets[] = $child;
-                        }
-                    }
-
-                    if ($n instanceof PrintNode) {
-                        $rets[] = $this->parsePrintNode($n);
-                    }
-                }
+            foreach ($this->parseNode($node) as $r) {
+                $rets[] = $r;
             }
         }
+        return $rets;
+    }
+
+    public function parseNode(Node $node): array
+    {
+
+        $rets = [];
+        foreach ($node as $n) {
+
+            if ($n instanceof ForNode) {
+                foreach ($this->parseForNode($n) as $r) {
+                    $rets[] = $r;
+                }
+                continue;
+            }
+
+            if ($n instanceof PrintNode) {
+                $rets[] = $this->parsePrintNode($n);
+                continue;
+            }
+
+            foreach ($this->parseNode($n) as $r) {
+                $rets[] = $r;
+                continue;
+            }
+        }
+
         return $rets;
     }
 
@@ -199,126 +273,7 @@ class Extension extends \Twig\Extension\AbstractExtension
 
         $stream = $env->tokenize(new \Twig\Source($code, "code"));
         $node = $env->parse($stream);
-        $nodes = $this->filterNodes($node);
 
-        $rets = [];
-        foreach ($nodes as $n) {
-            if ($n instanceof ForNode) {
-                foreach ($this->parseForNode($n) as $res) {
-                    $rets[] = $res;
-                }
-            }
-
-            if ($n instanceof PrintNode) {
-                $rets[] = $this->parsePrintNode($n);
-            }
-
-
-            if ($n instanceof ArrayList\Node) {
-                $r = [
-                    "type" => "list",
-                    "name" => $n->getNode("type")->getAttribute(("value")),
-                    "body" => []
-                ];
-
-                $body = $n->getNode("body");
-                foreach ($body as $child) {
-                    if ($child instanceof Image\Node) {
-                        $r["body"][] = [
-                            "type" => "image",
-                            "name" => $child->getNode("type")->getAttribute(("value"))
-                        ];
-                    }
-                    if ($child instanceof Text\Node) {
-                        $r["body"][] = [
-                            "type" => "text",
-                            "name" => $child->getNode("type")->getAttribute(("value"))
-                        ];
-                    }
-                }
-
-                $rets[] = $r;
-                continue;
-            }
-
-            if ($n instanceof Image\Node) {
-
-                $rets[] = [
-                    "type" => "image",
-                    "name" => $n->getNode("type")->getAttribute(("value"))
-                ];
-            }
-
-            if ($n instanceof Text\Node) {
-
-                $rets[] = [
-                    "type" => "text",
-                    "name" => $n->getNode("type")->getAttribute(("value"))
-                ];
-            }
-        }
-
-        //outP($rets);
-        //die();
-
-        return $rets;
-    }
-
-    private function filterNodes($node)
-    {
-        $ret = [];
-
-        foreach ($node as $n) {
-            if ($n instanceof ForNode) {
-                $ret[] = $n;
-                continue;
-            }
-
-            if ($n instanceof PrintNode) {
-                $expr = $n->getNode("expr");
-                if (!$expr->getNode("node")->hasNode("filter")) continue;
-                $ret[] = $n;
-                continue;
-            }
-
-            if ($n instanceof Image\Node) {
-                $expr = $n->getNode("expr");
-                if (!$expr->getNode("node")->hasNode("filter")) continue;
-                $ret[] = $n;
-                continue;
-            }
-            if ($n instanceof Text\Node) {
-                $ret[] = $n;
-                continue;
-            }
-            if ($n instanceof ArrayList\Node) {
-                $ret[] = $n;
-                continue;
-            }
-
-            foreach ($this->filterNodes($n) as $child) {
-                $ret[] = $child;
-            }
-        }
-        return $ret;
-    }
-
-    private function getAllTwigChildNode($node)
-    {
-        $nodes = $node->getIterator();
-        $ret = [];
-        foreach ($nodes as $node) {
-            $ret[] = $node;
-
-            foreach ($this->getAllTwigChildNode($node) as $n) {
-                $ret[] = $n;
-            }
-        }
-        return $ret;
-    }
-
-    public static function SetData(array $data)
-    {
-        self::$Data = $data;
+        return $this->parseNode($node);
     }
 }

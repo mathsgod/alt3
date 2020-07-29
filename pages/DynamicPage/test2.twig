@@ -1,1 +1,22 @@
-{% for a1 in arr1|list %}{% for row in rows %}{{row.input1}}{{a1.input2|text}}{% endfor %}{% endfor %}  
+{% if bbb %}
+
+{% for a in arr1|list %}
+
+
+{{a.input1|text}}
+
+{% for b in a.bs|list %}
+
+{{b.input2|text}}
+
+
+{% endfor %}
+
+{% endfor %}  
+
+{{other1|text}}
+{% endif %}
+{{other2|text}}
+
+
+
