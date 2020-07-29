@@ -137,9 +137,12 @@ class Extension extends \Twig\Extension\AbstractExtension
                 ];
                 break;
             case "image":
+                $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
+                $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
                 return [
                     "type" => "image",
-                    "name" => $expr->getNode("node")->getNode("node")->getAttribute("name")
+                    "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
+                    "attributes" => $args
                 ];
                 break;
         }
@@ -186,9 +189,15 @@ class Extension extends \Twig\Extension\AbstractExtension
             $name_expression = $node->getNode("node");
             if ($name_expression->hasNode("node")) {
                 if ($name_expression->getNode("node")->getAttribute("name") == $value_target) {
+
+                    $arguments_node = iterator_to_array($node->getNode("arguments"));
+                    $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
+
+                    $type=$node->getNode("filter")->getAttribute("value");
                     $rets[] = [
-                        "type" => "text",
-                        "name" => $name_expression->getNode("attribute")->getAttribute("value")
+                        "type" => $type,
+                        "name" => $name_expression->getNode("attribute")->getAttribute("value"),
+                        "attributes" => $args
                     ];
                 }
             }
