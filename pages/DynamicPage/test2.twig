@@ -1,14 +1,15 @@
+{% for row1 in arr1 %}
+
+{{other4|text({maxlength:10})}}
+
+{% for row2 in arr2|list %}
+
+{{other2|text}}
+
+{{row2.input2|text}}
+{% endfor %}
 
 
-{% for a in arr1|list %}
+{% endfor %}
 
-
-{{a.input1|image({maxlength:10})}}
-
-
-{% endfor %}  
-
-{{other1|image({maxlength:10})}}
-
-
-
+{{other1|text}}
