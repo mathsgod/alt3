@@ -1,15 +1,6 @@
-{% for row1 in arr1 %}
+{% if a %}
+{{other3|text({maxlength:10})}}
+{% else %}
 
 {{other4|text({maxlength:10})}}
-
-{% for row2 in arr2|list %}
-
-{{other2|text}}
-
-{{row2.input2|text}}
-{% endfor %}
-
-
-{% endfor %}
-
-{{other1|text}}
+{% endif %}

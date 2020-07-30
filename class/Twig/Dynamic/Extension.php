@@ -2,7 +2,10 @@
 
 namespace Twig\Dynamic;
 
+use App\Translate;
+use ArrayObject;
 use Doctrine\Instantiator\Instantiator;
+use Traversable;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Expression\GetAttrExpression;
@@ -10,6 +13,7 @@ use Twig\Node\Expression\NameExpression;
 use Twig\Node\ForNode;
 use Twig\Node\Node;
 use Twig\Node\PrintNode;
+use Twig\Node\TextNode;
 
 class Extension extends \Twig\Extension\AbstractExtension
 {
@@ -25,191 +29,64 @@ class Extension extends \Twig\Extension\AbstractExtension
         return [new Text\Filter(), new Image\Filter(), new ArrayList\Filter()];
     }
 
-    private function findNonChildInFor(Node $node)
+    /**
+     * parse normal print node, if this print node is not a seq of for, ignore it
+     */
+    private function parsePrintNode(PrintNode $node)
     {
-        $nodes = $this->filterNodes($node);
-        $rets = [];
-        foreach ($nodes as $n) {
-            if ($n instanceof PrintNode) {
-                $expr = $n->getNode("expr");
-                if (!$expr->getNode("node")->hasNode("filter")) continue;
-                $filter = $expr->getNode("node")->getNode("filter");
-                if (!$expr->getNode("node")->getNode("node")->hasAttribute("name")) continue;
-
-                $rets[] = $this->parsePrintNode($n);
-            }
-            if ($n instanceof ForNode) {
-
-                foreach ($this->findForBody($n->getNode("body")) as $child) {
-                    $rets[] = $child;
-                }
-
-                foreach ($this->findNonChildInFor($n->getNode("body")) as $child) {
-                    $rets[] = $child;
-                }
-            }
-        }
-        return $rets;
-    }
-
-    private function getHashArugments(ArrayExpression $node): array
-    {
-        $arg_name = null;
-        $args = [];
-        foreach ($node as $arg) {
-
-            if (is_null($arg_name)) {
-                $arg_name = $arg->getAttribute("value");
-                continue;
-            }
-
-            $args[$arg_name] = $arg->getAttribute("value");
-            $arg_name = null;
-        }
-        return $args;
-    }
-
-    private function findForBody(Node $node): array
-    {
-
-        $nodes = iterator_to_array($node);
-
-        //$nodes = $this->filterNodes($node);
-        $rets = [
-            "global" => [],
-            "body" => []
+        $filter = $this->getFilter($node);
+        return  [
+            "type" => $filter->getNode("filter")->getAttribute("value"),
+            "name" => $this->getNodeName($node),
+            "attributes" => $this->getArgument($filter)
         ];
+    }
 
-        foreach ($nodes[0] as $n) {
-            if ($n instanceof ForNode) {
 
-                $rets[] = [
-                    "type" => "list",
-                    "name" => $n->getNode("seq")->getNode("node")->getNode("attribute")->getAttribute("value"),
-                    "body" => $this->findForBody($n->getNode("body"))
-                ];
-            }
-
+    public function processForPrintNode(Node $node, string $value_target): array
+    {
+        $rets = [];
+        foreach ($node as $name => $n) {
             if ($n instanceof PrintNode) {
+                if ($this->getContextName($n) == $value_target) {
 
-                $expr = $n->getNode("expr");
-                if (!$expr->getNode("node")->getNode("node")->hasNode("attribute")) {
-                    $rets["global"][] = $this->parsePrintNode($n);
-                    continue;
+                    $filter_expression = $this->getFilter($n);
+                    $rets[] = [
+                        "type" => $filter_expression->getNode("filter")->getAttribute("value"),
+                        "name" => $filter_expression->getNode("node")->getNode("attribute")->getAttribute("value"),
+                        "attributes" => $this->getArgument($filter_expression)
+                    ];
+
+                    $node->removeNode($name);
                 }
-
-                $filter = $expr->getNode("node")->getNode("filter");
-
-                switch ($filter->getAttribute("value")) {
-                    case "text":
-
-                        $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                        $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                        $rets["body"][] = [
-                            "type" => "text",
-                            "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value"),
-                            "attributes" => $args
-                        ];
-                        break;
-                    case "image":
-                        $rets["body"][] = [
-                            "type" => "image",
-                            "name" => $expr->getNode("node")->getNode("node")->getNode("attribute")->getAttribute("value")
-                        ];
-                        break;
-                }
+            }
+            foreach ($this->processForPrintNode($n, $value_target) as $c) {
+                $rets[] = $c;
             }
         }
+
         return $rets;
     }
 
-    private function parsePrintNode(PrintNode $node): array
-    {
-        $expr = $node->getNode("expr");
-        $filter = $expr->getNode("node")->getNode("filter");
-
-        switch ($filter->getAttribute("value")) {
-            case "text":
-                $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                return  [
-                    "type" => "text",
-                    "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
-                    "attributes" => $args
-                ];
-                break;
-            case "image":
-                $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-                return [
-                    "type" => "image",
-                    "name" => $expr->getNode("node")->getNode("node")->getAttribute("name"),
-                    "attributes" => $args
-                ];
-                break;
-        }
-    }
-
-
-
-    public function getFilterExpression(FilterExpression $node, string $value_target)
-    {
-
-        $value = $node->getNode("filter")->getAttribute("value");
-
-        if ($value == "text" || $value == "image") {
-
-            if ($node->getNode("node") instanceof GetAttrExpression) {
-                $get_attr_expression = $node->getNode("node");
-
-                if ($get_attr_expression->getNode("node") instanceof NameExpression) {
-                    $name_expression = $get_attr_expression->getNode("node");
-
-                    if ($name_expression->getAttribute("name") == $value_target) {
-                        return $node;
-                    }
-                }
-            }
-        } elseif ($value == "list") {
-            if ($node->getNode("node") instanceof GetAttrExpression) {
-                $get_attr_expression = $node->getNode("node");
-                if ($get_attr_expression->getNode("node") instanceof NameExpression) {
-                    $name_expression = $get_attr_expression->getNode("node");
-
-                    if ($name_expression->getAttribute("name") == $value_target) {
-                        return $node;
-                    }
-                }
-            }
-        }
-
-        if ($node->getNode("node") instanceof FilterExpression) {
-            return $this->getFilterExpression($node->getNode("node"), $value_target);
-        }
-    }
-
-    public function filterTargetNode(Node $node, $value_target)
+    public function processForForNode(Node $node, string $value_target): array
     {
         $rets = [];
-
-        foreach ($node as $n) {
-            if ($n instanceof PrintNode) {
-                $expr = $n->getNode("expr");
-
-                if ($this->getFilterExpression($expr, $value_target)) {
-                    $rets[] = $n;
-                }
-            }
+        foreach ($node as $name => $n) {
 
             if ($n instanceof ForNode) {
-                $seq = $n->getNode("seq");
-                if ($this->getFilterExpression($seq, $value_target)) {
-                    $rets[] = $n;
+
+                if ($this->getContextName($n) == $value_target) {
+                    $rets[] = [
+                        "type" => "list",
+                        "name" => $this->getNodeName($n),
+                        "body" => $this->parseForNodeBody($n)
+                    ];
+
+                    $node->setNode($name, $n->getNode("body"));
                 }
             }
-
-            foreach ($this->filterTargetNode($n, $value_target) as $n) {
-                $rets[] = $n;
+            foreach ($this->processForForNode($n, $value_target) as $c) {
+                $rets[] = $c;
             }
         }
         return $rets;
@@ -218,102 +95,94 @@ class Extension extends \Twig\Extension\AbstractExtension
     public function parseForNodeBody(ForNode $node): array
     {
         $value_target = $node->getNode("value_target")->getAttribute("name");
+        $body = $node->getNode("body");
+
         $rets = [];
-        foreach ($this->filterTargetNode($node, $value_target) as $n) {
-
-            if ($n instanceof PrintNode) {
-
-                $expr = $n->getNode("expr");
-                $filter_expression = $this->getFilterExpression($expr, $value_target);
-                $get_attr_expression = $filter_expression->getNode("node");
-
-                $arguments_node = iterator_to_array($expr->getNode("node")->getNode("arguments"));
-                $args = $arguments_node[0] ? $this->getHashArugments($arguments_node[0]) : [];
-
-                $rets[] = [
-                    "type" => "text",
-                    "name" => $get_attr_expression->getNode("attribute")->getAttribute("value"),
-                    "attributes" => $args
-
-                ];
-            }
-
-            if ($n instanceof ForNode) {
-                $rets[] = [
-                    "type" => "list",
-                    "name" => $n->getNode("value_target")->getAttribute("name"),
-                    "body" => $this->parseForNodeBody($n)
-                ];
-            }
+        foreach ($this->processForPrintNode($body, $value_target) as $r) {
+            $rets[] = $r;
         }
+
+        foreach ($this->processForForNode($body, $value_target) as $r) {
+            $rets[] = $r;
+        }
+
         return $rets;
     }
 
-    public function isValidedPrintNode(Node $node): bool
-    {
-        $value = $node->getNode("filter")->getAttribute("value");
 
-        if ($value == "text" || $value == "image") {
-            return true;
-        }
-
-        if ($node->getNode("node") instanceof FilterExpression) {
-            return $this->isValidedPrintNode($node->getNode("node"));
-        }
-    }
-
-    public function findAllNonForPrintNode(Node $node): array
-    {
-        $rets = [];
-        foreach ($node as $n) {
-            if ($n instanceof PrintNode) {
-                if ($this->isValidedPrintNode($n->getNode("expr"))) {
-                    $rets[] = $n;
-                }
-            }
-
-            foreach ($this->findAllNonForPrintNode($n) as $nn) {
-                $rets[] = $nn;
-            }
-        }
-        return $rets;
-    }
-
-    public function getNodeType(Node $node)
-    {
-        $value = $node->getNode("filter")->getAttribute("value");
-
-        if ($value == "text" || $value == "image") {
-            return $value;
-        }
-        if ($node->getNode("node") instanceof FilterExpression) {
-            return $this->getNodeType($node->getNode("node"));
-        }
-    }
-
-
-    public function filterNameExpression(Node $node)
+    public function getNameExpression(Node $node)
     {
         foreach ($node as $n) {
             if ($n instanceof NameExpression) {
                 return $n;
             }
-            return $this->filterNameExpression($n);
+            if ($r = $this->getNameExpression($n)) {
+                return $r;
+            }
         }
     }
 
     public function getFilter(Node $node)
     {
-        foreach ($node as $n) {
-            if ($n instanceof FilterExpression) {
-                $filter = $n->getNode("filter");
-                $value = $filter->getAttribute("value");
-                if ($value == "text" || $value == "image") {
-                    return $n;
-                }
+        if ($node instanceof FilterExpression) {
+            $filter = $node->getNode("filter");
+            $value = $filter->getAttribute("value");
+            if ($value == "text" || $value == "image" || $value == "list") {
+                return $node;
             }
-            return $this->getFilter($node);
         }
+
+        foreach ($node as $n) {
+            if ($r = $this->getFilter($n)) {
+                return $r;
+            }
+        }
+    }
+
+    public function getArgument(FilterExpression $node): array
+    {
+        if (!$node->hasNode("arguments")) return [];
+        $rets = [];
+
+        foreach ($node->getNode("arguments") as $args) {
+            if ($args instanceof ArrayExpression) {
+
+                $arg_name = null;
+                $r = [];
+                foreach ($args as $n) {
+
+                    if (is_null($arg_name)) {
+                        $arg_name = $n->getAttribute("value");
+                        continue;
+                    }
+
+                    $r[$arg_name] = $n->getAttribute("value");
+                    $arg_name = null;
+                }
+
+                $rets[] = $r;
+            }
+        }
+
+        return $rets;
+    }
+
+    public function getContextName(Node $node):string
+    {
+        $filter = $this->getFilter($node);
+        if ($filter) {
+            $name_expression = $this->getNameExpression($filter);
+            return $name_expression->getAttribute("name");
+        }
+        return "";
+    }
+
+
+    public function getNodeName(Node $node): string
+    {
+        $filter = $this->getFilter($node);
+        $name_expression = $this->getNameExpression($filter);
+        return $name_expression->getAttribute("name");
     }
 
     /**
@@ -321,51 +190,57 @@ class Extension extends \Twig\Extension\AbstractExtension
      */
     public function parseForNode(ForNode $node): array
     {
-        $rets = [];
-        $seq = $node->getNode("seq");
-        if ($seq->hasNode("filter") && $seq->getNode("filter")->getAttribute("value") == "list") {
+        return [
+            "type" => "list",
+            "name" => $this->getNodeName($node),
+            "body" =>  $this->parseForNodeBody($node)
+        ];
+    }
 
-            $rets[] = [
-                "type" => "list",
-                "name" => $seq->getNode("node")->getAttribute("name"),
-                "body" =>  $this->parseForNodeBody($node)
-            ];
-            foreach ($this->parseNode($node) as $n) {
-                $rets[] = $n;
+    public function removeNode(Node $node)
+    {
+        foreach ($node as $name => $n) {
+            if ($n instanceof TextNode) {
+                $node->removeNode($name);
+                continue;
             }
-        } else {
 
-            foreach ($this->findAllNonForPrintNode($node) as $n) {
-                outP((string)$n);
-                die();
-                $expr = $n->getNode("expr");
-                $name_expression = $this->filterNameExpression($expr);
-                $rets[] = [
-                    "type" => $this->getNodeType($expr),
-                    "name" => $name_expression->getAttribute("name")
-                ];
+
+            if ($n instanceof PrintNode) {
+                //remove non valid filter
+                if (!$this->getFilter($n)) {
+                    $node->removeNode($name);
+                }
             }
+
+            $this->removeNode($n);
         }
 
-        return $rets;
+
+        foreach ($node as $name => $n) {
+            if ($n instanceof ForNode) {
+                $filter = $this->getFilter($n->getNode("seq"));
+
+                if (!$filter) { //normal for loop
+                    $node->setNode($name,  $n->getNode("body"));
+                }
+            }
+
+            $this->removeNode($n);
+        }
     }
 
     public function parseNode(Node $node): array
     {
 
         $rets = [];
-        foreach ($node as $n) {
-
+        foreach ($node as $name => $n) {
             if ($n instanceof ForNode) {
-                foreach ($this->parseForNode($n) as $r) {
-                    $rets[] = $r;
-                }
-                continue;
+                $rets[] = $this->parseForNode($n);
             }
 
             if ($n instanceof PrintNode) {
                 $rets[] = $this->parsePrintNode($n);
-                continue;
             }
 
             foreach ($this->parseNode($n) as $r) {
@@ -388,7 +263,9 @@ class Extension extends \Twig\Extension\AbstractExtension
 
         $stream = $env->tokenize(new \Twig\Source($code, "code"));
         $node = $env->parse($stream);
+        $node = $node->getNode("body");
 
+        $this->removeNode($node);
         return $this->parseNode($node);
     }
 }
