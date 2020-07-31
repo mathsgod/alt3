@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "652aa600a43839b4bed42c6c8d5ad0bd",
+    "content-hash": "70ccaed58e55851f83d55a4b88fc37b9",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -755,11 +755,11 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.4.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "e6689a1dfc9716ef85a8102dd093ca46ff3ebfe1"
+                "reference": "2ab6fa7fead3dd45fd0dbffffcab8244d441570c"
             },
             "require": {
                 "mathsgod/r-psr7": "2.*",
@@ -779,6 +779,11 @@
                     "R\\": "src/"
                 }
             },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
@@ -789,7 +794,7 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-03-10T09:35:04+00:00"
+            "time": "2020-07-31T03:21:26+00:00"
         },
         {
             "name": "mathsgod/r-db",
