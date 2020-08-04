@@ -96,7 +96,9 @@ class User_ae extends ALT\Page
         }
         $mv->addHr();
 
-        $mv->add("Language")->select("language")->ds($this->app->config["language"]);
+
+        
+        $mv->add("Language")->select("language")->ds($this->app->config["system"]["language"]);
         $mv->add("Default page")->input("default_page");
         return $this->createForm($mv);
     }
