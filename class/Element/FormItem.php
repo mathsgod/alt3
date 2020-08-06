@@ -10,4 +10,16 @@ class FormItem extends HTMLElement
     {
         parent::__construct("el-form-item");
     }
+
+    public function __get($name)
+    {
+        if ($name == "rules") {
+            if (!$this->hasAttribute(":rules")) {
+                $this->setAttribute(":rules", json_encode([]));
+            }
+            return $this->attributes->getNamedItem(":rules");
+        }
+        return parent::__get($name);
+    }
+
 }

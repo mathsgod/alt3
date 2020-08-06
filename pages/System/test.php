@@ -1,29 +1,5 @@
 <?php
 
-class EFormItem
-{
-
-    public function input()
-    {
-    }
-}
-
-class EForm
-{
-
-    public function __construct()
-    {
-        $this->form = new Element\Form();
-    }
-
-    public function add(string $label): EFormItem
-    {
-        $formitem = new EFormItem();
-        $this->form->append($formitem);
-        return $formitem;
-    }
-}
-
 
 class System_test extends ALT\Page
 {
@@ -35,123 +11,38 @@ class System_test extends ALT\Page
 
     public function get()
     {
-        $form = new Element\Form();
-        $form->setAttribute(":model", "form");
-        $form->setAttribute("method", "POST");
-        $form->setAttribute("label-width", "auto");
-        $form->setAttribute("ref", "form1");
+        $form = new ALT\Element\Form();
+        //$form->add("cb")->checkbox("cb");
+        //$form->add("switch")->switch("switch1");
+        
+        /*        $cbg = $form->add("CBG")->checkboxGroup();
 
+        $cbg->checkbox("cb", ["a", "b", "c"]);//
 
-        //--date
-        $formitem = new Element\FormItem();
-        $formitem->setAttribute("prop", "date1");
-        $formitem->setAttribute("label", "date1");
-        $formitem->setAttribute(":rules", json_encode([
-            ["required" => true]
-        ]));
+        //$form->add("CB")->checkbox("cb");
+        */
+        // $form->add("Input1")->input("input1")->required();
+        //$form->add("Date1")->datePicker("date1")->required();
+        $select=$form->add("Select")->select("select1");
+        $select->setAttribute("multiple",true);
+        $select->required()->option([
+            [
+                "value" => 1,
+                "label" => 1
+            ], [
+                "value" => 2,
+                "label" => 2
+            ], [
+                "value" => 3,
+                "label" => 3
+            ]
+        ]);
 
-        $date = new Element\DatePicker();
-        $date->setAttribute("name", "date1");
-        $date->setAttribute("v-model", "form.date1");
-        $formitem->append($date);
-        $form->append($formitem);
+        //   $form->setData(["input1" => "input1", "date1" => "2020-01-01"]);
 
-
-        //--input
-        $formitem = new Element\FormItem();
-        $formitem->setAttribute("prop", "input1");
-        $formitem->setAttribute("label", "input1");
-        $formitem->setAttribute(":rules", json_encode([
-            ["required" => true]
-        ]));
-
-        $input = new Element\Input();
-        $input->setAttribute("name", "input1");
-        $input->setAttribute("v-model", "form.input1");
-
-        $formitem->append($input);
-        $form->append($formitem);
-
-
-
-        $btn = new Element\Button();
-        $btn->setAttribute("type", "primary");
-        $btn->setAttribute("v-on:click", "submitForm");
-        $btn->textContent = "Submit";
-        $formitem = new Element\FormItem();
-        $formitem->append($btn);
-        $form->append($formitem);
-
-
-        $card = new Element\Card;
+        $card = new ALT\Element\Card();
         $card->append($form);
-
-        $card->setAttribute("id", "card");
-
-
-
-
         $this->write($card);
+        $this->write($card->script());
     }
 }
-?>
-
-<script>
-    new Vue({
-        el: "#card",
-        data: {
-            form: {}
-        },
-        methods: {
-            submitForm() {
-                this.$refs.form1.validate((valid) => {
-                    if (valid) {
-                        this.$refs.form1.$el.submit();
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-
-                    }
-                });
-
-            }
-        }
-    });
-</script>
-
-<div id="div2">
-
-    <el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
-        <el-form-item label="Name" :rules='["required" => true]'>
-            <el-input v-model="formLabelAlign.name"></el-input>
-            <el-input v-model="formLabelAlign.name1"></el-input>
-            <el-input v-model="formLabelAlign.name2"></el-input>
-            <el-input v-model="formLabelAlign.name3"></el-input>
-        </el-form-item>
-        <el-form-item label="Activity zone">
-            <el-input v-model="formLabelAlign.region"></el-input>
-        </el-form-item>
-        <el-form-item label="Activity form">
-            <el-input v-model="formLabelAlign.type"></el-input>
-        </el-form-item>
-    </el-form>
-</div>
-
-<script>
-    new Vue({
-        el: "#div2",
-        data() {
-            return {
-                labelPosition: 'right',
-                formLabelAlign: {
-                    name: '',
-                    name1: '',
-                    name2: '',
-                    name3: '',
-                    region: '',
-                    type: ''
-                }
-            };
-        }
-    });
-</script>
