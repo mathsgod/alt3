@@ -28,4 +28,14 @@ class Card extends \Element\Card
 
         return $script;
     }
+
+    public function form($data = null)
+    {
+        $form = new Form();
+        if ($data) {
+            $form->setData($data);
+        }
+        $this->append($form);
+        return $form;
+    }
 }

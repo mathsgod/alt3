@@ -2,6 +2,7 @@
 
 namespace App;
 
+use ALT\Element\Form;
 use Psr\Http\Message\ResponseInterface;
 use R\Psr7\Stream;
 use Exception;
@@ -109,6 +110,18 @@ class Page extends \R\Page
         return $card;
     }
 
+    protected function createElementCard()
+    {
+        $card = new \ALT\Element\Card();
+        return $card;
+    }
+
+    protected function createElementForm()
+    {
+        $form = new Form();
+        return $form;
+    }
+
     protected function createForm($content): UI\Form
     {
         $form = new UI\Form($this);
@@ -196,13 +209,12 @@ class Page extends \R\Page
             $request = $request->withQueryParams(["rt" => $rt]);
         }
 
-        if($request->getQueryParams()["_rt_request"]){
+        if ($request->getQueryParams()["_rt_request"]) {
             $rt = new UI\RTRequest($request);
             $request = $request->withQueryParams(["request" => $rt]);
         }
 
-        if ((
-            $request->isAccept("text/html")||$request->isAccept("*/*")) && $request->getMethod() == "get") {
+        if (($request->isAccept("text/html") || $request->isAccept("*/*")) && $request->getMethod() == "get") {
             $file = $route->file;
             $pi = pathinfo($file);
             if (file_exists($template_file = $pi["dirname"] . "/" . $pi["filename"] . ".twig")) {

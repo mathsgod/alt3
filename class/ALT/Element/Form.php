@@ -72,8 +72,12 @@ class Form extends \Element\Form
 function(){
             this.\$refs.$id.validate((valid) => {
                 if (valid) {
+                    var form=this.\$refs.$id;
+                    this.\$http.post(form.\$el.action,this.{$model}).then(resp=>{
+                        console.log(resp);
+                    });
                     
-                    var form = document.createElement("form");
+/*                    var form = document.createElement("form");
                     form.enctype="multipart/form-data";
                     form.method="POST";
                     for(var key in this.$model){
@@ -88,7 +92,7 @@ function(){
                         form.appendChild(hiddenField);
                     }
                     document.body.appendChild(form);
-                    form.submit();
+                    form.submit();*/
                     
                     //this.\$refs.$id.\$el.submit();
                 } else {

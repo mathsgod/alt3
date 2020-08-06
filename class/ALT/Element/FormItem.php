@@ -5,15 +5,107 @@ namespace ALT\Element;
 
 use Element\Checkbox;
 use Element\ElSwitch;
-use P\HTMLInputElement;
 
 class FormItem extends \Element\FormItem
 {
+    public function timeSelect(string $name)
+    {
+        $time = new TimeSelect();
+        $time->setAttribute("name", $name);
+        $this->append($time);
+        $this->setAttribute("prop", $name);
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $time->setAttribute("v-model", "$model.$name");
+        }
+        return $time;
+    }
+
+    public function timePicker(string $name)
+    {
+        $time = new TimePicker();
+        $time->setAttribute("name", $name);
+        $this->append($time);
+        $this->setAttribute("prop", $name);
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $time->setAttribute("v-model", "$model.$name");
+        }
+        return $time;
+    }
+
+    public function inputNumber(string $name)
+    {
+        $input = new InputNumber();
+        $input->setAttribute("name", $name);
+        $this->append($input);
+        $this->setAttribute("prop", $name);
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $input->setAttribute("v-model", "$model.$name");
+        }
+        return $input;
+    }
+
+    public function textarea(string $name)
+    {
+        $input = new Input();
+        $input->setAttribute("name", $name);
+        $input->setAttribute("type", "textarea");
+        $input->setAttribute(":autosize", json_encode(["minRows" => 4]));
+        $this->append($input);
+
+        $this->setAttribute("prop", $name);
+
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $input->setAttribute("v-model", "$model.$name");
+        }
+
+        return $input;
+    }
+
+    public function password(string $name)
+    {
+        $input = new Input();
+        $input->setAttribute("name", $name);
+        $input->setAttribute("show-password", true);
+        $this->append($input);
+
+
+        $this->setAttribute("prop", $name);
+
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $input->setAttribute("v-model", "$model.$name");
+        }
+
+        return $input;
+    }
+
+
+    public function email(string $name)
+    {
+        $input = new Input();
+        $input->setAttribute("name", $name);
+        $input->setAttribute("type", "email");
+        $this->append($input);
+
+        $this->setAttribute("prop", $name);
+
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $input->setAttribute("v-model", "$model.$name");
+        }
+
+        return $input;
+    }
 
     public function input(string $name)
     {
         $input = new Input();
         $input->setAttribute("name", $name);
+        $input->setAttribute("clearable", true);
         $this->append($input);
 
 
