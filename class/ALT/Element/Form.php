@@ -74,6 +74,7 @@ function(){
                 if (valid) {
                     
                     var form = document.createElement("form");
+                    form.enctype="multipart/form-data";
                     form.method="POST";
                     for(var key in this.$model){
                         var hiddenField = document.createElement("input");
