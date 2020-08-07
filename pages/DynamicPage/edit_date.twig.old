@@ -1,0 +1,75 @@
+
+<div id="div1">
+    <card>
+        <card-body>
+            <table class="table table-hover">
+                <tbody>
+                    <tr v-for="s in structure">
+                        <th v-text="s.name"></th>
+                        <td>
+                            <el-input v-if="s.type=='text'" v-model="data[s.name]" autosize type="textarea"
+                                v-bind="s.attributes" show-word-limit></el-input>
+                            <input v-if="s.type=='image'" v-model="data[s.name]" is="fileman" :name="s.name"
+                                :data-field="s.name" url="Fileman/?token=" />
+
+                            <div v-if="s.type=='list'">
+                                <dynamic-page-table :structure="s.body" :data="data[s.name]" @add="data[s.name].push($event)"></dynamic-page-table>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </card-body>
+
+        <card-footer>
+            <el-button type="success" @click="submit">Submit</el-button>
+        </card-footer>
+
+    </card>
+</div>
+
+<script>
+
+    Vue.component("dynamic-page-table", httpVueLoader("components/dynamic-page-table.vue"));
+    new Vue({
+        el: "#div1",
+        data: {
+            structure: [],
+            data:null,
+        },
+        async created() {
+            var resp = await this.$http.get(window.self.location + "/data");
+            this.data = resp.data||{};
+            
+            var resp = await this.$http.get(window.self.location + "/structure");
+            if (resp.data.error) {
+                alert(resp.data.error.message);
+                return;
+            }
+            this.structure = resp.data;
+
+            for(s of this.structure) {
+                if(s.type=="list"){
+                    this.data[s.name]=this.data[s.name]||[];
+                }
+            }
+        },
+        methods: {
+            async submit() {
+                var resp = await this.$http.post(window.self.location.href, this.data);
+                resp = resp.data;
+
+                if (resp.data) {
+                    window.history.back();
+                } else {
+                    alert("error");
+                }
+
+            }
+        }
+    });
+</script>

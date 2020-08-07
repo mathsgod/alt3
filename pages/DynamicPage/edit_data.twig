@@ -1,27 +1,16 @@
 <div id="div1">
     <card>
         <card-body>
-            <table class="table table-hover">
-                <tbody>
-                    <tr v-for="s in structure">
-                        <th v-text="s.name"></th>
-                        <td>
-                            <el-input v-if="s.type=='text'" v-model="data[s.name]" autosize type="textarea"
-                                v-bind="s.attributes" show-word-limit></el-input>
-                            <input v-if="s.type=='image'" v-model="data[s.name]" is="fileman" :name="s.name"
-                                :data-field="s.name" url="Fileman/?token=" />
-
-                            <div v-if="s.type=='list'">
-                                <dynamic-page-table :structure="s.body" :data="data[s.name]" @add="data[s.name].push($event)"></dynamic-page-table>
-                            </div>
-
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+            <div class="d-flex flex-wrap mb-5" v-for="s in structure">
+                <div class="mr-3" v-text="s.name" style="width: 200px;"></div>
+                <div class="flex-fill">
+                    <el-input v-if="s.type=='text'" v-model="data[s.name]" :autosize="{ minRows: 2}" type="textarea" v-bind="s.attributes" show-word-limit></el-input>
+                    <input v-if="s.type=='image'" v-model="data[s.name]" is="fileman" :name="s.name" :data-field="s.name" url="Fileman/?token=" />
+                    <div v-if="s.type=='list'">
+                        <dynamic-page-table :structure="s.body" :data="data[s.name]" @add="data[s.name].push($event)"></dynamic-page-table>
+                    </div>
+                </div>
+            </div>
         </card-body>
 
         <card-footer>
@@ -31,19 +20,20 @@
     </card>
 </div>
 
+<input type="hidden" id="system_base" value="{{system_base}}" />
 <script>
 
-    Vue.component("dynamic-page-table", httpVueLoader("components/dynamic-page-table.vue"));
+    Vue.component("dynamic-page-table", httpVueLoader(document.getElementById("system_base").value + "/components/dynamic-page-table.vue"));
     new Vue({
         el: "#div1",
         data: {
             structure: [],
-            data:null,
+            data: null,
         },
         async created() {
             var resp = await this.$http.get(window.self.location + "/data");
-            this.data = resp.data||{};
-            
+            this.data = resp.data || {};
+
             var resp = await this.$http.get(window.self.location + "/structure");
             if (resp.data.error) {
                 alert(resp.data.error.message);
@@ -51,9 +41,9 @@
             }
             this.structure = resp.data;
 
-            for(s of this.structure) {
-                if(s.type=="list"){
-                    this.data[s.name]=this.data[s.name]||[];
+            for (s of this.structure) {
+                if (s.type == "list") {
+                    this.data[s.name] = this.data[s.name] || [];
                 }
             }
         },
