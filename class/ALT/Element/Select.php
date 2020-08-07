@@ -9,6 +9,12 @@ use Traversable;
 
 class Select extends ElementSelect
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->style->width="100%";
+    }
+
     public function multiple()
     {
         $this->setAttribute("multiple", true);
