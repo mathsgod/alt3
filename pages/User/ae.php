@@ -39,6 +39,7 @@ class User_ae extends ALT\Page
 
     public function get()
     {
+
         $this->write($this->getForm());
     }
 
@@ -97,7 +98,7 @@ class User_ae extends ALT\Page
         $mv->addHr();
 
 
-        
+
         $mv->add("Language")->select("language")->ds($this->app->config["system"]["language"]);
         $mv->add("Default page")->input("default_page");
         return $this->createForm($mv);

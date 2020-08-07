@@ -134,6 +134,7 @@ class Page extends \App\Page
     public function write($element)
     {
         parent::write($element);
+
         if ($element instanceof Scriptable) {
             parent::write($element->script());
         }

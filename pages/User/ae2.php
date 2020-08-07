@@ -45,7 +45,7 @@ class User_ae2 extends ALT\Page
         $card = $this->createCard();
         $form = $card->addForm($obj);
         $form->add("First name")->input("first_name")->required();
-        /*         $form->add("Username")->input("username")->required();
+                 $form->add("Username")->input("username")->required();
         $form->add("Password")->password("password")->required();
         $form->add("First name")->input("first_name")->required();
         $form->add("Last name")->input("last_name");
@@ -64,7 +64,7 @@ class User_ae2 extends ALT\Page
         $form->add("User group")->select("usergroup_id")->multiple()->option(UserGroup::Query(), "name", "usergroup_id");
 
         $form->add("Language")->select("language")->option($this->app->config["system"]["language"]);
-        $form->add("Default page")->input("default_page"); */
+        $form->add("Default page")->input("default_page"); 
 
 
         $this->write($card);

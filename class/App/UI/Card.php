@@ -2,7 +2,6 @@
 
 namespace App\UI;
 
-use ALT\Element\Form;
 use App\Page;
 use P\HTMLElement;
 use Vue\Scriptable;
@@ -33,7 +32,9 @@ class Card extends HTMLElement implements Scriptable
     {
         parent::__construct("card");
         $this->page = $page;
-        $this->app=$page->app;
+
+        $this->app = $page->app;
+
 
         $this->setAttribute("id", "_card_" . self::$NUM);
 
@@ -91,7 +92,7 @@ class Card extends HTMLElement implements Scriptable
 
     public function addForm($data = null)
     {
-        $form = new Form();
+        $form = new \ALT\Element\Form();
 
         if ($data) {
             $form->setData($data);

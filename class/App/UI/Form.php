@@ -18,6 +18,7 @@ class Form extends HTMLFormElement implements Scriptable
     public function __construct(Page $page)
     {
         parent::__construct();
+
         //$this->setAttribute("is"]="alt-form"
         $this->page = $page;
         $this->method = "post";
@@ -25,7 +26,8 @@ class Form extends HTMLFormElement implements Scriptable
         $this->card = new Card($page);
         $this->card->setAttribute("primary", true);
         $this->card->setAttribute("outline", true);
-        $this->card->body;
+
+        $body = $this->card->body;
 
         $this->submit_button = new Button($page);
         $this->submit_button->classList->add("btn-success");

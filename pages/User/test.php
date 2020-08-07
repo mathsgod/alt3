@@ -1,9 +1,17 @@
 <?php
+
 class User_test extends ALT\Page
 {
     public function get()
     {
 
+        $card = $this->createCard();
+        $form = $card->addForm($this->object());
+        $form->add("first name")->input("first_name")->required();
+
+        $this->write($card);
+        //$this->write($this->createForm("test"));
+        return;
         $this->addLib("ckeditor/ckeditor");
         $e = $this->createE(["a" => "A", "b" => "B"]);
 
