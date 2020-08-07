@@ -1,8 +1,13 @@
 <?php
 
 use R\Psr7\ServerRequest;
+use Vue\JSCode;
+use Vue\JSObject;
 
-class System_test extends ALT\Page
+use function Vue\_json_encode;
+use function Vue\js;
+
+class System_test extends App\Page
 {
     public function post()
     {
@@ -15,6 +20,15 @@ class System_test extends ALT\Page
 
     public function get()
     {
+        new JSCode();
+        $o = new JSObject();
+        $o->a = 1;
+        $o->b = js("function(){
+            return 'hello';
+        }");
+        echo _json_encode($o);
+
+        return;
         $this->addLib("ckeditor/ckeditor");
 
         $card = $this->createCard();
