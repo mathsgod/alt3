@@ -3,11 +3,41 @@
 
 namespace ALT\Element;
 
+use App\UI\CKEditor;
 use Element\Checkbox;
 use Element\ElSwitch;
 
 class FormItem extends \Element\FormItem
 {
+    public function ckeditor(string $name)
+    {
+        $ckeditor = new CKEditor();
+        $ckeditor->setAttribute("is", "ckeditor");
+
+        $card=$this->closest("card");
+        if($card){            
+            $config = $card->app->config["hostlink-fileman"];
+            $basepath = $config["basepath"];
+            $ckeditor->setAttribute("basepath", $basepath);
+        }
+        
+        $ckeditor->setAttribute(":config", json_encode([
+            "filebrowserImageBrowseUrl" => "Fileman/?token=&source=ckeditor&type=image",
+            "filebrowserBrowseUrl" => "Fileman/?token=&source=ckeditor"
+        ]));
+
+
+        $this->append($ckeditor);
+
+        $this->setAttribute("prop", $name);
+
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $ckeditor->setAttribute("v-model", "$model.$name");
+        }
+        return $ckeditor;
+    }
+
     public function timeSelect(string $name)
     {
         $time = new TimeSelect();

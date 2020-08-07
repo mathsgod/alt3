@@ -24,12 +24,22 @@ class Form extends \Element\Form implements Scriptable
         //-- button
         $item = new FormItem();
         $this->append($item);
-        $btn = new \Element\Button();
-        $btn->setAttribute("type", "primary");
-        $btn->setAttribute("v-on:click", $id . "_submit_form");
-        $btn->textContent = "Submit";
 
+        //-- submit
+        $btn = new \Element\Button();
+        $btn->setAttribute("type", "success");
+        $btn->setAttribute("v-on:click", $id . "_submit_form");
+        $btn->textContent = " Submit";
+        $btn->setAttribute("icon","fa fa-check");
         $item->append($btn);
+
+        //-- back
+        $btn = new \Element\Button();
+        $btn->setAttribute("type", "warning");
+        $btn->setAttribute("v-on:click", $id . "_click_back");
+        $btn->textContent = "Back";
+        $item->append($btn);
+
         $this->last_form_item = $item;
 
         self::$NUM++;
@@ -73,7 +83,13 @@ class Form extends \Element\Form implements Scriptable
 
         $script->methods = [];
 
-        $script->methods["{$id}_submit_form"] = <<<js
+        $script->methods["{$id}_click_back"] = <<<JS
+function(){
+    window.history.go(-1);
+}
+JS;
+
+        $script->methods["{$id}_submit_form"] = <<<JS
 function(){
             this.\$refs.$id.validate((valid) => {
                 if (valid) {
@@ -106,7 +122,7 @@ function(){
                 }
             });
         }
-js;
+JS;
         return $script;
     }
 }

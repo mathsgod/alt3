@@ -126,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- plugins -->
     {% for plugin in plugins %}
     {% for js in plugin.setting.js %}
-    <script src="{{plugin.base}}/{{js}}" defer></script>
+    <script src="{{plugin.base}}/{{js}}"></script>
     {% endfor %}
 
     {% for css in plugin.setting.css %}

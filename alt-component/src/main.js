@@ -85,7 +85,8 @@ import datetime from "./Datetime";
 VueRegisterElement("alt-datetime", datetime);
 
 import ckeditor from "./ckeditor";
-VueRegisterElement("ckeditor", ckeditor);
+Vue.component("ckeditor", ckeditor);
+//VueRegisterElement("ckeditor", ckeditor);
 
 import altButton from "./Button";
 VueRegisterElement("alt-button", altButton);

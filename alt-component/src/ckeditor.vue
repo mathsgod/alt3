@@ -1,28 +1,29 @@
 <template>
-  <textarea v-model="value"></textarea>
+  <textarea v-model="localValue"></textarea>
 </template>
 <script>
 export default {
   name: "ckeditor",
   data() {
     return {
-      value: this.data
+      ckeditor: null,
+      localValue: this.value,
     };
   },
   props: {
+    value: String,
     basepath: String,
-    data: String,
     config: {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   created() {
     window.addEventListener(
       "message",
-      event => {
+      (event) => {
         var data = event.data;
         if (data.source == "ckeditor") {
           window.CKEDITOR.tools.callFunction(
@@ -37,10 +38,15 @@ export default {
   mounted() {
     if (typeof window.CKEDITOR != "undefined") {
       var CKEDITOR = window.CKEDITOR;
-      //var base = $("base").attr("href");
-      CKEDITOR.replace(this.$el, this.config);
+      this.ckeditor = CKEDITOR.replace(this.$el, this.config);
+
+      this.ckeditor.on("change", () => {
+        this.$emit("input", this.ckeditor.getData());
+      });
+    } else {
+      console.error("ckeditor/ckeditor not included");
     }
-  }
+  },
 };
 </script>
 

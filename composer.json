@@ -40,7 +40,7 @@
         "mathsgod/alt-app-core": "^1.1",
         "symfony/yaml": "^3.4",
         "mathsgod/html": "^1.0",
-        "mathsgod/p-query": "^2.2",
+        "mathsgod/p-query": "^2.3",
         "mathsgod/r-graphql": "^1.3",
         "mathsgod/hl-holiday": "^1.2",
         "mathsgod/hl-weather": "^2.0",

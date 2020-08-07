@@ -27,11 +27,13 @@ class Card extends HTMLElement implements Scriptable
 
     protected $page;
     private static $NUM = 0;
+    public $app;
 
     public function __construct(Page $page)
     {
         parent::__construct("card");
         $this->page = $page;
+        $this->app=$page->app;
 
         $this->setAttribute("id", "_card_" . self::$NUM);
 

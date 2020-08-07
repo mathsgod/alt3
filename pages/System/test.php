@@ -8,19 +8,20 @@ class System_test extends ALT\Page
     {
 
         return ["data" => [
-            "location" => "User/1/v"
+            "data" => $_POST
         ]];
     }
 
 
     public function get()
     {
+        $this->addLib("ckeditor/ckeditor");
 
         $card = $this->createCard();
         $form = $card->addForm();
 
         $form->add("test")->input("input1");
-
+        $form->add("ckeditor")->ckeditor("ckeditor");
 
         $this->write($card);
 
