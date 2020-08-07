@@ -2,34 +2,36 @@
 
 namespace ALT\Element;
 
+use Vue\Scriptable;
 use VueScript;
 
-class Form extends \Element\Form
+class Form extends \Element\Form implements Scriptable
 {
     private $last_form_item;
+
+    protected static $NUM = 0;
     public function __construct()
     {
+        $id = "_el_form_" . self::$NUM;
         parent::__construct();
-        $this->setAttribute(":model", "form1");
         $this->setAttribute("method", "POST");
-        $this->setAttribute("id", "form1");
-        $this->setAttribute("ref", "form1");
+        $this->setAttribute(":model", "el_form_" . self::$NUM);
+        $this->setAttribute("id", $id);
+        $this->setAttribute("ref", $id);
         $this->setAttribute("label-width", "auto");
 
-
         //-- button
-
         $item = new FormItem();
         $this->append($item);
-
         $btn = new \Element\Button();
         $btn->setAttribute("type", "primary");
-        $btn->setAttribute("v-on:click", "submitForm");
+        $btn->setAttribute("v-on:click", $id . "_submit_form");
         $btn->textContent = "Submit";
-
 
         $item->append($btn);
         $this->last_form_item = $item;
+
+        self::$NUM++;
     }
 
     public function add(string $label): FormItem
@@ -50,7 +52,7 @@ class Form extends \Element\Form
         $id = $this->getAttribute("id");
         $model = $this->getAttribute(":model");
 
-        $script = new VueScript();
+        $script = new \Vue\Script();
         $script->el = "#$id";
 
         //loop all form item
@@ -68,7 +70,8 @@ class Form extends \Element\Form
 
 
         $script->methods = [];
-        $script->methods["submitForm"] = <<<js
+
+        $script->methods["{$id}_submit_form"] = <<<js
 function(){
             this.\$refs.$id.validate((valid) => {
                 if (valid) {
@@ -76,25 +79,6 @@ function(){
                     this.\$http.post(form.\$el.action,this.{$model}).then(resp=>{
                         console.log(resp);
                     });
-                    
-/*                    var form = document.createElement("form");
-                    form.enctype="multipart/form-data";
-                    form.method="POST";
-                    for(var key in this.$model){
-                        var hiddenField = document.createElement("input");
-                        hiddenField.setAttribute("type", "hidden");
-                        hiddenField.setAttribute("name", key);
-                        if(this.{$model}[key]==null){
-                            hiddenField.setAttribute("value","");
-                        }else{
-                            hiddenField.setAttribute("value", this.{$model}[key]);
-                        }
-                        form.appendChild(hiddenField);
-                    }
-                    document.body.appendChild(form);
-                    form.submit();*/
-                    
-                    //this.\$refs.$id.\$el.submit();
                 } else {
                     console.log('error submit!!');
                     return false;

@@ -99,13 +99,11 @@ class Page extends \R\Page
         return $rt;
     }
 
-    protected function createCard(string $type = ""): UI\Card
+    protected function createCard(string $type = "primary"): UI\Card
     {
         $card = new UI\Card($this);
-        $card->classList->add("card-outline");
-        if ($type) {
-            $card->classList->add("card-$type");
-        }
+        $card->outline = true;
+        $card->setAttribute("type", $type);
 
         return $card;
     }

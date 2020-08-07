@@ -2,17 +2,15 @@
 
 namespace App\UI;
 
-use P\HTMLDivElement;
+use P\HTMLElement;
 use App\Page;
 
-class CardBody extends HTMLDivElement
+class CardBody extends HTMLElement
 {
     public $page;
     public function __construct(Page $page)
     {
-        parent::__construct();
+        parent::__construct("card-body");
         $this->page = $page;
-
-        $this->classList->add("card-body");
     }
 }

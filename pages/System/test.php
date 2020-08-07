@@ -7,12 +7,29 @@ class System_test extends ALT\Page
     public function post()
     {
 
-        return ["data" => $_POST];
+        return ["data" => [
+            "location" => "User/1/v"
+        ]];
     }
 
 
     public function get()
     {
+
+        $card = $this->createCard();
+        $form = $card->addForm();
+
+        $form->add("test")->input("input1");
+
+
+        $this->write($card);
+
+
+
+
+        return;
+
+
         $form = new ALT\Element\Form();
         $form->add("time select")->timeSelect("time1");
         $form->add("time picker")->timePicker("time2");

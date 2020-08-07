@@ -5,6 +5,7 @@ namespace ALT;
 use Psr\Http\Message\ResponseInterface;
 use Exception;
 use R\Psr7\Request;
+use Vue\Scriptable;
 
 class Page extends \App\Page
 {
@@ -128,5 +129,13 @@ class Page extends \App\Page
     public function navbar(): Navbar
     {
         return $this->navbar;
+    }
+
+    public function write($element)
+    {
+        parent::write($element);
+        if ($element instanceof Scriptable) {
+            parent::write($element->script());
+        }
     }
 }

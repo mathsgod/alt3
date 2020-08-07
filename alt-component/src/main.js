@@ -54,10 +54,10 @@ import CardBody from "./CardBody.vue";
 import CardHeader from "./CardHeader.vue";
 import CardFooter from "./CardFooter.vue";
 
-VueRegisterElement("card", Card);
-VueRegisterElement("card-body", CardBody);
-VueRegisterElement("card-header", CardHeader);
-VueRegisterElement("card-footer", CardFooter);
+Vue.component("card", Card);
+Vue.component("card-body", CardBody);
+Vue.component("card-header", CardHeader);
+Vue.component("card-footer", CardFooter);
 
 
 import RT2 from "./RT2.vue";

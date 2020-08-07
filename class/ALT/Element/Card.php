@@ -2,30 +2,30 @@
 
 namespace ALT\Element;
 
-use VueScript;
+use Vue\Script;
+use Vue\Scriptable;
 
-class Card extends \Element\Card
+class Card extends \Element\Card implements Scriptable
 {
+    protected static $NUM = 0;
+
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute("id", "card1");
+        $this->setAttribute("id", "_element_card_" . self::$NUM);
+        self::$NUM++;
     }
 
-    public function script(): VueScript
+    public function script()
     {
-        $id = $this->getAttribute("id");
+        $script = new Script();
+        $script->el = "#" . $this->getAttribute("id");
 
         foreach ($this->childNodes as $child) {
-            if ($child instanceof Form) {
-                $script = $child->script();
+            if ($child instanceof Scriptable) {
+                $script = $script->merge($child->script());
             }
         }
-
-        if ($script) {
-            $script->el = "#" . $id;
-        }
-
         return $script;
     }
 

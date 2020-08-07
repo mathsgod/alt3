@@ -11,6 +11,7 @@
 export default {
   name: "card",
   props: {
+    type: String,
     primary: Boolean,
     secondary: Boolean,
     success: Boolean,
@@ -22,23 +23,23 @@ export default {
     loading: Boolean,
     collapsible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     pinable: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    dataUri: String
+    dataUri: String,
   },
   data() {
     return {
-      myLoading: this.loading
+      myLoading: this.loading,
     };
   },
   watch: {
     loading(value) {
       this.myLoading = value;
-    }
+    },
   },
   computed: {
     c() {
@@ -46,6 +47,30 @@ export default {
 
       if (this.outline) {
         c.push("card-outline");
+      }
+
+      switch (this.type) {
+        case "primary":
+          c.push("card-primary");
+          break;
+        case "secondary":
+          c.push("card-secondary");
+          break;
+        case "success":
+          c.push("card-success");
+          break;
+        case "info":
+          c.push("card-info");
+          break;
+        case "warning":
+          c.push("card-warning");
+          break;
+        case "danger":
+          c.push("card-danger");
+          break;
+        case "dark":
+          c.push("card-dark");
+          break;
       }
 
       if (this.primary) {
@@ -67,42 +92,42 @@ export default {
       return c;
     },
     header() {
-      return this.$children.filter(o => {
+      return this.$children.filter((o) => {
         return o.$vnode.componentOptions.tag == "card-header";
       });
     },
     body() {
-      return this.$children.filter(o => {
+      return this.$children.filter((o) => {
         return o.$vnode.componentOptions.tag == "card-body";
       });
     },
     footer() {
-      return this.$children.filter(o => {
+      return this.$children.filter((o) => {
         return o.$vnode.componentOptions.tag == "card-footer";
       });
-    }
+    },
   },
   mounted() {
-    this.header.forEach(h => {
+    this.header.forEach((h) => {
       h.collapsible = this.collapsible;
       h.pinable = this.pinable;
 
-      h.$on("collapsed", collapsed => {
+      h.$on("collapsed", (collapsed) => {
         this.$emit("collapsed", collapsed);
 
         if (this.dataUri) {
           var data = {
             type: "card",
             layout: {
-              collapsed: collapsed
+              collapsed: collapsed,
             },
-            uri: this.dataUri
+            uri: this.dataUri,
           };
           this.$http.post("UI/save", data);
         }
       });
 
-      h.$on("pinned", pinned => {
+      h.$on("pinned", (pinned) => {
         this.$emit("pinned", pinned);
       });
     });
@@ -115,11 +140,11 @@ export default {
       this.myLoading = false;
     },
     pin() {
-      this.header.forEach(h => h.pin());
+      this.header.forEach((h) => h.pin());
     },
     unpin() {
-      this.header.forEach(h => h.unpin());
-    }
-  }
+      this.header.forEach((h) => h.unpin());
+    },
+  },
 };
 </script>

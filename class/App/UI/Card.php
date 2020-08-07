@@ -2,56 +2,38 @@
 
 namespace App\UI;
 
+use ALT\Element\Form;
 use App\Page;
-use P\HTMLDivElement;
+use P\HTMLElement;
+use Vue\Scriptable;
 
-class CardClassTokenList extends \P\DOMTokenList
+/**
+ * @property CardHeader $header
+ * @property CardBody $body
+ * @property CardFooter $footer
+ * @property bool $outline
+ */
+class Card extends HTMLElement implements Scriptable
 {
-    public function offsetSet($offset, $value)
-    {
-        $values = $this->values();
-        if ($this->values()) {
-            if (in_array($value, Card::CARD_TYPE)) {
-                $this->value = implode(" ", array_diff($values, Card::CARD_TYPE));
-            }
-        }
-        parent::offsetSet($offset, $value);
-    }
-}
-
-class Card extends HTMLDivElement
-{
-    const CARD_TYPE = [
-        "card-primary",
-        "card-secondary",
-        "card-success",
-        "card-info",
-        "card-warning",
-        "card-danger"
-    ];
-
     const ATTRIBUTES = [
         "dataUrl" => ["name" => "data-url"],
         "dataUri" => ["name" => "data-uri"],
         "collapsible" => ["name" => ":collapsible", "type" => "json"],
         "collapsed" => ["name" => ":collapsed", "type" => "json"],
         "pinable" => ["name" => ":pinable", "type" => "json"],
-        "draggable" => ["name" => ":draggable", "type" => "json"]
+        "draggable" => ["name" => ":draggable", "type" => "json"],
+        "outline"=>["name"=>"outline","type"=>"bool"]
     ] + parent::ATTRIBUTES;
 
     protected $page;
     private static $NUM = 0;
 
-    public $outline = true;
-
     public function __construct(Page $page)
     {
-        parent::__construct();
+        parent::__construct("card");
         $this->page = $page;
 
-        $this->setAttribute("is", "card");
-        $this->classList = new CardClassTokenList($this, "class");
-        $this->classList->add("card");
+        $this->setAttribute("id", "_card_" . self::$NUM);
 
         self::$NUM++;
     }
@@ -103,5 +85,27 @@ class Card extends HTMLDivElement
             $this->header->title = $title;
         }
         return p($this->header);
+    }
+
+    public function addForm()
+    {
+        $form = new Form();
+
+        $this->body->append($form);
+        return $form;
+    }
+
+
+    public function script()
+    {
+        $script = new \Vue\Script();
+        $script->el = "#" . $this->getAttribute("id");
+
+        foreach ($this->body->childNodes as $child) {
+            if ($child instanceof Scriptable) {
+                $script = $script->merge($child->script());
+            }
+        }
+        return $script;
     }
 }
