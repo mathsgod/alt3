@@ -22,7 +22,7 @@ class Card extends HTMLElement implements Scriptable
         "collapsed" => ["name" => ":collapsed", "type" => "json"],
         "pinable" => ["name" => ":pinable", "type" => "json"],
         "draggable" => ["name" => ":draggable", "type" => "json"],
-        "outline"=>["name"=>"outline","type"=>"bool"]
+        "outline" => ["name" => "outline", "type" => "bool"]
     ] + parent::ATTRIBUTES;
 
     protected $page;
@@ -87,11 +87,15 @@ class Card extends HTMLElement implements Scriptable
         return p($this->header);
     }
 
-    public function addForm()
+    public function addForm($data = null)
     {
         $form = new Form();
 
+        if ($data) {
+            $form->setData($data);
+        }
         $this->body->append($form);
+
         return $form;
     }
 

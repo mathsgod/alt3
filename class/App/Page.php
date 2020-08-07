@@ -311,9 +311,28 @@ class Page extends \R\Page
         }
 
 
-
         $obj->save();
         if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
+
+            $msg = $this->module()->name . " ";
+            if (method_exists($obj, '__toString')) {
+                $msg .= (string) $obj . " ";
+            }
+            $msg .= $id ? "updated" : "created";
+            $this->alert->success("Success", $msg);
+            
+
+            $referer = $this->request->getHeader("Referer")[0];
+            if ($url = $_SESSION["app"]["referer"][$referer]) {
+                $referer = $url;
+            }
+
+            return ["data" => [
+                "headers" => [
+                    "location" => $referer
+                ]
+            ]];
+
             return ["code" => 200];
         } else {
 

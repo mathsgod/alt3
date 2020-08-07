@@ -10,6 +10,7 @@ class User_ae2 extends ALT\Page
 {
     public function post()
     {
+
         $obj = $this->object();
 
         if ($_POST["password"]) {
@@ -18,7 +19,7 @@ class User_ae2 extends ALT\Page
             $_POST["password"] = $obj->password;
         }
 
-        parent::post();
+        $ret = parent::post();
 
         $obj = $this->object();
         if (isset($_POST["usergroup_id"])) {
@@ -30,7 +31,7 @@ class User_ae2 extends ALT\Page
             }
         }
 
-        return ["data" => true];
+        return $ret;
     }
 
     public function get()
@@ -43,7 +44,8 @@ class User_ae2 extends ALT\Page
 
         $card = $this->createCard();
         $form = $card->addForm($obj);
-        $form->add("Username")->input("username")->required();
+        $form->add("First name")->input("first_name")->required();
+        /*         $form->add("Username")->input("username")->required();
         $form->add("Password")->password("password")->required();
         $form->add("First name")->input("first_name")->required();
         $form->add("Last name")->input("last_name");
@@ -62,7 +64,7 @@ class User_ae2 extends ALT\Page
         $form->add("User group")->select("usergroup_id")->multiple()->option(UserGroup::Query(), "name", "usergroup_id");
 
         $form->add("Language")->select("language")->option($this->app->config["system"]["language"]);
-        $form->add("Default page")->input("default_page");
+        $form->add("Default page")->input("default_page"); */
 
 
         $this->write($card);

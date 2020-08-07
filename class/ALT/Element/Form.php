@@ -19,6 +19,7 @@ class Form extends \Element\Form implements Scriptable
         $this->setAttribute("id", $id);
         $this->setAttribute("ref", $id);
         $this->setAttribute("label-width", "auto");
+        $this->setAttribute("v-loading", "el_form_" . self::$NUM . "_loading");
 
         //-- button
         $item = new FormItem();
@@ -67,6 +68,7 @@ class Form extends \Element\Form implements Scriptable
         }
 
         $script->data[$model] = $data;
+        $script->data[$model . "_loading"] = false;
 
 
         $script->methods = [];
@@ -76,8 +78,26 @@ function(){
             this.\$refs.$id.validate((valid) => {
                 if (valid) {
                     var form=this.\$refs.$id;
+                    this.{$model}_loading=true;
                     this.\$http.post(form.\$el.action,this.{$model}).then(resp=>{
-                        console.log(resp);
+                        var r=resp.data;
+                        console.log(r);
+
+                        if(r.error){
+                            this.{$model}_loading=false;
+                            this.\$alert(r.error.message);
+                            return;
+                        }
+
+                        if(r.data.headers){
+                            if(r.data.headers.location){
+                                window.self.location=r.data.headers.location;
+                            }
+                        }else{
+                            this.{$model}_loading=false;
+                        }
+
+                        
                     });
                 } else {
                     console.log('error submit!!');
