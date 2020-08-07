@@ -4,8 +4,9 @@ namespace App\UI;
 
 use App\Page;
 use P\HTMLFormElement;
+use Vue\Scriptable;
 
-class Form extends HTMLFormElement
+class Form extends HTMLFormElement implements Scriptable
 {
 
     private $submit_button;
@@ -155,5 +156,10 @@ class Form extends HTMLFormElement
         }
 
         return true;
+    }
+
+    public function script()
+    {
+        return $this->card->script();
     }
 }

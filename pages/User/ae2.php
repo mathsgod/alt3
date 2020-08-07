@@ -38,11 +38,11 @@ class User_ae2 extends ALT\Page
 
         $obj = $this->object();
         $obj->password = "";
-        
-//        $obj->usergroup_id=$obj->UserGroup()->
 
-        $card = $this->createElementCard();
-        $form = $card->form($obj);
+        //        $obj->usergroup_id=$obj->UserGroup()->
+
+        $card = $this->createCard();
+        $form = $card->addForm($obj);
         $form->add("Username")->input("username")->required();
         $form->add("Password")->password("password")->required();
         $form->add("First name")->input("first_name")->required();
@@ -66,6 +66,5 @@ class User_ae2 extends ALT\Page
 
 
         $this->write($card);
-        $this->write($card->script());
     }
 }

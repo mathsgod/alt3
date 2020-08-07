@@ -2290,28 +2290,18 @@ function scrollIntoView(container, selected) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d0e2eda6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/RTPagination.vue?vue&type=template&id=53761b54&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group"},[_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"最前一頁","type":"button","disabled":_vm.firstPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',1)}}},[_c('i',{staticClass:"fa fa-fw fa-step-backward"})]),_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"上一頁","type":"button","disabled":_vm.prevPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',_vm.p-1)}}},[_c('i',{staticClass:"fa fa-fw fa-chevron-left"})]),_c('div',{staticClass:"pull-left",staticStyle:{"user-select":"none"}},[_c('input',{directives:[{name:"model",rawName:"v-model.number",value:(_vm.p),expression:"p",modifiers:{"number":true}}],staticClass:"form-control form-control-sm",staticStyle:{"width":"70px"},attrs:{"min":"1","max":_vm.pageCount,"type":"number"},domProps:{"value":(_vm.p)},on:{"change":_vm.changePage,"input":function($event){if($event.target.composing){ return; }_vm.p=_vm._n($event.target.value)},"blur":function($event){return _vm.$forceUpdate()}}})]),_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"下一頁","type":"button","disabled":_vm.nextPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',_vm.p+1)}}},[_c('i',{staticClass:"fa fa-fw fa-chevron-right"})]),_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"最後一頁","type":"button","disabled":_vm.lastPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',_vm.pageCount)}}},[_c('i',{staticClass:"fa fa-fw fa-step-forward"})])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d0e2eda6-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/RTPagination.vue?vue&type=template&id=6054f749&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-group"},[_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"最前一頁","type":"button","disabled":_vm.firstPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',1)}}},[_c('i',{staticClass:"fa fa-fw fa-step-backward"})]),_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"上一頁","type":"button","disabled":_vm.prevPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',_vm.p-1)}}},[_c('i',{staticClass:"fa fa-fw fa-chevron-left"})]),_c('el-input-number',{attrs:{"controls-position":"right","min":1,"max":_vm.pageCount},on:{"change":_vm.changePage},model:{value:(_vm.p),callback:function ($$v) {_vm.p=$$v},expression:"p"}}),_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"下一頁","type":"button","disabled":_vm.nextPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',_vm.p+1)}}},[_c('i',{staticClass:"fa fa-fw fa-chevron-right"})]),_c('button',{staticClass:"btn btn-default btn-sm",attrs:{"data-toggle":"tooltip","title":"最後一頁","type":"button","disabled":_vm.lastPageDisabled},on:{"click":function($event){$event.preventDefault();return _vm.$emit('change-page',_vm.pageCount)}}},[_c('i',{staticClass:"fa fa-fw fa-step-forward"})])],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/RTPagination.vue?vue&type=template&id=53761b54&
+// CONCATENATED MODULE: ./src/RTPagination.vue?vue&type=template&id=6054f749&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
 var es_number_constructor = __webpack_require__("a9e3");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/RTPagination.vue?vue&type=script&lang=js&
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -74754,21 +74744,19 @@ var fileman_component = Object(componentNormalizer["a" /* default */])(
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vue_i18n_esm);
 var messages = {
   en: Object(objectSpread2["a" /* default */])({}, en_default.a),
-  zh: Object(objectSpread2["a" /* default */])({}, zh_TW_default.a)
+  "zh-hk": Object(objectSpread2["a" /* default */])({}, zh_TW_default.a)
 }; // Create VueI18n instance with options
 
-var _i18n = new vue_i18n_esm({
+window.i18n = new vue_i18n_esm({
   locale: 'en',
   // set locale
   messages: messages // set locale messages
 
 });
-
-window.i18n = _i18n;
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(element_ui_common_default.a, {
   size: "small",
   i18n: function i18n(key, value) {
-    return _i18n.t(key, value);
+    return window.i18n.t(key, value);
   }
 });
 

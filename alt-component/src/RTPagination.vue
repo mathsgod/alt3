@@ -20,17 +20,7 @@
     >
       <i class="fa fa-fw fa-chevron-left"></i>
     </button>
-    <div class="pull-left" style="user-select: none;">
-      <input
-        style="width:70px"
-        min="1"
-        :max="pageCount"
-        type="number"
-        class="form-control form-control-sm"
-        v-model.number="p"
-        @change="changePage"
-      />
-    </div>
+    <el-input-number v-model="p" controls-position="right" @change="changePage" :min="1" :max="pageCount"></el-input-number>
     <button
       data-toggle="tooltip"
       title="下一頁"

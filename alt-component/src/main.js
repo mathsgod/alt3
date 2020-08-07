@@ -12,20 +12,19 @@ const messages = {
     en: {
         ...enLocale // Or use `Object.assign({ message: 'hello' }, enLocale)`
     },
-    zh: {
+    "zh-hk": {
         ...zhLocale // Or use `Object.assign({ message: '你好' }, zhLocale)`
     }
 }
 // Create VueI18n instance with options
-const i18n = new VueI18n({
+window.i18n = new VueI18n({
     locale: 'en', // set locale
     messages, // set locale messages
 });
-window.i18n = i18n;
 
 Vue.use(Element, {
     size: "small",
-    i18n: (key, value) => i18n.t(key, value)
+    i18n: (key, value) => window.i18n.t(key, value)
 });
 
 import DatePicker from "./DatePicker.vue";
