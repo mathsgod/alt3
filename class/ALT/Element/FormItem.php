@@ -101,6 +101,7 @@ class FormItem extends \Element\FormItem implements Objectable
         $input = new Input();
         $input->setAttribute("name", $name);
         $input->setAttribute("show-password", true);
+        $input->setAttribute("autocomplete", "off");
         $this->append($input);
 
 

@@ -2,7 +2,6 @@
 
 namespace ALT\Element;
 
-use phpDocumentor\Reflection\Types\Object_;
 use Vue\Objectable;
 use Vue\Scriptable;
 
@@ -10,6 +9,7 @@ class Form extends \Element\Form implements Scriptable
 {
     private $last_form_item;
 
+    private $_page;
     protected static $NUM = 0;
     public function __construct()
     {
@@ -30,8 +30,8 @@ class Form extends \Element\Form implements Scriptable
         $btn = new \Element\Button();
         $btn->setAttribute("type", "success");
         $btn->setAttribute("v-on:click", $id . "_submit_form");
-        $btn->textContent = " Submit";
-        $btn->setAttribute("icon", "fa fa-check");
+        $btn->textContent = "Submit";
+        $btn->setAttribute("icon", "el-icon-check");
         $item->append($btn);
 
         //-- back
@@ -48,8 +48,15 @@ class Form extends \Element\Form implements Scriptable
 
     public function add(string $label): FormItem
     {
+
+        if ($this->page) {
+            $t_label = $this->page->translate($label);
+        } else {
+            $t_label = $label;
+        }
+
         $formitem = new FormItem();
-        $formitem->setAttribute("label", $label);
+        $formitem->setAttribute("label", $t_label);
         $this->insertBefore($formitem, $this->last_form_item);
         return $formitem;
     }
@@ -57,6 +64,11 @@ class Form extends \Element\Form implements Scriptable
     public function setData($data)
     {
         $this->data = $data;
+    }
+
+    public function setPage($page)
+    {
+        $this->page = $page;
     }
 
     public function script()
@@ -74,10 +86,7 @@ class Form extends \Element\Form implements Scriptable
                 $js_object = $child->js_object();
                 foreach ($js_object as $key => $value) {
                     $script->data[$key] = $value;
-                    
                 }
-
-                
             }
 
             if ($child instanceof FormItem) {

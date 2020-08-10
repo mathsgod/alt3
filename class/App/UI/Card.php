@@ -93,6 +93,7 @@ class Card extends HTMLElement implements Scriptable
     public function addForm($data = null)
     {
         $form = new \ALT\Element\Form();
+        $form->setPage($this->page);
 
         if ($data) {
             $form->setData($data);
