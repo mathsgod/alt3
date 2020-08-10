@@ -6,21 +6,22 @@ namespace ALT\Element;
 use App\UI\CKEditor;
 use Element\Checkbox;
 use Element\ElSwitch;
+use Vue\Objectable;
 
-class FormItem extends \Element\FormItem
+class FormItem extends \Element\FormItem implements Objectable
 {
     public function ckeditor(string $name)
     {
         $ckeditor = new CKEditor();
         $ckeditor->setAttribute("is", "ckeditor");
 
-        $card=$this->closest("card");
-        if($card){            
+        $card = $this->closest("card");
+        if ($card) {
             $config = $card->app->config["hostlink-fileman"];
             $basepath = $config["basepath"];
             $ckeditor->setAttribute("basepath", $basepath);
         }
-        
+
         $ckeditor->setAttribute(":config", json_encode([
             "filebrowserImageBrowseUrl" => "Fileman/?token=&source=ckeditor&type=image",
             "filebrowserBrowseUrl" => "Fileman/?token=&source=ckeditor"
@@ -153,6 +154,15 @@ class FormItem extends \Element\FormItem
     {
         $date = new DatePicker();
         $date->setAttribute("name", $name);
+
+        $date->addPickerOption("shortcuts", [
+            [
+                "text" => "Today",
+                "onClick" => js("(picker)=>{picker.\$emit('pick', new Date());}")
+            ]
+        ]);
+
+
         $this->append($date);
 
         $this->setAttribute("prop", $name);
@@ -161,6 +171,7 @@ class FormItem extends \Element\FormItem
             $model = $this->parentNode->getAttribute(":model");
             $date->setAttribute("v-model", "$model.$name");
         }
+
 
 
         return $date;
@@ -224,5 +235,19 @@ class FormItem extends \Element\FormItem
         }
 
         return $switch;
+    }
+
+    public function js_object()
+    {
+        $obj = [];
+        foreach ($this->childNodes as $child) {
+            if ($child instanceof Objectable) {
+                $js_object = $child->js_object();
+                foreach ($js_object as $key => $value) {
+                    $obj[$key] = $value;
+                }
+            }
+        }
+        return $obj;
     }
 }

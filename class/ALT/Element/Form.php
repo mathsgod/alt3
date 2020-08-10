@@ -2,8 +2,9 @@
 
 namespace ALT\Element;
 
+use phpDocumentor\Reflection\Types\Object_;
+use Vue\Objectable;
 use Vue\Scriptable;
-use VueScript;
 
 class Form extends \Element\Form implements Scriptable
 {
@@ -30,7 +31,7 @@ class Form extends \Element\Form implements Scriptable
         $btn->setAttribute("type", "success");
         $btn->setAttribute("v-on:click", $id . "_submit_form");
         $btn->textContent = " Submit";
-        $btn->setAttribute("icon","fa fa-check");
+        $btn->setAttribute("icon", "fa fa-check");
         $item->append($btn);
 
         //-- back
@@ -68,9 +69,19 @@ class Form extends \Element\Form implements Scriptable
 
         //loop all form item
         $data = [];
-        foreach ($this->childNodes as $form_item) {
-            if ($form_item instanceof FormItem) {
-                $prop = $form_item->getAttribute("prop");
+        foreach ($this->childNodes as $child) {
+            if ($child instanceof Objectable) {
+                $js_object = $child->js_object();
+                foreach ($js_object as $key => $value) {
+                    $script->data[$key] = $value;
+                    
+                }
+
+                
+            }
+
+            if ($child instanceof FormItem) {
+                $prop = $child->getAttribute("prop");
                 if ($prop) {
                     $data[$prop] = var_get($this->data, $prop);
                 }
@@ -80,16 +91,18 @@ class Form extends \Element\Form implements Scriptable
         $script->data[$model] = $data;
         $script->data[$model . "_loading"] = false;
 
-
         $script->methods = [];
 
-        $script->methods["{$id}_click_back"] = <<<JS
+        $click_back = <<<JS
 function(){
     window.history.go(-1);
 }
 JS;
+        $script->methods["{$id}_click_back"] = js($click_back);
 
-        $script->methods["{$id}_submit_form"] = <<<JS
+
+
+        $submit_form = <<<JS
 function(){
             this.\$refs.$id.validate((valid) => {
                 if (valid) {
@@ -123,6 +136,7 @@ function(){
             });
         }
 JS;
+        $script->methods["{$id}_submit_form"] = js($submit_form);
         return $script;
     }
 }

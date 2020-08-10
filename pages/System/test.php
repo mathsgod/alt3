@@ -1,11 +1,6 @@
 <?php
 
-use R\Psr7\ServerRequest;
-use Vue\JSCode;
-use Vue\JSObject;
-
-use function Vue\_json_encode;
-use function Vue\js;
+use P\HTMLDivElement;
 
 class System_test extends App\Page
 {
@@ -20,13 +15,22 @@ class System_test extends App\Page
 
     public function get()
     {
-        new JSCode();
-        $o = new JSObject();
+
+
+        $div = new HTMLDivElement();
+        $div->setAttribute("test", json_decode([
+            "a" => js("testing")
+        ]));
+        
+
+
+        $o = new JS\ObjectClass();
         $o->a = 1;
         $o->b = js("function(){
             return 'hello';
         }");
-        echo _json_encode($o);
+
+        echo $o;
 
         return;
         $this->addLib("ckeditor/ckeditor");

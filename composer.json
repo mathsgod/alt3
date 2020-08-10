@@ -27,7 +27,8 @@
             "": "class/"
         },
         "files": [
-            "function/default.php"
+            "function/default.php",
+            "class/JS/function.php"
         ]
     },
     "require": {

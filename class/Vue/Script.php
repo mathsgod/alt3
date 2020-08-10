@@ -24,29 +24,11 @@ class Script
 
     public function __toString()
     {
-        $data = json_encode($this->data);
-
-
-        $m = [];
-        foreach ($this->methods as $name => $function) {
-            $m[] = $name . ":" . $function;
-        }
-
-        $ms = implode(",", $m);
-
-        $script = <<<HTML
+        $encoded_str = js_object_encode($this);
+        return <<<HTML
 <script>
-new Vue({
-    el: "{$this->el}",
-    data: {$data},
-    methods: {
-        $ms
-    }
-});
+new Vue($encoded_str);
 </script>
 HTML;
-        return $script;
     }
 }
-
-
