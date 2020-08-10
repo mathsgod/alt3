@@ -2631,8 +2631,3 @@ function str_chinese_simp($str){
 function str_chinese_trad($str){
 	return str_chinese_convert($str,"s2t");
 }
-
-
-
-
-?>

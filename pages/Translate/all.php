@@ -20,51 +20,13 @@ class Translate_all extends ALT\Page
         return ["code" => 200];
 
 
-
-        outp($_POST);
-        die();
-
-        // delete the removed data
-        foreach ($_POST["_d"] as $id) {
-            $t = new Translate($id);
-            $t->delete();
-        }
-
-        foreach ($_POST["_u"] as $id => $c) {
-            $t = new Translate($id);
-            if ($c["name"] == "") continue;
-            foreach ($this->app->config["language"] as $v => $l) {
-                $w = [];
-                $w[] = "name='$t->name'";
-                $w[] = $t->module ? "module='$t->module'" : "module is null";
-                $w[] = "language='$v'";
-                $tt = Translate::first($w);
-                $tt->value = $c["value_" . $v];
-                $tt->save();
-            }
-        }
-
-        foreach ($_POST["_c"] as $c) {
-            if ($c["name"] == "") continue;
-            foreach ($this->app->config["language"] as $v => $l) {
-                $t = new Translate();
-                $t->language = $v;
-                $t->name = $c["name"];
-                $t->action = $c["action"];
-                $t->value = $c["value_" . $v];
-                $t->module = $_POST["module"];
-                $t->save();
-            }
-        }
-
-        $this->_redirect("Translate");
     }
 
     public function modules()
     {
         return [
             "modules" => $this->app->modules(),
-            "languages" => $this->app->config["language"]
+            "languages" => $this->app->config["system"]["language"]
         ];
     }
 

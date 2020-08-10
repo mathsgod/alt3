@@ -6,6 +6,8 @@ show_create: true
 
 menu:
   Front translate:
+    icon: fa fa-language fa-fw
     link: System/front_translate_twig
   Translate all:
+    icon: fa fa-language fa-fw
     link: Translate/all

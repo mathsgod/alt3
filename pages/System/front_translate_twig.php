@@ -4,8 +4,8 @@ use SplFileInfo;
 use RecursiveIteratorIterator;
 use My\TreeView;
 
-require_once(__dir__ . "/str_chinese.php");
-require_once(__dir__ . "/msgfmt-functions.php");
+require_once(__DIR__ . "/str_chinese.php");
+require_once(__DIR__ . "/msgfmt-functions.php");
 //require_once (__dir__ . "/accesstokenauthentication.php");
 
 class PO

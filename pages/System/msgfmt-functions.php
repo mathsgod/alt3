@@ -236,5 +236,3 @@ function write_mo_file($hash, $out) {
 
 	file_put_contents($out, $mo);
 }
-
-?>

@@ -53,7 +53,9 @@ class User_myfav extends ALT\Page
         });
 
         $f = p("form")->attr("id", "form1")->append($t);
+
         $this->write($f);
+        $this->write($t->script());
     }
 }
 ?>
