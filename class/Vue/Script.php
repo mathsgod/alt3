@@ -24,6 +24,14 @@ class Script
 
     public function __toString()
     {
+
+        if (count($this->data) == 0) {
+            $this->data["test"] = 0;
+        }
+        if (count($this->methods) == 0) {
+            $this->methods["dummy"] = js("function(){}");
+        }
+
         $encoded_str = js_object_encode($this);
         return <<<HTML
 <script>

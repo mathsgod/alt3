@@ -13,8 +13,9 @@ export default {
     return {};
   },
   mounted() {
-    if (this.formCreate) {
-      var $ = window.$;
+    var $ = window.$;
+      if (this.formCreate) {
+
       var o = this.$el;
 
       var $table = $(o);

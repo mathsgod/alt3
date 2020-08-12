@@ -2,7 +2,7 @@
 
 use P\HTMLDivElement;
 
-class System_test extends App\Page
+class System_test extends ALT\Page
 {
     public function post()
     {
@@ -15,13 +15,20 @@ class System_test extends App\Page
 
     public function get()
     {
+        $t = $this->createTab();
+        $t->add("Test", "test_rt");
 
+        
+        $this->write($t);
+
+
+        return;
 
         $div = new HTMLDivElement();
         $div->setAttribute("test", json_decode([
             "a" => js("testing")
         ]));
-        
+
 
 
         $o = new JS\ObjectClass();
