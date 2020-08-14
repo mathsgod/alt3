@@ -222,6 +222,7 @@ class RTResponse implements JsonSerializable
         }
 
 
+
         $data = [];
         foreach ($source as $obj) {
             $d = [];
@@ -247,13 +248,14 @@ class RTResponse implements JsonSerializable
                             } else {
                                 $d[$c["name"]] = null;
                             }
-                        } elseif ($col->type != "text") {
+                        } elseif ($col->type == "text") {
                             $d[$c["name"]] = ["type" => $col->type, "content" => (string) $col->getData($obj, $k)];
                         } elseif ($col->type == "html") {
-                            $content=$col->getData($obj,$k);
-                            if($content instanceof Scriptable){
+
+                            $content = $col->getData($obj, $k);
+                            if ($content instanceof Scriptable) {
                                 $d[$c["name"]] = ["type" => "vue", "content" => (string) $content];
-                            }else{
+                            } else {
                                 $d[$c["name"]] = ["type" => "html", "content" => (string) $content];
                             }
                         } else {
