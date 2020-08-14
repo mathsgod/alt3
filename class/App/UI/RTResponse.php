@@ -7,6 +7,7 @@ use \Box\Spout\Common\Type;
 
 use JsonSerializable;
 use Exception;
+use Vue\Scriptable;
 
 class Row
 {
@@ -249,7 +250,12 @@ class RTResponse implements JsonSerializable
                         } elseif ($col->type != "text") {
                             $d[$c["name"]] = ["type" => $col->type, "content" => (string) $col->getData($obj, $k)];
                         } elseif ($col->type == "html") {
-                            $d[$c["name"]] = ["type" => "html", "content" => (string) $col->getData($obj, $k)];
+                            $content=$col->getData($obj,$k);
+                            if($content instanceof Scriptable){
+                                $d[$c["name"]] = ["type" => "vue", "content" => (string) $content];
+                            }else{
+                                $d[$c["name"]] = ["type" => "html", "content" => (string) $content];
+                            }
                         } else {
                             $v = $col->getData($obj, $k);
 
