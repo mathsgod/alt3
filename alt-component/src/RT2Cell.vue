@@ -32,8 +32,8 @@
     </template>
     <template v-else>
       <div v-if="type=='text'" v-text="content" :style="divStyle"></div>
-       <runtime-template-compiler  v-if="type=='html'" :template="content" />
-      <!-- div v-if="type=='html'" v-html="content" :style="divStyle"></div -->
+      <div v-if="type=='html'" v-html="content" :style="divStyle"></div>
+      <runtime-template-compiler  v-if="type=='vue'" :template="content" />
       <input
         type="checkbox"
         v-if="type=='checkbox'"
