@@ -33,9 +33,10 @@ class User_e_userlist extends ALT\Page
     {
         $obj = $this->object();
 
+
         $ug = $obj->UserList()->map(function ($o) {
             return $o->usergroup_id;
-        })->asArray();
+        })->all();
 
         $obj->usergroup_id = $ug;
 
