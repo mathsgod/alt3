@@ -99,8 +99,11 @@ class User_list extends App\Page
         });
         //$rt->add("isonline", "isOnline()")->format("tick");
         //$rt->add("username", "username")->alink("v");
-        if ($t >= 0) $w[] = ["status=:status1", ["status1" => $t]];
-        $rt->source = App\User::Query()->where($w);
+        $rt->source = App\User::Query();
+        if ($t >= 0) {
+            $rt->source->where("status=:status", ["status" => $t]);
+       
+        }
         return $rt;
     }
 

@@ -99,16 +99,16 @@
         },
         {
             "name": "fortawesome/font-awesome",
-            "version": "5.13.0",
+            "version": "5.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "4e6402443679e0a9d12c7401ac8783ef4646657f"
+                "reference": "c38da7f63e45b7ba12fb33539a4e54677f8e63aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/4e6402443679e0a9d12c7401ac8783ef4646657f",
-                "reference": "4e6402443679e0a9d12c7401ac8783ef4646657f",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/c38da7f63e45b7ba12fb33539a4e54677f8e63aa",
+                "reference": "c38da7f63e45b7ba12fb33539a4e54677f8e63aa",
                 "shasum": ""
             },
             "type": "library",
@@ -158,7 +158,7 @@
                 "icon",
                 "svg"
             ],
-            "time": "2020-03-23T18:53:09+00:00"
+            "time": "2020-07-15T18:03:34+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -513,21 +513,24 @@
         },
         {
             "name": "mathsgod/graphql-php-directive-resolvers",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/graphql-php-directive-resolvers.git",
-                "reference": "4f4fd48f30f9a2ecf3a61e0f6ca1e98854c871a0"
+                "reference": "b8a8e6c9847437480c65a712dd7566f719cc309d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/graphql-php-directive-resolvers/zipball/4f4fd48f30f9a2ecf3a61e0f6ca1e98854c871a0",
-                "reference": "4f4fd48f30f9a2ecf3a61e0f6ca1e98854c871a0",
+                "url": "https://api.github.com/repos/mathsgod/graphql-php-directive-resolvers/zipball/b8a8e6c9847437480c65a712dd7566f719cc309d",
+                "reference": "b8a8e6c9847437480c65a712dd7566f719cc309d",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/promises": "^1.3",
                 "webonyx/graphql-php": "^0.12.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
             },
             "type": "library",
             "autoload": {
@@ -536,13 +539,20 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Raymond Chong",
                     "email": "mathsgod@yahoo.com"
                 }
             ],
-            "time": "2019-01-11T04:48:34+00:00"
+            "description": "GraphQL directive resolver",
+            "keywords": [
+                "graphql"
+            ],
+            "time": "2020-05-20T09:42:09+00:00"
         },
         {
             "name": "mathsgod/hl-holiday",
@@ -717,6 +727,49 @@
             "time": "2020-08-07T05:32:34+00:00"
         },
         {
+            "name": "mathsgod/php-psr7",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mathsgod/php-psr7.git",
+                "reference": "a31f0737aade1e5de1d11987e4bebd77ea668af7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/a31f0737aade1e5de1d11987e4bebd77ea668af7",
+                "reference": "a31f0737aade1e5de1d11987e4bebd77ea668af7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHP\\Psr7\\": "src/"
+                },
+                "files": [
+                    "function/function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raymond Chong",
+                    "email": "mathsgod@yahoo.com"
+                }
+            ],
+            "description": "A standard implementation of php psr7",
+            "time": "2020-08-20T08:11:52+00:00"
+        },
+        {
             "name": "mathsgod/php-util",
             "version": "1.0.1",
             "source": {
@@ -755,11 +808,11 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.5.1",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "2ab6fa7fead3dd45fd0dbffffcab8244d441570c"
+                "reference": "c5306705a817e486bd670d4a9f5b9ff8a2dd4440"
             },
             "require": {
                 "mathsgod/r-psr7": "2.*",
@@ -794,15 +847,15 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-07-31T03:21:26+00:00"
+            "time": "2020-08-20T07:47:51+00:00"
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.5.3",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "177a029edf365847e5a5162d45593332a1742963"
+                "reference": "01ab163ca93c7f07aca88f57cb1f612707430183"
             },
             "require": {
                 "ext-pdo": "*",
@@ -828,32 +881,35 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-07-17T10:16:03+00:00"
+            "time": "2020-08-05T05:10:41+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
-            "version": "1.3.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-graphql.git",
-                "reference": "a7847951723d8e313dcc1463ea0becc5c6e0b350"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-graphql/mathsgod-r-graphql-1.3.1-48cc9f.zip",
-                "reference": "a7847951723d8e313dcc1463ea0becc5c6e0b350",
-                "shasum": "2543f1d1bdfa68435fea8495cb59aea2bbb99bea"
+                "reference": "ac083b792b53123d06215e74702d619f47b3fdd7"
             },
             "require": {
+                "firebase/php-jwt": "^5.2",
                 "guzzlehttp/promises": "^1.3",
                 "mathsgod/graphql-php-directive-resolvers": "^1.0",
                 "webonyx/graphql-php": "^0.12.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "R\\GraphQL\\": "src/"
                 }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
             },
             "authors": [
                 {
@@ -862,23 +918,18 @@
                 }
             ],
             "description": "GraphQL for php",
-            "time": "2019-11-01T09:34:08+00:00"
+            "time": "2020-05-20T09:20:16+00:00"
         },
         {
             "name": "mathsgod/r-psr7",
-            "version": "2.4.0",
+            "version": "2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-psr7.git",
-                "reference": "4f39c078b1bd7b914ec462a5aa2bfb886ae399ed"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/r-psr7/mathsgod-r-psr7-2.4.0-069329.zip",
-                "reference": "4f39c078b1bd7b914ec462a5aa2bfb886ae399ed",
-                "shasum": "3d64b7a5efbbfd63cf8439a821e720bedf85ebd6"
+                "reference": "3ea12c9304fd60b3eb0642681dd1029c9b242ee6"
             },
             "require": {
+                "mathsgod/php-psr7": "^1.0",
                 "php": ">=7.0",
                 "psr/http-message": "1.*"
             },
@@ -894,11 +945,16 @@
                     "function/function.php"
                 ]
             },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
+            },
             "license": [
                 "proprietary"
             ],
             "description": "psr7",
-            "time": "2020-02-07T09:55:41+00:00"
+            "time": "2020-08-20T04:53:47+00:00"
         },
         {
             "name": "mathsgod/r-translate",
@@ -934,17 +990,11 @@
         },
         {
             "name": "mathsgod/r-webauthn",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-webauthn.git",
-                "reference": "b184ee468a6a4b5067cec8493075738df57d643b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/r-webauthn/zipball/b184ee468a6a4b5067cec8493075738df57d643b",
-                "reference": "b184ee468a6a4b5067cec8493075738df57d643b",
-                "shasum": ""
+                "reference": "dd807ab32faa432268e9ade1f8f7c8d1f304e58d"
             },
             "require": {
                 "2tvenom/cborencode": "^1.0",
@@ -964,11 +1014,7 @@
                 }
             ],
             "description": "Web authentication for php",
-            "support": {
-                "source": "https://github.com/mathsgod/r-webauthn/tree/v1.0.9",
-                "issues": "https://github.com/mathsgod/r-webauthn/issues"
-            },
-            "time": "2019-12-02T04:22:48+00:00"
+            "time": "2020-05-19T02:43:24+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1017,16 +1063,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.1.5",
+            "version": "v6.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "a8bf068f64a580302026e484ee29511f661b2ad3"
+                "reference": "2c2370ba3df7034f9eb7b8f387c97b52b2ba5ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a8bf068f64a580302026e484ee29511f661b2ad3",
-                "reference": "a8bf068f64a580302026e484ee29511f661b2ad3",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/2c2370ba3df7034f9eb7b8f387c97b52b2ba5ad0",
+                "reference": "2c2370ba3df7034f9eb7b8f387c97b52b2ba5ad0",
                 "shasum": ""
             },
             "require": {
@@ -1075,7 +1121,13 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2020-03-14T14:23:48+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/synchro",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-07-14T18:50:27+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -1318,7 +1370,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.4.39",
+            "version": "v3.4.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1385,16 +1437,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.15.0",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14"
+                "reference": "1c302646f6efc070cd46856e600e5e0684d6b454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
-                "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/1c302646f6efc070cd46856e600e5e0684d6b454",
+                "reference": "1c302646f6efc070cd46856e600e5e0684d6b454",
                 "shasum": ""
             },
             "require": {
@@ -1406,7 +1458,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.15-dev"
+                    "dev-master": "1.18-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
                 }
             },
             "autoload": {
@@ -1453,20 +1509,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-02-27T09:26:54+00:00"
+            "time": "2020-07-14T12:35:20+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.15.0",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "81ffd3a9c6d707be22e3012b827de1c9775fc5ac"
+                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/81ffd3a9c6d707be22e3012b827de1c9775fc5ac",
-                "reference": "81ffd3a9c6d707be22e3012b827de1c9775fc5ac",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/a6977d63bf9a0ad4c65cd352709e230876f9904a",
+                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a",
                 "shasum": ""
             },
             "require": {
@@ -1478,7 +1534,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.15-dev"
+                    "dev-master": "1.18-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
                 }
             },
             "autoload": {
@@ -1526,20 +1586,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-03-09T19:04:49+00:00"
+            "time": "2020-07-14T12:35:20+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.39",
+            "version": "v3.4.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e701b47e11749970f63803879c4febb520f07b6c"
+                "reference": "e7fa05917ae931332a42d65b577ece4d497aad81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e701b47e11749970f63803879c4febb520f07b6c",
-                "reference": "e701b47e11749970f63803879c4febb520f07b6c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e7fa05917ae931332a42d65b577ece4d497aad81",
+                "reference": "e7fa05917ae931332a42d65b577ece4d497aad81",
                 "shasum": ""
             },
             "require": {
@@ -1585,7 +1645,21 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-25T12:02:26+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-07-23T09:37:51+00:00"
         },
         {
             "name": "twig/extensions",
@@ -1824,16 +1898,16 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.14.0",
+            "version": "4.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor4-releases.git",
-                "reference": "998e43cd6305bca24304b9538a682da123ac5b73"
+                "reference": "8eccaf31ad9832a113757d379758996ed2150f60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/998e43cd6305bca24304b9538a682da123ac5b73",
-                "reference": "998e43cd6305bca24304b9538a682da123ac5b73",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/8eccaf31ad9832a113757d379758996ed2150f60",
+                "reference": "8eccaf31ad9832a113757d379758996ed2150f60",
                 "shasum": ""
             },
             "type": "library",
@@ -1862,20 +1936,20 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2020-03-04T13:19:40+00:00"
+            "time": "2020-06-17T12:33:25+00:00"
         },
         {
             "name": "components/jquery",
-            "version": "3.4.1",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "901828b7968b18319e377dc23d466f28426ee083"
+                "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/901828b7968b18319e377dc23d466f28426ee083",
-                "reference": "901828b7968b18319e377dc23d466f28426ee083",
+                "url": "https://api.github.com/repos/components/jquery/zipball/b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
+                "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
                 "shasum": ""
             },
             "type": "component",
@@ -1904,7 +1978,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2019-10-23T05:15:13+00:00"
+            "time": "2020-05-05T13:21:02+00:00"
         },
         {
             "name": "corejavascript/typeahead.js",
@@ -2642,6 +2716,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -3440,16 +3515,16 @@
         },
         {
             "name": "vakata/jstree",
-            "version": "3.3.9",
+            "version": "3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vakata/jstree.git",
-                "reference": "a7f224265891eee74d85b469006ab461bd430f48"
+                "reference": "6dce2271757dd0bd4cd0e941bd093c6678e98faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vakata/jstree/zipball/a7f224265891eee74d85b469006ab461bd430f48",
-                "reference": "a7f224265891eee74d85b469006ab461bd430f48",
+                "url": "https://api.github.com/repos/vakata/jstree/zipball/6dce2271757dd0bd4cd0e941bd093c6678e98faf",
+                "reference": "6dce2271757dd0bd4cd0e941bd093c6678e98faf",
                 "shasum": ""
             },
             "require": {
@@ -3493,27 +3568,28 @@
             ],
             "description": "jsTree is jquery plugin, that provides interactive trees.",
             "homepage": "http://jstree.com",
-            "time": "2020-02-10T22:25:09+00:00"
+            "time": "2020-06-16T11:17:46+00:00"
         },
         {
             "name": "webmozart/assert",
-            "version": "1.8.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6"
+                "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
-                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0",
+                "php": "^5.3.3 || ^7.0 || ^8.0",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
+                "phpstan/phpstan": "<0.12.20",
                 "vimeo/psalm": "<3.9.1"
             },
             "require-dev": {
@@ -3541,7 +3617,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2020-04-18T12:12:48+00:00"
+            "time": "2020-07-08T17:02:28+00:00"
         }
     ],
     "aliases": [],
