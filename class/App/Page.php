@@ -201,7 +201,6 @@ class Page extends \R\Page
             return $this->app->accessDeny($request);
         }
 
-
         if ($request->getQueryParams()["_rt"]) {
             $rt = new UI\RTResponse();
             $request = $request->withQueryParams(["rt" => $rt]);
@@ -285,7 +284,7 @@ class Page extends \R\Page
                 throw new Exception("access deny");
             }
         }
-
+    
         $data = $this->request->getParsedBody();
 
         $obj->bind($data);

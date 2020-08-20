@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a47554d5a28a1b761b8f82484b06e2f",
+    "content-hash": "9a918db14ab37f2e856170ec9f8812f4",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -728,16 +728,16 @@
         },
         {
             "name": "mathsgod/php-psr7",
-            "version": "1.0.4",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/php-psr7.git",
-                "reference": "a31f0737aade1e5de1d11987e4bebd77ea668af7"
+                "reference": "31be59f6a2f18d6477dc8b45541aa307f97a896b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/a31f0737aade1e5de1d11987e4bebd77ea668af7",
-                "reference": "a31f0737aade1e5de1d11987e4bebd77ea668af7",
+                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/31be59f6a2f18d6477dc8b45541aa307f97a896b",
+                "reference": "31be59f6a2f18d6477dc8b45541aa307f97a896b",
                 "shasum": ""
             },
             "require": {
@@ -767,7 +767,7 @@
                 }
             ],
             "description": "A standard implementation of php psr7",
-            "time": "2020-08-20T08:11:52+00:00"
+            "time": "2020-08-20T08:35:43+00:00"
         },
         {
             "name": "mathsgod/php-util",
@@ -922,11 +922,11 @@
         },
         {
             "name": "mathsgod/r-psr7",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-psr7.git",
-                "reference": "3ea12c9304fd60b3eb0642681dd1029c9b242ee6"
+                "reference": "c9ee8a1e00561eea775d6e5574e31dc4690c3885"
             },
             "require": {
                 "mathsgod/php-psr7": "^1.0",
@@ -954,7 +954,7 @@
                 "proprietary"
             ],
             "description": "psr7",
-            "time": "2020-08-20T04:53:47+00:00"
+            "time": "2020-08-20T08:42:48+00:00"
         },
         {
             "name": "mathsgod/r-translate",
