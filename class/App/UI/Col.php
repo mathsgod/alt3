@@ -347,12 +347,18 @@ HTML
         return $p;
     }
 
+
+    private static $FILEMAN_NUM = 0;
     public function fileman(string $field)
     {
+
         $app = $this->page->app;
         $p = $this->input($field);
         $p->attr("is", "fileman");
         $p->attr("url", $app->base_path . "/Fileman/?token=");
+
+        $p->attr("id", "_fileman_" . self::$FILEMAN_NUM);
+        self::$FILEMAN_NUM++;
         return $p;
     }
 
@@ -392,9 +398,9 @@ HTML
 
         foreach ($this->cell as $cell) {
             try {
-                $cke=new CKEditor();
-                $textarea=p($cke)->appendTo($cell);
-                
+                $cke = new CKEditor();
+                $textarea = p($cke)->appendTo($cell);
+
                 $textarea->attr("is", "ckeditor");
                 $textarea->attr('data-field', $field);
                 $textarea->attr('name', $field);
@@ -405,7 +411,7 @@ HTML
                     $textarea->data("object", $object);
 
                     //$textarea->text($this->getObjectValue($object,$field));
-                    $textarea->attr("data", $this->getObjectValue($object, $field));
+                    $textarea->attr("value", $this->getObjectValue($object, $field));
 
                     if ($this->callback) {
                         call_user_func($this->callback, $object, $textarea[0]);

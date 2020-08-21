@@ -7,21 +7,24 @@ export default {
   name: "fileman",
   props: {
     url: String,
-    value: String
+    value: String,
   },
   data() {
     return {
       id: "",
-      value1: this.value
+      value1: this.value,
     };
   },
   created() {
-    this.id = new Date().getTime();
+    if (this.$attrs.id) {
+      this.id = this.$attrs.id;
+    } else {
+      this.id = new Date().getTime();
+    }
 
     window.addEventListener(
       "message",
-      event => {
-        
+      (event) => {
         var data = event.data;
         if (data.action == "select-file") {
           if (this.id == data.id) {
@@ -39,6 +42,6 @@ export default {
     this.$el.addEventListener("click", () => {
       window.open(url, "Hostlink Fileman", "width=1280,height=768");
     });
-  }
+  },
 };
 </script>

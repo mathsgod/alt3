@@ -4,7 +4,21 @@ class User_test extends ALT\Page
 {
     public function get()
     {
+        $this->addLib("ckeditor/ckeditor");
+        $m = $this->createE(["cke" => "hello"]);
+        $m->add("CKE")->ckeditor("cke");
+        $this->write($this->createForm($m));
 
+        return;
+        $m = $this->createE([
+            "image_1" => "",
+            "image_2" => ""
+        ]);
+        $m->add("Image 1")->fileman("image_1");
+        $m->add("Image 2")->fileman("image_2");
+
+        $this->write($m);
+        return;
         $card = $this->createCard();
         $form = $card->addForm($this->object());
         $form->add("first name")->input("first_name")->required();
