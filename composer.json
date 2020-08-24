@@ -53,7 +53,7 @@
         "mathsgod/r-db": "^3.5",
         "mathsgod/php-util": "^1.0",
         "phpoffice/phpspreadsheet": "^1.8",
-        "mathsgod/r-psr7": "^2.5"
+        "mathsgod/php-psr7": "^1.0"
     },
     "require-dev": {
         "box/spout": "^2.7",

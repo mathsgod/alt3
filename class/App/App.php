@@ -4,12 +4,11 @@ namespace App;
 
 use Exception;
 use Composer\Autoload\ClassLoader;
+use PHP\Psr7\Response;
+use PHP\Psr7\StringStream;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use R\Psr7\Response;
-use R\Psr7\ServerRequest;
-use R\Psr7\Stream;
 use Symfony\Component\Yaml\Yaml;
 
 class App extends \R\App
@@ -183,7 +182,7 @@ class App extends \R\App
         $this->route = $route;
         $request = $request->withAttribute("route", $route);
 
-        
+
         $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
         //---- Module --
@@ -214,7 +213,7 @@ class App extends \R\App
 
         $class = $route->class;
 
-        
+
 
         if ($class) {
             $page = new $class($this);
@@ -229,7 +228,7 @@ class App extends \R\App
                     $response = new Response(200);
                     $response = $response
                         ->withHeader("content-type", "application/json")
-                        ->withBody(new Stream($e->getMessage()));
+                        ->withBody(new StringStream($e->getMessage()));
                 } else {
                     $this->alert->danger($e->getMessage());
 
@@ -247,7 +246,7 @@ class App extends \R\App
 
 
             file_put_contents("php://output", (string) $response->getBody());
-        } elseif (self::Logined()) {
+        } elseif ($this->logined()) {
             $pi = $this->pathInfo();
             $cms_base = $pi["cms_base"];
             header("location: {$cms_base}404_not_found#" . $this->request->getUri()->getPath());

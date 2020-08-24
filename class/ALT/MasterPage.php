@@ -2,9 +2,10 @@
 
 namespace ALT;
 
+use PHP\Psr7\StringStream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use R\Psr7\Stream;
+
 use stdClass;
 
 class MasterPage extends \R\Page
@@ -172,8 +173,7 @@ class MasterPage extends \R\Page
         echo $time_elapsed_secs;
 */
 
-        $stream = new Stream($this->template->render($this->data));
 
-        return $response->withBody($stream);
+        return $response->withBody(new StringStream($this->template->render($this->data)));
     }
 }
