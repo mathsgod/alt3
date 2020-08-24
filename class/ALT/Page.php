@@ -37,8 +37,7 @@ class Page extends \App\Page
             }
         }
 
-        $accept = $request->getHeader("Accept");
-        if (in_array("text/html", $accept) && $request->getMethod() == "GET") {
+        if ($this->isAccept("text/html") && $request->getMethod() == "GET") {
             $this->master = new MasterPage($this->app);
             if ($this->module()) {
                 $this->header->title = $this->module()->name;

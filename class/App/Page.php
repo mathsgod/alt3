@@ -211,7 +211,8 @@ class Page extends \R\Page
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $this->request = $request;
-        $route = $this->route;
+        $route=$this->app->route;
+        
 
         $path = substr($route->path, 1);
         if (!$this->app->acl($path)) {
@@ -229,6 +230,7 @@ class Page extends \R\Page
                 $request = $request->withQueryParams(["request" => $rt]);
             }
         }
+
         if (($this->isAccept("text/html") || $this->isAccept("*/*")) && $request->getMethod() == "GET") {
             $file = $route->file;
             $pi = pathinfo($file);
@@ -312,7 +314,7 @@ class Page extends \R\Page
         }
 
         if ($this->request instanceof ServerRequestInterface) {
-        
+
             $data = $this->request->getParsedBody();
 
             $obj->bind($data);
