@@ -56,7 +56,7 @@ class api_index extends R\Page
 
         attachDirectiveResolvers($schema->schema, $directiveResolvers);
 
-        $input = (string) $this->request;
+        $input = (string) $this->request->getBody();
         $input = json_decode($input, true);
 
         $query = $input['query'];

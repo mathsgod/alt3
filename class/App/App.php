@@ -166,8 +166,6 @@ class App extends \R\App
         $translate = Yaml::parseFile(dirname(__DIR__, 2) . "/translate.yml");
         $translate = $translate[$this->user->language];
         $this->translate = $translate;
-
-
         ///-------------
 
         $this->alert = new Alert();
@@ -182,10 +180,10 @@ class App extends \R\App
         $route = $this->router->getRoute($this->request, $this->loader);
         $request = $request->withAttribute("included_content", ob_get_contents());
         ob_end_clean();
-
+        $this->route = $route;
         $request = $request->withAttribute("route", $route);
 
-
+        
         $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
         //---- Module --
@@ -216,19 +214,22 @@ class App extends \R\App
 
         $class = $route->class;
 
+        
 
         if ($class) {
             $page = new $class($this);
             $response = new Response(200);
+            $request = $request->withRequestTarget($route->method);
+
             try {
-                $request = $request->withMethod($route->method);
                 if ($this->logger) $this->logger->debug("invoke page");
                 $response = $page($request, $response);
             } catch (\Exception $e) {
                 if ($this->request->getHeader("accept")[0] == "application/json") {
                     $response = new Response(200);
-                    $response = $response->withHeader("content-type", "application/json");
-                    $response = $response->withBody(new Stream($e->getMessage()));
+                    $response = $response
+                        ->withHeader("content-type", "application/json")
+                        ->withBody(new Stream($e->getMessage()));
                 } else {
                     $this->alert->danger($e->getMessage());
 

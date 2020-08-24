@@ -2,18 +2,19 @@
 
 namespace App;
 
-use R\Psr7\Request;
+use Psr\Http\Message\RequestInterface as RequestInterface;
 
 class Route extends \R\Route
 {
     public $app;
-    public function __construct(Request $request, App $app)
+    public function __construct(RequestInterface $request, App $app)
     {
         $this->app = $app;
         $uri = $request->getUri();
         $this->uri = (string) $uri;
         $this->path = $uri->getPath();
-        $this->basePath = $uri->getBasePath();
+        $this->basePath = $app->base_path;
+        $this->path = substr($this->path, strlen($app->base_path));
 
 
 
@@ -36,9 +37,8 @@ class Route extends \R\Route
 
         $this->path = implode("/", $t);
         $this->psr0($request, $app->loader);
-      //  outp($this);
-       // die();
-
+        //  outp($this);
+        // die();
         if ($this->file) {
             require_once($this->file);
 
@@ -58,7 +58,7 @@ class Route extends \R\Route
         }
     }
 
-    public function psr0(Request $request, $loader)
+    public function psr0($request, $loader)
     {
         $pi = $this->app->pathinfo();
 
@@ -66,7 +66,7 @@ class Route extends \R\Route
         $method = strtolower($request->getMethod());
         $document_root = $pi["document_root"];
         $system_root = $pi["system_root"];
-        $base = $request->getURI()->getBasePath();
+        $base = $this->app->base_path;
 
         $page = $this->app->config["system"]["pages"];
         if (!$page) {

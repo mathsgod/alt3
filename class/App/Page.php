@@ -4,9 +4,11 @@ namespace App;
 
 use ALT\Element\Form;
 use Psr\Http\Message\ResponseInterface;
-use R\Psr7\Stream;
 use Exception;
-use R\Psr7\ServerRequest;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use PHP\Psr7\JsonStream;
+use PHP\Psr7\StringStream;
 
 class Page extends \R\Page
 {
@@ -91,7 +93,9 @@ class Page extends \R\Page
     protected function createRT2($objects): UI\RT2
     {
         $rt = new UI\RT2($this, $this->app->config);
-        $rt->ajax["url"] = (string) $objects[0]->request->getURI()->getPath() . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
+        $path = (string) $objects[0]->request->getURI()->getPath();
+        $path = substr($path, strlen($this->app->base_path));
+        $rt->ajax["url"] = (string) $path . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
         $rt->ajax["url"] = substr($rt->ajax["url"], 1);
 
 
@@ -152,7 +156,7 @@ class Page extends \R\Page
             $obj->delete();
         }
 
-        if ($this->request->isAccept("application/json")) {
+        if ($this->isAccept("application/json")) {
             return ["code" => 200];
         } else {
             $this->alert->success($this->module()->name . " deleted");
@@ -192,54 +196,75 @@ class Page extends \R\Page
         return $p;
     }
 
-    public function __invoke(ServerRequest $request, ResponseInterface $response): ResponseInterface
+    protected function isAccept(string $type)
     {
-        $route = $request->getAttribute("route");
+        $accepts = $this->request->getHeader("accept");
+        foreach ($accepts as $accept) {
+            $r = explode(";", $accept);
+            if ($r[0] == $type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $this->request = $request;
+        $route = $this->route;
 
         $path = substr($route->path, 1);
         if (!$this->app->acl($path)) {
             return $this->app->accessDeny($request);
         }
 
-        if ($request->getQueryParams()["_rt"]) {
-            $rt = new UI\RTResponse();
-            $request = $request->withQueryParams(["rt" => $rt]);
-        }
+        if ($request instanceof ServerRequestInterface) {
+            if ($request->getQueryParams()["_rt"]) {
+                $rt = new UI\RTResponse();
+                $request = $request->withQueryParams(["rt" => $rt]);
+            }
 
-        if ($request->getQueryParams()["_rt_request"]) {
-            $rt = new UI\RTRequest($request);
-            $request = $request->withQueryParams(["request" => $rt]);
+            if ($request->getQueryParams()["_rt_request"]) {
+                $rt = new UI\RTRequest($request);
+                $request = $request->withQueryParams(["request" => $rt]);
+            }
         }
-
-        if (($request->isAccept("text/html") || $request->isAccept("*/*")) && $request->getMethod() == "get") {
+        if (($this->isAccept("text/html") || $this->isAccept("*/*")) && $request->getMethod() == "GET") {
             $file = $route->file;
             $pi = pathinfo($file);
             if (file_exists($template_file = $pi["dirname"] . "/" . $pi["filename"] . ".twig")) {
                 $this->template = $this->app->twig($template_file);
             }
         }
+
         try {
             ob_start();
             $response = parent::__invoke($request, $response);
             $echo_content = ob_get_contents();
             ob_end_clean();
         } catch (Exception $e) {
-            $body = new Stream();
-            $body->write(json_encode(["error" => [
-                "message" => $e->getMessage()
-            ]], JSON_UNESCAPED_UNICODE));
-            return $response->withHeader("Content-Type", "application/json; charset=UTF-8")->withBody($body);
+
+
+            return $response
+                ->withHeader("Content-Type", "application/json; charset=UTF-8")
+                ->withBody(new JsonStream(["error" => [
+                    "message" => $e->getMessage()
+                ]]));
         }
+
 
         $content = "";
 
+
         if ($request->getQueryParams()["_rt"]) {
+
             return $response;
         }
 
         if ($request->getQueryParams()["_rt_request"]) {
             return $response;
         }
+
 
 
         foreach ($request->getHeader("Accept") as $accept) {
@@ -250,28 +275,31 @@ class Page extends \R\Page
                     break;
                 case "*/*":
                 case "text/html":
+
                     if ($this->template) {
                         $data = $this->data;
                         $data["app"] = $this->app;
-                        $content .= (string) $response;
+                        $content .= (string) $response->getBody();
                         $content .= $echo_content;
                         $content .= $this->template->render($data);
 
                         $response = $response->withHeader("Content-Type", "text/html; charset=UTF-8");
                     } else {
                         $content .= $echo_content;
-                        $content .= (string) $response;
+                        $content .= (string) $response->getBody();
                     }
 
                     if ($request->getMethod() == "get") {
-                        $content .= $request->getAttribute("included_content");
+                        if ($request instanceof ServerRequest) {
+                            $content .= $request->getAttribute("included_content");
+                        }
                     }
 
                     break;
             }
         }
 
-        return $response->withBody(new Stream($content));
+        return $response->withBody(new StringStream($content));
     }
 
     public function post()
@@ -284,7 +312,7 @@ class Page extends \R\Page
                 throw new Exception("access deny");
             }
         }
-    
+
         $data = $this->request->getParsedBody();
 
         $obj->bind($data);
@@ -319,7 +347,7 @@ class Page extends \R\Page
             }
             $msg .= $id ? "updated" : "created";
             $this->alert->success("Success", $msg);
-            
+
 
             $referer = $this->request->getHeader("Referer")[0];
             if ($url = $_SESSION["app"]["referer"][$referer]) {

@@ -2,9 +2,10 @@
 
 namespace ALT;
 
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+
 use Exception;
-use R\Psr7\Request;
 use Vue\Scriptable;
 
 class Page extends \App\Page
@@ -23,11 +24,12 @@ class Page extends \App\Page
         $this->header = new PageHeader;
     }
 
-    public function __invoke(Request $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $this->request = $request;
 
-        $route = $this->request->getAttribute("route");
+        $this->request = $request;
+        $route = $this->app->route;
+
         $this->name = $route->action;
         foreach ($this->module()->menu as $name => $action) {
             if ($action["link"] == substr($route->path, 1)) {
@@ -35,7 +37,8 @@ class Page extends \App\Page
             }
         }
 
-        if ($request->isAccept("text/html") && $request->getMethod() == "get") {
+        $accept = $request->getHeader("Accept");
+        if (in_array("text/html", $accept) && $request->getMethod() == "GET") {
             $this->master = new MasterPage($this->app);
             if ($this->module()) {
                 $this->header->title = $this->module()->name;
@@ -74,7 +77,7 @@ class Page extends \App\Page
             $this->master->data["header"] = $this->header;
             $this->master->data["module"] = $this->module();
 
-            $this->master->data["content"] .= (string) $response;
+            $this->master->data["content"] .= (string) $response->getBody();
             if ($this->navbar->hasButton()) {
                 $this->master->data["navbar"] = $this->navbar;
             }
@@ -93,7 +96,6 @@ class Page extends \App\Page
             if (is_readable($pi["cms_root"] . "/AdminLTE/custom-header.html")) {
                 $this->master->data["custom_header"] = file_get_contents($pi["cms_root"] . "/AdminLTE/custom-header.html");
             }
-
 
             return $this->master->__invoke($request, $response);
         }
