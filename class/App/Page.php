@@ -255,17 +255,15 @@ class Page extends \R\Page
 
         $content = "";
 
+        if ($request instanceof ServerRequestInterface) {
+            if ($request->getQueryParams()["_rt"]) {
+                return $response;
+            }
 
-        if ($request->getQueryParams()["_rt"]) {
-
-            return $response;
+            if ($request->getQueryParams()["_rt_request"]) {
+                return $response;
+            }
         }
-
-        if ($request->getQueryParams()["_rt_request"]) {
-            return $response;
-        }
-
-
 
         foreach ($request->getHeader("Accept") as $accept) {
             list($media,) = explode(",", $accept);
@@ -290,7 +288,7 @@ class Page extends \R\Page
                     }
 
                     if ($request->getMethod() == "get") {
-                        if ($request instanceof ServerRequest) {
+                        if ($request instanceof ServerRequestInterface) {
                             $content .= $request->getAttribute("included_content");
                         }
                     }
@@ -313,33 +311,37 @@ class Page extends \R\Page
             }
         }
 
-        $data = $this->request->getParsedBody();
+        if ($this->request instanceof ServerRequestInterface) {
+        
+            $data = $this->request->getParsedBody();
 
-        $obj->bind($data);
+            $obj->bind($data);
 
-        if ($files = $this->request->getUploadedFiles()) {
-            foreach ($files as $name => $file) {
+            if ($files = $this->request->getUploadedFiles()) {
+                foreach ($files as $name => $file) {
 
-                if (property_exists($obj, $name)) {
-                    $obj->$name = (string) $file->getStream();
-                }
-                if (property_exists($obj, $name . "_name")) {
-                    $obj->{$name . "_name"} = $file->getClientFilename();
-                }
+                    if (property_exists($obj, $name)) {
+                        $obj->$name = (string) $file->getStream();
+                    }
+                    if (property_exists($obj, $name . "_name")) {
+                        $obj->{$name . "_name"} = $file->getClientFilename();
+                    }
 
-                if (property_exists($obj, $name . "_type")) {
-                    $obj->{$name . "_type"} = $file->getClientMediaType();
-                }
+                    if (property_exists($obj, $name . "_type")) {
+                        $obj->{$name . "_type"} = $file->getClientMediaType();
+                    }
 
-                if (property_exists($obj, $name . "_size")) {
-                    $obj->{$name . "_size"} = $file->getSize();
+                    if (property_exists($obj, $name . "_size")) {
+                        $obj->{$name . "_size"} = $file->getSize();
+                    }
                 }
             }
         }
 
 
+
         $obj->save();
-        if ($this->request->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
+        if ($this->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
 
             $msg = $this->module()->name . " ";
             if (method_exists($obj, '__toString')) {
@@ -376,7 +378,8 @@ class Page extends \R\Page
     public function redirect(string $uri = null): ResponseInterface
     {
         if ($uri) {
-            $location = $this->request->getUri()->getBasePath() . "/" . $uri;
+
+            $location = $this->app->base_path . "/" . $uri;
             $this->response = $this->response->withHeader("Location", $location);
             return $this->response;
         }

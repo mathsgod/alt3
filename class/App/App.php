@@ -593,7 +593,7 @@ class App extends \R\App
         return $mail;
     }
 
-    public function accessDeny(ServerRequest $request): ResponseInterface
+    public function accessDeny(RequestInterface $request): ResponseInterface
     {
         $uri = $request->getUri()->getPath();
         $uri = substr($uri, 1);
