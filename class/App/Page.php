@@ -212,7 +212,10 @@ class Page extends \R\Page
     {
         $this->request = $request;
         $route=$this->app->route;
-        
+        if ($request instanceof ServerRequestInterface) {
+            $route = $request->getAttribute("route");
+        }
+
 
         $path = substr($route->path, 1);
         if (!$this->app->acl($path)) {
