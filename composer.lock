@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6cbd3b66385c037fca001e17cc5cc28",
+    "content-hash": "c80116e2dc8e778d069d9d0d5f451007",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -851,11 +851,11 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "01ab163ca93c7f07aca88f57cb1f612707430183"
+                "reference": "dd1efe8cc15791d99370f6a6be5ce1d71d394e53"
             },
             "require": {
                 "ext-pdo": "*",
@@ -881,7 +881,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-08-05T05:10:41+00:00"
+            "time": "2020-08-25T08:15:23+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
