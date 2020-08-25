@@ -46,6 +46,12 @@ class App extends \R\App
         $this->composer = new Composer($this);
         parent::__construct($root, $loader, $logger);
 
+        if ($this->request->getMethod() == "POST") {
+            if (strpos($this->request->getHeaderLine("Content-Type"), "application/json") !== false) {
+                $_POST = $this->request->getParsedBody();
+            }
+        }
+
         Model::$_db = $this->db;
         Model::$_app = $this;
         Module::$_app = $this;
