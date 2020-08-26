@@ -6,7 +6,7 @@ class Config_list extends App\Page
 {
     public function get()
     {
-
+        App\UI\Card::$NUM = 1000;
         foreach ($this->app->config as $category => $config) {
             $c = [];
             foreach ($config as $k => $v) {
@@ -40,6 +40,7 @@ class Config_list extends App\Page
             }
             $t->header($category);
             $this->write($t);
+            $this->write($t->script());
         }
     }
 }

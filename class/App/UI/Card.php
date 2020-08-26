@@ -25,7 +25,7 @@ class Card extends HTMLElement implements Scriptable
     ] + parent::ATTRIBUTES;
 
     protected $page;
-    private static $NUM = 0;
+    public static $NUM = 0;
     public $app;
 
     public function __construct(Page $page)
