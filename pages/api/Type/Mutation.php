@@ -30,7 +30,7 @@ class Mutation
                 $mail = $app->createMail();
                 $mail->Subject = "Login url";
                 $mail->setFrom("no-reply@" . $_SERVER["HTTP_HOST"]);
-                $mail->msgHTML("link");
+                $mail->msgHTML($token);
                 try {
                     $mail->send();
                 } catch (Exception $e) {
