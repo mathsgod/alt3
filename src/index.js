@@ -10,7 +10,11 @@ var vm = new Vue({
         username: "",
         password: "",
         message: "Sign in to start your session",
-        error: false
+        error: false,
+        showForgetDialog: false,
+        forgetForm: {
+
+        }
     },
     async created() {
         if ('credentials' in navigator) {
@@ -54,7 +58,7 @@ var vm = new Vue({
                 if (resp.data.loginWebAuthn) {
                     window.self.location.reload();
                 } else {
-                    bootbox.alert("login error");
+                    this.$alert("login error");
                 }
                 return;
             }
@@ -90,12 +94,14 @@ var vm = new Vue({
             if (resp.error) {
                 this.error = true;
                 if (resp.error.message == "2-step verification") {
-                    bootbox.prompt("Please input 2-step verification code", result => {
-                        if (result) {
-                            this.login(username, password, result);
-                        }
 
+                    this.$prompt('Please input your code', '2-step verification', {
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'Cancel'
+                    }).then(({ value }) => {
+                        this.login(username, password, value);
                     });
+
                 } else {
                     this.message = resp.error.message;
                 }
@@ -130,39 +136,33 @@ var vm = new Vue({
             }
             return this.login(this.username, this.password);
         }, forgetPassword() {
+            this.showForgetDialog = true;
+        }, async submtForgetForm() {
+            try {
+                await this.$refs.forgetForm.validate();
+            } catch (e) {
+                return;
+            }
 
-            let self = this;
-            var bb = bootbox.dialog({
-                title: "Forget password",
-                message: document.getElementById("forget-dialog").innerHTML,
-                centerVertical: true,
-                buttons: {
-                    submit: {
-                        label: "Submit",
-                        className: "btn-success",
-                        async callback() {
-
-                            var form = bb.find("form")[0];
-                            if (!form.checkValidity()) return;
-                            var resp = await self.$gql.mutation("api", {
-                                forgotPassword: {
-                                    __args: {
-                                        username: form.username.value,
-                                        email: form.email.value
-                                    }
-                                }
-                            });
-                            resp = resp.data;
-                            if (resp.error) {
-                                bootbox.alert(resp.error.message);
-                            } else {
-                                bootbox.alert("Password sent to your email if information correct");
-                            }
-
-                        }
+            let resp = await this.$gql.mutation("api", {
+                forgotPassword: {
+                    __args: {
+                        username: this.forgetForm.username,
+                        email: this.forgetForm.email
                     }
                 }
             });
+
+            resp = resp.data;
+            if (resp.error) {
+                await this.$alert(resp.error.message);
+                return;
+            }
+
+            await this.$alert("Password sent to you email if informcation correct");
+
+            this.forgetForm = {};
+            this.showForgetDialog = false;
         }
     }
 });

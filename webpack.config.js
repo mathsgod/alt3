@@ -2,6 +2,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: "production",
+    watch: true,
     entry: {
         app: "./src/app.js",
         index: "./src/index.js",
@@ -31,8 +32,8 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-          { from: './node_modules/element-ui/lib/theme-chalk', to: 'element-ui/lib/theme-chalk' },
+            { from: './node_modules/element-ui/lib/theme-chalk', to: 'element-ui/lib/theme-chalk' },
         ]),
-      ],
+    ],
 
 };

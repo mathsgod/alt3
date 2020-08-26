@@ -86,22 +86,25 @@
 
             </div>
             <!-- /.login-card-body -->
+
+            <el-dialog :visible.sync="showForgetDialog" title="Forget password">
+                <el-form :model="forgetForm" label-width="auto" ref="forgetForm">
+                    <el-form-item label="Username" prop="username" :rules="[{required:true}]">
+                        <el-input v-model="forgetForm.username"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Email" prop="email" :rules="[{required:true,type:'email'}]">
+                        <el-input type="email" v-model="forgetForm.email"></el-input>
+                    </el-form-item>
+                </el-form>
+
+                <span slot="footer">
+                    <el-button type="primary" @click="submtForgetForm">Submit</el-button>
+                </span>
+            </el-dialog>
         </div>
     </div>
     <!-- /.login-box -->
 
-    <template id="forget-dialog">
-        <form>
-            <div class="form-group">
-                <label>Username</label>
-                <input class="form-control" type="text" name="username" required autocomplete="username" />
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input class="form-control" type="email" name="email" required autocomplete="email" />
-            </div>
-        </form>
-    </template>
 
     <!-- jQuery -->
     <script src="{{system_base}}/plugins/jquery/jquery.min.js"></script>

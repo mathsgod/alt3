@@ -8,7 +8,6 @@ class User_v extends ALT\GridPage
 		$obj = $this->object();
 
 		$this->navbar->addButton("Reset password", $obj->uri("reset_password"));
-		$this->navbar->addButton("2 step verfication", $obj->uri("2step"));
 		$this->navbar->addButton("User group", $obj->uri("e_userlist"));
 		//		$this->navbar()->addLayoutReset();
 
