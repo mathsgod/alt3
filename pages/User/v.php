@@ -9,7 +9,14 @@ class User_v extends ALT\GridPage
 
 		$this->navbar->addButton("Reset password", $obj->uri("reset_password"));
 		$this->navbar->addButton("User group", $obj->uri("e_userlist"));
-		//		$this->navbar()->addLayoutReset();
+
+		if ($this->app->user->isAdmin()) {
+			if ($obj->secret) {
+				$this->navbar->addButton("Remove 2-step", $obj->uri("remove_2step"));
+			}
+		}
+
+		//$this->navbar()->addLayoutReset();
 
 		$mv = $this->createV();
 		$mv->header->title = "Information";

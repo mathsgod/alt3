@@ -28,6 +28,7 @@ class User_list extends App\Page
         $rt->add("Language", "language")->sort();
 
         $rt->add("Online", "isonline");
+        $rt->add("2-Step", "two_step");
         //$rt->addButton("test")->attr("onClick","window.self.location='User/1/v'");
         // $rt->add("Style","style")->attr("data-format",'json')->attr("collapsed",true);
 
@@ -87,6 +88,7 @@ class User_list extends App\Page
             ]
         ];
         $rt->key("user_id");
+        $rt->add("two_step", "secret")->format("tick");
         $rt->add("usergroup_id", function ($obj) {
             $ugs = [];
             foreach ($obj->UserGroup() as $ug) {
@@ -102,7 +104,6 @@ class User_list extends App\Page
         $rt->source = App\User::Query();
         if ($t >= 0) {
             $rt->source->where("status=:status", ["status" => $t]);
-       
         }
 
         return $rt;
