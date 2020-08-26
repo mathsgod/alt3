@@ -53,7 +53,8 @@
         "mathsgod/r-db": "^3.6",
         "mathsgod/php-util": "^1.0",
         "phpoffice/phpspreadsheet": "^1.8",
-        "mathsgod/php-psr7": "^1.0"
+        "mathsgod/php-psr7": "^1.0",
+        "endroid/qr-code": "^2.5"
     },
     "require-dev": {
         "box/spout": "^2.7",

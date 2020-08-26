@@ -1,4 +1,7 @@
 var Vue = window.Vue;
+import ElementUI from 'element-ui';
+//import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
 var $ = window.$;
 var vm = new Vue({

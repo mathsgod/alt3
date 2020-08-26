@@ -22,6 +22,7 @@
 
     <script src="{{system_base}}/plugins/regenerator-runtime/runtime.min.js"></script>
 
+    <link rel="stylesheet" href="{{system_base}}/dist/element-ui/lib/theme-chalk/index.css">
 </head>
 
 <body class="hold-transition login-page">
@@ -40,7 +41,8 @@
 
                 <form>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username" autocomplete="username" v-model="username">
+                        <input type="text" class="form-control" placeholder="Username" autocomplete="username"
+                            v-model="username">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -48,7 +50,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password" autocomplete="current-password" v-model="password">
+                        <input type="password" class="form-control" placeholder="Password"
+                            autocomplete="current-password" v-model="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -66,7 +69,8 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block" @click.prevent="signIn">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block" @click.prevent="signIn">Sign
+                                In</button>
                         </div>
                         <!-- /.col -->
                     </div>

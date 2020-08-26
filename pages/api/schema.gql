@@ -24,6 +24,8 @@ type Mutation{
     bodyRemoveClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     sidebarNavAddClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     sidebarNavRemoveClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
+    updateTwoStepVerification(secret:String!,code:String!):Boolean
+    removeTwoStepVerification:Boolean
 }
 
 input MyInfoInput{
@@ -46,6 +48,8 @@ type Me{
     jwt:String
     UserLog(limit:Int=10):[UserLog]
     EventLog(limit:Int=10):[EventLog]
+    twoStepVerification:JSON
+    hasTwoStepVerification:Boolean
 }
 
 type UserLog{

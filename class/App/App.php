@@ -321,9 +321,7 @@ class App extends \R\App
             throw new Exception("Login error");
         }
 
-
-
-        if ($this->config["user"]["2-step verification"]) {
+        if ($user->secret) {
             $need_check = true;
             if ($setting = $user->setting()) {
                 if (in_array($_SERVER["REMOTE_ADDR"], $setting["2-step_ip_white_list"])) {
@@ -332,11 +330,12 @@ class App extends \R\App
             }
 
             if ($need_check && !$this->IP2StepExemptCheck($_SERVER['REMOTE_ADDR'])) {
-                if (($code == "" || !$user->checkCode($code)) && $user->secret != "") {
-                    throw new \Exception("2-step verification", 403);
+                if (($code == "" || !$user->checkCode($code))) {
+                    throw new Exception("2-step verification", 403);
                 }
             }
         }
+
 
         $_SESSION["app"]["user_id"] = $user->user_id;
         $_SESSION["app"]["user"] = $user;

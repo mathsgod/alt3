@@ -6,9 +6,32 @@ use GraphQL\Error\Error;
 use App\User;
 use App\UI;
 use Exception;
+use Google\Authenticator\GoogleAuthenticator;
 
 class Mutation
 {
+    public function removeTwoStepVerification($root, $args, $app)
+    {
+        $user = $app->user;
+        $user->secret = null;
+        $user->save();
+        return true;
+    }
+    public function updateTwoStepVerification($root, $args, $app)
+    {
+        $g = new GoogleAuthenticator();
+        if (!$g->checkCode($args["secret"], $args["code"])) {
+            return false;
+        }
+
+        $user = $app->user;
+        $user->secret = $args["secret"];
+        $user->save();
+
+        return true;
+    }
+
+
     public function sidebarNavAddClass($root, $args, $app)
     {
         //check style type

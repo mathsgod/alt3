@@ -2,7 +2,10 @@
   <div class="card-header">
     <slot></slot>
     <slot name="title" v-if="!title"></slot>
-    <div class="card-title" v-else v-text="title"></div>
+    <div class="card-title" v-else>
+      <i :class="icon" v-if="icon"></i>
+      {{title}}
+    </div>
 
     <div class="card-tools">
       <slot name="tools"></slot>
@@ -28,13 +31,13 @@
 <script>
 export default {
   name: "card-header",
-  props: ["title"],
+  props: ["title", "icon"],
   data() {
     return {
       pinable: false,
       pinned: true,
       collapsible: false,
-      collapsed: false
+      collapsed: false,
     };
   },
   methods: {
@@ -51,7 +54,7 @@ export default {
     },
     unpin() {
       this.pinned = false;
-    }
-  }
+    },
+  },
 };
 </script>
