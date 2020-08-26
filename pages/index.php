@@ -1,13 +1,16 @@
 <?php
 
+use Firebase\JWT\JWT;
+
 /**
  * @property App\App $app
  */
 class _index extends R\Page
 {
-    public function get()
+    public function get($token)
     {
         $config = $this->app->config;
+
         if ($this->app->logined()) {
             $user = $this->app->user;
             if ($user->secret == "" && $config["user"]["2-step verification"]) {
@@ -23,6 +26,14 @@ class _index extends R\Page
 
             return;
         }
+
+        if ($token) {
+            if ($this->app->loginByToken($token)) {
+                $this->redirect();
+            }
+        }
+
+
         $twig = $this->app->twig(__DIR__ . "/index.twig");
 
         $pi = $this->app->pathInfo();

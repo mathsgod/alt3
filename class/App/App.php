@@ -4,6 +4,7 @@ namespace App;
 
 use Exception;
 use Composer\Autoload\ClassLoader;
+use Firebase\JWT\JWT;
 use PHP\Psr7\Response;
 use PHP\Psr7\StringStream;
 use Psr\Log\LoggerInterface;
@@ -348,6 +349,26 @@ class App extends \R\App
         $this->user_id = $user->user_id;
 
         return true;
+    }
+
+    public function loginByToken(string $token): bool
+    {
+        try {
+            $token = (array)JWT::decode($token, $this->config["jwt"]["key"], ["HS256"]);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        if ($token) {
+            if ($token["type"] == "access_token") {
+                $user = new User($token["id"]);
+                $_SESSION["app"]["user_id"] = $user->user_id;
+                $_SESSION["app"]["user"] = $user;
+                $_SESSION["app"]["login"] = true;
+            }
+            return true;
+        }
+        return false;
     }
 
     public function logined(): bool
