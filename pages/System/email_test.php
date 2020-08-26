@@ -6,24 +6,13 @@ class System_email_test extends ALT\Page
 {
     public function post()
     {
-        $mail = $this->createMail();
-        $mail->isSMTP();
+        $mail = $this->app->createMail();
         $mail->Subject = $_POST["subject"];
         $mail->setFrom($_POST["sender"]);
         $mail->addAddress($_POST["receiver"]);
-
         if ($_POST["cc"]) $mail->addCC($_POST["cc"]);
         if ($_POST["bcc"]) $mail->addBCC($_POST["bcc"]);
         $mail->msgHTML($_POST["content"]);
-
-        if ($_POST["smtp"]) {
-            $mail->Host = $_POST["smtp"];
-            $mail->Port = 25;
-            $mail->SMTPAuth = true;
-            $mail->Username = $_POST["smtp-username"];
-            $mail->Password = $_POST["smtp-password"];
-        }
-
         if ($mail->send()) {
             $this->app->alert->success("mail sent");
         } else {
@@ -44,10 +33,11 @@ class System_email_test extends ALT\Page
         $config["content"] = "This is a test mail";
 
         $mv = $this->createE($config);
-        $mv->add("smtp")->input("smtp");
-        $mv->add("smtp-username")->input("smtp-username");
-        $mv->add("smtp-password")->input("smtp-password");
-        $mv->add("return-path")->input("return-path");
+        $mv->add("smtp", "smtp");
+        $mv->add("smtp-username", "smtp-username");
+        $mv->add("smtp-password", "smtp-password");
+        $mv->add("smtp-port", "smtp-port");
+        //$mv->add("return-path")->input("return-path");
 
         $mv->addHr();
         $mv->add("Sender")->input("sender");

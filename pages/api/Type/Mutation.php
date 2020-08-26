@@ -2,6 +2,7 @@
 
 namespace Type;
 
+use App\App;
 use GraphQL\Error\Error;
 use App\User;
 use App\UI;
@@ -18,19 +19,21 @@ class Mutation
 
             if ($user->email == $args["email"]) {
 
-                //create login token
-                $token = JWT::encode([
-                    "iat" => time(),
-                    "exp" => time() + 3600,
-                    "id" => $user->user_id,
-                    "type" => "access_token"
-                ], $app->config["jwt"]["key"]);
 
-                //send token to user
+                $token = $app->getUserLoginToken($user);
+
+                $uri = $app->request->getUri();
+                $uri = $uri->withPath($app->base_path . "/?token=$token");
+
                 $mail = $app->createMail();
-                $mail->Subject = "Login url";
-                $mail->setFrom("no-reply@" . $_SERVER["HTTP_HOST"]);
-                $mail->msgHTML($token);
+                $mail->Subject = "Lost 2-step device";
+                $mail->addAddress($user->email);
+                $html = $app->twig("template/lost_2step.twig")->render([
+                    "user" => $user,
+                    "link" => $uri
+                ]);
+
+                $mail->msgHTML($html);
                 try {
                     $mail->send();
                 } catch (Exception $e) {
@@ -202,7 +205,7 @@ class Mutation
         return new \App\UserGroup($args["usergroup_id"]);
     }
 
-    public function forgotPassword($root, $args, $app): bool
+    public function forgotPassword($root, $args, App $app): bool
     {
         $user = User::Query([
             "username" => $args["username"],
@@ -211,8 +214,24 @@ class Mutation
         ])->first();
 
         if ($user) {
+
+
+            $token = $app->getUserLoginToken($user);
+
+            $uri = $app->request->getUri();
+            $uri = $uri->withPath($app->base_path . "/?token=$token");
+
+            $mail = $app->createMail();
+            $mail->Subject = "Forget password";
+            $mail->addAddress($user->email);
+            $html = $app->twig("template/forget_password.twig")->render([
+                "user" => $user,
+                "link" => $uri
+            ]);
+
+            $mail->msgHTML($html);
             try {
-                $user->sendPassword($app);
+                $mail->send();
             } catch (Exception $e) {
                 throw new Error($e->getMessage());
             }

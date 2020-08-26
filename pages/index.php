@@ -29,7 +29,8 @@ class _index extends R\Page
 
         if ($token) {
             if ($this->app->loginByToken($token)) {
-                $this->redirect();
+                $this->response = $this->response->withHeader("Location", "");
+                return;
             }
         }
 

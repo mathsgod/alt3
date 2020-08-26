@@ -606,14 +606,20 @@ class App extends \R\App
     {
         $mail = new Mail(true);
         $smtp = $this->config["user"]["smtp"];
+        $mail->setFrom("no-reply@" . $this->config["user"]["domain"]);
 
-        if ($smtp && $smtp->value) {
-            $mail->IsSMTP();
+        if ($smtp) {
+            $mail->isSMTP();
             $mail->Host = (string) $smtp;
+            if ($this->config["user"]["smtp-port"]) {
+                $mail->Port = (int)$this->config["user"]["smtp-port"];
+            }
             $mail->SMTPAuth = true;
             $mail->Username = $this->config["user"]["smtp-username"];
             $mail->Password = $this->config["user"]["smtp-password"];
+            $mail->SMTPAutoTLS = $this->config["user"]["smtp-auto-tls"];
         }
+
 
         return $mail;
     }
@@ -749,5 +755,18 @@ class App extends \R\App
         $languages = array_unique($languages);
 
         return $languages;
+    }
+
+    public function getUserLoginToken(User $user): String
+    {
+        //create login token
+        $token = JWT::encode([
+            "iat" => time(),
+            "exp" => time() + 3600,
+            "id" => $user->user_id,
+            "type" => "access_token"
+        ], $this->config["jwt"]["key"]);
+
+        return $token;
     }
 }

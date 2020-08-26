@@ -20,9 +20,6 @@ user:
   copyright-name: HostLink
   logo:
 
-  forget pwd email/subject: Your password had been reset
-  forget pwd email/content: Your new password<br/><br/>nusername:{username}<br/>password:{password}
-
   search-form: false
   default-skin: skin-blue
 
@@ -31,6 +28,8 @@ user:
   smtp:
   smtp-username:
   smtp-password:
+  smtp-port:
+  smtp-auto-tls: 1
 
   return-path:
 
@@ -45,3 +44,6 @@ user:
 hostlink-fileman:
   key: test1234
   basepath: /uploads
+
+jwt:
+  key: 1QekHjUGABWFYpoEYVJb1cgmqx80u3JotKGi6Qa157Gmm8Tf6hsmosd9PRvrRL8dRJbZrIbmfrSo4aC0ew1iDqO1hvIOEd8KCslfE4OFePR593D9FaCYmhHXjbKrPD2Z0rOiAN7V6E4GmrPX4clB6yRyrmRlHNpcyr1suoH60ftnFNpZUgLnnk194tF3Q3jg3JA25C5n7sMlrtpVUCfECIGQrAhlOPNQQfi034VmQFQdAYqJiBPAXBSnvlFp8Hn9
