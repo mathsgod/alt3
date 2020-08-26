@@ -80,7 +80,7 @@ var vm = new Vue({
                 this.login(creds.id, creds.password);
             }
         }, async login(username, password, code = "") {
-            let resp = await this.$gql.mutation("api", {
+            let resp = (await this.$gql.mutation("api", {
                 login: {
                     __args: {
                         username: username,
@@ -89,11 +89,12 @@ var vm = new Vue({
                     },
                     username: true
                 }
-            });
-            resp = resp.data;
+            })).data;
+
             if (resp.error) {
                 this.error = true;
                 if (resp.error.message == "2-step verification") {
+                    this.message = "Please input 2-step verification code";
                     this.show2StepDialog = true;
                 } else {
                     this.message = resp.error.message;
@@ -137,16 +138,15 @@ var vm = new Vue({
                 return;
             }
 
-            let resp = await this.$gql.mutation("api", {
+            let resp = (await this.$gql.mutation("api", {
                 forgotPassword: {
                     __args: {
                         username: this.forgetForm.username,
                         email: this.forgetForm.email
                     }
                 }
-            });
+            })).data;
 
-            resp = resp.data;
             if (resp.error) {
                 await this.$alert(resp.error.message);
                 return;
