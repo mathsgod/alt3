@@ -26,6 +26,7 @@ type Mutation{
     sidebarNavRemoveClass(class:String!):Boolean @hasRole(role:[Administrators,Power Users,Users])
     updateTwoStepVerification(secret:String!,code:String!):Boolean
     removeTwoStepVerification:Boolean
+    lost2StepDevice(username:String!,password:String!,email:String):Boolean
 }
 
 input MyInfoInput{

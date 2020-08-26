@@ -87,6 +87,18 @@
             </div>
             <!-- /.login-card-body -->
 
+            <el-dialog :visible.syn="show2StepDialog" title="2-step verification">
+                <div>
+                    <p>Please input your code, if you lost your device, click <a href="#"
+                            @click.prevent="lost2Step">here</a></p>
+                </div>
+                <el-input v-model="code" placeholder="6 digits code"></el-input>
+                <span slot="footer">
+                    <el-button @click="show2StepDialog=false">Cancel</el-button>
+                    <el-button type="primary" @click="signIn">Ok</el-button>
+                </span>
+            </el-dialog>
+
             <el-dialog :visible.sync="showForgetDialog" title="Forget password">
                 <el-form :model="forgetForm" label-width="auto" ref="forgetForm">
                     <el-form-item label="Username" prop="username" :rules="[{required:true}]">

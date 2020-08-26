@@ -10,11 +10,11 @@ var vm = new Vue({
         username: "",
         password: "",
         message: "Sign in to start your session",
+        code: "",
         error: false,
         showForgetDialog: false,
-        forgetForm: {
-
-        }
+        forgetForm: {},
+        show2StepDialog: false
     },
     async created() {
         if ('credentials' in navigator) {
@@ -94,14 +94,7 @@ var vm = new Vue({
             if (resp.error) {
                 this.error = true;
                 if (resp.error.message == "2-step verification") {
-
-                    this.$prompt('Please input your code', '2-step verification', {
-                        confirmButtonText: 'OK',
-                        cancelButtonText: 'Cancel'
-                    }).then(({ value }) => {
-                        this.login(username, password, value);
-                    });
-
+                    this.show2StepDialog = true;
                 } else {
                     this.message = resp.error.message;
                 }
@@ -134,7 +127,7 @@ var vm = new Vue({
                 this.message = "Please input password";
                 return;
             }
-            return this.login(this.username, this.password);
+            return this.login(this.username, this.password, this.code);
         }, forgetPassword() {
             this.showForgetDialog = true;
         }, async submtForgetForm() {
@@ -163,6 +156,40 @@ var vm = new Vue({
 
             this.forgetForm = {};
             this.showForgetDialog = false;
+        }, lost2Step() {
+
+            this.show2StepDialog = false;
+            this.$prompt('Please input your e-mail', 'Lost 2-step device', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+                inputErrorMessage: 'Invalid Email'
+            }).then(async ({ value }) => {
+                console.log(value);
+                let resp = await this.$gql.mutation("api", {
+                    lost2StepDevice: {
+                        __args: {
+                            email: value,
+                            username: this.username,
+                            password: this.password
+                        }
+                    }
+                });
+                resp = resp.data;
+                if (resp.error) {
+                    this.$alert(resp.error.message, { type: "error" });
+                    return;
+                }
+                if (resp.data.lost2StepDevice) {
+                    this.$alert("Login link sent to you email, if you email are correct");
+                    return;
+                }
+
+
+            }).catch(() => {
+
+            });
+
         }
     }
 });

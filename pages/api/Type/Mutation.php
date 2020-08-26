@@ -6,10 +6,41 @@ use GraphQL\Error\Error;
 use App\User;
 use App\UI;
 use Exception;
+use Firebase\JWT\JWT;
 use Google\Authenticator\GoogleAuthenticator;
 
 class Mutation
 {
+    public function lost2StepDevice($root, $args, $app)
+    {
+        $user = User::Login($args["username"], $args["password"]);
+        if ($user) {
+
+            if ($user->email == $args["email"]) {
+
+                //create login token
+                $token = JWT::encode([
+                    "iat" => time(),
+                    "exp" => time() + 3600,
+                    "id" => $user->user_id,
+                    "type" => "access_token"
+                ], $app->config["jwt"]["key"]);
+
+                //send token to user
+                $mail = $app->createMail();
+                $mail->Subject = "Login url";
+                $mail->setFrom("no-reply@" . $_SERVER["HTTP_HOST"]);
+                $mail->msgHTML("link");
+                try {
+                    $mail->send();
+                } catch (Exception $e) {
+                    throw new Error($e->getMessage());
+                }
+            }
+        }
+        return true;
+    }
+
     public function removeTwoStepVerification($root, $args, $app)
     {
         $user = $app->user;
