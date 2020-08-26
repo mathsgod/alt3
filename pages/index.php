@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * @property App\App $app
+ */
 class _index extends R\Page
 {
     public function get()

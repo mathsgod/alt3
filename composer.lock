@@ -728,16 +728,16 @@
         },
         {
             "name": "mathsgod/php-psr7",
-            "version": "1.0.11",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/php-psr7.git",
-                "reference": "8b6b293cab9c1f824ca3b40472f1f7b135868405"
+                "reference": "4ae558cdce4bacbc37d35c51ecc518ff6214bc6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/8b6b293cab9c1f824ca3b40472f1f7b135868405",
-                "reference": "8b6b293cab9c1f824ca3b40472f1f7b135868405",
+                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/4ae558cdce4bacbc37d35c51ecc518ff6214bc6e",
+                "reference": "4ae558cdce4bacbc37d35c51ecc518ff6214bc6e",
                 "shasum": ""
             },
             "require": {
@@ -767,7 +767,7 @@
                 }
             ],
             "description": "A standard implementation of php psr7",
-            "time": "2020-08-25T03:06:11+00:00"
+            "time": "2020-08-25T10:37:59+00:00"
         },
         {
             "name": "mathsgod/php-util",
@@ -851,11 +851,11 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "dd1efe8cc15791d99370f6a6be5ce1d71d394e53"
+                "reference": "4a07a0114398754bbfb3abf1c2bb0d9bfe1bd753"
             },
             "require": {
                 "ext-pdo": "*",
@@ -881,7 +881,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-08-25T08:15:23+00:00"
+            "time": "2020-08-25T09:07:11+00:00"
         },
         {
             "name": "mathsgod/r-graphql",

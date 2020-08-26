@@ -16,8 +16,6 @@ class Route extends \R\Route
         $this->basePath = $app->base_path;
         $this->path = substr($this->path, strlen($app->base_path));
 
-
-
         $this->method = strtolower($request->getMethod());
         parse_str($uri->getQuery(), $this->query);
 
@@ -61,7 +59,6 @@ class Route extends \R\Route
     public function psr0($request, $loader)
     {
         $pi = $this->app->pathinfo();
-
 
         $method = strtolower($request->getMethod());
         $document_root = $pi["document_root"];

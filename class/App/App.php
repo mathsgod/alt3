@@ -220,7 +220,6 @@ class App extends \R\App
         $class = $route->class;
 
 
-
         if ($class) {
             $page = new $class($this);
             $response = new Response(200);
