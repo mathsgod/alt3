@@ -80,7 +80,12 @@ class Page extends \R\Page
     public function path()
     {
         $route = $this->request->getAttribute("route");
-        return substr($route->path, 1);
+        $path = $route->path;
+        if ($path[0] == "/") {
+            $path = substr($path, 1);
+        }
+
+        return $path;
     }
 
     protected function createTab($prefix = null): UI\Tab
@@ -94,9 +99,8 @@ class Page extends \R\Page
     {
         $rt = new UI\RT2($this, $this->app->config);
         $path = (string) $objects[0]->request->getURI()->getPath();
-        $path = substr($path, strlen($this->app->base_path));
+
         $rt->ajax["url"] = (string) $path . "/" . $objects[1] . "?" . $this->request->getUri()->getQuery();
-        $rt->ajax["url"] = substr($rt->ajax["url"], 1);
 
 
         $rt->pageLength = 25;
@@ -211,7 +215,7 @@ class Page extends \R\Page
     public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $this->request = $request;
-        $route=$this->app->route;
+        $route = $this->app->route;
         if ($request instanceof ServerRequestInterface) {
             $route = $request->getAttribute("route");
         }
@@ -384,7 +388,7 @@ class Page extends \R\Page
     {
         if ($uri) {
 
-            $location = $this->app->base_path . "/" . $uri;
+            $location = $this->app->base_path . $uri;
             $this->response = $this->response->withHeader("Location", $location);
             return $this->response;
         }

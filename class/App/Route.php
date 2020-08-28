@@ -67,7 +67,7 @@ class Route extends \R\Route
 
         $page = $this->app->config["system"]["pages"];
         if (!$page) {
-            $page = DIRECTORY_SEPARATOR . "pages";
+            $page =  "pages".DIRECTORY_SEPARATOR;
         }
 
         $qs = explode("/", $this->path);
@@ -76,6 +76,7 @@ class Route extends \R\Route
         //end with slash, check index
         if (substr($this->path, -1) == "/") {
             $file = $document_root . $base .  $page .  $this->path . "index.php";
+
             if (file_exists($file)) {
                 $this->file = $file;
                 $this->path = $this->path . "index";
@@ -85,7 +86,7 @@ class Route extends \R\Route
                 return;
             }
 
-            $file = $system_root . $page . $this->path . "index.php";
+            $file = $system_root .DIRECTORY_SEPARATOR. $page . $this->path . "index.php";
             if (file_exists($file)) {
                 $this->file = $file;
                 $this->path = $this->path . "index";
@@ -95,6 +96,7 @@ class Route extends \R\Route
                 return;
             }
         } else {
+            
             $file = $document_root . $base .  $page .  $this->path . "/index.php";
             if (file_exists($file)) {
                 $this->file = $file;
@@ -105,7 +107,7 @@ class Route extends \R\Route
                 return;
             }
 
-            $file = $system_root . $page . $this->path . "/index.php";
+            $file = $system_root . DIRECTORY_SEPARATOR.$page . $this->path . "/index.php";
             if (file_exists($file)) {
                 $this->file = $file;
                 $this->path = $this->path . "/index";
@@ -131,7 +133,7 @@ class Route extends \R\Route
                 return;
             }
 
-            if (file_exists($file = $system_root . $page . $path . ".php")) {
+            if (file_exists($file = $system_root . DIRECTORY_SEPARATOR.$page . $path . ".php")) {
                 $this->file = $file;
                 $this->path = $path;
                 $this->class = implode("_", $qs);

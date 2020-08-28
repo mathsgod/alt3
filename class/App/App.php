@@ -151,6 +151,7 @@ class App extends \R\App
 
     public function run()
     {
+        
         $this->loadACL();
 
         $this->user->online();
@@ -188,7 +189,6 @@ class App extends \R\App
         ob_end_clean();
         $this->route = $route;
         $request = $request->withAttribute("route", $route);
-
 
         $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
@@ -259,7 +259,7 @@ class App extends \R\App
         } else {
             $pi = $this->pathInfo();
             $cms_base = $pi["cms_base"];
-            header("location: {$$cms_base}#" . $this->request->getUri()->getPath());
+            header("location: {$cms_base}#" . $this->request->getUri()->getPath());
         }
     }
 
@@ -632,7 +632,7 @@ class App extends \R\App
             $uri .= "?" . $q;
         }
 
-        $base = $request->getUri()->getBasePath();
+        $base = $this->base_path;
         if ($this->logined()) {
 
             if ($request->getHeader("accept")[0] == "application/json") {
@@ -644,11 +644,11 @@ class App extends \R\App
                 $response = $response->withBody(new Stream(json_encode($msg)));
             } else {
                 $response = new Response(403);
-                $response = $response->withHeader("location", $base . "/access_deny#/" . $uri);
+                $response = $response->withHeader("location", $base . "access_deny#/" . $uri);
             }
         } else {
             $response = new Response(403);
-            $response = $response->withHeader("location", $base . "/#/" . $uri);
+            $response = $response->withHeader("location", $base . "#/" . $uri);
         }
 
         return $response;

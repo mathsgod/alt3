@@ -16,8 +16,8 @@ class Tab extends Card
     {
         parent::__construct($page);
         $this->classList->add("card-outline card-outline-tabs border-top-0");
-        
-        
+
+
         $this->navs = $this->ownerDocument->createElement("ul");
         $this->navs->classList->add("nav");
         $this->navs->classList->add("nav-tabs");
@@ -75,12 +75,14 @@ class Tab extends Card
 
         if (isset($t)) {
             $url = parse_url($href);
-            parse_str($url["query"],$query);
-            $query["t"]=$t;
-            $href=$url["path"]."?".http_build_query($query);
+            parse_str($url["query"], $query);
+            $query["t"] = $t;
+            $href = $url["path"] . "?" . http_build_query($query);
         }
-        
+
+
         $url = dirname($this->page->path()) . "/" . $uri;
+
         if (!$this->page->app->acl($url)) {
             return;
         }
