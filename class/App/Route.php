@@ -67,7 +67,7 @@ class Route extends \R\Route
 
         $page = $this->app->config["system"]["pages"];
         if (!$page) {
-            $page =  "pages".DIRECTORY_SEPARATOR;
+            $page =  "pages" . DIRECTORY_SEPARATOR;
         }
 
         $qs = explode("/", $this->path);
@@ -86,7 +86,7 @@ class Route extends \R\Route
                 return;
             }
 
-            $file = $system_root .DIRECTORY_SEPARATOR. $page . $this->path . "index.php";
+            $file = $system_root . DIRECTORY_SEPARATOR . $page . $this->path . "index.php";
             if (file_exists($file)) {
                 $this->file = $file;
                 $this->path = $this->path . "index";
@@ -96,7 +96,7 @@ class Route extends \R\Route
                 return;
             }
         } else {
-            
+
             $file = $document_root . $base .  $page .  $this->path . "/index.php";
             if (file_exists($file)) {
                 $this->file = $file;
@@ -107,7 +107,7 @@ class Route extends \R\Route
                 return;
             }
 
-            $file = $system_root . DIRECTORY_SEPARATOR.$page . $this->path . "/index.php";
+            $file = $system_root . DIRECTORY_SEPARATOR . $page . $this->path . "/index.php";
             if (file_exists($file)) {
                 $this->file = $file;
                 $this->path = $this->path . "/index";
@@ -122,7 +122,7 @@ class Route extends \R\Route
             $path = "/" . implode("/", $qs);
             if (file_exists($file = $document_root . $base . $page . $path . ".php")) {
                 $this->file = $file;
-                $this->path = $path;
+                $this->path = substr($path, 1);
                 $this->class = implode("_", $qs);
                 if (count($qs) == 1) {
                     $this->class = "_" . $this->class;
@@ -133,9 +133,9 @@ class Route extends \R\Route
                 return;
             }
 
-            if (file_exists($file = $system_root . DIRECTORY_SEPARATOR.$page . $path . ".php")) {
+            if (file_exists($file = $system_root . DIRECTORY_SEPARATOR . $page . $path . ".php")) {
                 $this->file = $file;
-                $this->path = $path;
+                $this->path = substr($path, 1);
                 $this->class = implode("_", $qs);
                 if (count($qs) == 1) {
                     $this->class = "_" . $this->class;

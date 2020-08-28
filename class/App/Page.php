@@ -221,7 +221,8 @@ class Page extends \R\Page
         }
 
 
-        $path = substr($route->path, 1);
+        $path = $route->path;
+        
         if (!$this->app->acl($path)) {
             return $this->app->accessDeny($request);
         }
