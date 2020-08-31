@@ -128,7 +128,7 @@ class Page extends \R\Page
         return $form;
     }
 
-    protected function createForm($content, bool $multipart = true): UI\Form
+    protected function createForm($content, bool $multipart = false): UI\Form
     {
         $form = new UI\Form($this);
         p($form->card->body)->append($content);
