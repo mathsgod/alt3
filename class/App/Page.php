@@ -215,31 +215,25 @@ class Page extends \R\Page
         return false;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $this->request = $request;
         $route = $this->app->route;
-        if ($request instanceof ServerRequestInterface) {
-            $route = $request->getAttribute("route");
-        }
-
 
         $path = $route->path;
-        
+
         if (!$this->app->acl($path)) {
             return $this->app->accessDeny($request);
         }
 
-        if ($request instanceof ServerRequestInterface) {
-            if ($request->getQueryParams()["_rt"]) {
-                $rt = new UI\RTResponse();
-                $request = $request->withQueryParams(["rt" => $rt]);
-            }
+        if ($request->getQueryParams()["_rt"]) {
+            $rt = new UI\RTResponse();
+            $request = $request->withQueryParams(["rt" => $rt]);
+        }
 
-            if ($request->getQueryParams()["_rt_request"]) {
-                $rt = new UI\RTRequest($request);
-                $request = $request->withQueryParams(["request" => $rt]);
-            }
+        if ($request->getQueryParams()["_rt_request"]) {
+            $rt = new UI\RTRequest($request);
+            $request = $request->withQueryParams(["request" => $rt]);
         }
 
         if (($this->isAccept("text/html") || $this->isAccept("*/*")) && $request->getMethod() == "GET") {
@@ -324,33 +318,30 @@ class Page extends \R\Page
             }
         }
 
-        if ($this->request instanceof ServerRequestInterface) {
 
-            $data = $this->request->getParsedBody();
+        $data = $this->request->getParsedBody();
 
-            $obj->bind($data);
+        $obj->bind($data);
 
-            if ($files = $this->request->getUploadedFiles()) {
-                foreach ($files as $name => $file) {
+        if ($files = $this->request->getUploadedFiles()) {
+            foreach ($files as $name => $file) {
 
-                    if (property_exists($obj, $name)) {
-                        $obj->$name = (string) $file->getStream();
-                    }
-                    if (property_exists($obj, $name . "_name")) {
-                        $obj->{$name . "_name"} = $file->getClientFilename();
-                    }
+                if (property_exists($obj, $name)) {
+                    $obj->$name = (string) $file->getStream();
+                }
+                if (property_exists($obj, $name . "_name")) {
+                    $obj->{$name . "_name"} = $file->getClientFilename();
+                }
 
-                    if (property_exists($obj, $name . "_type")) {
-                        $obj->{$name . "_type"} = $file->getClientMediaType();
-                    }
+                if (property_exists($obj, $name . "_type")) {
+                    $obj->{$name . "_type"} = $file->getClientMediaType();
+                }
 
-                    if (property_exists($obj, $name . "_size")) {
-                        $obj->{$name . "_size"} = $file->getSize();
-                    }
+                if (property_exists($obj, $name . "_size")) {
+                    $obj->{$name . "_size"} = $file->getSize();
                 }
             }
         }
-
 
 
         $obj->save();

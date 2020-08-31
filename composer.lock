@@ -973,11 +973,11 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.6.1",
+            "version": "3.6.5",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "58dec2c44c78e215188dd240888e8182ee7553b4"
+                "reference": "77518bb39b736c1582c033c85223debaf634e668"
             },
             "require": {
                 "mathsgod/php-psr7": "^1.0",
@@ -1012,7 +1012,7 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-08-25T03:17:32+00:00"
+            "time": "2020-08-31T05:27:23+00:00"
         },
         {
             "name": "mathsgod/r-db",

@@ -80,7 +80,7 @@ class Table extends HTMLTableElement
                 if ($getter instanceof \Closure) {
                     p($cell)->html(call_user_func_array($getter, [$obj, $k]));
                 } else {
-                    $cell->setAttribute("data-name",$getter);
+                    $cell->setAttribute("data-name", $getter);
                     p($cell)->text(Func::_($getter)->call($obj));
                 }
             }
@@ -143,7 +143,7 @@ class Table extends HTMLTableElement
             $obj = p($c)->data("object");
             if ($obj instanceof \App\Model) {
                 if ($obj->canDelete()) {
-                    $btn = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri('delete'))->html("<i class='fa fa-fw fa-times'></i>");
+                    $btn = html("a")->class("btn btn-xs btn-danger confirm")->href($obj->uri('index/delete'))->html("<i class='fa fa-fw fa-times'></i>");
                     p($c)->html($btn);
                 }
             }

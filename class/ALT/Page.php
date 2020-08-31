@@ -2,7 +2,7 @@
 
 namespace ALT;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 use Exception;
@@ -24,7 +24,7 @@ class Page extends \App\Page
         $this->header = new PageHeader;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
 
         $this->request = $request;
