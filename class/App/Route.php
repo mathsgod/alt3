@@ -124,7 +124,7 @@ class Route extends \R\Route
             $path = implode("/", $qs);
             if (file_exists($file = $document_root . $base . $page . $path . ".php")) {
                 $this->file = $file;
-                $this->path = substr($path, 1);
+                $this->path = $path;
                 $this->class = implode("_", $qs);
                 if (count($qs) == 1) {
                     $this->class = "_" . $this->class;
@@ -137,7 +137,7 @@ class Route extends \R\Route
 
             if (file_exists($file = $system_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . $path . ".php")) {
                 $this->file = $file;
-                $this->path = substr($path, 1);
+                $this->path = $path;
                 $this->class = implode("_", $qs);
                 if (count($qs) == 1) {
                     $this->class = "_" . $this->class;
