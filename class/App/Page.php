@@ -128,10 +128,13 @@ class Page extends \R\Page
         return $form;
     }
 
-    protected function createForm($content): UI\Form
+    protected function createForm($content, bool $multipart = true): UI\Form
     {
         $form = new UI\Form($this);
         p($form->card->body)->append($content);
+        if ($multipart) {
+            $form->setAttribute("enctype", "multipart/form-data");
+        }
         return $form;
     }
 
