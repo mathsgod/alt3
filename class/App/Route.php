@@ -12,13 +12,14 @@ class Route extends \R\Route
         $this->app = $app;
         $uri = $request->getUri();
         $this->uri = (string) $uri;
+
         $this->path = $uri->getPath();
         $this->basePath = $app->base_path;
+
         $this->path = substr($this->path, strlen($app->base_path));
 
         $this->method = strtolower($request->getMethod());
         parse_str($uri->getQuery(), $this->query);
-
 
         // skip id
         $t = [];
@@ -34,7 +35,8 @@ class Route extends \R\Route
         }
 
         $this->path = implode("/", $t);
-        $this->psr0($request, $app->loader);
+
+        $this->psr0($request);
         //  outp($this);
         // die();
         if ($this->file) {
@@ -56,7 +58,7 @@ class Route extends \R\Route
         }
     }
 
-    public function psr0($request, $loader)
+    public function psr0(RequestInterface $request)
     {
         $pi = $this->app->pathinfo();
 
@@ -107,7 +109,7 @@ class Route extends \R\Route
                 return;
             }
 
-            $file = $system_root . DIRECTORY_SEPARATOR . $page . $this->path . "/index.php";
+            $file = $system_root . DIRECTORY_SEPARATOR . $page .  $this->path . "/index.php";
             if (file_exists($file)) {
                 $this->file = $file;
                 $this->path = $this->path . "/index";
@@ -119,7 +121,7 @@ class Route extends \R\Route
         }
 
         while (count($qs)) {
-            $path = "/" . implode("/", $qs);
+            $path = implode("/", $qs);
             if (file_exists($file = $document_root . $base . $page . $path . ".php")) {
                 $this->file = $file;
                 $this->path = substr($path, 1);
@@ -133,7 +135,7 @@ class Route extends \R\Route
                 return;
             }
 
-            if (file_exists($file = $system_root . DIRECTORY_SEPARATOR . $page . $path . ".php")) {
+            if (file_exists($file = $system_root . DIRECTORY_SEPARATOR . $page . DIRECTORY_SEPARATOR . $path . ".php")) {
                 $this->file = $file;
                 $this->path = substr($path, 1);
                 $this->class = implode("_", $qs);
