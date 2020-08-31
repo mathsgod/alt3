@@ -5,6 +5,7 @@ namespace App;
 use Exception;
 use Composer\Autoload\ClassLoader;
 use Firebase\JWT\JWT;
+use PHP\Psr7\JsonStream;
 use PHP\Psr7\Response;
 use PHP\Psr7\StringStream;
 use Psr\Log\LoggerInterface;
@@ -151,7 +152,7 @@ class App extends \R\App
 
     public function run()
     {
-        
+
         $this->loadACL();
 
         $this->user->online();
@@ -627,12 +628,13 @@ class App extends \R\App
     public function accessDeny(RequestInterface $request): ResponseInterface
     {
         $uri = $request->getUri()->getPath();
-        $uri = substr($uri, 1);
+        $base = $this->base_path;
+        $uri = substr($uri, strlen($base));
+
         if ($q = $request->getUri()->getQuery()) {
             $uri .= "?" . $q;
         }
 
-        $base = $this->base_path;
         if ($this->logined()) {
 
             if ($request->getHeader("accept")[0] == "application/json") {
@@ -641,7 +643,7 @@ class App extends \R\App
                 $msg["error"]["message"] = "access deny";
                 $msg["error"]["code"] = 403;
                 $response = $response->withHeader("content-type", "application/json");
-                $response = $response->withBody(new Stream(json_encode($msg)));
+                $response = $response->withBody(new JsonStream($msg));
             } else {
                 $response = new Response(403);
                 $response = $response->withHeader("location", $base . "access_deny#/" . $uri);
