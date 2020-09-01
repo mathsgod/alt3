@@ -51,7 +51,7 @@
         "mathsgod/date": "^1.0",
         "mathsgod/hostlink-fileman": "^2.0",
         "mathsgod/r-db": "^3.6",
-        "mathsgod/php-util": "^1.0",
+        "mathsgod/php-util": "^1.1",
         "phpoffice/phpspreadsheet": "^1.8",
         "mathsgod/php-psr7": "^1.0",
         "endroid/qr-code": "^2.5"

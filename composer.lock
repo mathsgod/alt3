@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f620289520229cccbea7631128330fef",
+    "content-hash": "16b6c484fcb4bb46a94e89fdd4e9aca3",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -473,16 +473,16 @@
         },
         {
             "name": "markbaker/matrix",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MarkBaker/PHPMatrix.git",
-                "reference": "5348c5a67e3b75cd209d70103f916a93b1f1ed21"
+                "reference": "182d44c3b2e3b063468f7481ae3ef71c69dc1409"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/5348c5a67e3b75cd209d70103f916a93b1f1ed21",
-                "reference": "5348c5a67e3b75cd209d70103f916a93b1f1ed21",
+                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/182d44c3b2e3b063468f7481ae3ef71c69dc1409",
+                "reference": "182d44c3b2e3b063468f7481ae3ef71c69dc1409",
                 "shasum": ""
             },
             "require": {
@@ -493,7 +493,7 @@
                 "phpcompatibility/php-compatibility": "dev-master",
                 "phploc/phploc": "^4",
                 "phpmd/phpmd": "dev-master",
-                "phpunit/phpunit": "^5.7",
+                "phpunit/phpunit": "^5.7|^6.0|7.0",
                 "sebastian/phpcpd": "^3.0",
                 "squizlabs/php_codesniffer": "^3.0@dev"
             },
@@ -538,7 +538,7 @@
                 "matrix",
                 "vector"
             ],
-            "time": "2019-10-06T11:29:25+00:00"
+            "time": "2020-08-28T19:41:55+00:00"
         },
         {
             "name": "mathsgod/alt-app-core",
@@ -893,16 +893,16 @@
         },
         {
             "name": "mathsgod/php-psr7",
-            "version": "1.0.16",
+            "version": "1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/php-psr7.git",
-                "reference": "e6f17654e9435eefffab60038d85d3d09228acf1"
+                "reference": "ccd0d8a6b6d6cd551ffe3334a844d889cf77d960"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/e6f17654e9435eefffab60038d85d3d09228acf1",
-                "reference": "e6f17654e9435eefffab60038d85d3d09228acf1",
+                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/ccd0d8a6b6d6cd551ffe3334a844d889cf77d960",
+                "reference": "ccd0d8a6b6d6cd551ffe3334a844d889cf77d960",
                 "shasum": ""
             },
             "require": {
@@ -932,15 +932,15 @@
                 }
             ],
             "description": "A standard implementation of php psr7",
-            "time": "2020-08-26T03:09:29+00:00"
+            "time": "2020-08-31T08:19:05+00:00"
         },
         {
             "name": "mathsgod/php-util",
-            "version": "1.0.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/php-util.git",
-                "reference": "cb93bd78133cd2ec154b458e3c1b353401be6465"
+                "reference": "3754b1588434b1812fc828073c94c1888dff8f8e"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.5"
@@ -969,7 +969,7 @@
                 }
             ],
             "description": "a simple php util for data structure",
-            "time": "2020-07-21T08:18:20+00:00"
+            "time": "2020-09-01T02:07:22+00:00"
         },
         {
             "name": "mathsgod/r",
@@ -1016,15 +1016,16 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.6.2",
+            "version": "3.6.6",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "4a07a0114398754bbfb3abf1c2bb0d9bfe1bd753"
+                "reference": "9b1d4374eb7bdf8086afc18812bd376b945495a9"
             },
             "require": {
                 "ext-pdo": "*",
                 "mathsgod/data-structure": "^1.3",
+                "mathsgod/php-util": "^1.1",
                 "php": ">=7.0",
                 "psr/log": "^1.1"
             },
@@ -1046,7 +1047,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-08-25T09:07:11+00:00"
+            "time": "2020-09-01T02:18:18+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -1544,7 +1545,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.4.43",
+            "version": "v3.4.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1879,16 +1880,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.43",
+            "version": "v3.4.44",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e7fa05917ae931332a42d65b577ece4d497aad81"
+                "reference": "4152e36b0f305c2a57aa0233dee56ec27bca4f06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e7fa05917ae931332a42d65b577ece4d497aad81",
-                "reference": "e7fa05917ae931332a42d65b577ece4d497aad81",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/4152e36b0f305c2a57aa0233dee56ec27bca4f06",
+                "reference": "4152e36b0f305c2a57aa0233dee56ec27bca4f06",
                 "shasum": ""
             },
             "require": {
@@ -1948,7 +1949,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-23T09:37:51+00:00"
+            "time": "2020-08-26T06:32:27+00:00"
         },
         {
             "name": "twig/extensions",
