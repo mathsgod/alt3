@@ -26,12 +26,18 @@ class App extends \R\App
     public $router;
     public $composer;
 
+    /** Root path of alt3 */
+    public $system_root;
+
     public function __construct(string $root = null, ClassLoader $loader = null, LoggerInterface  $logger = null)
     {
         //check config file
         if (!file_exists($root . "/config.ini") && !file_exists($root . "/config.yml")) {
             throw new Exception("config.ini or config.yml not found");
         }
+
+        $this->system_root = dirname(__DIR__, 2);
+
 
         spl_autoload_register(function ($class) use ($root) {
             $class_path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
@@ -42,11 +48,12 @@ class App extends \R\App
         });
 
         if (file_exists($config_file = $root . "/config.yml")) {
-            $this->config = Yaml::parseFile($config_file);
+            $this->config = array_merge([], Yaml::parseFile($config_file));
         }
 
         $this->composer = new Composer($this);
         parent::__construct($root, $loader, $logger);
+
 
         if ($this->request->getMethod() == "POST") {
             if (strpos($this->request->getHeaderLine("Content-Type"), "application/json") !== false) {
@@ -63,6 +70,10 @@ class App extends \R\App
 
         //-- CONFIG.INI
         $user_config = $this->config;
+
+        //load system config 
+        $this->config = Yaml::parseFile($this->system_root . "/config.yml");
+
 
         //user config
         foreach ($user_config as $n => $v) {
@@ -152,7 +163,6 @@ class App extends \R\App
 
     public function run()
     {
-
         $this->loadACL();
 
         $this->user->online();
@@ -220,8 +230,6 @@ class App extends \R\App
         }
 
         $class = $route->class;
-
-
         if ($class) {
             $page = new $class($this);
             $response = new Response(200);
