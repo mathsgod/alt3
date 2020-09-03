@@ -262,12 +262,11 @@ class App extends \R\App
 
             file_put_contents("php://output", (string) $response->getBody());
         } elseif ($this->logined()) {
-            $pi = $this->pathInfo();
-            $cms_base = $pi["cms_base"];
+            $cms_base = $this->base_path;
             header("location: {$cms_base}404_not_found#" . $this->request->getUri()->getPath());
         } else {
             $pi = $this->pathInfo();
-            $cms_base = $pi["cms_base"];
+            $cms_base = $this->base_path;
             header("location: {$cms_base}#" . $this->request->getUri()->getPath());
         }
     }
@@ -438,7 +437,7 @@ class App extends \R\App
 
     public function pathInfo(): array
     {
-        $system_root = dirname(__DIR__, 2);
+        $system_root = $this->system_root;
 
         $server = $this->request->getServerParams();
 
@@ -447,8 +446,8 @@ class App extends \R\App
             $document_root = $this->config["system"]["document_root"];
         }
 
-        $cms_base = dirname($server["PHP_SELF"]);
-        if (substr($cms_base, -1) != "/") $cms_base .= "/";
+        $cms_base = $this->base_path;
+
         $cms_root = $this->root;
 
         if (file_exists($document_root . "/composer.json")) {
