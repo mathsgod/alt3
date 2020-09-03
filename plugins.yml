@@ -12,9 +12,9 @@ bootstrap-select/bootstrap-select:
   js: ['dist/js/bootstrap-select.min.js']
   css: ['dist/css/bootstrap-select.min.css']
 
-fullcalendar/fullcalendar:
-  css: ['dist/fullcalendar.min.css']
-  js: ['dist/fullcalendar.min.js','gcal.min.js']
+fullcalendar:
+  css: ['main.min.css']
+  js: ['main.min.js']
 
 components/jquery:
   js: ['jquery.min.js']
