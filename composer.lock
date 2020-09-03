@@ -750,17 +750,11 @@
         },
         {
             "name": "mathsgod/hl-weather",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/hl-weather.git",
-                "reference": "81ca42051aa67c66a342c7db1fee5cf91ebc14a6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://raymond2.hostlink.com.hk/satis/web/dist/mathsgod/hl-weather/mathsgod-hl-weather-2.0.1-df0c2f.zip",
-                "reference": "81ca42051aa67c66a342c7db1fee5cf91ebc14a6",
-                "shasum": "5b55f5c0c98fe6a114ee61d60c9c52fb551f649c"
+                "reference": "4d271bf264f2f37bb9427f289defc42bdf3ffca0"
             },
             "require": {
                 "php": ">=5.6"
@@ -774,6 +768,14 @@
                     "HL\\": "src/"
                 }
             },
+            "scripts": {
+                "test": [
+                    "phpunit tests"
+                ]
+            },
+            "license": [
+                "proprietary"
+            ],
             "authors": [
                 {
                     "name": "Raymond Chong",
@@ -781,7 +783,7 @@
                 }
             ],
             "description": "Hong Kong weather forecast",
-            "time": "2019-07-22T02:48:06+00:00"
+            "time": "2020-09-03T03:03:45+00:00"
         },
         {
             "name": "mathsgod/hostlink-fileman",
@@ -893,16 +895,16 @@
         },
         {
             "name": "mathsgod/php-psr7",
-            "version": "1.0.17",
+            "version": "1.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/php-psr7.git",
-                "reference": "ccd0d8a6b6d6cd551ffe3334a844d889cf77d960"
+                "reference": "87841abbe416f057d72d3cdbad1c9c678f4a529a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/ccd0d8a6b6d6cd551ffe3334a844d889cf77d960",
-                "reference": "ccd0d8a6b6d6cd551ffe3334a844d889cf77d960",
+                "url": "https://api.github.com/repos/mathsgod/php-psr7/zipball/87841abbe416f057d72d3cdbad1c9c678f4a529a",
+                "reference": "87841abbe416f057d72d3cdbad1c9c678f4a529a",
                 "shasum": ""
             },
             "require": {
@@ -932,7 +934,7 @@
                 }
             ],
             "description": "A standard implementation of php psr7",
-            "time": "2020-08-31T08:19:05+00:00"
+            "time": "2020-09-02T10:47:58+00:00"
         },
         {
             "name": "mathsgod/php-util",

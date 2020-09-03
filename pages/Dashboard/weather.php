@@ -14,7 +14,7 @@ class Dashboard_weather extends App\Page
             $c = array();
             $c["textEscape"] = true;
             //$c["title"] = "<i class='wi wi-yahoo-" . $d["code"] . "'></i> {$d[low]}°C - {$d[high]}°C";
-            $c["title"] = "{$d[low]}°C - {$d[high]}°C";
+            $c["title"] = "{$d['low']}°C - {$d['high']}°C";
             $c["start"] = $d["date"];
             $c["backgroundColor"] = "transparent";
             $c["textColor"] = "#924da3";

@@ -1,10 +1,12 @@
-<card primary>
-    <card-body class="p-0">
-        <div id="calendar"></div>
-    </card-body>
-</card>
+<div id="div1">
+    <card primary>
+        <card-body class="p-0">
+            <div id="calendar"></div>
+        </card-body>
+    </card>
+</div>
 
-<link rel="stylesheet" href="vendor/mathsgod/hl-weather/css/weather-icons.min.css" />
+<link rel="stylesheet" href="{{composer_root}}vendor/mathsgod/hl-weather/css/weather-icons.min.css" />
 
 
 {% verbatim %}
@@ -21,6 +23,14 @@
         });
 
         calendar.render();
+
+
+        new Vue({
+            el: "#div1"
+        });
     });
+
+
 </script>
+
 {% endverbatim %}
