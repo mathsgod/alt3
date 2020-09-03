@@ -14,9 +14,7 @@ class Route extends \R\Route
         $this->uri = (string) $uri;
 
         $this->path = $uri->getPath();
-        $this->basePath = $app->base_path;
 
-        $this->path = substr($this->path, strlen($app->base_path));
 
         $this->method = strtolower($request->getMethod());
         parse_str($uri->getQuery(), $this->query);
@@ -37,6 +35,7 @@ class Route extends \R\Route
         $this->path = implode("/", $t);
 
         $this->psr0($request);
+        
         //  outp($this);
         // die();
         if ($this->file) {

@@ -107,6 +107,11 @@ class App extends \R\App
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
         }
+
+        $uri = $this->request->getUri();
+        $path = substr($uri->getPath(), strlen($this->base_path));
+        $uri = $uri->withPath($path);
+        $this->request = $this->request->withUri($uri);
     }
 
     public function loginWith(User $user)
@@ -200,6 +205,7 @@ class App extends \R\App
         ob_end_clean();
         $this->route = $route;
         $request = $request->withAttribute("route", $route);
+        
 
         $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
@@ -262,12 +268,10 @@ class App extends \R\App
 
             file_put_contents("php://output", (string) $response->getBody());
         } elseif ($this->logined()) {
-            $cms_base = $this->base_path;
-            header("location: {$cms_base}404_not_found#" . $this->request->getUri()->getPath());
+            header("location: {$this->base_path}404_not_found#" . $this->request->getUri()->getPath());
         } else {
             $pi = $this->pathInfo();
-            $cms_base = $this->base_path;
-            header("location: {$cms_base}#" . $this->request->getUri()->getPath());
+            header("location: {$this->base_path}#" . $this->request->getUri()->getPath());
         }
     }
 
