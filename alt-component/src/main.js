@@ -1,9 +1,14 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n'
 import Element from 'element-ui';
-//import VueResource from 'vue-resource';
+import VueResource from 'vue-resource';
 
-//Vue.use(VueResource);
+
+Vue = window.Vue;
+Vue.use(VueResource);
+
+import VueGQL from '@mathsgod/vue-gql/dist/vue-gql.js';
+Vue.use(VueGQL);
 
 import "element-ui/lib/theme-chalk/index.css";
 import enLocale from 'element-ui/lib/locale/lang/en';
@@ -61,6 +66,10 @@ Vue.component("card-body", CardBody);
 Vue.component("card-header", CardHeader);
 Vue.component("card-footer", CardFooter);
 
+
+import Test from "./Test";
+window.Test = Test;
+Vue.component("rt-test", Test);
 
 import RT2 from "./RT2.vue";
 window.RT2 = RT2;

@@ -31,11 +31,11 @@ export default {
     columns: Array,
     data: Array,
     selectable: Boolean,
-    storage: Object
+    storage: Object,
   },
   components: {
     Rt2Thead,
-    Rt2Tbody
+    Rt2Tbody,
   },
   methods: {
     toggleChild(show) {
@@ -47,8 +47,8 @@ export default {
     },
     checkAll(column, value) {
       this.$refs.tbody.checkAll(column, value);
-    }
-  }
+    },
+  },
 };
 </script>
 

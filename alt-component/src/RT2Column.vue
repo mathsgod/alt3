@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     checkboxChange(e) {
-      this.$emit("check-all", e[0]);
+      this.$emit("check-all", e);
     },
     click() {
       if (!this.orderable) return;

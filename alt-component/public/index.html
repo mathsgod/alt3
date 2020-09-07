@@ -9,40 +9,63 @@
   <title><%= htmlWebpackPlugin.options.title %></title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+
+
+  <link el="stylesheet" href="adminlte/css/adminlte.min.css" />
+
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
+
 </head>
 
-<body>
-  <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-      Please enable it to continue.</strong>
-  </noscript>
-  <div id="app"></div>
-
-  <!-- built files will be auto injected -->
-
-  alt-component
-  <div id="div1">
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    <div class="content-wrapper">
+      <div id="div1">
 
 
-    <div is="rt2"
-      :columns='[{"name":"test","title":null,"data":null,"type":"checkbox","orderable":false,"searchable":false,"searchType":"text","searchOption":[],"searchOptGroup":null,"searchMultiple":null,"searchMethod":null,"editable":false,"editType":"text","editData":null,"wrap":false,"noHide":false},{"name":"username","title":"\u4f7f\u7528\u8005\u540d\u7a31","data":"username","type":"text","orderable":false,"searchable":false,"searchType":"text","searchOption":[],"searchOptGroup":null,"searchMultiple":null,"searchMethod":null,"editable":false,"editType":"text","editData":null,"wrap":false,"noHide":false}]'
-      :data="[]" :ajax='{"url":"\/data.json"}' :responsive="false" cell-url :page-length="25"
-      :selectable="false" :buttons="[]" :dropdown="[]" :order="[]"></div>
+        <div is="rt2"
+          :columns='[{"name":"user_id","title":null,"data":null,"type":"checkbox","orderable":false,"searchable":false,"searchType":"text","searchOption":[],"searchOptGroup":null,"searchMultiple":null,"searchMethod":null,"editable":false,"editType":"text","editData":null,"wrap":false,"noHide":false},{"name":"username","title":"\u4f7f\u7528\u8005\u540d\u7a31","data":"username","type":"text","orderable":false,"searchable":false,"searchType":"text","searchOption":[],"searchOptGroup":null,"searchMultiple":null,"searchMethod":null,"editable":false,"editType":"text","editData":null,"wrap":false,"noHide":false}]'
+          :data="[]" :ajax='{"url":"\/data.json"}' :responsive="false" cell-url :page-length="10" :selectable="false"
+          :buttons="[]" :dropdown="[]" :order="[]"></div>
 
+
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          new Vue({
+            el: "#div1",
+            components: {
+              rt2: window.RT2,
+              "rt-test":window.Test
+            }, data: {
+              p: 1
+            }
+          });
+
+        });
+
+      </script>
+
+    </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      new Vue({
-        el: "#div1",
-        components: {
-          rt2: window.RT2
-        }
-      });
 
-    });
 
-  </script>
 </body>
 
 </html>

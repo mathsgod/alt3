@@ -34,7 +34,7 @@
       <div v-if="type=='text'" v-text="content" :style="divStyle"></div>
       <runtime-template-compiler v-if="type=='vue'" :template="content" />
       <div v-if="type=='html'" v-html="content" :style="divStyle"></div>
-      <el-checkbox  v-if="type=='checkbox'" @input="toggleCheckBox($event)" v-bind:checked="checked()"></el-checkbox>
+      <el-checkbox v-if="type=='checkbox'" v-model="is_checked"></el-checkbox>
 
       <button class="btn btn-xs btn-danger" v-else-if="type=='delete'" @click="deleteRow()">
         <i class="fa fa-fw fa-times"></i>
@@ -71,6 +71,7 @@ export default {
   },
   data() {
     return {
+      is_checked: false,
       showSubRow: false,
       divStyle: {},
     };
@@ -86,6 +87,21 @@ export default {
         "white-space": "pre-wrap",
       };
     }
+  },
+  watch: {
+    is_checked() {
+      this.storage.rows = this.storage.rows || {};
+
+      this.storage.rows[this.column.name] =
+        this.storage.rows[this.column.name] || {};
+
+      if (this.is_checked) {
+        this.storage.rows[this.column.name][this.content] = true;
+      } else {
+        delete this.storage.rows[this.column.name][this.content];
+      }
+      this.storage.save();
+    },
   },
   computed: {
     style() {
@@ -125,18 +141,17 @@ export default {
       return o;
     },
   },
-  methods: {
-    checked() {
+  created() {
+    if (this.type == "checkbox") {
       this.storage.rows = this.storage.rows || {};
       this.storage.rows[this.column.name] =
         this.storage.rows[this.column.name] || {};
-
       if (this.storage.rows[this.column.name][this.content]) {
-        return true;
+        this.is_checked = true;
       }
-
-      return false;
-    },
+    }
+  },
+  methods: {
     getValue() {
       var o = this.data[this.column.name];
       if (!o) return "";
@@ -151,18 +166,7 @@ export default {
       return o;
     },
     setCheckbox(value) {
-      this.storage.rows = this.storage.rows || {};
-
-      this.storage.rows[this.column.name] =
-        this.storage.rows[this.column.name] || {};
-
-      if (value) {
-        this.storage.rows[this.column.name][this.content] = value;
-      } else {
-        delete this.storage.rows[this.column.name][this.content];
-      }
-      this.storage.save();
-      this.$forceUpdate();
+      this.is_checked = value;
     },
     toggleCheckBox(e) {
       this.setCheckbox(e);

@@ -18,8 +18,7 @@ table.rt > thead button.multiselect {
     </card-body>
     <card-body class="p-0 m-0">
       <div class="table-responsive">
-        <table
-          is="rt2-table"
+        <rt2-table
           ref="table"
           :columns="columns"
           :data="data()"
@@ -30,11 +29,11 @@ table.rt > thead button.multiselect {
           @draw="draw"
           @update-data="updateData"
           @data-deleted="draw"
-        ></table>
+        ></rt2-table>
       </div>
     </card-body>
     <card-footer class="p-0 m-0 d-flex">
-      <div is="rt-pagination" :page="page" :page-count="pageCount" @change-page="page=$event"></div>
+      <rt-pagination :page="page" :page-count="pageCount" @change-page="page=$event"></rt-pagination>
 
       <div class="btn-group">
         <button
@@ -341,7 +340,7 @@ export default {
   },
   computed: {
     bottomButtons() {
-      return this.buttons.filter(button => {
+      return this.buttons.filter((button) => {
         return button.text;
       });
     },
