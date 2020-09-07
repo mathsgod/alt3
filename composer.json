@@ -33,7 +33,7 @@
     },
     "require": {
         "php": ">=7.0",
-        "mathsgod/r": "^3.6",
+        "mathsgod/r": "^3.7",
         "twig/twig": "^2.12",
         "firebase/php-jwt": "^5.0",
         "twig/extensions": "^1.5",

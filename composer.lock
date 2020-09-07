@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16b6c484fcb4bb46a94e89fdd4e9aca3",
+    "content-hash": "a3f20a2193f715f90c207c4975eec01f",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -975,11 +975,11 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.6.5",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r.git",
-                "reference": "77518bb39b736c1582c033c85223debaf634e668"
+                "reference": "791338a22747f122763193993bfc4e1272dfc40a"
             },
             "require": {
                 "mathsgod/php-psr7": "^1.0",
@@ -1014,15 +1014,15 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-08-31T05:27:23+00:00"
+            "time": "2020-09-07T03:49:32+00:00"
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.6.6",
+            "version": "3.6.7",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "9b1d4374eb7bdf8086afc18812bd376b945495a9"
+                "reference": "0054937194fef812c31d01d85e57961ebaec97a8"
             },
             "require": {
                 "ext-pdo": "*",
@@ -1049,7 +1049,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-09-01T02:18:18+00:00"
+            "time": "2020-09-03T07:35:26+00:00"
         },
         {
             "name": "mathsgod/r-graphql",
@@ -2365,16 +2365,16 @@
         },
         {
             "name": "kevinchappell/form-builder",
-            "version": "v3.4.2",
+            "version": "v3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinchappell/formBuilder.git",
-                "reference": "a74d55d54b4d2a7be596e022377e49ba04ac2448"
+                "reference": "6b2d324d37d34ef701d6d1e5172a856e094afaee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinchappell/formBuilder/zipball/a74d55d54b4d2a7be596e022377e49ba04ac2448",
-                "reference": "a74d55d54b4d2a7be596e022377e49ba04ac2448",
+                "url": "https://api.github.com/repos/kevinchappell/formBuilder/zipball/6b2d324d37d34ef701d6d1e5172a856e094afaee",
+                "reference": "6b2d324d37d34ef701d6d1e5172a856e094afaee",
                 "shasum": ""
             },
             "type": "library",
@@ -2398,7 +2398,7 @@
                 "form builder",
                 "formbuilder"
             ],
-            "time": "2020-03-04T17:38:35+00:00"
+            "time": "2020-08-24T02:50:07+00:00"
         },
         {
             "name": "myclabs/deep-copy",
