@@ -10,6 +10,7 @@ class EventLog_list extends App\Page
     public function get()
     {
         $rt = $this->createRT2([$this, "ds"]);
+        $rt->addCheckbox("eventlog_id");
         $rt->order("eventlog_id", "desc");
         $rt->addView();
         $rt->add("ID", "eventlog_id")->ss();

@@ -141,17 +141,17 @@ export default {
       return o;
     },
   },
-  created() {
-    if (this.type == "checkbox") {
+  created() {},
+  methods: {
+    reloadValue() {
+      this.is_checked = false;
       this.storage.rows = this.storage.rows || {};
       this.storage.rows[this.column.name] =
         this.storage.rows[this.column.name] || {};
       if (this.storage.rows[this.column.name][this.content]) {
         this.is_checked = true;
       }
-    }
-  },
-  methods: {
+    },
     getValue() {
       var o = this.data[this.column.name];
       if (!o) return "";

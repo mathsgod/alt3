@@ -104,11 +104,14 @@ export default {
     });
   },
   methods: {
+    rows() {
+      return this.$children;
+    },
     checkAll(column, value) {
-      var cells = this.$children.map(row => {
+      var cells = this.$children.map((row) => {
         return row.getCell(column);
       });
-      cells.forEach(cell => {
+      cells.forEach((cell) => {
         cell.setCheckbox(value);
       });
     },

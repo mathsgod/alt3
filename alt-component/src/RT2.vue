@@ -544,11 +544,12 @@ export default {
 
       return this;
     },
-    draw() {
+    async draw() {
       this.loading = true;
       this.local.draw++;
-      window.Vue.http
-        .get(this.ajax.url, {
+
+      let data = (
+        await this.$http.get(this.ajax.url, {
           params: {
             _rt: 1,
             draw: this.local.draw,
@@ -566,21 +567,29 @@ export default {
             length: this.local.pageLength,
           },
         })
-        .then((resp) => {
-          this.loading = false;
-          try {
-            if (resp.data.draw < this.local.draw) {
-              return;
+      ).data;
+
+      this.loading = false;
+      try {
+        if (data.draw < this.local.draw) {
+          return;
+        }
+
+        this.remoteData = data.data;
+        this.total = data.total;
+
+        this.resize();
+
+        this.$nextTick(() => {
+          this.columns.forEach((column) => {
+            if (column.type == "checkbox") {
+              this.$refs.table.reloadCell(column);
             }
-
-            this.remoteData = resp.data.data;
-            this.total = resp.data.total;
-
-            this.resize();
-          } catch (e) {
-            alert(e.message);
-          }
+          });
         });
+      } catch (e) {
+        alert(e.message);
+      }
     },
     search(name, value) {
       this.page = 1;

@@ -48,6 +48,15 @@ export default {
     checkAll(column, value) {
       this.$refs.tbody.checkAll(column, value);
     },
+    reloadCell(column) {
+      var rows = this.$refs.tbody.rows();
+      var cells = rows.map((row) => {
+        return row.getCell(column);
+      });
+      cells.forEach((cell) => {
+        cell.reloadValue();
+      });
+    },
   },
 };
 </script>
