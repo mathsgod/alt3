@@ -100,6 +100,11 @@ class App extends \R\App
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
         }
+
+        $uri = $this->request->getUri();
+        $path = substr($uri->getPath(), strlen($this->base_path));
+        $uri = $uri->withPath($path);
+        $this->request = $this->request->withUri($uri);
     }
 
     public function loginWith(User $user)
@@ -193,7 +198,7 @@ class App extends \R\App
         ob_end_clean();
         $this->route = $route;
         $request = $request->withAttribute("route", $route);
-        
+
 
         $this->plugins = Yaml::parseFile(dirname(__DIR__, 2) . "/plugins.yml");
 
