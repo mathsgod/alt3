@@ -128,7 +128,7 @@ table.rt > thead button.multiselect {
 
       <div class="btn-group">
         <button
-          v-for="(button,index) in buttons | isBottomButton"
+          v-for="(button,index) in bottomButtons"
           :key="index"
           @click="onClickButton(button)"
           class="btn btn-default btn-sm"
@@ -156,11 +156,11 @@ export default {
       type: Object,
       default: () => {
         return {};
-      }
+      },
     },
     pageLength: {
       type: Number,
-      default: 10
+      default: 10,
     },
     cellUrl: String,
     selectable: Boolean,
@@ -168,14 +168,14 @@ export default {
       type: Array,
       default: () => {
         return [];
-      }
+      },
     },
     dropdown: {
       type: Array,
       default: () => {
         return [];
-      }
-    }
+      },
+    },
   },
   components: {
     Card,
@@ -183,7 +183,7 @@ export default {
     CardFooter,
     Rt2Table,
     RtPagination,
-    RtInfo
+    RtInfo,
   },
   data() {
     var data = {
@@ -194,24 +194,16 @@ export default {
         search: {},
         draw: 1,
         pageLength: this.pageLength,
-        order: this.$attrs.order
+        order: this.$attrs.order,
       },
       page: 1,
       remoteData: [],
       columns: [],
-      loading: false
+      loading: false,
     };
     return data;
   },
-  filters: {
-    isBottomButton(button) {
-      if (button.text) {
-        return true;
-      }
-      return false;
-    }
-  },
-  created: function() {
+  created: function () {
     /////-------------------
 
     var storage = this.storage;
@@ -226,7 +218,7 @@ export default {
       this.local.order = storage.order;
     }
 
-    this.columns = this.$attrs.columns.map(o => {
+    this.columns = this.$attrs.columns.map((o) => {
       o.hide = false;
       o.orderDir = "";
       o.isVisible = true;
@@ -240,7 +232,7 @@ export default {
         }
       }
 
-      this.local.order.forEach(ord => {
+      this.local.order.forEach((ord) => {
         if (ord.name == o.name) {
           o.orderDir = ord.dir;
         }
@@ -252,7 +244,7 @@ export default {
           cell(d) {
             var cell = {
               type: "text",
-              column: this
+              column: this,
             };
 
             if (this.type == "checkbox") {
@@ -269,7 +261,7 @@ export default {
             if (this.wrap) {
               cell.divStyle = {
                 "word-wrap": "break-word",
-                "white-space": "pre-wrap"
+                "white-space": "pre-wrap",
               };
             }
 
@@ -317,12 +309,12 @@ export default {
           toggleVisible() {
             this.isVisible = !this.isVisible;
             this.$emit("toggleVisible");
-          }
-        }
+          },
+        },
       });
     });
 
-    this.columns.forEach(column => {
+    this.columns.forEach((column) => {
       column.$on("toggleVisible", () => {
         let storage = this.storage;
         storage.columns = storage.columns || {};
@@ -345,9 +337,14 @@ export default {
   watch: {
     page() {
       this.draw();
-    }
+    },
   },
   computed: {
+    bottomButtons() {
+      return this.buttons.filter(button => {
+        return button.text;
+      });
+    },
     storage() {
       var storage = JSON.parse(localStorage.getItem(this.id)) || {};
       storage.save = () => {
@@ -372,14 +369,14 @@ export default {
     },
 
     columnsHasTitle() {
-      return this.columns.filter(column => {
+      return this.columns.filter((column) => {
         return column.title;
       });
     },
     id() {
       return this.ajax.url
         .split("/")
-        .filter(s => !Number(s))
+        .filter((s) => !Number(s))
         .join("/");
     },
     pageCount() {
@@ -389,9 +386,9 @@ export default {
       return {
         from: (this.page - 1) * this.local.pageLength + 1,
         to: Math.min(this.page * this.local.pageLength, this.total),
-        total: this.total
+        total: this.total,
       };
-    }
+    },
   },
   methods: {
     clickExport(xlsx) {
@@ -404,7 +401,7 @@ export default {
         filter.push({
           name: col.name,
           value: this.local.search[col.name],
-          method: col.searchMethod
+          method: col.searchMethod,
         });
       }
 
@@ -417,7 +414,7 @@ export default {
 
       const params = window.$.param({
         _rt_request: 1,
-        filter
+        filter,
       });
       url += params;
 
@@ -450,26 +447,26 @@ export default {
           params: {
             _rt: 1,
             draw: this.local.draw,
-            columns: this.columns.map(o => {
+            columns: this.columns.map((o) => {
               return {
                 name: o.name,
                 search: {
-                  value: this.local.search[o.name]
+                  value: this.local.search[o.name],
                 },
-                searchMethod: o.searchMethod
+                searchMethod: o.searchMethod,
               };
             }),
             order: this.local.order,
             search: this.searchData,
-            type: type
+            type: type,
           },
-          responseType: "arraybuffer"
+          responseType: "arraybuffer",
         })
-        .then(function(response) {
+        .then(function (response) {
           //console.log(response);
           var headers = response.headers;
           var blob = new Blob([response.data], {
-            type: headers["content-type"]
+            type: headers["content-type"],
           });
           var link = document.createElement("a");
           link.href = window.URL.createObjectURL(blob);
@@ -531,10 +528,10 @@ export default {
       this.local.order = [
         {
           name: o[0],
-          dir: o[1]
-        }
+          dir: o[1],
+        },
       ];
-      this.columns.forEach(c => {
+      this.columns.forEach((c) => {
         if (c.name != o[0]) {
           c.orderDir = "";
         } else {
@@ -556,21 +553,21 @@ export default {
           params: {
             _rt: 1,
             draw: this.local.draw,
-            columns: this.columns.map(o => {
+            columns: this.columns.map((o) => {
               return {
                 name: o.name,
                 search: {
-                  value: this.local.search[o.name]
+                  value: this.local.search[o.name],
                 },
-                searchMethod: o.searchMethod
+                searchMethod: o.searchMethod,
               };
             }),
             order: this.local.order,
             page: this.page,
-            length: this.local.pageLength
-          }
+            length: this.local.pageLength,
+          },
         })
-        .then(resp => {
+        .then((resp) => {
           this.loading = false;
           try {
             if (resp.data.draw < this.local.draw) {
@@ -595,7 +592,7 @@ export default {
       return this;
     },
     resize() {
-      this.columns.forEach(c => {
+      this.columns.forEach((c) => {
         c.hide = false;
       });
 
@@ -616,7 +613,7 @@ export default {
             }
           });
           if (
-            this.columns.some(c => {
+            this.columns.some((c) => {
               return c.hide;
             })
           ) {
@@ -626,7 +623,7 @@ export default {
         };
 
         var hideLastColumn = () => {
-          let columns = this.columns.filter(c => {
+          let columns = this.columns.filter((c) => {
             if (c.noHide) {
               return false;
             }
@@ -657,7 +654,7 @@ export default {
 
         check();
       });
-    }
-  }
+    },
+  },
 };
 </script>

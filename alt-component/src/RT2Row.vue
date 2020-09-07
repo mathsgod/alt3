@@ -2,6 +2,7 @@
   <tr @click="onClick" v-bind:class="getClass">
     <td
       is="rt2-cell"
+      ref="cell"
       v-for="(column,index) in columns"
       :data="data"
       :key="'col_'+index"
@@ -53,6 +54,13 @@ export default {
     }
   },
   methods: {
+    /**
+     * get cell by column
+     */
+    getCell(column){
+      var index=this.columns.indexOf(column);
+      return this.$children[index];
+    },
     updateData(column, value) {
       var r = this.data;
       if (column.editType == "text") {

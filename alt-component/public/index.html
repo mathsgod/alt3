@@ -22,42 +22,26 @@
 
   alt-component
   <div id="div1">
-    <el-select v-model="value" placeholder="Select">
-      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-      </el-option>
-    </el-select>
+
+
+    <div is="rt2"
+      :columns='[{"name":"test","title":null,"data":null,"type":"checkbox","orderable":false,"searchable":false,"searchType":"text","searchOption":[],"searchOptGroup":null,"searchMultiple":null,"searchMethod":null,"editable":false,"editType":"text","editData":null,"wrap":false,"noHide":false},{"name":"username","title":"\u4f7f\u7528\u8005\u540d\u7a31","data":"username","type":"text","orderable":false,"searchable":false,"searchType":"text","searchOption":[],"searchOptGroup":null,"searchMultiple":null,"searchMethod":null,"editable":false,"editType":"text","editData":null,"wrap":false,"noHide":false}]'
+      :data="[]" :ajax='{"url":"\/data.json"}' :responsive="false" cell-url :page-length="25"
+      :selectable="false" :buttons="[]" :dropdown="[]" :order="[]"></div>
 
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      i18n.locale="zh";
-      var vm = new Vue({
+      new Vue({
         el: "#div1",
-        data: {
-          value:"",
-          options:[],
-          selectOptions: [{
-            value: 'Option1 value',
-            label: 'Option1'
-          }, {
-            value: 'Option2 value',
-            label: 'Option2'
-          }, {
-            value: 'Option3 value',
-            label: 'Option3'
-          }, {
-            value: 'Option4 value',
-            label: 'Option4'
-          }, {
-            value: 'Option5 value',
-            label: 'Option5'
-          }],
-          selectValue: null
+        components: {
+          rt2: window.RT2
         }
       });
 
     });
+
   </script>
 </body>
 

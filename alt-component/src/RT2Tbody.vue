@@ -2,6 +2,7 @@
   <tbody>
     <template v-for="(d,index) in data">
       <tr
+        ref="row"
         is="rt2-row"
         :index="index"
         :key="'row_'+index"
@@ -50,10 +51,10 @@ export default {
     data: Array,
     columns: Array,
     selectable: Boolean,
-    storage: Object
+    storage: Object,
   },
   components: {
-    "rt2-row": Rt2Row
+    "rt2-row": Rt2Row,
   },
   data() {
     return {
@@ -63,39 +64,39 @@ export default {
       hoverChild: [],
       showIndex: [],
       editColumn: null,
-      editIndex: null
+      editIndex: null,
     };
   },
   computed: {
     selectedData() {
       return this.$children
-        .filter(child => {
+        .filter((child) => {
           return child.selected;
         })
-        .map(child => {
+        .map((child) => {
           return child.data;
         });
     },
     hideColumns() {
-      return this.columns.filter(column => {
+      return this.columns.filter((column) => {
         return column.hide;
       });
     },
     visibleColumns() {
-      return this.columns.filter(column => {
+      return this.columns.filter((column) => {
         return column.isDisplay();
       });
     },
     hasHideColumn() {
-      return this.columns.some(o => o.hide);
+      return this.columns.some((o) => o.hide);
     },
     showColumnCount() {
       return (
-        this.columns.filter(c => {
+        this.columns.filter((c) => {
           return !c.hide;
         }).length + 1
       );
-    }
+    },
   },
   mounted() {
     this.$parent.$on("reset-local-storage", () => {
@@ -104,10 +105,10 @@ export default {
   },
   methods: {
     checkAll(column, value) {
-      var cells = this.$refs.cell.filter(cell => {
-        return cell.column == column;
+      var cells = this.$children.map(row => {
+        return row.getCell(column);
       });
-      cells.forEach(cell => {
+      cells.forEach((cell) => {
         cell.setCheckbox(value);
       });
     },
@@ -121,10 +122,10 @@ export default {
           .get(content.url, {
             params: content.params,
             headers: {
-              Accept: "text/html"
-            }
+              Accept: "text/html",
+            },
           })
-          .then(resp => {
+          .then((resp) => {
             this.subRowContent[index] = resp.body;
             this.$forceUpdate();
           });
@@ -170,9 +171,9 @@ export default {
       this.$emit("update-data", {
         key: key,
         field: field,
-        value: value
+        value: value,
       });
-    }
-  }
+    },
+  },
 };
 </script>

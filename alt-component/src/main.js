@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n'
 import Element from 'element-ui';
+//import VueResource from 'vue-resource';
+
+//Vue.use(VueResource);
 
 import "element-ui/lib/theme-chalk/index.css";
 import enLocale from 'element-ui/lib/locale/lang/en';
@@ -60,6 +63,8 @@ Vue.component("card-footer", CardFooter);
 
 
 import RT2 from "./RT2.vue";
+window.RT2 = RT2;
+Vue.component("rt2", RT2);
 VueRegisterElement("rt2", RT2);
 
 import Table from "./Table";

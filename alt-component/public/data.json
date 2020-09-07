@@ -1,0 +1,31 @@
+{
+    "draw": "2",
+    "data": [
+        {
+            "__row__": [],
+            "user_id": 1,
+            "username": "admin"
+        },
+        {
+            "__row__": [],
+            "user_id": 2,
+            "username": "guest"
+        },
+        {
+            "__row__": [],
+            "user_id": 3,
+            "username": "system"
+        },
+        {
+            "__row__": [],
+            "user_id": 6,
+            "username": "raymond"
+        },
+        {
+            "__row__": [],
+            "user_id": 11,
+            "username": "power"
+        }
+    ],
+    "total": 5
+}

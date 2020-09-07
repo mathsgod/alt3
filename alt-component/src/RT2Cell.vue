@@ -32,23 +32,14 @@
     </template>
     <template v-else>
       <div v-if="type=='text'" v-text="content" :style="divStyle"></div>
-       <runtime-template-compiler  v-if="type=='vue'" :template="content" />
+      <runtime-template-compiler v-if="type=='vue'" :template="content" />
       <div v-if="type=='html'" v-html="content" :style="divStyle"></div>
-      <input
-        type="checkbox"
-        v-if="type=='checkbox'"
-        is="icheck"
-        @input="toggleCheckBox($event)"
-        v-bind:checked="checked()"
-      />
+      <el-checkbox  v-if="type=='checkbox'" @input="toggleCheckBox($event)" v-bind:checked="checked()"></el-checkbox>
+
       <button class="btn btn-xs btn-danger" v-else-if="type=='delete'" @click="deleteRow()">
         <i class="fa fa-fw fa-times"></i>
       </button>
-      <button
-        class="btn btn-xs btn-default"
-        v-else-if="type=='sub-row'"
-        @click="toggleSubRow()"
-      >
+      <button class="btn btn-xs btn-default" v-else-if="type=='sub-row'" @click="toggleSubRow()">
         <i v-show="showSubRow" class="fa fa-fw fa-minus"></i>
         <i v-show="!showSubRow" class="fa fa-fw fa-plus"></i>
       </button>
@@ -75,13 +66,13 @@ export default {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       showSubRow: false,
-      divStyle: {}
+      divStyle: {},
     };
   },
   mounted() {
@@ -92,7 +83,7 @@ export default {
     if (this.column.wrap) {
       this.divStyle = {
         "word-wrap": "break-word",
-        "white-space": "pre-wrap"
+        "white-space": "pre-wrap",
       };
     }
   },
@@ -132,7 +123,7 @@ export default {
       }
 
       return o;
-    }
+    },
   },
   methods: {
     checked() {
@@ -209,7 +200,7 @@ export default {
         }
         return;
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -9,7 +9,7 @@
         sorting_asc:(orderDir=='asc')
     }"
   >
-    <input v-if="type=='checkbox'" type="checkbox" is="icheck" @change="checkboxChange" />
+    <el-checkbox v-if="type=='checkbox'" @input="checkboxChange"  ></el-checkbox>
     <div v-else v-text="title"></div>
   </th>
 </template>
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     checkboxChange(e) {
-      this.$emit("check-all", e.target.checked);
+      this.$emit("check-all", e[0]);
     },
     click() {
       if (!this.orderable) return;
