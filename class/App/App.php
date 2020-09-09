@@ -632,8 +632,6 @@ class App extends \R\App
     public function accessDeny(RequestInterface $request): ResponseInterface
     {
         $uri = $request->getUri()->getPath();
-        $base = $this->base_path;
-        $uri = substr($uri, strlen($base));
 
         if ($q = $request->getUri()->getQuery()) {
             $uri .= "?" . $q;
@@ -650,11 +648,12 @@ class App extends \R\App
                 $response = $response->withBody(new JsonStream($msg));
             } else {
                 $response = new Response(403);
-                $response = $response->withHeader("location", $base . "access_deny#/" . $uri);
+                $response = $response->withHeader("location", $this->base_path . "access_deny#/" . $uri);
             }
         } else {
-            $response = new Response(403);
-            $response = $response->withHeader("location", $base . "#/" . $uri);
+    
+            $response = new Response(200);
+            $response = $response->withHeader("location", $this->base_path . "#/" . $uri);
         }
 
         return $response;
