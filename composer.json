@@ -54,7 +54,8 @@
         "mathsgod/php-util": "^1.1",
         "phpoffice/phpspreadsheet": "^1.8",
         "mathsgod/php-psr7": "^1.0",
-        "endroid/qr-code": "^2.5"
+        "endroid/qr-code": "^2.5",
+        "gettext/gettext": "^4.8"
     },
     "require-dev": {
         "box/spout": "^2.7",

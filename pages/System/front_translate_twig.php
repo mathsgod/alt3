@@ -4,8 +4,8 @@ use SplFileInfo;
 use RecursiveIteratorIterator;
 use My\TreeView;
 
-require_once(__DIR__ . "/str_chinese.php");
-require_once(__DIR__ . "/msgfmt-functions.php");
+//require_once(__DIR__ . "/str_chinese.php");
+//require_once(__DIR__ . "/msgfmt-functions.php");
 //require_once (__dir__ . "/accesstokenauthentication.php");
 
 class PO
@@ -194,26 +194,19 @@ class System_front_translate_twig extends \ALT\Page
 
             if (!file_exists($po_file = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . ".po")) {
                 mkdir(dirname($po_file), 0777, true);
-            } else {
-                unlink($po_file);
             }
-            file_put_contents($po_file, "");
 
-            $catalog = Sepia\PoParser\Parser::parseFile($po_file);
-
+            $ts = Gettext\Translations::fromPoFile($po_file);
             foreach ($data as $d) {
-                $entry = Sepia\PoParser\Catalog\EntryFactory::createFromArray([
-                    "msgid" => $d["msgid"],
-                    "msgstr" => $d["msgstr"][$lang]
-                ]);
-
-                $catalog->addEntry($entry);
+                $t = $ts->find("", $d["msgid"]);
+                if ($t) {
+                    $t->setTranslation($d["msgstr"][$lang]);
+                } else {
+                    $ts->insert("", $d["msgid"], $d["msgstr"]);
+                }
             }
 
-
-            $fileHandler = new Sepia\PoParser\SourceHandler\FileSystem($po_file);
-            $compiler = new Sepia\PoParser\PoCompiler();
-            $fileHandler->save($compiler->compile($catalog));
+            $ts->toPoFile($po_file);
 
             // del all mo
             foreach (glob(dirname($po_file) . "/" . $fi["filename"] . "-*.mo") as $mo_file) {
@@ -221,15 +214,16 @@ class System_front_translate_twig extends \ALT\Page
             }
             // convert po to mo
             $mo = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . "-" . time() . ".mo";
-
-
+          //  $ts->toMoFile($mo);
+             
+         
             $hash = parse_po_file($po_file);
             if ($hash === false) {
                 print "Error reading '{$po_file}', aborted.\n";
             } else {
                 write_mo_file($hash, $mo);
             }
-
+ 
             $result[] = ["po" => $po_file, "mo" => $mo];
         }
         return ["code" => 200, "result" => $result];
@@ -263,16 +257,18 @@ class System_front_translate_twig extends \ALT\Page
 
     public function getLang()
     {
+
+        $this->template = null;
         // get front language
-        $ini = parse_ini_file($this->getRootPath() . "/config.ini", true);
+        $ini = parse_ini_file($this->app->document_root . "/config.ini", true);
         $lang = $ini["language"]["value"];
-
         $lang_locale_map = $ini["language_locale_map"];
-
 
         $la = [];
         foreach ($lang as $l) {
-            $la[] = $lang_locale_map[$l];
+            if ($lang_locale_map[$l]) {
+                $la[] = $lang_locale_map[$l];
+            }
         }
         return $la;
     }
@@ -325,46 +321,79 @@ class System_front_translate_twig extends \ALT\Page
         return $trans;
     }
 
-    public function getTran($file)
+    public function getTran(string $file)
     {
-        $frontPage = new SplFileInfo($this->frontPath());
-        $basePath = new SplFileInfo($frontPage->getPath());
 
+
+        $root = $this->app->document_root;
         $text_domain = preg_replace('/.[^.]*$/', '', $file);
 
-        $poEntries = [];
-
+        $data = [];
         foreach ($this->getLang() as $lang) {
-            if (file_exists($f = $basePath . "/locale/{$lang}/LC_MESSAGES/{$text_domain}.po")) {
+            $dd = [];
+            $f = $root . DIRECTORY_SEPARATOR . "locale" . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . "LC_MESSAGES" . DIRECTORY_SEPARATOR . $text_domain . ".po";
+            if (file_exists($f)) {
+                $ts = Gettext\Translations::fromPoFile($f);
+                foreach ($ts as  $t) {
 
-                $fileHandler = new Sepia\PoParser\SourceHandler\FileSystem($f);
-                $poParser = new Sepia\PoParser\Parser($fileHandler);
-                $catalog = $poParser->parse();
-
-                //$poFile[$lang] = $poParser->parseFile($f, ["multiline-glue" => ""]);
-                foreach ($catalog->getEntries() as $entry) {
-                    $poEntries[$lang][$entry->getMsgId()] = $entry->getMsgStr();
+                    $org = $t->getOriginal();
+                    $dd[$org] = $t->getTranslation();
                 }
             }
+            $data[$lang] = $dd;
         }
 
 
-        $data = [];
+
+        $ds = [];
         foreach ($this->getToken($file) as $str) {
             $msgstr = [];
             foreach ($this->getLang() as $lang) {
-                $msgstr[$lang] = $poEntries[$lang][$str];
-                unset($poEntries[$lang][$str]);
+                $msgstr[$lang] = $data[$lang][$str];
+                unset($data[$lang][$str]);
             }
-            $data[] = ["msgid" => $str, "msgstr" => $msgstr];
+            $ds[] = ["msgid" => $str, "msgstr" => $msgstr];
         }
 
-        return ["data" => $data, "unuse" => $poEntries];
+        return ["data" => $ds, "unuse" => $data];
     }
 
     public function frontPath()
     {
         return realpath($this->app->root . "/../pages");
+    }
+
+    public function frontPathStruct()
+    {
+        $root = $this->app->document_root;
+        $root = $root . DIRECTORY_SEPARATOR . "pages";
+        return $this->getFilesData($root);
+    }
+
+    private function getFilesData(string $path): array
+    {
+        $root = $this->app->document_root;
+        $root = $root . DIRECTORY_SEPARATOR . "pages";
+
+
+        $data = [];
+
+        foreach (glob($path . DIRECTORY_SEPARATOR . "*", GLOB_ONLYDIR) as $d) {
+            $data[] = [
+                "label" => basename($d),
+                "children" => $this->getFilesData($d)
+            ];
+        }
+
+        foreach (glob($path . DIRECTORY_SEPARATOR . "*.twig") as $p) {
+            $data[] = [
+                "id" => substr($p, strlen($root) + 1),
+                "label" => basename($p)
+            ];
+        }
+
+
+        return $data;
     }
 
     public function renderTree($path, $tree)
@@ -401,16 +430,16 @@ class System_front_translate_twig extends \ALT\Page
     {
         $this->header->title = "Front translate";
 
+
         // get locale folder
         $locale_folder = $this->getLocaleFolder();
-
         if (!$locale_folder->isWritable()) {
             $this->callout->danger("", "Cannot write to locale, please create and change the permission of folder ({$locale_folder}) to 0777");
             $this->template = null;
             return;
         }
 
-        if (!$this->app->composer()->hasPackage("vakata/jstree")) {
+        /*         if (!$this->app->composer()->hasPackage("vakata/jstree")) {
             $this->callout->danger("Error", "vakata/jstree not found. <a href='System/composer?require=vakata/jstree'>Install it.</a>");
             $this->template = null;
             return;
@@ -422,10 +451,10 @@ class System_front_translate_twig extends \ALT\Page
             $this->template = null;
             return;
         }
+ */
 
 
-
-        $this->addLib("vakata/jstree");
+        //$this->addLib("vakata/jstree");
 
         $tree = new TreeView();
         $this->renderTree($this->frontPath(), $tree);
