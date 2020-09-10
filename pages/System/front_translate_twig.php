@@ -222,7 +222,7 @@ class System_front_translate_twig extends \ALT\Page
 
     public function getLocaleFolder(): SplFileInfo
     {
-        return new SplFileInfo($this->document_root . DIRECTORY_SEPARATOR . "locale");
+        return new SplFileInfo($this->app->document_root . DIRECTORY_SEPARATOR . "locale");
     }
 
     public function getRootPath()
