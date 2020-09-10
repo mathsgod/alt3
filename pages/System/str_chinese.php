@@ -1,4 +1,5 @@
-<?php/*
+<?php
+/*
 
    *mbstring are required*
    Convert to Traditional Chinese

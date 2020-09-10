@@ -8,11 +8,15 @@
                 <el-tree ref="tree" :data="fileStruct" @node-click="selectFile" :filter-node-method="filterNode">
                 </el-tree>
 
-                <el-form>
-                    <el-form-item label="Height">
-                        <el-input-number v-model="edit_height" :min="10" :step="10"></el-input-number>
-                    </el-form-item>
-                </el-form>
+                <el-card shadow="never">
+                    <el-form>
+                        <el-form-item label="Height">
+                            <el-input-number v-model="edit_height" :min="10" :step="10"></el-input-number>
+                        </el-form-item>
+                    </el-form>
+
+                </el-card>
+
             </div>
         </div>
     </div>
@@ -441,15 +445,18 @@
                     });
                 });
             },
-            saveTran(lang) {
+            async saveTran(lang) {
                 if (confirm("Save?")) {
-                    this.$http.post("System/front_translate_twig", {
+                    var resp = (await this.$http.post("System/front_translate_twig", {
                         file: this.file,
                         data: this.data,
                         lang: this.lang
-                    }).then(function (data) {
-                        this.selected_data = null;
-                    });
+                    })).data;
+                    if (resp.error) {
+                        this.$alert(resp.error.message, { type: "error" });
+                        return;
+                    }
+                    this.selected_data = null;
                 }
 
             },
@@ -457,6 +464,12 @@
 
             },
             async selectFile(node) {
+                if(!node.id){
+                    this.data=[];
+                    this.unuse=[];
+                    return;
+
+                }
 
                 this.file = node.id;
                 var resp = (await this.$http.get("System/front_translate_twig/getTran", {
@@ -466,7 +479,7 @@
                 })).data;
 
                 this.data = resp.data;
-                this.unuse=resp.unuse;
+                this.unuse = resp.unuse;
             }, clickData(d, lang) {
                 this.selected_data = d;
                 this.selected_lang = lang;

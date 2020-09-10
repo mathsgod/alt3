@@ -1,12 +1,9 @@
 <?php
 
 use SplFileInfo;
-use RecursiveIteratorIterator;
-use My\TreeView;
+use Twig\Extensions\Node\TransNode;
 
-//require_once(__DIR__ . "/str_chinese.php");
-//require_once(__DIR__ . "/msgfmt-functions.php");
-//require_once (__dir__ . "/accesstokenauthentication.php");
+require_once __DIR__ . "/str_chinese.php";
 
 class PO
 {
@@ -99,53 +96,67 @@ class System_front_translate_twig extends \ALT\Page
         $root = $this->getRootPath();
         $entries = $this->globalData()["entries"];
 
+        $log = [];
         try {
             foreach ($this->getLang() as $lang) {
 
-                foreach ($this->rglob($root . "/locale/$lang/*.po") as $po_file) {
-                    $po = new PO($po_file);
+                foreach ($this->rglob($root . "/locale/$lang/*.po") as $po) {
+
+                    $log[] = $po;
+                    $trans = Gettext\Translations::fromPoFile($po);
 
                     foreach ($entries as $entry) {
-                        $po->setEntry($entry["name"], $entry["value"][$lang]);
+                        $t = $trans->find("", $entry["name"]);
+                        if (!$t) {
+                            $trans->insert("", $entry["name"]);
+                        }
+                        $t->setTranslation($entry["value"][$lang]);
+                    }
+                    if (!$trans->toPoFile($po)) {
+                        throw new Exception("error to po file $po");
                     }
 
-                    $po->save();
+                    $fi = pathinfo($po);
+
+                    //delete all mo
+                    foreach (glob(dirname($po) . "/" . $fi["filename"] . "-*.mo") as $mo) {
+                        unlink($mo);
+                    }
 
                     //complie to mo
-                    $fi = pathinfo($po_file);
-                    $mo = dirname($po_file) . "/" . $fi["filename"] . "-" . time() . ".mo";
-                    $po->toMoFile($mo);
+                    $mo = dirname($po) . "/" . $fi["filename"] . "-" . time() . ".mo";
+                    $trans->toMoFile($mo);
                 }
             }
         } catch (Exception $e) {
             return ["error" => ["message" => $e->getMessage()]];
         }
-        return ["data" => true];
+        return ["data" => $log];
     }
 
 
     public function upldateGlobal()
     {
-        $frontPage = new SplFileInfo($this->frontPath());
-        $basePath = new SplFileInfo($frontPage->getPath());
+        $base = $this->frontPath();
         foreach ($this->getLang() as $lang) {
             $data = [];
             foreach ($_POST["data"] as $d) {
                 $data[$d["name"]] = $d["value"][$lang];
             }
 
-            $file = $basePath . "/locale/$lang/global.json";
+            $file = $base . DIRECTORY_SEPARATOR . "locale" . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . "global.json";
             file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE));
         }
+        return ["data" => true];
     }
 
     public function globalData()
     {
         $data = [];
-        $frontPage = new SplFileInfo($this->frontPath());
-        $basePath = new SplFileInfo($frontPage->getPath());
+
+        $base = $this->frontPath();
         foreach ($this->getLang() as $lang) {
-            $file = $basePath . "/locale/$lang/global.json";
+            $file = $base . "/locale/$lang/global.json";
             if (!file_exists($file)) {
                 file_put_contents($file, json_encode([]));
                 $data[$lang] = [];
@@ -177,12 +188,13 @@ class System_front_translate_twig extends \ALT\Page
         $data = $post["data"];
         $file = $post["file"];
 
-
-        $frontPage = new SplFileInfo($this->frontPath());
-        $basePath = new SplFileInfo($frontPage->getPath());
-
+        $root = $this->app->document_root;
         $result = [];
         $fi = pathinfo($file);
+
+        $file = preg_replace('/.[^.]*$/', '', $file);
+
+        $filename = basename($file);
 
         foreach ($this->getLang() as $lang) {
 
@@ -192,41 +204,49 @@ class System_front_translate_twig extends \ALT\Page
                 }
             }
 
-            if (!file_exists($po_file = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . ".po")) {
-                mkdir(dirname($po_file), 0777, true);
+            $po = $root . DIRECTORY_SEPARATOR . "locale" . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . "LC_MESSAGES" . DIRECTORY_SEPARATOR . $file . ".po";
+            if (file_exists($po)) {
+                $ts = Gettext\Translations::fromPoFile($po);
+            } else {
+                mkdir(dirname($po), 0777, true);
+                $ts = new Gettext\Translations();
             }
 
-            $ts = Gettext\Translations::fromPoFile($po_file);
             foreach ($data as $d) {
                 $t = $ts->find("", $d["msgid"]);
-                if ($t) {
-                    $t->setTranslation($d["msgstr"][$lang]);
-                } else {
-                    $ts->insert("", $d["msgid"], $d["msgstr"]);
+                if (!$t) {
+                    $t = $ts->insert("", $d["msgid"]);
                 }
+                $t->setTranslation($d["msgstr"][$lang]);
             }
 
-            $ts->toPoFile($po_file);
+            //create po
+            file_put_contents($po, "");
+            $ts->toPoFile($po);
 
             // del all mo
-            foreach (glob(dirname($po_file) . "/" . $fi["filename"] . "-*.mo") as $mo_file) {
-                unlink($mo_file);
+            foreach (glob(dirname($po) . "/" . $filename . "-*.mo") as $mo) {
+                unlink($mo);
             }
             // convert po to mo
-            $mo = $basePath . "/locale/$lang/LC_MESSAGES/" . $fi["dirname"] . "/" . $fi["filename"] . "-" . time() . ".mo";
-          //  $ts->toMoFile($mo);
-             
-         
-            $hash = parse_po_file($po_file);
+            $mo = dirname($po) . DIRECTORY_SEPARATOR . "{$filename}-" . time() . ".mo";
+            //create mo
+            file_put_contents($mo, "");
+
+            if (!$ts->toMoFile($mo)) {
+                return ["error" => ["message" => "cannot write mo file $mo"]];
+            }
+
+            /*             $hash = parse_po_file($po_file);
             if ($hash === false) {
                 print "Error reading '{$po_file}', aborted.\n";
             } else {
                 write_mo_file($hash, $mo);
             }
- 
-            $result[] = ["po" => $po_file, "mo" => $mo];
+ */
+            $result[] = ["po" => $po, "mo" => $mo];
         }
-        return ["code" => 200, "result" => $result];
+        return ["data" => $result];
     }
 
     public function googleTranslate()
@@ -294,37 +314,53 @@ class System_front_translate_twig extends \ALT\Page
         return $n;
     }
 
-    public function getToken($file): array
+    private function parseTrans($nodes): array
+
+    {
+        $data = [];
+        foreach ($nodes as $node) {
+            if ($node instanceof TransNode) {
+                $data[] = $node;
+                continue;
+            }
+
+            $child = $this->parseTrans($node->getIterator());
+            foreach ($child as $d) {
+                $data[] = $d;
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Get all trans token from twig file
+     */
+    public function getToken(string $file): array
     {
 
-        $code = file_get_contents($this->frontPath() . "/" . $file);
+        $this->template = null;
+        $root = $this->app->document_root . DIRECTORY_SEPARATOR . "pages";
+        $code = file_get_contents($root . DIRECTORY_SEPARATOR . $file);
 
-        $loader = new Twig\Loader\FilesystemLoader($this->frontPath());
+        $loader = new Twig\Loader\FilesystemLoader($root);
         $env = new Twig\Environment($loader, ["debug" => true]);
         $env->addExtension(new Twig\Extensions\I18nExtension());
 
         $stream = $env->tokenize(new Twig\Source($code, "trans"));
         $node = $env->parse($stream);
 
-
         $trans = [];
-
-        $nodes = $node->getNode("body")->getIterator();
-        foreach ($nodes as $node) {
-            foreach ($node->getIterator() as $n) {
-                if ($n instanceof Twig_Extensions_Node_Trans) {
-                    $trans[] = $n->getNode("body")->getAttribute("value");
-                }
-            }
+        foreach ($this->parseTrans($node) as $t) {
+            $trans[] = $t->getNode("body")->getAttribute("value");
         }
-
         return $trans;
     }
 
+    /**
+     * Get all translate data
+     */
     public function getTran(string $file)
     {
-
-
         $root = $this->app->document_root;
         $text_domain = preg_replace('/.[^.]*$/', '', $file);
 
@@ -360,7 +396,7 @@ class System_front_translate_twig extends \ALT\Page
 
     public function frontPath()
     {
-        return realpath($this->app->root . "/../pages");
+        return $this->app->document_root . DIRECTORY_SEPARATOR . "pages";
     }
 
     public function frontPathStruct()
@@ -456,8 +492,6 @@ class System_front_translate_twig extends \ALT\Page
 
         //$this->addLib("vakata/jstree");
 
-        $tree = new TreeView();
-        $this->renderTree($this->frontPath(), $tree);
-        $this->data["tree"] = (string) $tree;
+
     }
 }
