@@ -61,6 +61,7 @@ class System_front_translate_twig extends \ALT\Page
 
                     $log[] = $po;
                     $trans = Gettext\Translations::fromPoFile($po);
+                    $trans->setHeader("Content-Type", "");
 
                     foreach ($entries as $entry) {
                         $t = $trans->find("", $entry["name"]);
@@ -168,6 +169,7 @@ class System_front_translate_twig extends \ALT\Page
                 mkdir(dirname($po), 0777, true);
                 $ts = new Gettext\Translations();
             }
+            $ts->setLanguage($lang);
 
             foreach ($data as $d) {
                 $t = $ts->find("", $d["msgid"]);
@@ -176,6 +178,7 @@ class System_front_translate_twig extends \ALT\Page
                 }
                 $t->setTranslation($d["msgstr"][$lang]);
             }
+            $ts->setHeader("Content-Type", "");
 
             //create po
             file_put_contents($po, "");
@@ -194,13 +197,6 @@ class System_front_translate_twig extends \ALT\Page
                 return ["error" => ["message" => "cannot write mo file $mo"]];
             }
 
-            /*             $hash = parse_po_file($po_file);
-            if ($hash === false) {
-                print "Error reading '{$po_file}', aborted.\n";
-            } else {
-                write_mo_file($hash, $mo);
-            }
- */
             $result[] = ["po" => $po, "mo" => $mo];
         }
         return ["data" => $result];
