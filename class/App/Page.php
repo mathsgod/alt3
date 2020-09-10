@@ -260,7 +260,6 @@ class Page extends \R\Page
         }
 
 
-        $content = "";
 
         if ($request instanceof ServerRequestInterface) {
             if ($request->getQueryParams()["_rt"]) {
@@ -280,6 +279,7 @@ class Page extends \R\Page
                     break;
                 case "*/*":
                 case "text/html":
+                    $content = "";
 
                     if ($this->template) {
                         $data = $this->data;
@@ -299,12 +299,14 @@ class Page extends \R\Page
                             $content .= $request->getAttribute("included_content");
                         }
                     }
-
+                    return $response->withBody(new StringStream($content));
                     break;
+                default:
+                    return $response;
             }
         }
 
-        return $response->withBody(new StringStream($content));
+        return $response;
     }
 
     public function post()
