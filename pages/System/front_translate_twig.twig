@@ -347,13 +347,15 @@
                 });
                 this.globalEntries = data;
             },
-            onSaveGlobal() {
+            async onSaveGlobal() {
                 if (confirm("Are you sure update global data?")) {
-                    this.$http.post("System/front_translate_twig/upldateGlobal", {
+                    var resp = (await this.$http.post("System/front_translate_twig/upldateGlobal", {
                         data: this.globalEntries
-                    }).then(resp => {
+                    })).data;
+                    if (resp.error) {
+                        this.$alert(resp.error.message, { type: "error" });
+                    }
 
-                    });
                 }
             },
             clickGlobal(entry, lang) {
@@ -464,9 +466,9 @@
 
             },
             async selectFile(node) {
-                if(!node.id){
-                    this.data=[];
-                    this.unuse=[];
+                if (!node.id) {
+                    this.data = [];
+                    this.unuse = [];
                     return;
 
                 }

@@ -161,6 +161,13 @@ class App extends \R\App
 
     public function run()
     {
+        //* Create $_POST
+        if ($this->request->getMethod() == "POST") {
+            if (strpos($this->request->getHeaderLine("Content-Type"), "application/json") !== false) {
+                $_POST = $this->request->getParsedBody();
+            }
+        }
+
         $this->loadACL();
 
         $this->user->online();
@@ -651,7 +658,7 @@ class App extends \R\App
                 $response = $response->withHeader("location", $this->base_path . "access_deny#/" . $uri);
             }
         } else {
-    
+
             $response = new Response(200);
             $response = $response->withHeader("location", $this->base_path . "#/" . $uri);
         }

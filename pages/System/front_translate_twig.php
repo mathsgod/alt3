@@ -5,59 +5,12 @@ use Twig\Extensions\Node\TransNode;
 
 require_once __DIR__ . "/str_chinese.php";
 
-class PO
-{
-
-    public $parser;
-    public $file;
-    public function __construct(string $file)
-    {
-        if (!file_exists($file)) {
-            throw new Exception("$file not found");
-        }
-        $this->file = $file;
-        $this->parser = \Sepia\PoParser::parseFile($file, ["multiline-glue" => ""]);
-    }
-
-    public function setEntry($name, $value)
-    {
-        $previous = $this->getEntry($name);
-
-        $this->parser->setEntry($name, [
-            "msgid" => $name,
-            "msgstr" => $value,
-            "previous" => $previous
-        ]);
-    }
-
-    public function getEntry($name)
-    {
-        $entries = $this->parser->getEntries();
-        return $entries[$name];
-    }
-
-    public function save()
-    {
-        return $this->parser->writeFile($this->file);
-    }
-    public function getEntries()
-    {
-        return $this->parser->getEntries();
-    }
-
-    public function toMoFile(string $mo)
-    {
-        $hash = parse_po_file($this->file);
-        if ($hash === false) {
-            throw new Exception("Error reading $this->file, aborted");
-        }
-        write_mo_file($hash, $mo);
-    }
-}
-
 class System_front_translate_twig extends \ALT\Page
 {
-    public function rglob($pattern, $flags = 0)
+    /**
+     * Get all file resursively
+     */
+    private function rglob($pattern, $flags = 0)
     {
         $files = glob($pattern, $flags);
         foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
@@ -65,6 +18,7 @@ class System_front_translate_twig extends \ALT\Page
         }
         return $files;
     }
+
 
     public function generatePO()
     {
@@ -90,6 +44,9 @@ class System_front_translate_twig extends \ALT\Page
         }
     }
 
+    /**
+     * Apply the global json to all po
+     */
     public function applyGlobal()
     {
         $this->generatePO();
@@ -108,7 +65,7 @@ class System_front_translate_twig extends \ALT\Page
                     foreach ($entries as $entry) {
                         $t = $trans->find("", $entry["name"]);
                         if (!$t) {
-                            $trans->insert("", $entry["name"]);
+                            $t = $trans->insert("", $entry["name"]);
                         }
                         $t->setTranslation($entry["value"][$lang]);
                     }
@@ -134,18 +91,18 @@ class System_front_translate_twig extends \ALT\Page
         return ["data" => $log];
     }
 
-
     public function upldateGlobal()
     {
-        $base = $this->frontPath();
+        $base = $this->app->document_root;
         foreach ($this->getLang() as $lang) {
             $data = [];
             foreach ($_POST["data"] as $d) {
                 $data[$d["name"]] = $d["value"][$lang];
             }
-
             $file = $base . DIRECTORY_SEPARATOR . "locale" . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . "global.json";
-            file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE));
+            if (file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE)) === false) {
+                return ["error" => ["message" => "cannot write to $file"]];
+            }
         }
         return ["data" => true];
     }
@@ -154,7 +111,7 @@ class System_front_translate_twig extends \ALT\Page
     {
         $data = [];
 
-        $base = $this->frontPath();
+        $base = $this->app->document_root;
         foreach ($this->getLang() as $lang) {
             $file = $base . "/locale/$lang/global.json";
             if (!file_exists($file)) {
@@ -265,14 +222,12 @@ class System_front_translate_twig extends \ALT\Page
 
     public function getLocaleFolder(): SplFileInfo
     {
-        return new SplFileInfo(realpath($this->root . "/../locale"));
+        return new SplFileInfo($this->document_root . DIRECTORY_SEPARATOR . "locale");
     }
 
     public function getRootPath()
     {
-        $frontPage = new SplFileInfo($this->frontPath());
-        $basePath = new SplFileInfo($frontPage->getPath());
-        return $basePath;
+        return $this->app->document_root;
     }
 
     public function getLang()
