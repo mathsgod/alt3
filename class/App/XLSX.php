@@ -38,8 +38,9 @@ class XLSX
 
         $sheet->fromArray($this->columns->column("label")->all());
         $sheet->getStyle('A1:' . $sheet->getHighestColumn() . '1')->getFont()->setBold(true);
-
-
+        $sheet->freezePane("A2");
+        $sheet->setAutoFilter('A1:'.$sheet->getHighestColumn()."1");
+        
         $i = 2;
         foreach ($this->source as $data) {
 
