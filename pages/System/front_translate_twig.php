@@ -304,7 +304,8 @@ class System_front_translate_twig extends \ALT\Page
         foreach ($this->parseTrans($node) as $t) {
             $trans[] = $t->getNode("body")->getAttribute("value");
         }
-        return $trans;
+        $trans=array_unique($trans);
+        return array_values($trans);
     }
 
     /**
