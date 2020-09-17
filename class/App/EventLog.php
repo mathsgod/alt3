@@ -61,12 +61,20 @@ class EventLog extends Model
             $c = "\\$class";
             $org = new $c($r["id"]);
             $r["source"] = json_encode($org);
-            $r["target"] = json_encode($object);
-            $r["target"] = $r["target"] ?? null;
+            $target = json_encode($object);
+            if ($target === false) {
+                $r["target"] = null;
+            } else {
+                $r["target"] = $target;
+            }
         } else {
             $r["action"] = "Insert";
-            $r["target"] = json_encode($object);
-            $r["target"] = $r["target"] ?? null;
+            $target = json_encode($object);
+            if ($target === false) {
+                $r["target"] = null;
+            } else {
+                $r["target"] = $target;
+            }
         }
         $r["created_time"] = date("Y-m-d H:i:s");
         self::_table()->insert($r);

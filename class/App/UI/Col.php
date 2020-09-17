@@ -43,6 +43,50 @@ class Col extends HTMLElement
         return $this;
     }
 
+    public function tinymce(string $field)
+    {
+
+        foreach ($this->cell as $cell) {
+            try {
+                $textarea = p("textarea")->appendTo($cell);
+                $textarea->attr("is", "tinymce");
+                $textarea->attr('data-field', $field);
+                $textarea->attr('name', $field);
+                $textarea->addClass('form-control');
+
+                if ($object = p($cell)->data("object")) {
+                    $textarea->data("object", $object);
+
+                    $textarea->attr("value",$this->getObjectValue($object, $field));
+
+                    if ($this->callback) {
+                        call_user_func($this->callback, $object, $textarea[0]);
+                    }
+                }
+                $p[] = $textarea[0];
+            } catch (Exception $e) {
+                $cell->append("<p class='form-control-static'>" . $e->getMessage() . "</p>");
+            }
+        }
+
+
+        if ($this->createTemplate) {
+            $textarea = p("textarea");
+            $textarea->addClass('form-control');
+            $textarea->attr("name", $field);
+            $textarea->attr("data-field", $field);
+
+            $p[] = $textarea[0];
+            $this->c_tpl[] = $textarea[0];
+            $this->setAttribute("c-tpl", $this->c_tpl);
+            $p->on("change", function () {
+                $this->setAttribute("c-tpl",  $this->c_tpl);
+            });
+        }
+
+        return $p;
+    }
+
     /*public function iconpicker($field)
     {
         $p = new \BS\ButtonCollection;

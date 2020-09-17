@@ -5,11 +5,11 @@ use Firebase\JWT\JWT;
 class Fileman_index extends App\Page
 {
 
-    public function get($token)
+    public function get($token, $source)
     {
         $pi = $this->app->pathinfo();
 
-        $this->data["system_base"]=$pi["system_base"];
+        $this->data["system_base"] = $pi["system_base"];
 
 
         if (!$token) {
@@ -17,6 +17,9 @@ class Fileman_index extends App\Page
 
             $query = $_GET ?? [];
             $query["token"] = $token;
+            if ($source) {
+                $query["source"] = $source;
+            }
             $q = http_build_query($query);
 
 

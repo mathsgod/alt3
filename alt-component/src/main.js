@@ -107,3 +107,7 @@ VueRegisterElement("alt-button", altButton);
 
 import fileman from "./fileman";
 VueRegisterElement("fileman", fileman);
+
+import TinyMCEVue from "./TinyMCE";
+
+Vue.component("tinymce", TinyMCEVue);

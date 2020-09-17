@@ -68,7 +68,6 @@
                     <i class="fa fa-fw fa-th"></i>
                   </el-radio-button>
                 </el-radio-group>
-
               </el-button-group>
             </el-col>
           </el-row>
@@ -122,13 +121,13 @@ export default {
   components: {
     "upload-file-dialog": UploadFileDialog,
     "file-list-view": FileListView,
-    "file-grid-view": FileGridView
+    "file-grid-view": FileGridView,
   },
   data() {
     return {
       props: {
         label: "name",
-        isLeaf: "isLeaf"
+        isLeaf: "isLeaf",
       },
       token: "",
       payload: {},
@@ -136,14 +135,14 @@ export default {
       items1: [],
       uploadFiles: [],
       selectedFolder: {
-        value: "/"
+        value: "/",
       },
       elementId: "",
       fileViewMode: "list",
       init_value: "",
       source: "",
       selectedFiles: [],
-      type: ""
+      type: "",
     };
   },
   async created() {
@@ -173,7 +172,7 @@ export default {
   computed: {
     selectedNode() {
       return this.getSelectedNode();
-    }
+    },
   },
   methods: {
     getTreeItem2(arr) {
@@ -191,11 +190,11 @@ export default {
         return resolve([{ name: "/", pathname: "/", isLeaf: false }]);
       }
       let data = await this.api.listDirectory(node.data.pathname);
-      data = data.map(d => {
+      data = data.map((d) => {
         return {
           name: d.name,
           pathname: d.pathname,
-          isLeaf: false
+          isLeaf: false,
         };
       });
       return resolve(data);
@@ -274,7 +273,7 @@ export default {
         return null;
       }
       var n = null;
-      this.$refs.tree1.handleRecursionNodeChilds(this.$refs.tree1, node => {
+      this.$refs.tree1.handleRecursionNodeChilds(this.$refs.tree1, (node) => {
         if (
           typeof node.model != "undefined" &&
           //          node.model.hasOwnProperty("selected") &&
@@ -319,7 +318,23 @@ export default {
     },
     onSelectFile(f) {
       console.log("select file ", f);
-      if (this.source == "ckeditor") {
+      if (this.source == "tinymce") {
+        console.log(f.url);
+        window.parent.postMessage(
+          {
+            mceAction: "insertContent",
+            content: "<img src='" + f.url + "' />",
+          },
+          "*"
+        );
+
+        window.parent.postMessage(
+          {
+            mceAction: "close",
+          },
+          "*"
+        );
+      } else if (this.source == "ckeditor") {
         if (window.opener) {
           window.opener.postMessage(
             {
@@ -327,7 +342,7 @@ export default {
               CKEditorFuncNum: this.getUrlParam("CKEditorFuncNum"),
               token: this.token,
               action: "select-file",
-              value: f.pathname
+              value: f.pathname,
             },
             "*"
           );
@@ -339,7 +354,7 @@ export default {
             token: this.token,
             action: "select-file",
             value: f.pathname,
-            id: this.elementId
+            id: this.elementId,
           },
           "*"
         );
@@ -387,7 +402,7 @@ export default {
           loading: false,
           isLeaf: false,
           children: children,
-          opened: a.children !== null
+          opened: a.children !== null,
         });
         items.push(item);
       }
@@ -419,8 +434,8 @@ export default {
             loading: false,
             isLeaf: false,
             children: children,
-            opened: true
-          }
+            opened: true,
+          },
         ]);
 
         this.files = await this.api.listFile(path);
@@ -437,7 +452,7 @@ export default {
         return;
       }
 
-      data = data.map(d => {
+      data = data.map((d) => {
         return {
           text: d.name,
           value: d.pathname,
@@ -445,14 +460,14 @@ export default {
           disabled: false,
           loading: false,
           isLeaf: false,
-          children: [this.$refs.tree1.initializeLoading()]
+          children: [this.$refs.tree1.initializeLoading()],
         };
       });
 
       console.log(data);
       resolve(data);
-    }
-  }
+    },
+  },
 };
 </script>
 

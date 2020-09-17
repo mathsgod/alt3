@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --target lib src/main.js --name fileman --port 8086",
     "build": "vue-cli-service build --target lib src/main.js --name fileman",
+    "watch": "vue-cli-service build --watch --target lib src/main.js --name fileman",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
