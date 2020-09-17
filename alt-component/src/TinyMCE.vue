@@ -19,6 +19,8 @@ export default {
       type: Object,
       default() {
         return {
+          height: 600,
+          convert_urls: false,
           plugins: [
             "fileman",
             "advlist autolink lists link image charmap print preview anchor",
