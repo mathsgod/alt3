@@ -1,5 +1,5 @@
 <template>
-  <textarea></textarea>
+  <textarea v-model="localValue"></textarea>
 </template>
 <script>
 export default {
