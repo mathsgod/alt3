@@ -40,10 +40,15 @@ export default {
     if (this.$attrs.id) {
       this.id = this.$attrs.id;
     } else {
-      this.id = "tinymce-" + new Date().getTime();
+      this.id =
+        "tinymce-" +
+        new Date().getTime() +
+        "-" +
+        Math.random().toString(36).substr(2, 9);
     }
   },
   mounted() {
+    var id = this.id;
     window.tinymce.PluginManager.add("fileman", function (editor) {
       var openDialog = function () {
         return editor.windowManager.openUrl({
@@ -80,12 +85,12 @@ export default {
       };
     });
 
-    window.tinymce.PluginManager.add("ace", function (editor) {
-      var openDialog = function () {
-        localStorage.setItem("tinymce_content", editor.getContent());
+    window.tinymce.PluginManager.add("ace", (editor) => {
+      let openDialog = () => {
+        localStorage.setItem(id, editor.getContent());
         editor.windowManager.openUrl({
           title: "Ace code editor",
-          url: "tinymce_code?source=tinymce",
+          url: "tinymce_code?source=tinymce&id=" + id,
           buttons: [
             {
               type: "custom",
@@ -99,36 +104,23 @@ export default {
               text: "Close",
             },
           ],
-          onAction: function (instance) {
-            editor.setContent(localStorage.getItem("tinymce_content"));
+          onAction(instance) {
+            let content = localStorage.getItem(id);
+            editor.setContent(content ?? "");
+            localStorage.removeItem(id);
             // close the dialog
             instance.close();
+          },
+          onClose() {
+            localStorage.removeItem(id);
           },
         });
       };
 
-      /*         window.ace.edit("code", {
-            mode: "ace/mode/html",
-            wrap: true,
-          });
-        setTimeout(() => {
-             var textarea = document
-            .querySelector(".tox-dialog__body-content")
-            .querySelector("textarea");
-          textarea.style.height = "600px";
-
-          var e=window.ace.edit("code", {
-            mode: "ace/mode/html",
-            wrap: true,
-          });
-          e.session.setOptions({ tabSize: 4, useSoftTabs: false });
-        });  
-      };*/
-
       // Add a button that opens a window
       editor.ui.registry.addButton("ace", {
         text: "Code",
-        onAction: function () {
+        onAction() {
           // Open window
           openDialog();
         },

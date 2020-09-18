@@ -3,16 +3,17 @@
 <head>
     <script src="{{system_base}}/plugins/ace/src-min-noconflict/ace.js"></script>
     <script src="{{system_base}}/plugins/ace/src-min-noconflict/ext-beautify.js"></script>
-    <style type="text/css" media="screen">
-        #editor {
-            position: absolute;
-            top: 20;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-    </style>
 </head>
+<style type="text/css" media="screen">
+    #editor {
+        position: absolute;
+        top: 20;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+
 
 <body>
 
@@ -22,6 +23,24 @@
     <pre id="editor"></pre>
 
     <script>
+        var editor;
+        document.addEventListener("DOMContentLoaded", () => {
+            var url = new URL(location);
+            var id = url.searchParams.get("id");
+            if (!id) {
+                alert("tinymce id not found");
+                return;
+            }
+            document.getElementById("editor").innerHTML = escapeHtml(localStorage.getItem(id));
+
+            editor = ace.edit("editor");
+            //editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/html");
+
+            editor.session.on('change', () => {
+                localStorage.setItem(id, editor.session.getValue());
+            });
+        });
 
         function escapeHtml(text) {
             var map = {
@@ -34,15 +53,6 @@
 
             return text.replace(/[&<>"']/g, function (m) { return map[m]; });
         }
-        document.getElementById("editor").innerHTML = escapeHtml(localStorage.getItem("tinymce_content"));
-
-        var editor = ace.edit("editor");
-        //editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/html");
-
-        editor.session.on('change', function () {
-            localStorage.setItem("tinymce_content", editor.session.getValue());
-        });
 
         function onBeautify() {
             var beautify = ace.require("ace/ext/beautify");
