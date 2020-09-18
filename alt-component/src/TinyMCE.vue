@@ -20,15 +20,16 @@ export default {
       default() {
         return {
           height: 600,
+          apply_source_formatting: true,
           convert_urls: false,
           plugins: [
-            "fileman",
+            "fileman ace",
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
             "insertdatetime media table paste imagetools wordcount",
           ],
           toolbar:
-            "fileman insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            "fileman ace insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
           images_upload_url: "postAcceptor.php",
           automatic_uploads: false,
         };
@@ -77,6 +78,61 @@ export default {
           };
         },
       };
+    });
+
+    window.tinymce.PluginManager.add("ace", function (editor) {
+      var openDialog = function () {
+        localStorage.setItem("tinymce_content", editor.getContent());
+        editor.windowManager.openUrl({
+          title: "HostLink Fileman",
+          url: "System/code?source=tinymce",
+          buttons: [
+            {
+              type: "custom",
+              name: "action",
+              text: "Submit",
+              primary: true,
+            },
+            {
+              type: "cancel",
+              name: "cancel",
+              text: "Close",
+            },
+          ],
+          onAction: function (instance, trigger) {
+            editor.setContent(localStorage.getItem("tinymce_content"));
+            // close the dialog
+            instance.close();
+          },
+        });
+      };
+
+      /*         window.ace.edit("code", {
+            mode: "ace/mode/html",
+            wrap: true,
+          });
+        setTimeout(() => {
+             var textarea = document
+            .querySelector(".tox-dialog__body-content")
+            .querySelector("textarea");
+          textarea.style.height = "600px";
+
+          var e=window.ace.edit("code", {
+            mode: "ace/mode/html",
+            wrap: true,
+          });
+          e.session.setOptions({ tabSize: 4, useSoftTabs: false });
+        });  
+      };*/
+
+      // Add a button that opens a window
+      editor.ui.registry.addButton("ace", {
+        text: "Code",
+        onAction: function () {
+          // Open window
+          openDialog();
+        },
+      });
     });
 
     this.init.selector = "#" + this.id;

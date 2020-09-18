@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <script src="/alt3/plugins/ace/src-min-noconflict/ace.js"></script>
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <pre id="editor"></pre>
+
+    <script>
+        function escapeHtml(text) {
+            var map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+
+            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+        }
+        document.getElementById("editor").innerHTML = escapeHtml(localStorage.getItem("tinymce_content"));
+
+        var editor = ace.edit("editor");
+        //editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/html");
+
+        editor.session.on('change', function () {
+            localStorage.setItem("tinymce_content", editor.session.getValue());
+        });
+    </script>
+</body>
+
+</html>
