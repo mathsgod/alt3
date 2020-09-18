@@ -87,7 +87,6 @@ export default {
 
     window.tinymce.PluginManager.add("ace", (editor) => {
       let openDialog = () => {
-        localStorage.setItem(id, editor.getContent());
         editor.windowManager.openUrl({
           title: "Ace code editor",
           url: "tinymce_code?source=tinymce&id=" + id,
@@ -104,15 +103,28 @@ export default {
               text: "Close",
             },
           ],
-          onAction(instance) {
-            let content = localStorage.getItem(id);
-            editor.setContent(content ?? "");
-            localStorage.removeItem(id);
-            // close the dialog
-            instance.close();
+          onAction() {
+            var iframeWin = document.querySelector(".tox-dialog iframe")
+              .contentWindow;
+            iframeWin.postMessage({
+              action: "getContentAndClose",
+            });
           },
-          onClose() {
-            localStorage.removeItem(id);
+          onMessage(instance, data) {
+            switch (data.mceAction) {
+              case "getContent":
+                var iframeWin = document.querySelector(".tox-dialog iframe")
+                  .contentWindow;
+                iframeWin.postMessage(
+                  {
+                    action: "setContent",
+                    content: editor.getContent(),
+                  },
+                  origin
+                );
+                //console.log(iframeWin);
+                break;
+            }
           },
         });
       };

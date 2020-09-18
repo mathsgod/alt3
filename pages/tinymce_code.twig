@@ -24,23 +24,32 @@
 
     <script>
         var editor;
-        document.addEventListener("DOMContentLoaded", () => {
-            var url = new URL(location);
-            var id = url.searchParams.get("id");
-            if (!id) {
-                alert("tinymce id not found");
-                return;
+
+        window.addEventListener("message", evt => {
+            var data = evt.data;
+
+            switch (data.action) {
+                case "setContent":
+                    document.getElementById("editor").innerHTML = escapeHtml(data.content);
+                    editor = ace.edit("editor");
+                    //editor.setTheme("ace/theme/monokai");
+                    editor.session.setMode("ace/mode/html");
+                    break;
+                case "getContentAndClose":
+                    window.parent.postMessage({
+                        mceAction: "setContent",
+                        content: editor.getValue()
+                    });
+                    window.parent.postMessage({
+                        mceAction: "close"
+                    });
+                    break;
             }
-            document.getElementById("editor").innerHTML = escapeHtml(localStorage.getItem(id));
+        }, false);
 
-            editor = ace.edit("editor");
-            //editor.setTheme("ace/theme/monokai");
-            editor.session.setMode("ace/mode/html");
-
-            editor.session.on('change', () => {
-                localStorage.setItem(id, editor.session.getValue());
-            });
-        });
+        window.parent.postMessage({
+            mceAction: "getContent"
+        }, origin);
 
         function escapeHtml(text) {
             var map = {
