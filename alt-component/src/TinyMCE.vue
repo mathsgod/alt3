@@ -85,7 +85,7 @@ export default {
         localStorage.setItem("tinymce_content", editor.getContent());
         editor.windowManager.openUrl({
           title: "HostLink Fileman",
-          url: "System/code?source=tinymce",
+          url: "tinymce_code?source=tinymce",
           buttons: [
             {
               type: "custom",
@@ -99,7 +99,7 @@ export default {
               text: "Close",
             },
           ],
-          onAction: function (instance, trigger) {
+          onAction: function (instance) {
             editor.setContent(localStorage.getItem("tinymce_content"));
             // close the dialog
             instance.close();

@@ -2,10 +2,11 @@
 
 <head>
     <script src="{{system_base}}/plugins/ace/src-min-noconflict/ace.js"></script>
+    <script src="{{system_base}}/plugins/ace/src-min-noconflict/ext-beautify.js"></script>
     <style type="text/css" media="screen">
         #editor {
             position: absolute;
-            top: 0;
+            top: 20;
             right: 0;
             bottom: 0;
             left: 0;
@@ -15,9 +16,13 @@
 
 <body>
 
+    <div>
+        <button onclick="onBeautify()">Beautify</button>
+    </div>
     <pre id="editor"></pre>
 
     <script>
+
         function escapeHtml(text) {
             var map = {
                 '&': '&amp;',
@@ -38,6 +43,12 @@
         editor.session.on('change', function () {
             localStorage.setItem("tinymce_content", editor.session.getValue());
         });
+
+        function onBeautify() {
+            var beautify = ace.require("ace/ext/beautify");
+            beautify.beautify(editor.session);
+        }
+
     </script>
 </body>
 
