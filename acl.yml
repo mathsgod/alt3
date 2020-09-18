@@ -25,7 +25,8 @@ path:
   User/reset_password: [Power Users]
   Fileman: [Users,Power Users]
   Fileman/api: [Users,Power Users]
-
+  System/code: [Users,Power Users]
+  
 action:
   FC:
     App\UserLog: [Power Users]
