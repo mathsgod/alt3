@@ -84,7 +84,7 @@ export default {
       var openDialog = function () {
         localStorage.setItem("tinymce_content", editor.getContent());
         editor.windowManager.openUrl({
-          title: "HostLink Fileman",
+          title: "Ace code editor",
           url: "tinymce_code?source=tinymce",
           buttons: [
             {
