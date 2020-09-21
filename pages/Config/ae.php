@@ -14,7 +14,6 @@ class Config_ae extends ALT\Page
 
 
 		if ($type == "json") {
-			$this->addLib("ace");
 			$mv->add("Value")->ace("value", "json");
 		} else {
 			$mv->add("Value")->input("value");
