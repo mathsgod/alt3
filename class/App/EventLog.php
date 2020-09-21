@@ -61,6 +61,10 @@ class EventLog extends Model
             $c = "\\$class";
             $org = new $c($r["id"]);
             $r["source"] = json_encode($org);
+            if ($r["source"] === false) {
+                $r["source"] = null;
+            }
+
             $target = json_encode($object);
             if ($target === false) {
                 $r["target"] = null;
