@@ -33,4 +33,11 @@ class DynamicPage_edit_data extends ALT\Page
     {
         return $this->object()->data;
     }
+
+
+    public function get()
+    {
+        $system_base = $this->app->pathInfo()["system_base"];
+        $this->data["system_base"] = $system_base;
+    }
 }
