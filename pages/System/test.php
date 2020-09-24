@@ -15,6 +15,8 @@ class System_test extends ALT\Page
 
     public function get()
     {
+        $user=App\User::Query()->first();
+        
         $t = $this->createTab();
         $t->add("Test", "test_rt");
 

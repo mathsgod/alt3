@@ -38,6 +38,9 @@ class EventLog extends Model
         $r["class"] = $class;
         $r["action"] = "Delete";
         $r["source"] = json_encode($object);
+        if ($r["source"] === false) {
+            $r["source"] = null;
+        }
         $r["created_time"] = date("Y-m-d H:i:s");
         self::_table()->insert($r);
     }
