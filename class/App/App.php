@@ -673,7 +673,7 @@ class App extends \R\App
 
         $package = $this->composer->package("mathsgod/alt3");
 
-        $_SESSION["app"]["version"] = $package->version ?? "6.0.0";
+        $_SESSION["app"]["version"] = $package["version"] ?? "6.0.0";
         return $_SESSION["app"]["version"];
     }
 

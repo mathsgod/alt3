@@ -15,6 +15,16 @@ class Composer
         return $this->lockConfig()["packages"] ?? [];
     }
 
+    public function package(string $name)
+    {
+        foreach ($this->installed() as $package) {
+            if ($package["name"] == $name) {
+                return $package;
+            }
+        }
+        return null;
+    }
+
 
     public function hasPackage($package): bool
     {
