@@ -1,5 +1,3 @@
-const CopyPlugin = require('copy-webpack-plugin');
-
 module.exports = {
     mode: "production",
     watch: true,
@@ -27,13 +25,11 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
-            }
+            }, {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
         ]
-    },
-    plugins: [
-        new CopyPlugin([
-            { from: './node_modules/element-ui/lib/theme-chalk', to: 'element-ui/lib/theme-chalk' },
-        ]),
-    ],
+    }
 
 };

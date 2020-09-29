@@ -75,7 +75,7 @@
                 $('body').removeClass('text-sm');
             }
         } catch (e) {
-            swal.fire("Error", e, "error");
+            Swal.fire("Error", e, "error");
 
         }
     });

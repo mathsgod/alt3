@@ -52,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {% endif %}
 
     <script src="{{system_base}}/plugins/vue/vue-runtime-template-compiler.umd.js"></script>
-    
+
     <script src="{{system_base}}/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{system_base}}/plugins/ace/src-min-noconflict/ace.js"></script>
 
@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {% if app.user.language =="zh-hk" %}
     <script src="{{system_base}}/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-TW.min.js"></script>
     {% endif %}
-    
+
 
     <!-- iCheck -->
     <link rel="stylesheet" href="{{system_base}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
@@ -103,15 +103,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- bootstrap select -->
     <link rel="stylesheet" href="{{system_base}}/plugins/bootstrap-select/css/bootstrap-select.min.css" />
-    <script type="text/javascript" src="{{system_base}}/plugins/bootstrap-select/js/bootstrap-select.min.js" defer></script>
+    <script type="text/javascript" src="{{system_base}}/plugins/bootstrap-select/js/bootstrap-select.min.js"
+        defer></script>
 
     <!-- daterangepicker.com -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <!-- tempusdominus-bootstrap4 -->
-    <link rel="stylesheet" href="{{system_base}}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
-    <script type="text/javascript" src="{{system_base}}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet"
+        href="{{system_base}}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+    <script type="text/javascript"
+        src="{{system_base}}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- plugins -->
     {% for plugin in plugins %}
@@ -140,24 +143,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- webpack -->
 
-    {% if app.config.user.development %}
-    <script src="{{system_base}}/src/api.js" defer></script>
-    <script src="{{system_base}}/src/control-sidebar.js" defer></script>
-    <script src="{{system_base}}/src/sidebar.js" defer></script>
-    <script src="{{system_base}}/src/tab-ajax.js" defer></script>
-    <script src="{{system_base}}/src/default.js" defer></script>
-    <script src="{{system_base}}/src/confirm.js" defer></script>
-    <script src="{{system_base}}/src/vue.dialog.js" defer></script>
-
-    {% else %}
     <script src="{{system_base}}/dist/main.js" defer></script>
-    {% endif %}
-
     <script src="{{system_base}}/dist/app.js"></script>
-
     <script src="{{system_base}}/dist/plugin.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{system_base}}/dist/element-ui/lib/theme-chalk/index.css" />
-
 
 
     <!-- Custom js -->
@@ -173,7 +161,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <script src="{{system_base}}/src/jquery.ajaxbox.js" defer></script>
-    <script>i18n.locale="{{app.user.language}}"</script>
+    <script>i18n.locale = "{{app.user.language}}"</script>
 </head>
 
 {% set body = app.user.style.body|join(' ') %}
@@ -352,7 +340,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i class="fas fa-th-large"></i></a>
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
+                            class="fas fa-th-large"></i></a>
                 </li>
             </ul>
         </nav>
@@ -368,7 +357,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Brand Logo -->
             {% if app.config.user.logo %}
             <a href="#" class="brand-link">
-                <img src="{{app.config.user.logo}}" alt="Logo" class="brand-image {# img-circle elevation-3 #}" style="opacity: .8">
+                <img src="{{app.config.user.logo}}" alt="Logo" class="brand-image {# img-circle elevation-3 #}"
+                    style="opacity: .8">
                 <span class="brand-text font-weight-light">{{app.config.user.company}}</span>
             </a>
             {% else %}
@@ -398,7 +388,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar nav-compact flex-column nav-child-indent {{sidebar_nav}}" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar nav-compact flex-column nav-child-indent {{sidebar_nav}}"
+                        data-widget="treeview" role="menu" data-accordion="false">
 
 
                         <li class="nav-item has-treeview">
@@ -433,7 +424,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         {% for fav in favs %}
                         <li class="nav-item">
                             <a href="{{fav.link}}" class="nav-link">
-                                <i class="nav-icon fa fa-fw {{fav.icon?fav.icon:'fa-link'}} {{fav.color?fav.color:''}}"></i>
+                                <i
+                                    class="nav-icon fa fa-fw {{fav.icon?fav.icon:'fa-link'}} {{fav.color?fav.color:''}}"></i>
                                 <p>{{fav.label}}</p>
                             </a>
                         </li>
@@ -442,7 +434,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-header">Main navigation</li>
                         {% for menu in sidebar_menu %}
-                        <li class="nav-item" is="nav-item" :is-root="true" :menu="{{menu|json_encode(constant('JSON_UNESCAPED_UNICODE'))}}"></li>
+                        <li class="nav-item" is="nav-item" :is-root="true"
+                            :menu="{{menu|json_encode(constant('JSON_UNESCAPED_UNICODE'))}}"></li>
                         {% endfor %}
 
                         {#
@@ -539,11 +532,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="">{{'Home'|trans}}</a></li>
                                 {% if module %}
-                                <li class="breadcrumb-item active"><a href="{{module.name}}">{{module.name|trans}}</a></li>
+                                <li class="breadcrumb-item active"><a href="{{module.name}}">{{module.name|trans}}</a>
+                                </li>
                                 {% endif %}
 
                                 {% if page.name != "index" %}
-                                <li class="breadcrumb-item active"><a href="javascript:location.reload()">{{page.name}}</a></li>
+                                <li class="breadcrumb-item active"><a
+                                        href="javascript:location.reload()">{{page.name}}</a></li>
                                 {% endif %}
 
 
@@ -605,7 +600,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 {{app.version}}
             </div>
             <!-- Default to the left -->
-            <strong>{{'Copyright'|trans}} &copy; {{app.config.user['copyright-year']}} <a href="{{app.config.user['copyright-url']}}" target="_blank">{{app.config.user['copyright-name']}}</a>.</strong> {{'All rights reserved'|trans}}.
+            <strong>{{'Copyright'|trans}} &copy; {{app.config.user['copyright-year']}} <a
+                    href="{{app.config.user['copyright-url']}}"
+                    target="_blank">{{app.config.user['copyright-name']}}</a>.</strong> {{'All rights reserved'|trans}}.
         </footer>
     </div>
     <!-- ./wrapper -->
