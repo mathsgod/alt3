@@ -11,11 +11,10 @@ module.exports = {
             "./src/control-sidebar.js",
             "./src/sidebar.js",
             "./src/tab-ajax.js",
-            "./src/default.js",
             "./src/confirm.js",
             "./src/vue.dialog.js"],
         plugin: "./src/plugin.js",
-   
+
     },
     module: {
         rules: [
@@ -52,6 +51,7 @@ module.exports = {
     }, plugins: [
         // make sure to include the plugin!
         new VueLoaderPlugin()
+       
     ]
 
 };

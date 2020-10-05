@@ -18,8 +18,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         {% endif %}
     </title>
 
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{composer_base}}/vendor/fortawesome/font-awesome/css/all.min.css">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="{{system_base}}/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
@@ -103,10 +101,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="{{system_base}}/plugins/bootstrap-select/js/bootstrap-select.min.js"
         defer></script>
 
-    <!-- daterangepicker.com -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+    
     <!-- tempusdominus-bootstrap4 -->
     <link rel="stylesheet"
         href="{{system_base}}/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
@@ -136,7 +131,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootbox -->
     <script src="{{system_base}}/plugins/bootbox/bootbox.all.min.js" defer></script>
 
-
     <!-- webpack -->
 
     <script src="{{system_base}}/dist/main.js" defer></script>
@@ -155,8 +149,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" type="text/css" href="{{css}}" />
     {% endfor %}
 
-
-    <script src="{{system_base}}/src/jquery.ajaxbox.js" defer></script>
     <script>i18n.locale = "{{app.user.language}}"</script>
 </head>
 

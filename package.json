@@ -13,6 +13,7 @@
     "http-vue-loader": "^1.4.2",
     "icheck-bootstrap": "^3.0.1",
     "jquery": "^3.5.1",
+    "jquery-validation": "^1.19.2",
     "sweetalert2": "^9.17.1",
     "tinymce": "^5.5.1",
     "vue": "^2.6.12",
