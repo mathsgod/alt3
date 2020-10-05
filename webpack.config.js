@@ -1,3 +1,5 @@
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 module.exports = {
     mode: "production",
     watch: true,
@@ -17,6 +19,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
                 test: /\.m?js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
@@ -28,8 +34,23 @@ module.exports = {
             }, {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
-            },
+            }, {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts/',
+                            publicPath: "dist/fonts/"
+                        }
+                    }
+                ]
+            }
         ]
-    }
+    }, plugins: [
+        // make sure to include the plugin!
+        new VueLoaderPlugin()
+    ]
 
 };

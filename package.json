@@ -4,13 +4,17 @@
   "description": "Raymond framework",
   "main": "src/index.js",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.0",
     "@mathsgod/vue-gql": "^1.0.3",
     "bootbox": "^5.4.1",
+    "bootstrap": "^4.5.2",
     "element-ui": "^2.13.2",
-    "file-loader": "^6.0.0",
     "http-vue-loader": "^1.4.2",
+    "icheck-bootstrap": "^3.0.1",
     "jquery": "^3.5.1",
     "sweetalert2": "^9.17.1",
+    "vue": "^2.6.12",
+    "vue-resource": "^1.5.1",
     "webpack": "^4.44.1",
     "x-html-bs4": "git+https://github.com/mathsgod/x-html-bs4.git"
   },
@@ -19,8 +23,11 @@
     "@babel/preset-env": "^7.11.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
+    "file-loader": "^6.1.0",
     "mini-css-extract-plugin": "^0.9.0",
     "style-loader": "^1.2.1",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.12",
     "webpack-cli": "^3.3.12"
   },
   "scripts": {

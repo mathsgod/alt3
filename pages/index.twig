@@ -9,12 +9,6 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{composer_base}}/vendor/fortawesome/font-awesome/css/all.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="{{system_base}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{system_base}}/adminlte/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
@@ -22,10 +16,15 @@
 
     <script src="{{system_base}}/plugins/regenerator-runtime/runtime.min.js"></script>
 
-    <link rel="stylesheet" href="{{system_base}}/dist/element-ui/lib/theme-chalk/index.css">
+    <!-- Vue -->
+    <script src="{{system_base}}/plugins/vue/vue.js"></script>
+
+    <script src="{{system_base}}/dist/index.js" defer></script>
+
 </head>
 
 <body class="hold-transition login-page">
+    <input type="hidden" id="version" value="{{app.version}}" />
     <div class="login-box">
         <div class="login-logo">
             {% if app.config.user.logo %}
@@ -35,108 +34,9 @@
             {% endif %}
         </div>
         <!-- /.login-logo -->
-        <div class="card" id="app">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg" v-text="message" :class="{'text-red':error}"></p>
-
-                <form>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username" autocomplete="username"
-                            v-model="username">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password"
-                            autocomplete="current-password" v-model="password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember" ref="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block" @click.prevent="signIn">Sign
-                                In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
-
-                <p class="mb-1">
-                    <a href="#" @click.prevent="forgetPassword">I forgot my password</a>
-                </p>
-                <p class="mb-1">
-                    {{app.version}}
-                </p>
-
-
-            </div>
-            <!-- /.login-card-body -->
-
-            <el-dialog :visible.syn="show2StepDialog" title="2-step verification">
-                <div>
-                    <p>Please input your code, if you lost your device, click <a href="#"
-                            @click.prevent="lost2Step">here</a></p>
-                </div>
-                <el-input v-model="code" placeholder="6 digits code"></el-input>
-                <span slot="footer">
-                    <el-button @click="show2StepDialog=false">Cancel</el-button>
-                    <el-button type="primary" @click="signIn">Ok</el-button>
-                </span>
-            </el-dialog>
-
-            <el-dialog :visible.sync="showForgetDialog" title="Forget password">
-                <el-form :model="forgetForm" label-width="auto" ref="forgetForm">
-                    <el-form-item label="Username" prop="username" :rules="[{required:true}]">
-                        <el-input v-model="forgetForm.username"></el-input>
-                    </el-form-item>
-                    <el-form-item label="Email" prop="email" :rules="[{required:true,type:'email'}]">
-                        <el-input type="email" v-model="forgetForm.email"></el-input>
-                    </el-form-item>
-                </el-form>
-
-                <span slot="footer">
-                    <el-button type="primary" @click="submtForgetForm">Submit</el-button>
-                </span>
-            </el-dialog>
-        </div>
+        <div id="app"></div>
     </div>
     <!-- /.login-box -->
-
-
-    <!-- jQuery -->
-    <script src="{{system_base}}/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{system_base}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="{{system_base}}/adminlte/dist/js/adminlte.min.js"></script>
-    <!-- Bootbox -->
-    <script src="{{system_base}}/plugins/bootbox/bootbox.all.min.js"></script>
-
-    <!-- Vue -->
-    <script src="{{system_base}}/plugins/vue/vue.js"></script>
-    <script src="{{system_base}}/plugins/vue/vue-resource.min.js"></script>
-    <script src="{{system_base}}/plugins/vue/vue-gql.js"></script>
-
-    <!-- r-webauthn -->
-    <script src="{{composer_base}}/vendor/mathsgod/r-webauthn/dist/main.js"></script>
-
-    <script src="{{system_base}}/dist/index.js"></script>
-
 </body>
 
 </html>
