@@ -5,7 +5,7 @@
         ref="row"
         is="rt2-row"
         :index="index"
-        :key="'row_'+index"
+        :key="'row_'+index+'_'+(new Date()).getTime()"
         :data="d"
         :columns="visibleColumns"
         :storage="storage"

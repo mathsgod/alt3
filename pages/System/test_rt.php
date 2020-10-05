@@ -10,13 +10,17 @@ class System_test_rt extends App\Page
     }
     public function ds($rt)
     {
-        $rt->source = App\User::Query();
+        $rt->source = App\EventLog::Query();
 
-        $rt->add("table", function () {
+        $rt->add("table", function ($o) {
 
-
-            $t = $this->createT(App\User::Query());
+            $t = $this->createT(App\User::Query()->toArray());
+            $t->addEdit();
+            $t->addView();
             $t->add("U", "username");
+            $t->add("test",function()use($o){
+                return $o->eventlog_id;
+            });
 
             return $t;
         })->type="html";
