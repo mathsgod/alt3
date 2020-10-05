@@ -1,5 +1,6 @@
 //Date: 2017-08-04
 //Created by: Raymond Chong
+var $ = window.jQuery;
 $(function () {
     function MyTab(o) {
         this._current_xhr = null;

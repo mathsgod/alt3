@@ -14,7 +14,8 @@ module.exports = {
             "./src/default.js",
             "./src/confirm.js",
             "./src/vue.dialog.js"],
-        plugin: "./src/plugin.js"
+        plugin: "./src/plugin.js",
+   
     },
     module: {
         rules: [

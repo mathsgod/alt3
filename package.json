@@ -4,6 +4,7 @@
   "description": "Raymond framework",
   "main": "src/index.js",
   "dependencies": {
+    "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.15.0",
     "@mathsgod/vue-gql": "^1.0.3",
     "bootbox": "^5.4.1",
@@ -13,7 +14,9 @@
     "icheck-bootstrap": "^3.0.1",
     "jquery": "^3.5.1",
     "sweetalert2": "^9.17.1",
+    "tinymce": "^5.5.1",
     "vue": "^2.6.12",
+    "vue-i18n": "^8.21.1",
     "vue-resource": "^1.5.1",
     "webpack": "^4.44.1",
     "x-html-bs4": "git+https://github.com/mathsgod/x-html-bs4.git"
