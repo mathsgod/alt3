@@ -14,7 +14,7 @@
     "icheck-bootstrap": "^3.0.1",
     "jquery": "^3.5.1",
     "jquery-validation": "^1.19.2",
-    "sweetalert2": "^9.17.1",
+    "sweetalert2": "^10.3.5",
     "tinymce": "^5.5.1",
     "vue": "^2.6.12",
     "vue-i18n": "^8.21.1",

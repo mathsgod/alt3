@@ -29,12 +29,12 @@ path:
   
 action:
   FC:
-    App\UserLog: [Power Users]
+    UserLog: [Power Users]
   C:
-    App\User: [Power Users]
+    User: [Power Users]
   R:
     
   U:
-    App\User: [Power Users]
+    User: [Power Users]
   D:
-    App\User: [Power Users]
+    User: [Power Users]

@@ -1,4 +1,8 @@
 class API {
+    constructor(Vue) {
+        this.Vue = Vue;
+    }
+
     async bodyAddClass(name) {
         var resp = await this.mutation({
             bodyAddClass: {
@@ -56,11 +60,18 @@ class API {
     }
 
     mutation(data) {
-        return Vue.gql.mutation("api", data);
+        return this.Vue.gql.mutation("api", data);
     }
 
     query(data) {
-        return Vue.gql.query("api", data);
+        return this.Vue.gql.query("api", data);
     }
 }
-window.api = new API();
+
+
+export default {
+    install: (Vue, options) => {
+        window.api = new API(Vue);
+        Vue.prototype.$api = api;
+    }
+};

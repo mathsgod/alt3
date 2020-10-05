@@ -7,7 +7,6 @@ module.exports = {
         app: "./src/app.js",
         index: "./src/index.js",
         main: [
-            "./src/api.js",
             "./src/control-sidebar.js",
             "./src/sidebar.js",
             "./src/tab-ajax.js",

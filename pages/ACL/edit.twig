@@ -20,7 +20,8 @@
                 <div class="form-group">
                     <label>{{'User'|trans}}</label>
                     <select class="form-control form-control-sm" v-model="user" @change="changeUser">
-                        <option v-for="u in users" :value="u" v-text="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></option>
+                        <option v-for="u in users" :value="u"
+                            v-text="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></option>
                     </select>
                 </div>
 
@@ -47,16 +48,10 @@
                     <tr v-for="(a,index) in data1.action">
                         <td v-text="a.action"></td>
                         <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" :id="'action-allow-'+index" v-model="a.allow" @change="actionChecked(a)">
-                                <label :for="'action-allow-'+index"></label>
-                            </div>
+                            <el-checkbox v-model="a.allow" @change="actionChecked(a)"></el-checkbox>
                         </td>
                         <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" :id="'action-deny-'+index" v-model="a.deny" @change="actionChecked(a)">
-                                <label :for="'action-deny-'+index"></label>
-                            </div>
+                            <el-checkbox v-model="a.deny" @change="actionChecked(a)"></el-checkbox>
                         </td>
                     </tr>
                 </tbody>
@@ -76,16 +71,10 @@
                     <tr v-for="(a,index) in data1.path">
                         <td v-text="a.path"></td>
                         <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" :id="'path-allow-'+index" v-model="a.allow" @change="actionChecked(a)">
-                                <label :for="'path-allow-'+index"></label>
-                            </div>
+                            <el-checkbox v-model="a.allow" @change="actionChecked(a)"></el-checkbox>
                         </td>
                         <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" :id="'path-deny-'+index" v-model="a.deny" @change="actionChecked(a)">
-                                <label :for="'path-deny-'+index"></label>
-                            </div>
+                            <el-checkbox v-model="a.deny" @change="actionChecked(a)"></el-checkbox>
                         </td>
                     </tr>
                 </tbody>
@@ -94,7 +83,8 @@
             <table class="table table-sm" v-if="allowAddCustom()">
                 <thead>
                     <tr>
-                        <th><button class="btn btn-xs btn-primary" @click="custom={allow:1,deny:0}"><i class="fa fa-fw fa-plus"></i></button></th>
+                        <th><button class="btn btn-xs btn-primary" @click="custom={allow:1,deny:0}"><i
+                                    class="fa fa-fw fa-plus"></i></button></th>
                         <th>Path</th>
                         <th>Allow</th>
                         <th>Deny</th>
@@ -103,25 +93,24 @@
 
                 <tbody>
                     <tr v-if="custom">
-                        <td><button @click.prevent="onSaveCustom" class="btn btn-xs btn-success"><i class="fa fa-fw fa-check"></i></button>
-                            <button @click.prevent="custom=null" class="btn btn-xs btn-warning"><i class="fa fa-fw fa-undo"></i></button></td>
-                        <td><input type="text" class="form-control input-sm" v-model="custom.path" /></td>
+                        <td><button @click.prevent="onSaveCustom" class="btn btn-xs btn-success"><i
+                                    class="fa fa-fw fa-check"></i></button>
+                            <button @click.prevent="custom=null" class="btn btn-xs btn-warning"><i
+                                    class="fa fa-fw fa-undo"></i></button></td>
                         <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" id="cb1" v-model="custom.allow">
-                                <label for="cb1"></label>
-                            </div>
+                            <el-input v-model="custom.path"></el-input>
                         </td>
                         <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" v-model="custom.deny">
-                                <label></label>
-                            </div>
+                            <el-checkbox v-model="custom.allow"></el-checkbox>
+                        </td>
+                        <td>
+                            <el-checkbox v-model="custom.deny"></el-checkbox>
                         </td>
 
                     </tr>
                     <tr v-for="a in data1.custom">
-                        <td><button @click.prevent="delAction(a)" class="btn btn-xs btn-danger"><i class="fa fa-fw fa-times"></i></button></td>
+                        <td><button @click.prevent="delAction(a)" class="btn btn-xs btn-danger"><i
+                                    class="fa fa-fw fa-times"></i></button></td>
                         <td v-text="a.path"></td>
                         <td>
                             <div class="icheck-primary d-inline ml-2">
@@ -177,7 +166,7 @@
             actionChecked(a) {
                 let p = {};
                 if (this.module) {
-                    p.module = this.module.class;
+                    p.module = this.module.name;
                 }
 
                 if (this.usergroup) {
@@ -198,7 +187,7 @@
             getValue() {
                 let p = {};
                 if (this.module) {
-                    p.module = this.module.class;
+                    p.module = this.module.name;
                 }
 
                 if (this.usergroup) {

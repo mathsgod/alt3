@@ -122,11 +122,14 @@ class ACL_edit extends ALT\Page
         ];
     }
 
+
     public function getValue($module, $usergroup_id, $user_id, $special_user)
     {
         if (!$usergroup_id && !$user_id && !$special_user) {
             return [];
         }
+
+
 
         $module = $this->app->module($module);
 
@@ -145,7 +148,7 @@ class ACL_edit extends ALT\Page
                     "value" => "allow"
                 ])->count();
 
-                $d["allow"] = $count ? 1 : 0;
+                $d["allow"] = $count ? true : false;
 
                 $w = [];
                 if ($user_id) {
@@ -155,10 +158,10 @@ class ACL_edit extends ALT\Page
                 } elseif ($special_user) {
                     $w[] = "special_user=$special_user";
                 }
-                $w[] = ["module=?", $module->name];
+                $w[] = ["module=?", $module->class];
                 $w[] = ["action=?", $action];
                 $w[] = "value='deny'";
-                $d["deny"] = ACL::count($w) ? 1 : 0;
+                $d["deny"] = ACL::count($w) ? true : false;
                 $ds[] = $d;
             }
             $dds["action"] = $ds;
@@ -191,7 +194,7 @@ class ACL_edit extends ALT\Page
                     "path" => $path,
                     "value" => 'allow'
                 ])->count();
-                $d["allow"] = $count ? 1 : 0;
+                $d["allow"] = $count ? true : false;
 
                 $count = $this->getACL([
                     "user_id" => $user_id,
@@ -201,7 +204,7 @@ class ACL_edit extends ALT\Page
                     "path" => $path,
                     "value" => 'deny'
                 ])->count();
-                $d["deny"] = $count ? 1 : 0;
+                $d["deny"] = $count ? true : false;
 
                 $ds[] = $d;
             }
@@ -232,7 +235,7 @@ class ACL_edit extends ALT\Page
                 "path" => $path,
                 "value" => 'allow'
             ])->count();
-            $d["allow"] = $count ? 1 : 0;
+            $d["allow"] = $count ? true : false;
 
             $count = $this->getACL([
                 "user_id" => $user_id,
@@ -245,7 +248,7 @@ class ACL_edit extends ALT\Page
 
 
 
-            $d["deny"] = $count ? 1 : 0;
+            $d["deny"] = $count ? true : false;
 
             $ds[] = $d;
         }
@@ -253,6 +256,10 @@ class ACL_edit extends ALT\Page
 
 
         return $dds;
+    }
+    public function test()
+    {
+        outp($this->app->modules());
     }
 
     public function getACL($s)

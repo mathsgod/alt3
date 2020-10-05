@@ -1,5 +1,10 @@
 import '@fortawesome/fontawesome-free/css/all.css';
 
+import Swal from "sweetalert2";
+window.Swal = Swal;
+
+
+
 Vue = window.Vue;
 
 import httpVueLoader from "http-vue-loader";
