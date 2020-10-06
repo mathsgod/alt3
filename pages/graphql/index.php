@@ -48,7 +48,7 @@ class graphql_index extends R\Page
         $loader->addPsr4("Type\\", __DIR__);
         $loader->register(true);
 
-        $gql=file_get_contents($this->app->file("pages/graphql/schema.gql"));
+        $gql=file_get_contents($this->app->file("schema.gql"));
         try {
             $schema = Schema::Build($gql, $this->app);
     
