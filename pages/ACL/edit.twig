@@ -1,38 +1,33 @@
 <div id="div1">
     <card>
         <card-body>
-            <form>
-                <div class="form-group">
-                    <label>{{'Module'|trans}}</label>
-                    <select class="form-control form-control-sm" v-model="module">
-                        <option></option>
-                        <option v-for="m in modules" :value="m" v-text="m.name"></option>
-                    </select>
-                </div>
+            <el-form label-width="auto">
+                <el-form-item label="Module">
+                    <el-select v-model="module" clearable>
+                        <el-option v-for="m in modules" :value="m" :label="m.name"></el-option>
+                    </el-select>
+                </el-form-item>
 
-                <div class="form-group">
-                    <label>{{'User group'|trans}}</label>
-                    <select class="form-control form-control-sm" v-model="usergroup" @change="changeUserGroup">
-                        <option v-for="ug in usergroups" :value="ug" v-text="ug.name"></option>
-                    </select>
-                </div>
+                <el-form-item label="User group">
+                    <el-select v-model="usergroup" @change="changeUserGroup" clearable>
+                        <el-option v-for="ug in usergroups" :value="ug" :label="ug.name"></el-option>
+                    </el-select>
+                </el-form-item>
 
-                <div class="form-group">
-                    <label>{{'User'|trans}}</label>
-                    <select class="form-control form-control-sm" v-model="user" @change="changeUser">
-                        <option v-for="u in users" :value="u"
-                            v-text="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></option>
-                    </select>
-                </div>
 
-                <div class="form-group">
+                <el-form-item label="User">
+                    <el-select v-model="user" @change="changeUser" clearable>
+                        <el-option v-for="u in users" :value="u"
+                            :label="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></el-option>
+                    </el-select>
+                </el-form-item>
 
-                    <label>SPECIAL USER</label>
-                    <select class="form-control form-control-sm" v-model="special_user" @change="changeSpecialUser">
-                        <option v-for="(k,v) in special_users" :value="v" v-text="k"></option>
-                    </select>
-                </div>
-            </form>
+                <el-form-item label="SPECIAL USER" clearable>
+                    <el-select v-model="special_user" @change="changeSpecialUser">
+                        <el-option v-for="(k,v) in special_users" :value="v" :label="k"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
 
 
             <table class="table table-sm" v-if="data1.action">
@@ -56,7 +51,6 @@
                     </tr>
                 </tbody>
             </table>
-
 
             <table class="table table-sm" v-if="data1.path">
                 <thead>

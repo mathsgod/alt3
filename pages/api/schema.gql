@@ -9,7 +9,12 @@ type Query{
     test:String
 }
 
+type Subscription{
+    createUser(username:String!,password:String!,first_name:String!,last_name:String):Int
+}
+
 type Mutation{
+    updateUser(user_id:Int!,data:UserInput):Boolean
     login(username:String!,password:String!,code:String):Me
     loginWebAuthn(username:String!,assertion:String!):Boolean
     UserGroup(usergroup_id:Int!):UserGroup
@@ -27,6 +32,11 @@ type Mutation{
     updateTwoStepVerification(secret:String!,code:String!):Boolean
     removeTwoStepVerification:Boolean
     lost2StepDevice(username:String!,password:String!,email:String):Boolean
+}
+
+input UserInput{
+    first_name:String
+    last_name:String
 }
 
 input MyInfoInput{

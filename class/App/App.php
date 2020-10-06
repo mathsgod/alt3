@@ -388,6 +388,18 @@ class App extends \R\App
         return (bool) $_SESSION["app"]["login"];
     }
 
+    public function file(string $file)
+    {
+        if (is_readable($file)) {
+            $f = $file;
+        } elseif (is_readable($this->root . "/" . $file)) {
+            $f = $this->root . "/" . $file;
+        } elseif (is_readable($this->system_root . "/" . $file)) {
+            $f = $this->system_root . "/" . $file;
+        }
+        return $f;
+    }
+
     public function twig(string $file)
     {
         $pi = $this->pathInfo();

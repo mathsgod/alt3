@@ -63,7 +63,36 @@ class Form extends \Element\Form implements Scriptable
 
     public function setData($data)
     {
+        $model = $this->getAttribute(":model");
         $this->data = $data;
+
+        if ($data->id()) {
+            $this->gql_action = "mutation";
+            $this->gql_field = "updateUser";
+            $this->gql_field_id = $data->id();
+            $id = $data->id();
+
+            $this->gql_function = <<<js
+            await this.\$gql.mutations("graphql",{
+                updateUser:{
+                    __args:{
+                        user_id:{$id},
+                        data:this.{$model}
+                    }
+                }
+            })
+js;
+        } else {
+            $this->gql_action = "subscription";
+            $this->gql_field = "createUser";
+            $this->gql_function = <<<js
+            await this.\$gql.subscription("graphql",{
+                createUser:{
+                    __args:this.{$model}
+                }
+            })
+js;
+        }
     }
 
     public function setPage($page)
@@ -109,9 +138,7 @@ function(){
 JS;
         $script->methods["{$id}_click_back"] = js($click_back);
 
-
-
-        $submit_form = <<<JS
+        $submit_form_1 = <<<JS
 function(){
             this.\$refs.$id.validate((valid) => {
                 if (valid) {
@@ -144,6 +171,38 @@ function(){
                 }
             });
         }
+JS;
+
+
+            $submit_form = <<<JS
+async function(){
+    try{
+        await this.\$refs.$id.validate();
+    }catch(e){
+        return;
+    }
+       
+    var form=this.\$refs.$id;
+    this.{$model}_loading=true;
+    var resp={$this->gql_function};
+    var r=resp.data;
+    console.log(r);
+
+    if(r.error){
+        this.{$model}_loading=false;
+        this.\$alert(r.error.message);
+        return;
+    }
+
+    if(r.data.headers){
+        if(r.data.headers.location){
+            window.self.location=r.data.headers.location;
+        }
+    }else{
+        this.{$model}_loading=false;
+    }
+ 
+}
 JS;
         $script->methods["{$id}_submit_form"] = js($submit_form);
         return $script;

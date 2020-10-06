@@ -45,14 +45,13 @@ class User_ae2 extends ALT\Page
         $card = $this->createCard();
         $form = $card->addForm($obj);
 
+
         $user = $this->app->user;
         if ($user->isAdmin() || $user->isPowerUser() || !$obj->user_id) {
             $form->add("Username")->input("username")->required();
+            $form->add("Password")->password("password")->required();
         }
 
-        $form->add("First name")->input("first_name")->required();
-        $form->add("Username")->input("username")->required();
-        $form->add("Password")->password("password")->required();
         $form->add("First name")->input("first_name")->required();
         $form->add("Last name")->input("last_name");
         $form->add("Phone")->input("phone");
