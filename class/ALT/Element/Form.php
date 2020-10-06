@@ -2,6 +2,7 @@
 
 namespace ALT\Element;
 
+use ReflectionObject;
 use Vue\Objectable;
 use Vue\Scriptable;
 
@@ -66,17 +67,20 @@ class Form extends \Element\Form implements Scriptable
         $model = $this->getAttribute(":model");
         $this->data = $data;
 
+        $r=new ReflectionObject($data);
+        $class=$r->getShortName();
         if ($data->id()) {
+            $key=$data->key();
             $this->gql_action = "mutation";
-            $this->gql_field = "updateUser";
+            $this->gql_field = "update$class";
             $this->gql_field_id = $data->id();
             $id = $data->id();
 
             $this->gql_function = <<<js
             await this.\$gql.mutations("graphql",{
-                updateUser:{
+                update$class:{
                     __args:{
-                        user_id:{$id},
+                        {$key}:{$id},
                         data:this.{$model}
                     }
                 }
@@ -84,10 +88,10 @@ class Form extends \Element\Form implements Scriptable
 js;
         } else {
             $this->gql_action = "subscription";
-            $this->gql_field = "createUser";
+            $this->gql_field = "create$class";
             $this->gql_function = <<<js
             await this.\$gql.subscription("graphql",{
-                createUser:{
+                create$class:{
                     __args:this.{$model}
                 }
             })
