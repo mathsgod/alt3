@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GQL;
+namespace App\GQL\Type;
 
 class Mutation
 {
@@ -9,8 +9,10 @@ class Mutation
         $root = $arguments[0];
         $args = $arguments[1];
         $app =  $arguments[2];
+
         if (starts_with($name, "update")) {
-            $module = $app->module($name);
+            $module = $app->module(substr($name, 6));
+
             $class = $module->class;
             $key = $class::_key();
 

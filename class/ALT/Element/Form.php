@@ -67,17 +67,23 @@ class Form extends \Element\Form implements Scriptable
         $model = $this->getAttribute(":model");
         $this->data = $data;
 
-        $r=new ReflectionObject($data);
-        $class=$r->getShortName();
+        $r = new ReflectionObject($data);
+        $class = $r->getShortName();
+
+        $gql_url = "graphql";
+        if ($r->getNamespaceName() == "App") {
+            $gql_url .= "?system=1";
+        }
+
         if ($data->id()) {
-            $key=$data->key();
+            $key = $data::_key();
             $this->gql_action = "mutation";
             $this->gql_field = "update$class";
             $this->gql_field_id = $data->id();
             $id = $data->id();
 
             $this->gql_function = <<<js
-            await this.\$gql.mutations("graphql",{
+            await this.\$gql.mutation("{$gql_url}",{
                 update$class:{
                     __args:{
                         {$key}:{$id},
@@ -90,7 +96,7 @@ js;
             $this->gql_action = "subscription";
             $this->gql_field = "create$class";
             $this->gql_function = <<<js
-            await this.\$gql.subscription("graphql",{
+            await this.\$gql.subscription("{$gql_url}",{
                 create$class:{
                     __args:this.{$model}
                 }
@@ -142,43 +148,7 @@ function(){
 JS;
         $script->methods["{$id}_click_back"] = js($click_back);
 
-        $submit_form_1 = <<<JS
-function(){
-            this.\$refs.$id.validate((valid) => {
-                if (valid) {
-                    var form=this.\$refs.$id;
-                    this.{$model}_loading=true;
-                    this.\$http.post(form.\$el.action,this.{$model}).then(resp=>{
-                        var r=resp.data;
-                        console.log(r);
-
-                        if(r.error){
-                            this.{$model}_loading=false;
-                            this.\$alert(r.error.message);
-                            return;
-                        }
-
-                        if(r.data.headers){
-                            if(r.data.headers.location){
-                                window.self.location=r.data.headers.location;
-                            }
-                        }else{
-                            this.{$model}_loading=false;
-                        }
-
-                        
-                    });
-                } else {
-                    console.log('error submit!!');
-                    return false;
-
-                }
-            });
-        }
-JS;
-
-
-            $submit_form = <<<JS
+        $submit_form = <<<JS
 async function(){
     try{
         await this.\$refs.$id.validate();
@@ -203,6 +173,11 @@ async function(){
             window.self.location=r.data.headers.location;
         }
     }else{
+        if(document.referrer){
+            window.self.location=document.referrer;
+            return;
+        }
+
         this.{$model}_loading=false;
     }
  

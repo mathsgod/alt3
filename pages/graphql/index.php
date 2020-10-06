@@ -12,7 +12,7 @@ class graphql_index extends R\Page
         $this->write("api");
     }
 
-    public function post()
+    public function post($system)
     {
         $directiveResolvers = [
             "hasRole" => function ($next, $source, $args, $app) {
@@ -42,13 +42,15 @@ class graphql_index extends R\Page
                 $this->app->role[] = (string) $ug;
             }
         }
+        if ($system) {
+            $gql = file_get_contents($this->app->system_root . "/schema.gql");
+            Schema::$Namespace = "\\App\\GQL\\";
+        } else {
+            $gql = file_get_contents($this->app->file("schema.gql"));
+        }
 
-
-
-        $gql=file_get_contents($this->app->file("schema.gql"));
         try {
             $schema = Schema::Build($gql, $this->app);
-    
         } catch (Exception $e) {
             return ["error" => [
                 "message" => $e->getMessage()

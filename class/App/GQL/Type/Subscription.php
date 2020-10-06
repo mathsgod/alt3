@@ -1,6 +1,10 @@
 <?php
 
-namespace App\GQL;
+namespace App\GQL\Type;
+
+
+use Exception;
+use GraphQL\Error\Error;
 
 class Subscription
 {
@@ -12,13 +16,16 @@ class Subscription
 
         if (starts_with($name, "create")) {
 
-            $module = $app->module($name);
+            $module = $app->module(substr($name, 6));
             $class = $module->class;
             $obj = new $class();
             $obj->bind($args);
-            $obj->save();
+            try {
+                $obj->save();
+            } catch (Exception $e) {
+                throw new Error($e->getMessage());
+            }
             return $obj->id();
         }
-
     }
 }

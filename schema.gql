@@ -10,15 +10,22 @@ type Subscription{
     phone:String,email:String!,addr1:String,addr2:String,addr3:String,
     join_date:String,status:Int!,expiry_date:String,usergroup_id:[Int],
     language:String,default_page:String):Int
+
+    createUserGroup(name:String!,code:String,remark:String):Int
 }
 
 type Mutation{
     updateUser(user_id:Int!,data:UserInput):Boolean
-   
+    updateUserGroup(usergroup_id:Int!,data:UserGroupInput):Boolean
 }
 
 input UserInput{
     first_name:String
     last_name:String
-    
+}
+
+input UserGroupInput{
+    name:String
+    code:String
+    remark:String
 }

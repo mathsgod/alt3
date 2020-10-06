@@ -9,16 +9,6 @@ class UserGroup_ae extends ALT\Page
         $form->add("Name")->input("name")->required();
         $form->add("Code")->input("code");
         $form->add("Remark")->textarea("remark");
-
         $this->write($card);
-
-        /*
-
-        $mv = $this->createE();
-        $mv->add("Name")->input("name")->required();
-        $mv->add("Code")->input("code");
-        $mv->add("Remark")->textarea("remark");
-
-        $this->write($this->createForm($mv));*/
     }
 }
