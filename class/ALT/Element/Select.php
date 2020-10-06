@@ -17,7 +17,7 @@ class Select extends ElementSelect
     public function multiple()
     {
         $this->setAttribute("multiple", true);
-        $this->style->width="100%";
+        $this->style->width = "100%";
         return $this;
     }
 
@@ -44,7 +44,7 @@ class Select extends ElementSelect
         $option->setAttribute(":label", $label);
         $option->setAttribute(":value", $value);
 
-        $option->setAttribute("v-for", "(item,value) in " . json_encode($data,JSON_UNESCAPED_UNICODE));
+        $option->setAttribute("v-for", "(item,value) in " . json_encode($data, JSON_UNESCAPED_UNICODE));
         return $option;
     }
 
