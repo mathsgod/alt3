@@ -9,7 +9,7 @@ type Subscription{
     createUser(username:String!,password:String!,first_name:String!,last_name:String,
     phone:String,email:String!,addr1:String,addr2:String,addr3:String,
     join_date:String,status:Int!,expiry_date:String,usergroup_id:[Int],
-    language:String,default_page:String):Int
+    language:String,default_page:String,usergroup_id:[Int]):Int
 
     createUserGroup(name:String!,code:String,remark:String):Int
 }
@@ -22,6 +22,18 @@ type Mutation{
 input UserInput{
     first_name:String
     last_name:String
+    password:String
+    phone:String
+    email:String
+    addr1:String
+    addr2:String
+    addr3:String
+    join_date:String
+    status:Int
+    expiry_date:String
+    language:String
+    default_page:String
+    usergroup_id:[Int]
 }
 
 input UserGroupInput{

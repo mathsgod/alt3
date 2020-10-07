@@ -9,6 +9,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use PHP\Psr7\JsonStream;
 use PHP\Psr7\StringStream;
+use ReflectionObject;
 
 class Page extends \R\Page
 {
@@ -320,8 +321,21 @@ class Page extends \R\Page
             }
         }
 
-
         $data = $this->request->getParsedBody();
+
+        //gql
+        if ($data["query"]) {
+            $ro = new ReflectionObject($obj);
+            $use_system_gql = $ro->getNamespaceName() == "App";
+            $r = $this->app->executeQuery($data["query"], $use_system_gql);
+            if (!$r["error"]) {
+                $msg = $this->module()->name . " ";
+                $msg .= $id ? "updated" : "created";
+                $this->alert->success("Success", $msg);
+            }
+
+            return $r;
+        }
 
         $obj->bind($data);
 

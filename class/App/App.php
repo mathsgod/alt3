@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\GQL\Server;
 use Exception;
 use Composer\Autoload\ClassLoader;
 use Firebase\JWT\JWT;
@@ -792,5 +793,11 @@ class App extends \R\App
         ], $this->config["jwt"]["key"]);
 
         return $token;
+    }
+
+    public function executeQuery(string $query, bool $use_system_gql = false)
+    {
+        $server = new Server($this, $use_system_gql);
+        return $server->executeQuery($query);
     }
 }

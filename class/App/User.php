@@ -18,6 +18,15 @@ class User extends Core\User
         canDelete as protected canDelete2;
     }
 
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+        if (!$id) {
+            $this->join_date = date("Y-m-d");
+            $this->language = "en";
+        }
+    }
+
     public function checkCode(string $code): bool
     {
         $g = new GoogleAuthenticator();

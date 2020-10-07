@@ -83,7 +83,7 @@ class Form extends \Element\Form implements Scriptable
             $id = $data->id();
 
             $this->gql_function = <<<js
-            await this.\$gql.mutation("{$gql_url}",{
+            await this.\$gql.mutation(location.toString(),{
                 update$class:{
                     __args:{
                         {$key}:{$id},
@@ -96,7 +96,7 @@ js;
             $this->gql_action = "subscription";
             $this->gql_field = "create$class";
             $this->gql_function = <<<js
-            await this.\$gql.subscription("{$gql_url}",{
+            await this.\$gql.subscription(location.toString(),{
                 create$class:{
                     __args:this.{$model}
                 }
@@ -158,6 +158,7 @@ async function(){
        
     var form=this.\$refs.$id;
     this.{$model}_loading=true;
+
     var resp={$this->gql_function};
     var r=resp.data;
     console.log(r);

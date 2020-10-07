@@ -18,9 +18,9 @@ class User_ae extends ALT\Page
 
 
         $user = $this->app->user;
-        if ($user->isAdmin() || $user->isPowerUser() || !$obj->user_id) {
+        if (!$obj->user_id) {
             $form->add("Username")->input("username")->required();
-            $form->add("Password")->password("password")->required();
+            $form->add("Password")->password("password")->required()->setAttribute("auto-complete","new-password");
         }
 
         $form->add("First name")->input("first_name")->required();
