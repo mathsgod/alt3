@@ -9,6 +9,19 @@ class Config_ae extends ALT\Page
 			$type = $obj->type;
 		}
 
+		$card = $this->createCard();
+		$form = $card->addForm($obj);
+		$form->add("Name")->input("name")->required();
+
+		if ($type == "json") {
+			$form->add("Value")->ace("value", "json");
+		} else {
+			$form->add("Value")->input("value");
+		}
+
+		$this->write($card);
+		return;
+
 		$mv = $this->createE();
 		$mv->add("Name")->input("name")->required();
 

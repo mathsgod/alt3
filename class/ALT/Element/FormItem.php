@@ -6,10 +6,31 @@ namespace ALT\Element;
 use App\UI\CKEditor;
 use Element\Checkbox;
 use Element\ElSwitch;
+use P\HTMLDivElement;
 use Vue\Objectable;
 
 class FormItem extends \Element\FormItem implements Objectable
 {
+    public function ace(string $name,string $mode=""){
+        $e =new HTMLDivElement();
+        $e->style->height="400px";
+        $e->style->display="none";
+        $e->setAttribute("is","ace");
+        $e->setAttribute("name","name");
+        if ($mode) {
+            $e->setAttribute("ace-mode", $mode);
+        }
+        $this->append($e);
+        $this->setAttribute("prop", $name);
+
+        if ($this->parentNode instanceof Form) {
+            $model = $this->parentNode->getAttribute(":model");
+            $e->setAttribute("v-model", "$model.$name");
+        }
+        return $e;
+
+    }
+
     public function ckeditor(string $name)
     {
         $ckeditor = new CKEditor();

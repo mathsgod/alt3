@@ -12,11 +12,13 @@ type Subscription{
     language:String,default_page:String,usergroup_id:[Int]):Int
 
     createUserGroup(name:String!,code:String,remark:String):Int
+    createConfig(name:String!,value:String):Int
 }
 
 type Mutation{
     updateUser(user_id:Int!,data:UserInput):Boolean
     updateUserGroup(usergroup_id:Int!,data:UserGroupInput):Boolean
+    updateConfig(config_id:Int!,data:ConfigInput):Boolean
 }
 
 input UserInput{
@@ -40,4 +42,9 @@ input UserGroupInput{
     name:String
     code:String
     remark:String
+}
+
+input ConfigInput{
+    name:String
+    value:String
 }
