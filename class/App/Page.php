@@ -237,7 +237,7 @@ class Page extends \R\Page
             $request = $request->withQueryParams(["request" => $rt]);
         }
 
-        if (($this->isAccept("text/html") || $this->isAccept("*/*")) && $request->getMethod() == "GET") {
+        if ($this->isAccept("text/html") && $request->getMethod() == "GET" && $request->getRequestTarget() == "get") {
             $file = $route->file;
             $pi = pathinfo($file);
             if (file_exists($template_file = $pi["dirname"] . "/" . $pi["filename"] . ".twig")) {
@@ -271,7 +271,7 @@ class Page extends \R\Page
                 return $response;
             }
         }
- 
+
         foreach ($request->getHeader("Accept") as $accept) {
             list($media,) = explode(",", $accept);
             switch ($media) {
