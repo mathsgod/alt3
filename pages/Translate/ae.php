@@ -9,7 +9,7 @@ class Translate_ae extends ALT\Page
             $obj->delete();
         }
         // create
-        foreach ($this->app->config["language"] as $k => $v) {
+        foreach ($this->app->config["system"]["language"] as $k => $v) {
             $t = new App\Translate();
             $t->module = $_POST["module"];
             $t->action = $_POST["action"];
@@ -31,7 +31,7 @@ class Translate_ae extends ALT\Page
         $e->add("Name")->input("name")->required();
 
         $e->addHr();
-        foreach ($this->app->config["language"] as $k => $v) {
+        foreach ($this->app->config["system"]["language"] as $k => $v) {
             $e->add($v)->input("")->attr("name", $k)->val((string) $obj->get($k));
         }
 

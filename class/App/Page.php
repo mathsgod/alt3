@@ -271,7 +271,7 @@ class Page extends \R\Page
                 return $response;
             }
         }
-
+ 
         foreach ($request->getHeader("Accept") as $accept) {
             list($media,) = explode(",", $accept);
             switch ($media) {

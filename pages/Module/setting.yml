@@ -2,9 +2,3 @@ class: App\Module
 log: 
 group: System
 icon: fa fa-folder fa-fw
-
-menu:
-  Install: 
-    link: Module/install
-    icon: fa fa-download fa-fw
-

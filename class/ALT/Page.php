@@ -6,6 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 use Exception;
+use PHP\Psr7\StringStream;
 use Vue\Scriptable;
 
 class Page extends \App\Page
@@ -54,6 +55,17 @@ class Page extends \App\Page
 
         try {
             $response = parent::__invoke($request, $response);
+            if ($response->getHeader("Content-Type")[0] == "application/json; charset=UTF-8") {
+                $body = json_decode($response->getBody(), true);
+                if ($body["error"]) {
+                    $this->alert->danger("Error", $body["error"]["message"]);
+                    if (!$this->master) {
+                        return $this->redirect();
+                    } else {
+                        $response = $response->withHeader("Content-Type", "text/html")->withBody(new StringStream());
+                    }
+                }
+            }
         } catch (Exception $e) {
             $this->alert->danger("Error", $e->getMessage());
             if (!$this->master) {

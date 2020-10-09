@@ -17,8 +17,7 @@ class Translate_list extends App\Page
         $jq->add("Action", "action")->ss();
         $jq->add("Name", "name")->ss();
 
-
-        foreach ($this->app->config["language"] as $v => $l) {
+        foreach ($this->app->config["system"]["language"] as $v => $l) {
             $jq->add($l, "$l");
         }
 
@@ -28,7 +27,7 @@ class Translate_list extends App\Page
     public function ds($rt)
     {
 
-        $lang = array_keys($this->app->config["language"]);
+        $lang = array_keys($this->app->config["system"]["language"]);
 
         $rt->source = App\Translate::Query([
             "language" => $lang[0]

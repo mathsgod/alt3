@@ -1,5 +1,5 @@
 <?php
-class graphql_index extends R\Page
+class _graphql extends R\Page
 {
     public function get()
     {
