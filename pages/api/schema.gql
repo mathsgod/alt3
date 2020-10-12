@@ -32,6 +32,8 @@ type Mutation{
     updateTwoStepVerification(secret:String!,code:String!):Boolean
     removeTwoStepVerification:Boolean
     lost2StepDevice(username:String!,password:String!,email:String):Boolean
+    registrationWebAuthn(attestion:String!):Boolean
+
 }
 
 input UserInput{
@@ -55,7 +57,7 @@ type Me{
     email:String
     group:[UserGroup]
     credentialCreationOptions:String
-    registrationWebAuthn(attestion:String!):Boolean
+
     jwt:String
     UserLog(limit:Int=10):[UserLog]
     EventLog(limit:Int=10):[EventLog]

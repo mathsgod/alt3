@@ -191,16 +191,23 @@
                         alert(resp.message);
                     });
                 });
-            }, webAuthnRegister(info) {
-                this.$gql.mutation("api", {
-                    me: {
-                        registrationWebAuthn: {
-                            __args: {
-                                attestion: JSON.stringify(info)
-                            }
+            }, async webAuthnRegister(info) {
+                var resp = await this.$gql.mutation("api", {
+                    registrationWebAuthn: {
+                        __args: {
+                            attestion: JSON.stringify(info)
                         }
                     }
-                }).then(resp => {
+                });
+                resp = resp.data;
+
+                if (resp.error) {
+                    this.$alert(resp.error.message, { type: "error" });
+                    return;
+                }
+
+                if (resp.data.registrationWebAuthn) {
+
                     this.$gql.query("api", {
                         me: {
                             username: true
@@ -213,7 +220,9 @@
                         });
 
                     });
-                });
+
+                }
+
             }
         }
     });
