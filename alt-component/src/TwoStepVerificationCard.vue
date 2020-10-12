@@ -121,7 +121,9 @@ module.exports = {
         }
 
         await this.reload();
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

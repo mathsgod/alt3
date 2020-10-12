@@ -1,13 +1,13 @@
 import Vue from 'vue';
+
 import VueI18n from 'vue-i18n'
 import Element from 'element-ui';
 import VueResource from 'vue-resource';
 
 
-Vue = window.Vue;
 Vue.use(VueResource);
 
-import VueGQL from '@mathsgod/vue-gql/dist/vue-gql.js';
+import VueGQL from '@mathsgod/vue-gql/src/index.js';
 Vue.use(VueGQL);
 
 import "element-ui/lib/theme-chalk/index.css";
@@ -34,6 +34,8 @@ Vue.use(Element, {
     size: "small",
     i18n: (key, value) => window.i18n.t(key, value)
 });
+
+
 
 import DatePicker from "./DatePicker.vue";
 Vue.component("date-picker", DatePicker);
@@ -111,3 +113,16 @@ VueRegisterElement("fileman", fileman);
 import TinyMCEVue from "./TinyMCE";
 
 Vue.component("tinymce", TinyMCEVue);
+
+import TwoStepVerificationCard from "./TwoStepVerificationCard";
+Vue.component("two-step-verification-card", TwoStepVerificationCard);
+
+import NavItem from './NavItem';
+Vue.component("nav-item", NavItem);
+
+
+import App from './class/App';
+Vue.use(App);
+
+import API from './class/API';
+Vue.use(API);

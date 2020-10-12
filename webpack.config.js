@@ -5,14 +5,12 @@ module.exports = {
     mode: "production",
     watch: true,
     entry: {
-        app: "./src/app.js",
         index: "./src/index.js",
         main: [
+            "./src/main.js",
             "./src/control-sidebar.js",
-            "./src/sidebar.js",
             "./src/tab-ajax.js",
-            "./src/confirm.js",
-            "./src/vue.dialog.js"],
+            "./src/confirm.js"],
         plugin: "./src/plugin.js",
 
     },

@@ -29,7 +29,7 @@ class APP {
 }
 
 export default {
-    install: (Vue, options) => {
+    install: (Vue) => {
         const app = new APP(Vue);
         window.app = app;
         Vue.prototype.$app = app;

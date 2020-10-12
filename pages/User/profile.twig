@@ -98,8 +98,6 @@
 
 <input type="hidden" id="system_base" value="/alt3" />
 <script>
-    Vue.component("two-step-verification-card", httpVueLoader(document.getElementById("system_base").value + "/components/two-step-verification-card.vue"));
-
     var vm = new Vue({
         el: "#div1",
         data: {
@@ -186,7 +184,7 @@
                         credentialCreationOptions: true
                     }
                 }).then(resp => {
-                    var webn = new WebAuthn.WebAuthn();
+                    var webn = new WebAuthn();
                     webn.register(resp.data.data.me.credentialCreationOptions).then(resp => {
                         this.webAuthnRegister(resp);
                     }).catch(resp => {

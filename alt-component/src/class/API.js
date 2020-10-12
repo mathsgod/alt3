@@ -70,8 +70,9 @@ class API {
 
 
 export default {
-    install: (Vue, options) => {
-        window.api = new API(Vue);
+    install: (Vue) => {
+        let api = new API(Vue);
+        window.api = api;
         Vue.prototype.$api = api;
     }
 };

@@ -1,4 +1,4 @@
-window.VueDialog = class VueDialog {
+export default class VueDialog {
     constructor(options = {}) {
         this.options = options;
         this.vm = "";
