@@ -122,7 +122,7 @@ export default {
           return;
         }
 
-        var a = new WebAuthn.WebAuthn();
+        var a = new WebAuthn();
         let info;
         try {
           info = await a.authenticate(resp.data.credentialRequestOptions);
