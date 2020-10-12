@@ -723,14 +723,12 @@ class App extends \R\App
     public function loginFido2(string $username, string  $assertion): bool
     {
         $user = User::Query([
-            "username" => $username
+            "username" => $username,
+            "status" => 0
         ])->first();
 
-        if (!$user) {
-            return false;
-        }
 
-        if (!$user->isAllowLogin()) {
+        if (!$user) {
             return false;
         }
 
