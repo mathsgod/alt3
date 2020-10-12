@@ -132,7 +132,7 @@ export default {
         }
 
         resp = (
-          await this.$gql.query("api", {
+          await this.$gql.mutation("api", {
             loginWebAuthn: {
               __args: {
                 username: username,

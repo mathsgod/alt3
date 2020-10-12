@@ -12,14 +12,16 @@ use Google\Authenticator\GoogleAuthenticator;
 
 class Mutation
 {
-    public function registrationWebAuthn($user, $args, $context)
+    public function registrationWebAuthn($user, $args, $app)
     {
+        $user = $app->user;
+        if (!$user) return false;
         $weba = new \R\WebAuthn($_SERVER['HTTP_HOST']);
-        $user->credential = json_encode($weba->register(json_decode($args["attestion"]),null));
+        $user->credential = json_encode($weba->register(json_decode($args["attestion"]), null));
         $user->save();
         return true;
     }
-    
+
     public function lost2StepDevice($root, $args, $app)
     {
         $user = User::Login($args["username"], $args["password"]);
