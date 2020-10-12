@@ -1,7 +1,5 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path');
-//const ASSET_PATH = process.env.ASSET_PATH 
-__webpack_public_path__ = process.env.ASSET_PATH;
 
 module.exports = {
     mode: "production",
@@ -44,7 +42,7 @@ module.exports = {
                         options: {
                             name: '[name].[ext]',
                             outputPath: './css/',
-                            publicPath: "dist/css/",
+                            publicPath: "/css/",
                             postTransformPublicPath: function (p) {
                                 return `__webpack_public_path__ + ${p}`;
                             }

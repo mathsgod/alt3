@@ -1,3 +1,5 @@
+import "./../public_path.js";
+
 Vue = window.Vue;
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
@@ -15,12 +17,4 @@ window.WebAuthn = WebAuthn;
 
 import indexPage from './index.vue';
 
-(new Vue(indexPage)).$mount("#app");
-
-/* var scripts = document.getElementsByTagName("script"),
-    src = scripts[scripts.length - 1].src;
-
-import path from 'path';
-//console.log(path.dirname(src));
-//__webpack_public_path__=path.dirname(src)
-__webpack_public_path__ = 'test'; */
+(new Vue(indexPage)).$mount("#app");   
