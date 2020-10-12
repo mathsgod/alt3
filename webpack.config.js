@@ -41,8 +41,7 @@ module.exports = {
                         options: {
                             name: '[name].[ext]',
                             outputPath: 'fonts/',
-                            publicPath: 'dist/fonts/',
-                            useRelativePath: true
+                            publicPath:"./dist/fonts/"
                         }
                     }
                 ]
