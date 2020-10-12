@@ -16,3 +16,11 @@ window.WebAuthn = WebAuthn;
 import indexPage from './index.vue';
 
 (new Vue(indexPage)).$mount("#app");
+
+/* var scripts = document.getElementsByTagName("script"),
+    src = scripts[scripts.length - 1].src;
+
+import path from 'path';
+//console.log(path.dirname(src));
+//__webpack_public_path__=path.dirname(src)
+__webpack_public_path__ = 'test'; */

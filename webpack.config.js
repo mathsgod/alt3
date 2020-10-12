@@ -1,4 +1,7 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require('path');
+//const ASSET_PATH = process.env.ASSET_PATH 
+__webpack_public_path__ = process.env.ASSET_PATH;
 
 module.exports = {
     mode: "production",
@@ -40,8 +43,11 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'fonts/',
-                            publicPath:"./dist/fonts/"
+                            outputPath: './css/',
+                            publicPath: "dist/css/",
+                            postTransformPublicPath: function (p) {
+                                return `__webpack_public_path__ + ${p}`;
+                            }
                         }
                     }
                 ]
@@ -51,6 +57,7 @@ module.exports = {
         // make sure to include the plugin!
         new VueLoaderPlugin()
 
+     
     ]
 
 };
