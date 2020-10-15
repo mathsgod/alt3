@@ -7,9 +7,9 @@ table.rt > thead button.multiselect {
 </style>
 <template>
   <card class="p-0 m-0" :loading="loading">
-    <card-body v-if="buttons.length>0">
+    <card-body v-if="buttons.length > 0">
       <button
-        v-for="(button,index) in buttons"
+        v-for="(button, index) in buttons"
         :key="index"
         v-text="button.title"
         @click="onClickButton(button)"
@@ -32,68 +32,56 @@ table.rt > thead button.multiselect {
         ></rt2-table>
       </div>
     </card-body>
-    <card-footer class="p-0 m-0 d-flex">
-      <rt-pagination :page="page" :page-count="pageCount" @change-page="page=$event"></rt-pagination>
-
-      <div class="btn-group">
-        <button
-          @click="draw"
-          class="btn btn-default btn-sm"
-          type="button"
-          title="重新載入"
-          data-toggle="tooltip"
-        >
-          <i class="fa fa-sync-alt"></i>
-        </button>
+    <card-footer class="p-0 m-0">
+      <div class="float-left">
+        <rt-pagination
+          :page="page"
+          :page-count="pageCount"
+          @change-page="page = $event"
+        ></rt-pagination>
       </div>
-
-      <div>
-        <select
-          class="form-control form-control-sm"
+      <div class="float-left d-flex">
+        <el-button @click="draw" icon="el-icon-refresh-right"></el-button>
+        <el-select
           @change="onChangePageLength"
           v-model="local.pageLength"
+          style="width: 70px"
         >
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-          <option value="500">500</option>
-        </select>
-      </div>
+          <el-option value="10">10</el-option>
+          <el-option value="25">25</el-option>
+          <el-option value="50">50</el-option>
+          <el-option value="100">100</el-option>
+        </el-select>
 
-      <div class="dropup">
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <i class="fas fa-fw fa-list"></i>
-        </button>
-        <ul class="dropdown-menu" ref="column_menu">
-          <li v-for="(column,key) in columnsHasTitle" :key="key">
-            <a
-              href="#"
-              class="dropdown-item"
-              data-value="option1"
-              tabindex="-1"
-              @click.prevent="column.toggleVisible()"
-            >
-              <input type="checkbox" v-model="column.isVisible" />
-              &nbsp;{{column.title}}
-            </a>
-          </li>
-        </ul>
-      </div>
+        <div class="dropup">
+          <button
+            type="button"
+            class="btn btn-default btn-sm dropdown-toggle"
+            data-toggle="dropdown"
+          >
+            <i class="fas fa-fw fa-list"></i>
+          </button>
+          <ul class="dropdown-menu" ref="column_menu">
+            <li v-for="(column, key) in columnsHasTitle" :key="key">
+              <a
+                href="#"
+                class="dropdown-item"
+                data-value="option1"
+                tabindex="-1"
+                @click.prevent="column.toggleVisible()"
+              >
+                <input type="checkbox" v-model="column.isVisible" />
+                &nbsp;{{ column.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
 
-      <div class="btn-group">
-        <button
-          @click="resetLocalStorage"
-          class="btn btn-default btn-sm"
-          type="button"
-          title="clear cache"
-          data-toggle="tooltip"
-        >
+        <el-button @click="resetLocalStorage">
           <i class="fa fa-times-circle"></i>
-        </button>
-      </div>
+        </el-button>
 
-      <!-- div class="dropdown" v-if="hasExport()">
+        <!-- div class="dropdown" v-if="hasExport()">
         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
           Export
           <span class="caret"></span>
@@ -108,35 +96,38 @@ table.rt > thead button.multiselect {
         </ul>
       </div-->
 
-      <div class="dropdown" v-if="dropdown.length>0">
-        <el-dropdown>
-          <el-button>
-            Export
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              v-for="(x,index) in dropdown"
-              :key="index"
-              v-text="x.label"
-              @click.native="clickExport(x)"
-            ></el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <div class="dropdown" v-if="dropdown.length > 0">
+          <el-dropdown>
+            <el-button>
+              Export
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item
+                v-for="(x, index) in dropdown"
+                :key="index"
+                v-text="x.label"
+                @click.native="clickExport(x)"
+              ></el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
+        <div class="btn-group">
+          <button
+            v-for="(button, index) in bottomButtons"
+            :key="index"
+            @click="onClickButton(button)"
+            class="btn btn-default btn-sm"
+            type="button"
+            v-text="button.text"
+          ></button>
+        </div>
       </div>
 
-      <div class="btn-group">
-        <button
-          v-for="(button,index) in bottomButtons"
-          :key="index"
-          @click="onClickButton(button)"
-          class="btn btn-default btn-sm"
-          type="button"
-          v-text="button.text"
-        ></button>
+      <div class="float-right">
+        <rt-info v-bind="info"></rt-info>
       </div>
-
-      <rt-info class="ml-auto" v-bind="info"></rt-info>
     </card-footer>
   </card>
 </template>
