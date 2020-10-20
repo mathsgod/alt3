@@ -41,60 +41,48 @@ table.rt > thead button.multiselect {
         ></rt-pagination>
       </div>
       <div class="float-left d-flex">
-        <el-button @click="draw" icon="el-icon-refresh-right"></el-button>
-        <el-select
-          @change="onChangePageLength"
-          v-model="local.pageLength"
-          style="width: 70px"
-        >
-          <el-option value="10">10</el-option>
-          <el-option value="25">25</el-option>
-          <el-option value="50">50</el-option>
-          <el-option value="100">100</el-option>
-        </el-select>
+        <el-tooltip content="Reload" placement="top">
+          <el-button @click="draw" icon="el-icon-refresh-right"></el-button>
+        </el-tooltip>
 
-        <div class="dropup">
-          <button
-            type="button"
-            class="btn btn-default btn-sm dropdown-toggle"
-            data-toggle="dropdown"
+        <el-tooltip content="每頁顯示" placement="top">
+          <el-select
+            @change="onChangePageLength"
+            v-model="local.pageLength"
+            style="width: 70px"
           >
+            <el-option value="10">10</el-option>
+            <el-option value="25">25</el-option>
+            <el-option value="50">50</el-option>
+            <el-option value="100">100</el-option>
+          </el-select>
+        </el-tooltip>
+
+        <el-dialog
+          :visible.sync="showColumnSelector"
+          title="Display columns selector"
+          @close="onColumnSelectorClose"
+        >
+          <el-checkbox
+            v-for="(column, key) in columnsHasTitle"
+            :label="column.title"
+            :key="key"
+            v-model="column.isVisible"
+            >{{ column.title }}</el-checkbox
+          >
+        </el-dialog>
+
+        <el-tooltip content="Columns selector" placement="top">
+          <el-button @click="showColumnSelector = true">
             <i class="fas fa-fw fa-list"></i>
-          </button>
-          <ul class="dropdown-menu" ref="column_menu">
-            <li v-for="(column, key) in columnsHasTitle" :key="key">
-              <a
-                href="#"
-                class="dropdown-item"
-                data-value="option1"
-                tabindex="-1"
-                @click.prevent="column.toggleVisible()"
-              >
-                <input type="checkbox" v-model="column.isVisible" />
-                &nbsp;{{ column.title }}
-              </a>
-            </li>
-          </ul>
-        </div>
+          </el-button>
+        </el-tooltip>
 
-        <el-button @click="resetLocalStorage">
-          <i class="fa fa-times-circle"></i>
-        </el-button>
-
-        <!-- div class="dropdown" v-if="hasExport()">
-        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-          Export
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li v-if="exports.indexOf('xlsx')>=0">
-            <a href="#" @click.prevent="exportFile('xlsx')">XLSX</a>
-          </li>
-          <li v-if="exports.indexOf('csv')>=0">
-            <a href="#" @click.prevent="exportFile('csv')">CSV</a>
-          </li>
-        </ul>
-      </div-->
+        <el-tooltip content="Clear cache" placement="top-start">
+          <el-button @click="resetLocalStorage">
+            <i class="fa fa-times-circle"></i>
+          </el-button>
+        </el-tooltip>
 
         <div class="dropdown" v-if="dropdown.length > 0">
           <el-dropdown>
@@ -140,7 +128,6 @@ import RtInfo from "./RTInfo";
 import RtPagination from "./RTPagination";
 
 export default {
-  name: "alt-rt2",
   props: {
     ajax: {
       type: Object,
@@ -177,6 +164,7 @@ export default {
   },
   data() {
     var data = {
+      showColumnSelector: false,
       hoverChild: [],
       total: 0,
       showIndex: [],
@@ -303,19 +291,6 @@ export default {
         },
       });
     });
-
-    this.columns.forEach((column) => {
-      column.$on("toggleVisible", () => {
-        let storage = this.storage;
-        storage.columns = storage.columns || {};
-        storage.columns[column.name] = storage.columns[column.name] || {};
-        storage.columns[column.name] = Object.assign(
-          storage.columns[column.name],
-          { isVisible: column.isVisible }
-        );
-        storage.save();
-      });
-    });
   },
   mounted() {
     if (this.ajax.url) {
@@ -381,6 +356,23 @@ export default {
     },
   },
   methods: {
+    onColumnSelectorClose() {
+      //save the result
+      this.columns.forEach((column) => {
+        let storage = this.storage;
+        storage.columns = storage.columns || {};
+        storage.columns[column.name] = storage.columns[column.name] || {};
+        storage.columns[column.name] = Object.assign(
+          storage.columns[column.name],
+          { isVisible: column.isVisible }
+        );
+        storage.save();
+      });
+      this.draw();
+    },
+    toggleVisible(column) {
+      column.toggleVisible();
+    },
     clickExport(xlsx) {
       var filter = [];
       for (var col of this.columns) {

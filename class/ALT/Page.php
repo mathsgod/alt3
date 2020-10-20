@@ -144,12 +144,5 @@ class Page extends \App\Page
         return $this->navbar;
     }
 
-    public function write($element)
-    {
-        parent::write($element);
 
-        if ($element instanceof Scriptable) {
-            parent::write($element->script());
-        }
-    }
 }

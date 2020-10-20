@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use PHP\Psr7\JsonStream;
 use PHP\Psr7\StringStream;
 use ReflectionObject;
+use Vue\Scriptable;
 
 class Page extends \R\Page
 {
@@ -422,5 +423,13 @@ class Page extends \R\Page
     public function createDataTable($objects): UI\DataTables
     {
         return new UI\DataTables($objects, $this);
+    }
+    public function write($element)
+    {
+        parent::write($element);
+
+        if ($element instanceof Scriptable) {
+            parent::write($element->script());
+        }
     }
 }

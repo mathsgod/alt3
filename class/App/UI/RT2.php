@@ -3,8 +3,10 @@
 namespace App\UI;
 
 use Closure;
+use Vue\Scriptable;
+
 //class RT extends \RT
-class RT2 extends Element
+class RT2 extends Element implements Scriptable
 {
     public $columns = [];
     public $data = [];
@@ -20,6 +22,7 @@ class RT2 extends Element
     public $order = [];
     public $dropdown = [];
 
+    public static $NUM = 0;
     public function __construct(\App\Page $page, array $config = [])
     {
         parent::__construct("div");
@@ -30,6 +33,9 @@ class RT2 extends Element
         $this->_page = $page;
 
         $this->responsive = $config["rt2-responsive"];
+
+        $this->setAttribute("id", "_rt2_" . time() . "_" . self::$NUM);
+        self::$NUM++;
     }
 
     public function order(string $name, string $dir = null)
@@ -164,5 +170,18 @@ class RT2 extends Element
                 return $col;
             }
         }
+    }
+
+    public function script()
+    {
+        $script = new \Vue\Script();
+        $script->el = "#" . $this->getAttribute("id");
+
+        foreach ($this->body->childNodes as $child) {
+            if ($child instanceof Scriptable) {
+                $script = $script->merge($child->script());
+            }
+        }
+        return $script;
     }
 }

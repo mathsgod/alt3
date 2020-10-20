@@ -69,14 +69,10 @@ Vue.component("card-header", CardHeader);
 Vue.component("card-footer", CardFooter);
 
 
-import Test from "./Test";
-window.Test = Test;
-Vue.component("rt-test", Test);
-
 import RT2 from "./RT2.vue";
 window.RT2 = RT2;
 Vue.component("rt2", RT2);
-VueRegisterElement("rt2", RT2);
+//VueRegisterElement("rt2", RT2);
 
 import Table from "./Table";
 VueRegisterElement("alt-table", Table);
@@ -126,3 +122,13 @@ Vue.use(App);
 
 import API from './class/API';
 Vue.use(API);
+
+
+import RT3Table from './RT3Table';
+Vue.component('rt3-table', RT3Table);
+import RT3TableColumn from './RT3TableColumn';
+Vue.component('rt3-table-column', RT3TableColumn);
+
+import RT3TableBody from './RT3TableBody';
+Vue.component('rt3-table-body', RT3TableBody);
+
