@@ -3,6 +3,7 @@
 (function () {
     var f = function (el) {
         if (el.closest(".el-time-panel")) return;
+        if (el.closest(".el-picker-panel")) return;
 
         var msg = el.getAttribute("confirm-msg");
         if (msg == undefined) msg = "Are you sure?";
