@@ -31,9 +31,11 @@ $.validator.setDefaults({
 
 document.addEventListener("DOMContentLoaded", function () {
     var forms = document.querySelectorAll("form");
-
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function (form) {
+        if (form.hasAttribute("novalidate")) return;
+
+
         $(form).validate();
 
         form.addEventListener('submit', function (event) {
