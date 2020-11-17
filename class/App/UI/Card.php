@@ -90,9 +90,29 @@ class Card extends HTMLElement implements Scriptable
         return p($this->header);
     }
 
+    public function addRForm($data = null)
+    {
+        $form = new \ALT\R\Form();
+        $form->setAttribute("method", "POST");
+        $form->setAttribute("label-width", "auto");
+        if ($data) {
+            $form->setData($data);
+        }
+        $this->body->append($form);
+        return $form;
+    }
+
     public function addForm($data = null)
     {
-        $form = new \ALT\Element\Form();
+        $form = new \ALT\R\Form();
+        $form->setAttribute("method", "POST");
+        $form->setAttribute("label-width", "auto");
+        if ($data) {
+            $form->setData($data);
+        }
+        $this->body->append($form);
+        return $form;
+        /*     $form = new \ALT\Element\Form();
         $form->setPage($this->page);
 
         if ($data) {
@@ -100,7 +120,7 @@ class Card extends HTMLElement implements Scriptable
         }
         $this->body->append($form);
 
-        return $form;
+        return $form; */
     }
 
 

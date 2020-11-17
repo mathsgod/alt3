@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 use App\UserList;
 
@@ -22,9 +23,9 @@ class UserGroup_ae_user extends ALT\Page
 
         $usergroups = [];
         if ($this->app->user->isAdmin()) {
-            $usergroups = App\UserGroup::Find();
+            $usergroups = App\UserGroup::Query()->toArray();
         } else {
-            foreach (App\UserGroup::Find() as $ug) {
+            foreach (App\UserGroup::Query() as $ug) {
                 if ($ug->usergroup_id == 1) continue;
                 $usergroups[] = $ug;
             }

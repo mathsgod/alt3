@@ -24,7 +24,6 @@ class Mutation
     public function updateUser($root, $args, $app)
     {
         //only admin or power user can update
-
         if (!$app->me->isAdmin() && !$app->me->isPowerUser()) {
             throw new Error("access deny");
         }

@@ -65,6 +65,7 @@ class System_example_createE extends ALT\Page
         $e->add("Date Time (required)")->time("t")->required();
 
         $e->add("Date picker")->datePicker("date");
+        $e->add("Date picker (required)")->datePicker("date1")->required();
 
         $this->write($this->createForm($e));
     }

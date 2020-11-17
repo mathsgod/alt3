@@ -19,6 +19,9 @@ class Page extends \R\Page
      */
     public $app;
     public $data = [];
+    /**
+     * @var \App\Alert
+     */
     protected $alert;
 
     public function __construct(App $app)
@@ -109,6 +112,7 @@ class Page extends \R\Page
         return $rt;
     }
 
+    
     protected function createCard(string $type = "primary"): UI\Card
     {
         $card = new UI\Card($this);

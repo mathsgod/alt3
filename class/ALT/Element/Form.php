@@ -2,6 +2,7 @@
 
 namespace ALT\Element;
 
+use App\Model;
 use ReflectionObject;
 use Vue\Objectable;
 use Vue\Scriptable;
@@ -75,33 +76,37 @@ class Form extends \Element\Form implements Scriptable
             $gql_url .= "?system=1";
         }
 
-        if ($data->id()) {
-            $key = $data::_key();
-            $this->gql_action = "mutation";
-            $this->gql_field = "update$class";
-            $this->gql_field_id = $data->id();
-            $id = $data->id();
+        if ($data instanceof Model) {
+            if ($data->id()) {
+                $key = $data::_key();
+                $this->gql_action = "mutation";
+                $this->gql_field = "update$class";
+                $this->gql_field_id = $data->id();
+                $id = $data->id();
 
-            $this->gql_function = <<<js
-            await this.\$gql.mutation(location.toString(),{
-                update$class:{
-                    __args:{
-                        {$key}:{$id},
-                        data:this.{$model}
+                $this->gql_function = <<<js
+                await this.\$gql.mutation(location.toString(),{
+                    update$class:{
+                        __args:{
+                            {$key}:{$id},
+                            data:this.{$model}
+                        }
                     }
-                }
-            })
+                })
 js;
-        } else {
-            $this->gql_action = "subscription";
-            $this->gql_field = "create$class";
-            $this->gql_function = <<<js
-            await this.\$gql.subscription(location.toString(),{
-                create$class:{
-                    __args:this.{$model}
-                }
-            })
+            } else {
+                $this->gql_action = "subscription";
+                $this->gql_field = "create$class";
+                $this->gql_function = <<<js
+                await this.\$gql.subscription(location.toString(),{
+                    create$class:{
+                        __args:this.{$model}
+                    }
+                })
 js;
+            }
+        }else{
+            $this->gql_function="null";
         }
     }
 

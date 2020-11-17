@@ -19,7 +19,7 @@ class System_alter_table_utf8 extends ALT\Page
                     $this->alert->info("ALTER TABLE  `$t` DEFAULT CHARACTER SET {$charset} COLLATE {$collation};");
                     $this->app->db->exec("ALTER TABLE  `$t` DEFAULT CHARACTER SET {$charset} COLLATE {$collation};");
                 } catch (Exception $e) {
-                    $this->alert->error($e->getMessage());
+                    $this->alert->danger($e->getMessage());
                 }
             }
         }

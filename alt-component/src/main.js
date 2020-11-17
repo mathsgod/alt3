@@ -132,3 +132,8 @@ Vue.component('rt3-table-column', RT3TableColumn);
 import RT3TableBody from './RT3TableBody';
 Vue.component('rt3-table-body', RT3TableBody);
 
+
+
+
+Vue.component("r-form", () => import("./r-form"));
+Vue.component("r-date", () => import("./r-date"));

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4936827c5609a82e4d3225433a344b03",
+    "content-hash": "2e632121f7171a7c88e5dd14564ca8f6",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -981,11 +981,11 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/p-query.git",
-                "reference": "26bbe8c3fdd8615ed458bd2002c1f49947155912"
+                "reference": "982b6f8439919c917f323ea82af3f4f70ae2c0cb"
             },
             "require": {
                 "php": ">=7.0",
@@ -1018,7 +1018,7 @@
                 }
             ],
             "description": "Using jQuery liked method to parse html by using php",
-            "time": "2020-08-07T05:32:34+00:00"
+            "time": "2020-11-16T05:10:50+00:00"
         },
         {
             "name": "mathsgod/php-psr7",
@@ -4043,5 +4043,5 @@
         "php": ">=7.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
