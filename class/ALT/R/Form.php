@@ -9,7 +9,7 @@ class Form extends HTMLElement
 {
     private $template;
     private $_data;
-
+    private $page;
 
     public function __construct()
     {
@@ -19,12 +19,24 @@ class Form extends HTMLElement
         $this->append($this->template);
     }
 
+    public function setPage($page)
+    {
+        $this->page = $page;
+    }
+
     public function add(string $label, $getter = null)
     {
         $form_item = new FormItem();
         $this->template->append($form_item);
 
-        $form_item->setAttribute("label", $label);
+        if ($this->page) {
+            $t_label = $this->page->translate($label);
+        } else {
+            $t_label = $label;
+        }
+
+
+        $form_item->setAttribute("label", $t_label);
 
 
         $form_item->addEventListener("prop_added", function ($e) {

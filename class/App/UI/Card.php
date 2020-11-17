@@ -93,6 +93,7 @@ class Card extends HTMLElement implements Scriptable
     public function addRForm($data = null)
     {
         $form = new \ALT\R\Form();
+        $form->setPage($this->page);
         $form->setAttribute("method", "POST");
         $form->setAttribute("label-width", "auto");
         if ($data) {
@@ -105,6 +106,7 @@ class Card extends HTMLElement implements Scriptable
     public function addForm($data = null)
     {
         $form = new \ALT\R\Form();
+        $form->setPage($this->page);
         $form->setAttribute("method", "POST");
         $form->setAttribute("label-width", "auto");
         if ($data) {
