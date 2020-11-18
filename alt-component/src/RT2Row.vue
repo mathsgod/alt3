@@ -74,7 +74,7 @@ export default {
       if (column.editType == "select") {
         if (r[column.data].value != value) {
           r[column.data].value = value;
-          r[column.data].content = column.editData[value].label;
+          r[column.data].content = column.editData.find(d=>d.value==value).label;
           this.$emit("update-data", r._key, column.data, value);
         }
       }
