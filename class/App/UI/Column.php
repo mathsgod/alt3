@@ -1,4 +1,5 @@
 <?php
+
 namespace App\UI;
 
 use JsonSerializable;
@@ -42,6 +43,20 @@ class Column implements JsonSerializable
 
     public $order;
 
+
+    public $cell_value_getter = null;
+    public function setCellValue($getter)
+    {
+        $this->cell_value_getter = $getter;
+    }
+
+    public function getCellValue($obj)
+    {
+        if ($this->cell_value_getter) {
+            return var_get($obj, $this->cell_value_getter);
+        }
+        return null;
+    }
 
     public function addEdit()
     {

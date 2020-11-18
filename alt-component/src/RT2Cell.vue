@@ -17,7 +17,7 @@
             :key="'option'+opt_key"
             v-bind:value="opt.value"
             v-text="opt.label"
-            v-bind:selected="opt.value==column.getValue(d).value"
+            v-bind:selected="opt.value==column.getValue(data).value"
           ></option>
         </select>
       </template>

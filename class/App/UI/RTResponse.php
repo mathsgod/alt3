@@ -249,7 +249,11 @@ class RTResponse implements JsonSerializable
                                 $d[$c["name"]] = null;
                             }
                         } elseif ($col->type == "text") {
-                            $d[$c["name"]] = ["type" => $col->type, "content" => (string) $col->getData($obj, $k)];
+                            $d[$c["name"]] = [
+                                "type" => $col->type,
+                                "content" => (string) $col->getData($obj, $k),
+                                "value" => $col->getCellValue($obj)
+                            ];
                         } elseif ($col->type == "html") {
 
                             $content = $col->getData($obj, $k);
