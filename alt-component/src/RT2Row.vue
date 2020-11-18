@@ -3,16 +3,17 @@
     <td
       is="rt2-cell"
       ref="cell"
-      v-for="(column,index) in columns"
+      v-for="(column, index) in columns"
       :data="data"
-      :key="'col_'+index"
+      :key="'col_' + index"
       :storage="storage"
       :column="column"
       :edit-mode="isEditMode(column)"
-      @click="$emit('cell-clicked',column)"
+      @click="$emit('cell-clicked', column)"
       @data-deleted="$emit('data-deleted')"
-      @toggle-sub-row="$emit('toggle-sub-row',$event)"
-      @update-data="updateData(column,$event)"
+      @toggle-sub-row="$emit('toggle-sub-row', $event)"
+      @update-data="updateData(column, $event)"
+      @cancel-edit-mode="$emit('cancel-edit-mode')"
     ></td>
   </tr>
 </template>
@@ -30,15 +31,15 @@ export default {
     editIndex: Number,
     editColumn: Object,
     index: Number,
-    selectable: Boolean
+    selectable: Boolean,
   },
   data() {
     return {
-      selected: false
+      selected: false,
     };
   },
   components: {
-    "rt2-cell": Rt2Cell
+    "rt2-cell": Rt2Cell,
   },
   computed: {
     getClass() {
@@ -51,14 +52,14 @@ export default {
     style() {
       var style = this.data.__row__.style || {};
       return style;
-    }
+    },
   },
   methods: {
     /**
      * get cell by column
      */
-    getCell(column){
-      var index=this.columns.indexOf(column);
+    getCell(column) {
+      var index = this.columns.indexOf(column);
       return this.$children[index];
     },
     updateData(column, value) {
@@ -72,11 +73,11 @@ export default {
       }
 
       if (column.editType == "select") {
-        if (r[column.data].value != value) {
-          r[column.data].value = value;
-          r[column.data].content = column.editData.find(d=>d.value==value).label;
-          this.$emit("update-data", r._key, column.data, value);
-        }
+        r[column.data].value = value;
+        r[column.data].content = column.editData.find(
+          (d) => d.value == value
+        ).label;
+        this.$emit("update-data", r._key, column.data, value);
       }
     },
     onClick() {
@@ -89,8 +90,8 @@ export default {
         return true;
       }
       return false;
-    }
-  }
+    },
+  },
 };
 </script>
 

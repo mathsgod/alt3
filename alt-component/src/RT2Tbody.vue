@@ -1,11 +1,11 @@
 <template>
   <tbody>
-    <template v-for="(d,index) in data">
+    <template v-for="(d, index) in data">
       <tr
         ref="row"
         is="rt2-row"
         :index="index"
-        :key="'row_'+index+'_'+(new Date()).getTime()"
+        :key="'row_' + index + '_' + new Date().getTime()"
         :data="d"
         :columns="visibleColumns"
         :storage="storage"
@@ -17,26 +17,37 @@
         @toggle-row-child="toggleRowChild(index)"
         @mouse-enter-row="mouseEnterRow(index)"
         @mouse-leave-row="mouseLeaveRow(index)"
-        @cell-clicked="onClickCell(index,$event)"
+        @cell-clicked="onClickCell(index, $event)"
         @update-data="updateData"
-        @toggle-sub-row="toggleSubRow(index,$event)"
+        @toggle-sub-row="toggleSubRow(index, $event)"
         @data-deleted="$emit('data-deleted')"
+        @cancel-edit-mode="editColumn = null"
       ></tr>
 
-      <tr class="child" v-show="showChild(index)" :key="'child'+index">
+      <tr class="child" v-show="showChild(index)" :key="'child' + index">
         <td v-bind:colspan="showColumnCount">
           <ul>
-            <li v-for="(column,key) in hideColumns" :key="'hide_col'+key">
+            <li v-for="(column, key) in hideColumns" :key="'hide_col' + key">
               <b v-html="column.title"></b>&nbsp;&nbsp;
-              <span v-if="column.cell(d).type=='html'" v-html="column.getContent(d)"></span>
-              <span v-if="column.cell(d).type=='text'" v-text="column.getContent(d)"></span>
+              <span
+                v-if="column.cell(d).type == 'html'"
+                v-html="column.getContent(d)"
+              ></span>
+              <span
+                v-if="column.cell(d).type == 'text'"
+                v-text="column.getContent(d)"
+              ></span>
             </li>
           </ul>
         </td>
       </tr>
 
-      <tr v-show="subRow[index]" :key="'subrow'+index">
-        <td v-html="subRowContent[index]" :colspan="visibleColumns.length" class="p-1"></td>
+      <tr v-show="subRow[index]" :key="'subrow' + index">
+        <td
+          v-html="subRowContent[index]"
+          :colspan="visibleColumns.length"
+          class="p-1"
+        ></td>
       </tr>
     </template>
   </tbody>
