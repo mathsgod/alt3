@@ -1,0 +1,129 @@
+<template>
+  <td>
+    <template v-if="column.searchable && column.searchType == 'text'">
+      <el-input
+        @keyup.enter.native="doSearch"
+        v-model="search"
+        clearable
+        @clear="
+          search = '';
+          doSearch();
+        "
+        size="mini"
+      ></el-input>
+    </template>
+
+    <template v-if="column.searchable && column.searchType == 'date'">
+      <el-date-picker
+        v-model="search"
+        type="daterange"
+        unlink-panels
+        range-separator="~"
+        start-placeholder="Start date"
+        end-placeholder="End date"
+        :picker-options="pickerOptions"
+        @change="doSearch()"
+        format="yyyy-MM-dd"
+        value-format="yyyy-MM-dd"
+        size="mini"
+      ></el-date-picker>
+    </template>
+
+    <template v-if="column.searchable && column.searchType == 'select'">
+      <el-select
+        v-model="search"
+        clearable
+        filterable
+        @change="doSearch()"
+        size="mini"
+      >
+        <el-option
+          v-for="(o, key) in column.searchOption"
+          :key="key"
+          :label="o.label"
+          :value="o.value"
+        ></el-option>
+      </el-select>
+    </template>
+
+    <template v-if="column.searchable && column.searchType == 'multiselect'">
+      <el-select
+        v-model="search"
+        clearable
+        filterable
+        multiple
+        collapse-tags
+        @change="doSearch()"
+        size="mini"
+      >
+        <el-option
+          v-for="(o, key) in column.searchOption"
+          :key="key"
+          :label="o.label"
+          :value="o.value"
+        ></el-option>
+      </el-select>
+    </template>
+  </td>
+</template>
+
+<script>
+export default {
+  props: {
+    column: Object,
+  },
+  data() {
+    return {
+      search: null,
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "Today",
+            onClick(picker) {
+              const start = new Date();
+              const end = new Date();
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Last week",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Last month",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+          {
+            text: "Last 3 months",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
+      },
+    };
+  },
+  methods: {
+    doSearch() {
+      this.$emit("search", [
+        this.column.prop,
+        this.search,
+        this.column.searchMethod,
+      ]);
+    },
+  },
+};
+</script>

@@ -1,7 +1,7 @@
 <template>
-  <td @click="$emit('click',$event)" :style="style">
+  <td @click="$emit('click', $event)" :style="style">
     <template v-if="editMode">
-      <template v-if="column.editType=='text'">
+      <template v-if="column.editType == 'text'">
         <input
           type="text"
           class="form-control form-control-sm"
@@ -10,18 +10,18 @@
           @keyup.enter="updateData($event.target.value)"
         />
       </template>
-      <template v-else-if="column.editType=='select'">
+      <template v-else-if="column.editType == 'select'">
         <select class="formControl" v-on:blur="updateData($event.target.value)">
           <option
-            v-for="(opt,opt_key) in column.editData"
-            :key="'option'+opt_key"
+            v-for="(opt, opt_key) in column.editData"
+            :key="'option' + opt_key"
             v-bind:value="opt.value"
             v-text="opt.label"
-            v-bind:selected="opt.value==column.getValue(d).value"
+            v-bind:selected="opt.value == column.getValue(data).value"
           ></option>
         </select>
       </template>
-      <template v-else-if="column.editType=='date'">
+      <template v-else-if="column.editType == 'date'">
         <input
           type="text"
           class="form-control form-control-sm"
@@ -31,15 +31,23 @@
       </template>
     </template>
     <template v-else>
-      <div v-if="type=='text'" v-text="content" :style="divStyle"></div>
-      <runtime-template-compiler v-if="type=='vue'" :template="content" />
-      <div v-if="type=='html'" v-html="content" :style="divStyle"></div>
-      <el-checkbox v-if="type=='checkbox'" v-model="is_checked"></el-checkbox>
+      <div v-if="type == 'text'" v-text="content" :style="divStyle"></div>
+      <runtime-template-compiler v-if="type == 'vue'" :template="content" />
+      <div v-if="type == 'html'" v-html="content" :style="divStyle"></div>
+      <el-checkbox v-if="type == 'checkbox'" v-model="is_checked"></el-checkbox>
 
-      <button class="btn btn-xs btn-danger" v-else-if="type=='delete'" @click="deleteRow()">
+      <button
+        class="btn btn-xs btn-danger"
+        v-else-if="type == 'delete'"
+        @click="deleteRow()"
+      >
         <i class="fa fa-fw fa-times"></i>
       </button>
-      <button class="btn btn-xs btn-default" v-else-if="type=='sub-row'" @click="toggleSubRow()">
+      <button
+        class="btn btn-xs btn-default"
+        v-else-if="type == 'sub-row'"
+        @click="toggleSubRow()"
+      >
         <i v-show="showSubRow" class="fa fa-fw fa-minus"></i>
         <i v-show="!showSubRow" class="fa fa-fw fa-plus"></i>
       </button>

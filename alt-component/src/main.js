@@ -124,16 +124,13 @@ import API from './class/API';
 Vue.use(API);
 
 
-import RT3Table from './RT3Table';
-Vue.component('rt3-table', RT3Table);
-import RT3TableColumn from './RT3TableColumn';
-Vue.component('rt3-table-column', RT3TableColumn);
-
-import RT3TableBody from './RT3TableBody';
-Vue.component('rt3-table-body', RT3TableBody);
-
-
 
 
 Vue.component("r-form", () => import("./r-form"));
 Vue.component("r-date", () => import("./r-date"));
+
+
+Vue.component("r-table", () => import("./r-table"));
+Vue.component("r-table-column", () => import("./r-table-column"));
+Vue.component("r-table-column-search", () => import("./r-table-column-search"));
+Vue.component("r-table-cell", () => import("./r-table-cell"));

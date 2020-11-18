@@ -232,6 +232,11 @@ class Page extends \R\Page
             return $this->app->accessDeny($request);
         }
 
+        if ($request->getQueryParams()["_rtable"]) {
+            $rt = new UI\RTableResponse();
+            $request = $request->withQueryParams(["rt" => $rt]);
+        }
+
         if ($request->getQueryParams()["_rt"]) {
             $rt = new UI\RTResponse();
             $request = $request->withQueryParams(["rt" => $rt]);

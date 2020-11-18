@@ -39,7 +39,7 @@ class Row
     }
 }
 
-class RTResponse implements JsonSerializable
+class RTableResponse implements JsonSerializable
 {
     public $fields = [];
     public $source = null;
@@ -61,17 +61,18 @@ class RTResponse implements JsonSerializable
         $this->length = intval($_GET["length"]);
         $this->search = $_GET["search"];
         $this->row = new Row();
+        $this->search = $_GET["search"] ?? [];
 
         foreach ($this->request["columns"] as $column) {
-            if ($column["name"] == "__view__") {
+            if ($column == "__view__") {
                 $this->addView();
             }
 
-            if ($column["name"] == "__edit__") {
+            if ($column == "__edit__") {
                 $this->addEdit();
             }
 
-            if ($column["name"] == "__del__") {
+            if ($column == "__del__") {
                 $this->addDel();
             }
         }
@@ -208,7 +209,6 @@ class RTResponse implements JsonSerializable
         return $c;
     }
 
-
     public function data()
     {
         foreach ($this->fields as $c) {
@@ -216,6 +216,7 @@ class RTResponse implements JsonSerializable
         }
 
         $source = $this->filteredSource();
+
 
         if ($this->page) {
             $source->limit($this->length);
@@ -238,49 +239,43 @@ class RTResponse implements JsonSerializable
 
             foreach ($this->request["columns"] as $k => $c) {
                 try {
-                    if (array_key_exists($c["name"], $this->_columns)) {
-                        $col = $this->_columns[$c["name"]];
+                    if (array_key_exists($c, $this->_columns)) {
+                        $col = $this->_columns[$c];
 
                         if ($col->type == "sub-row") {
-                            $d[$c["name"]] = ["url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
+                            $d[$c] = ["url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
                         } elseif ($col->type == "delete") {
-                            if ($content = (string) $col->getData($obj, $k)) {
-                                $d[$c["name"]] = ["type" => $col->type, "content" => (string) $content];
+                            if ($content = (string) $col->getData($obj, $c)) {
+                                $d[$c] = ["type" => $col->type, "content" => (string) $content];
                             } else {
-                                $d[$c["name"]] = null;
+                                $d[$c] = null;
                             }
                         } elseif ($col->type == "text") {
-
-                            $d1 = ["type" => $col->type, "content" => (string) $col->getData($obj, $k)];
-
-                            $d1["value"] = $col->getCellValue($obj);
-
-
-                            $d[$c["name"]] = $d1;
+                            $d[$c] = (string) $col->getData($obj, $k);
                         } elseif ($col->type == "html") {
 
-                            $content = $col->getData($obj, $k);
+                            $content = $col->getData($obj, $c);
                             if ($content instanceof Scriptable) {
-                                $d[$c["name"]] = ["type" => "vue", "content" => (string) $content];
+                                $d[$c] = ["type" => "vue", "content" => (string) $content];
                             } else {
-                                $d[$c["name"]] = ["type" => "html", "content" => (string) $content];
+                                $d[$c] = ["type" => "html", "content" => (string) $content];
                             }
                         } else {
-                            $v = $col->getData($obj, $k);
+                            $v = $col->getData($obj, $c);
 
                             if (is_array($v)) {
-                                $d[$c["name"]] = $v;
+                                $d[$c] = $v;
                             } else {
-                                $d[$c["name"]] = (string) $v;
+                                $d[$c] = (string) $v;
                             }
                         }
-                    } elseif (array_key_exists($c["name"], $object_vars)) {
-                        $d[$c["name"]] = $object_vars[$c["name"]];
+                    } elseif (array_key_exists($c, $object_vars)) {
+                        $d[$c] = $object_vars[$c];
                     } else {
-                        $d[$c["name"]] = null;
+                        $d[$c] = null;
                     }
                 } catch (Exception $e) {
-                    $d[$c["name"]] = $e->getMessage();
+                    $d[$c] = $e->getMessage();
                 }
             }
 
@@ -303,8 +298,8 @@ class RTResponse implements JsonSerializable
     public function search()
     {
         $search = [];
-        foreach ($this->request["columns"] as $k => $c) {
-            $search[$c["name"]] = $c["search"]["value"];
+        foreach ($this->request["search"] as  $c) {
+            $search[$c["name"]] = $c["value"];
         }
         return $search;
     }
@@ -324,19 +319,20 @@ class RTResponse implements JsonSerializable
             }
         }
 
-        foreach ($this->request["columns"] as $k => $c) {
+        foreach ($this->search as $k => $c) {
             $column = $this->_columns[$c["name"]];
-            $value = $c["search"]["value"];
+            $value = $c["value"];
 
             if ($value !== null && $value !== "") {
 
                 if ($column->searchCallback) {
                     $c = call_user_func($column->searchCallback, $value);
+
                     $source->where($c[0], $c[1]);
                     continue;
                 }
 
-                if ($c["searchMethod"] == "multiple") {
+                if ($c["method"] == "in") {
                     $field = $c["name"];
                     $s = [];
                     $p = [];
@@ -345,14 +341,15 @@ class RTResponse implements JsonSerializable
                         $p["{$field}_{$k}"] = $k;
                     }
 
+
                     $source->where("$field in (" . implode(",", $s) . ")", $p);
                     continue;
-                } elseif ($c["searchMethod"] == "like") {
+                } elseif ($c["method"] == "like") {
                     $name = ":" . $c["name"];
                     $source->where($c["name"] . " like $name", [$name => "%$value%"]);
-                } elseif ($c["searchMethod"] == "equal") {
+                } elseif ($c["method"] == "equal") {
                     $source->filter([$c["name"] => $value]);
-                } elseif ($c["searchMethod"] == "date") {
+                } elseif ($c["method"] == "date") {
 
                     $from = $value[0];
                     $to = $value[1];
@@ -372,6 +369,7 @@ class RTResponse implements JsonSerializable
                 }
             }
         }
+
 
         return $source;
     }

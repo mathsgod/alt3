@@ -1145,11 +1145,11 @@
         },
         {
             "name": "mathsgod/r-db",
-            "version": "3.6.10",
+            "version": "3.6.12",
             "source": {
                 "type": "git",
                 "url": "https://mathsgod:d97ca44a017f09f662c0761828b0f66caf373415@github.com/mathsgod/r-db.git",
-                "reference": "8b58ff38205cf95fbb00cd420149b4041c1d3369"
+                "reference": "e3c2872e2545b57a7f403f7013415da46ec94f79"
             },
             "require": {
                 "ext-pdo": "*",
@@ -1176,7 +1176,7 @@
                 }
             ],
             "description": "raymond framework db",
-            "time": "2020-10-06T09:03:48+00:00"
+            "time": "2020-11-17T10:29:39+00:00"
         },
         {
             "name": "mathsgod/r-graphql",

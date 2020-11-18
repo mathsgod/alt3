@@ -1,0 +1,83 @@
+<template>
+  <th
+    @click="click"
+    class="unselectable"
+    v-bind:class="{
+      sortable: sortable,
+      sorting_desc: localOrder == 'desc',
+      sorting_asc: localOrder == 'asc',
+    }"
+  >
+    {{ label }}
+  </th>
+</template>
+<style scoped>
+.unselectable {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+.sortable {
+  cursor: pointer;
+  background: url(./assets/images/sort_both.png) no-repeat center right;
+}
+
+.sorting_desc {
+  background: url(./assets/images/sort_desc.png) no-repeat center right;
+}
+
+.sorting_asc {
+  background: url(./assets/images/sort_asc.png) no-repeat center right;
+}
+</style>
+<script>
+export default {
+  props: {
+    label: String,
+    prop: String,
+    sortable: Boolean,
+    searchable: Boolean,
+    searchType: {
+      type: String,
+      default: "text",
+    },
+    searchOption: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    searchMethod: {
+      type: String,
+      default: "like",
+    },
+    order: String,
+    isVisible: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      localOrder: this.order,
+    };
+  },
+  watch: {
+    localOrder() {
+      this.$emit("order-changed", this.localOrder);
+    },
+  },
+  methods: {
+    click() {
+      if (!this.sortable) return;
+      if (this.localOrder == "desc") {
+        this.localOrder = "asc";
+      } else {
+        this.localOrder = "desc";
+      }
+    },
+  },
+};
+</script>
