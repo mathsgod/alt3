@@ -19,6 +19,7 @@
             :label="opt.label"
           ></el-option>
         </el-select>
+        <br />
         <el-button
           icon="el-icon-check"
           type="success"
@@ -97,7 +98,7 @@ export default {
     };
   },
   mounted() {
-    this.localValue = this.data[this.column.data].value;
+    this.localValue = this.column.getValue(this.data);
     this.$on("reset-local-storage", () => {
       //      console.log("reset");
     });
