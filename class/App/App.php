@@ -445,7 +445,7 @@ class App extends \R\App
 
         $server = $this->request->getServerParams();
 
-        $document_root = $server["DOCUMENT_ROOT"];
+        $document_root = $this->document_root;
         if ($this->config["system"]["document_root"]) {
             $document_root = $this->config["system"]["document_root"];
         }
