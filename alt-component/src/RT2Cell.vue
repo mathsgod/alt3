@@ -11,21 +11,33 @@
         />
       </template>
       <template v-else-if="column.editType == 'select'">
-        <select class="formControl" v-on:blur="updateData($event.target.value)">
-          <option
+        <el-select v-model="localValue" size="mini">
+          <el-option
             v-for="(opt, opt_key) in column.editData"
-            :key="'option' + opt_key"
-            v-bind:value="opt.value"
-            v-text="opt.label"
-            v-bind:selected="opt.value == column.getValue(data).value"
-          ></option>
-        </select>
+            :key="`option${opt_key}`"
+            :value="opt.value"
+            :label="opt.label"
+          ></el-option>
+        </el-select>
+        <br />
+        <el-button
+          icon="el-icon-check"
+          type="success"
+          size="mini"
+          @click="updateData(localValue)"
+        ></el-button>
+        <el-button
+          icon="el-icon-close"
+          type="warning"
+          size="mini"
+          @click="cancelUpdate()"
+        ></el-button>
       </template>
       <template v-else-if="column.editType == 'date'">
         <input
           type="text"
           class="form-control form-control-sm"
-          v-bind:value="column.getValue(d)"
+          v-bind:value="column.getValue(data)"
           v-on:blur="updateData($event.target.value)"
         />
       </template>
@@ -79,12 +91,14 @@ export default {
   },
   data() {
     return {
+      localValue: null,
       is_checked: false,
       showSubRow: false,
       divStyle: {},
     };
   },
   mounted() {
+    this.localValue = this.column.getValue(this.data);
     this.$on("reset-local-storage", () => {
       //      console.log("reset");
     });
@@ -206,12 +220,17 @@ export default {
 
       if (this.column.editType == "select") {
         if (this.data[this.column.data].value != value) {
-          //          r[column.data].value = value;
-          //        r[column.data].content = column.editData[value].label;
           this.$emit("update-data", value);
         }
         return;
       }
+    },
+    cancelUpdate() {
+      this.localValue = this.column.getValue(this.data);
+      this.$emit("cancel-edit-mode");
+    },
+    updateSelectData(e) {
+      console.log(e);
     },
   },
 };

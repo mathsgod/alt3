@@ -9,7 +9,7 @@ class Fileman_api extends R\Page
     public function post($token)
     {
         $config = $this->app->config["hostlink-fileman"];
-        $f = new Fileman\App($token, $config);
+        $f = new Fileman\App($config, $this->app->loader);
 
         return $f->post($token, $_POST["query"]);
     }

@@ -131,6 +131,10 @@ class RT2 extends Element implements Scriptable
         return parent::__toString();
     }
 
+    public function setCellEditUrl($url){
+        $this->cellUrl=$url;
+    }
+
     public function addSubRow($name)
     {
         $c = new Column();

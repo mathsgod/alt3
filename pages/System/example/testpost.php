@@ -3,9 +3,10 @@ class System_example_testpost extends ALT\Page
 {
     public function post()
     {
-        outp("hello");
-        $this->alert->info("hello");
-        $this->redirect("Dashboard");
+        outP($_POST);
+        die();
+        //$this->alert->info("hello");
+        //$this->redirect("Dashboard");
     }
 
     public function get()
