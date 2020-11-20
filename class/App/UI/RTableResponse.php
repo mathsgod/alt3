@@ -78,7 +78,7 @@ class RTableResponse implements JsonSerializable
         }
     }
 
-    public function key($key)
+    public function setKey(string $key)
     {
         $this->key = $key;
         return $this;
@@ -281,11 +281,12 @@ class RTableResponse implements JsonSerializable
 
             if ($this->key) {
                 $key = $this->key;
-                $d["_key"] = $obj->$key;
+                $d[$key] = $obj->$key;
             }
 
             $data[] = $d;
         }
+
 
         return $data;
     }
@@ -349,7 +350,7 @@ class RTableResponse implements JsonSerializable
                     $source->where($c["name"] . " like $name", [$name => "%$value%"]);
                 } elseif ($c["method"] == "equal") {
                     $source->filter([$c["name"] => $value]);
-                } elseif ($c["method"] == "date") {
+                } elseif ($c["method"] == "between") {
 
                     $from = $value[0];
                     $to = $value[1];
@@ -405,11 +406,17 @@ class RTableResponse implements JsonSerializable
             return null;
         }
 
-        return [
+        $ret = [
             "draw" => $this->draw,
             "data" => $this->data(),
             "total" => $this->recordsFiltered()
         ];
+
+        if ($this->key) {
+            $ret["key"] = $this->key;
+        }
+
+        return $ret;
     }
 
     public function exportFile($type)

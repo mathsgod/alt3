@@ -5,7 +5,7 @@
         <tr>
           <slot></slot>
         </tr>
-        <tr>
+        <tr v-if="isSearchable">
           <r-table-column-search
             v-for="(c, i) in columns"
             :key="`column-search-${i}`"
@@ -17,10 +17,14 @@
       <tbody>
         <tr v-for="(d, k) in localData" :key="k">
           <r-table-cell
+            ref="cell"
+            @click.native="onCellClicked()"
             v-for="(c, i) in columns"
             :key="i"
             :column="c"
             :data="d"
+            @update-data="updateData(d, c.prop, $event)"
+            @edit-started="onEditStarted()"
           ></r-table-cell>
         </tr>
       </tbody>
@@ -111,12 +115,18 @@
 <script>
 export default {
   props: {
-    data: Array,
+    data: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
     remote: String,
     pageLength: {
       type: Number,
       default: 25,
     },
+    cellUrl: String,
   },
   components: {
     "r-table-pagination": () => import("./r-table-pagination"),
@@ -133,6 +143,7 @@ export default {
       localPageLength: this.pageLength,
       showColumnSelector: false,
       total: 0,
+      key: null,
     };
   },
   computed: {
@@ -143,6 +154,9 @@ export default {
       return this.columns.filter((column) => {
         return column.label;
       });
+    },
+    isSearchable() {
+      return this.columns.some((o) => o.searchable);
     },
   },
   watch: {
@@ -177,6 +191,38 @@ export default {
     }
   },
   methods: {
+    onEditStarted() {
+      this.$refs.cell.forEach((cell) => {
+        cell.editMode = false;
+      });
+    },
+    async updateData(data, prop, value) {
+      if (!this.cellUrl) {
+        console.log("cell url not defined");
+        return;
+      }
+      if (!this.key) {
+        console.log("key is not defined");
+        return;
+      }
+      let key_value = data[this.key];
+      let params = {};
+      params[prop] = value;
+      let url = this.cellUrl + "/" + key_value;
+      let resp = await this.$http.post(url, params);
+      resp = resp.data;
+      if (resp.error) {
+        this.$alert(resp.error.message, { type: "error" });
+        return;
+      }
+      if (resp.data) {
+        await this.reload();
+      }
+      //should be reload
+    },
+    onCellClicked() {
+      console.log("cell clicked");
+    },
     onColumnSelectorClose() {},
     loadData() {},
     search(name, value, method) {
@@ -214,6 +260,7 @@ export default {
       resp = resp.data;
       this.localData = resp.data;
       this.total = resp.total;
+      this.key = resp.key;
     },
   },
 };

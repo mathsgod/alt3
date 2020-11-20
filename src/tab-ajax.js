@@ -32,6 +32,7 @@ $(function () {
 
             that._current_xhr = $.get(loadurl, function (data) {
                 $(targ).html(data);
+
                 localStorage.setItem(cookie_name + "-tab", targ);
 
                 if (timer != undefined) {

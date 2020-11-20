@@ -2,7 +2,7 @@
 
 use App\UI\RTResponse;
 
-class System_example_list extends App\Page
+class System_example_list extends ALT\Page
 {
 
     public function get()

@@ -3,6 +3,7 @@
 namespace App;
 
 use ALT\Element\Form;
+use App\UI\RTable;
 use Psr\Http\Message\ResponseInterface;
 use Exception;
 use Psr\Http\Message\RequestInterface;
@@ -100,6 +101,15 @@ class Page extends \R\Page
         return $tab;
     }
 
+    protected function createRTable(array $function)
+    {
+        $rtable = new RTable($this);
+        $path = (string) $function[0]->request->getURI()->getPath();
+        $remote = (string) $path . "/" . $function[1] . "?" . $this->request->getUri()->getQuery();
+        $rtable->setAttribute("remote", $remote);
+        return $rtable;
+    }
+
     protected function createRT2($objects): UI\RT2
     {
         $rt = new UI\RT2($this, $this->app->config);
@@ -112,13 +122,12 @@ class Page extends \R\Page
         return $rt;
     }
 
-    
+
     protected function createCard(string $type = "primary"): UI\Card
     {
         $card = new UI\Card($this);
         $card->outline = true;
         $card->setAttribute("type", $type);
-
         return $card;
     }
 
@@ -370,30 +379,23 @@ class Page extends \R\Page
         }
 
 
-        $obj->save();
         if ($this->isAccept("application/json") || $this->request->getHeader("X-Requested-With")) {
+
+            try {
+                $obj->save();
+            } catch (Exception $e) {
+                return ["error" => ["message" => $e->getMessage()]];
+            }
 
             $msg = $this->module()->name . " ";
             if (method_exists($obj, '__toString')) {
                 $msg .= (string) $obj . " ";
             }
             $msg .= $id ? "updated" : "created";
-            $this->alert->success("Success", $msg);
 
-
-            $referer = $this->request->getHeader("Referer")[0];
-            if ($url = $_SESSION["app"]["referer"][$referer]) {
-                $referer = $url;
-            }
-
-            return ["data" => [
-                "headers" => [
-                    "location" => $referer
-                ]
-            ]];
-
-            return ["code" => 200];
+            return ["data" => ["message" => $msg]];
         } else {
+            $obj->save();
 
             $msg = $this->module()->name . " ";
             if (method_exists($obj, '__toString')) {

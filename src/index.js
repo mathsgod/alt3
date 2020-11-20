@@ -17,4 +17,4 @@ window.WebAuthn = WebAuthn;
 
 import indexPage from './index.vue';
 
-(new Vue(indexPage)).$mount("#app");   
+(new Vue(indexPage)).$mount("#app");

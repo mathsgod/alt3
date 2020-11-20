@@ -43,10 +43,6 @@ class Column implements JsonSerializable
 
     public $order;
 
-    public function setCellValue($getter)
-    {
-        $this->cell_value_getter = $getter;
-    }
 
 
     public $cell_value_getter = null;
@@ -290,13 +286,7 @@ class Column implements JsonSerializable
         return $data;
     }
 
-    public function getCellValue($object)
-    {
-        if ($this->cell_value_getter) {
-            return var_get($object, $this->cell_value_getter);
-        }
-        return null;
-    }
+
 
     public function getData($object, $k)
     {

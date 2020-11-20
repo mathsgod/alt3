@@ -70,6 +70,7 @@ class User_list extends App\Page
     {
 
         $this->write($this->getRT());
+        
     }
 
     public function ds(RTResponse $rt, $t): RTResponse

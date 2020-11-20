@@ -58,6 +58,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    editable: Boolean,
+    editType: String,
   },
   data() {
     return {

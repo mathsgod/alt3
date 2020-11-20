@@ -125,9 +125,9 @@ class Card extends HTMLElement implements Scriptable
         return $form; */
     }
 
-
     public function script()
     {
+        
         $script = new \Vue\Script();
         $script->el = "#" . $this->getAttribute("id");
 

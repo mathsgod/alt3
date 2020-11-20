@@ -118,11 +118,23 @@ export default {
   },
   methods: {
     doSearch() {
-      this.$emit("search", [
-        this.column.prop,
-        this.search,
-        this.column.searchMethod,
-      ]);
+      let method = "like";
+      switch (this.column.searchType) {
+        case "equal":
+          method = "eq";
+          break;
+        case "select":
+          method = "eq";
+          break;
+        case "multiple":
+          method = "in";
+          break;
+        case "date":
+          method = "between";
+          break;
+      }
+
+      this.$emit("search", [this.column.prop, this.search, method]);
     },
   },
 };

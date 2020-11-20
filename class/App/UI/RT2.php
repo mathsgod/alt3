@@ -81,8 +81,10 @@ class RT2 extends Element implements Scriptable
     public function addView()
     {
         $c = $this->response->addView();
+        
         $c->noHide();
         $this->columns[] = $c;
+        
         return $c;
     }
 
