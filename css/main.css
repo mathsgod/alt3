@@ -27,3 +27,7 @@ textarea.form-control:required{
     padding-right: 0.6rem;
     padding-left: 0.6rem;
 }
+
+.r-table-checkbox-group .el-checkbox__label{
+    display: none;
+}

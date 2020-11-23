@@ -1,11 +1,7 @@
 <template>
   <div>
     <el-tooltip content="最前一頁" placement="top">
-      <el-button
-        @click="$emit('input', 1)"
-        :disabled="firstPageDisabled"
-        size="mini"
-      >
+      <el-button @click="$emit('input', 1)" :disabled="firstPageDisabled">
         <i class="fa fa-fw fa-step-backward"></i>
       </el-button>
     </el-tooltip>
@@ -14,7 +10,6 @@
       <el-button
         @click.prevent="$emit('input', value - 1)"
         :disabled="prevPageDisabled"
-        size="mini"
       >
         <i class="fa fa-fw fa-chevron-left"></i>
       </el-button>
@@ -25,7 +20,6 @@
       @change="$emit('input', $event)"
       :min="1"
       :max="pageCount"
-      size="mini"
       style="width: 70px"
     ></el-input>
 
@@ -33,7 +27,6 @@
       <el-button
         @click.prevent="$emit('input', value + 1)"
         :disabled="nextPageDisabled"
-        size="mini"
       >
         <i class="fa fa-fw fa-chevron-right"></i>
       </el-button>
@@ -43,7 +36,6 @@
       <el-button
         @click.prevent="$emit('input', pageCount)"
         :disabled="lastPageDisabled"
-        size="mini"
       >
         <i class="fa fa-fw fa-step-forward"></i>
       </el-button>

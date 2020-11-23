@@ -1,11 +1,13 @@
 <template>
-  <el-card v-loading="loading" :body-style="{ padding: '0px' }">
+  <el-card v-loading="loading" :body-style="{ padding: '0px' }" shadow="never">
     <table class="table table-hover table-sm table-bordered m-0">
       <thead>
         <tr>
+          <th v-if="selectable"></th>
           <slot></slot>
         </tr>
         <tr v-if="isSearchable">
+          <td v-if="selectable"></td>
           <r-table-column-search
             v-for="(c, i) in columns"
             :key="`column-search-${i}`"
@@ -15,18 +17,35 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(d, k) in localData" :key="k">
-          <r-table-cell
-            ref="cell"
-            @click.native="onCellClicked()"
-            v-for="(c, i) in columns"
-            :key="i"
-            :column="c"
-            :data="d"
-            @update-data="updateData(d, c.prop, $event)"
-            @edit-started="onEditStarted()"
-          ></r-table-cell>
-        </tr>
+        <template v-for="(d, k) in localData">
+          <tr :key="`${draw}-${k}`">
+            <td v-if="selectable">
+              <el-checkbox-group
+                v-model="selectedValue"
+                class="r-table-checkbox-group"
+              >
+                <el-checkbox :label="d[key]"></el-checkbox>
+              </el-checkbox-group>
+            </td>
+
+            <r-table-cell
+              ref="cell"
+              @click.native="onCellClicked()"
+              v-for="(c, i) in columns"
+              :key="i"
+              :column="c"
+              :data="d"
+              @update-data="updateData(d, c.prop, $event)"
+              @edit-started="onEditStarted()"
+              @toggle-sub-row="toggleSubRow(k, $event)"
+              @data-deleted="reload"
+            ></r-table-cell>
+          </tr>
+
+          <tr v-show="subRow[k]" :key="`subrow-${k}`">
+            <td v-html="subRowContent[k]" :colspan="columnsLength"></td>
+          </tr>
+        </template>
       </tbody>
     </table>
 
@@ -45,12 +64,13 @@
       </el-tooltip>
 
       <el-tooltip content="每頁顯示" placement="top">
-        <el-select v-model="localPageLength" style="width: 70px" size="mini">
-          <el-option :value="2">2</el-option>
-          <el-option :value="10">10</el-option>
-          <el-option :value="25">25</el-option>
-          <el-option :value="50">50</el-option>
-          <el-option :value="100">100</el-option>
+        <el-select v-model="localPageLength" style="width: 70px">
+          <el-option
+            v-for="(p, index) in pageLengthOption"
+            :value="p"
+            v-text="p"
+            :key="index"
+          ></el-option>
         </el-select>
       </el-tooltip>
 
@@ -73,6 +93,23 @@
           <i class="fas fa-fw fa-list"></i>
         </el-button>
       </el-tooltip>
+
+      <el-dropdown v-if="$slots.dropdown">
+        <el-button>
+          Export
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <slot name="dropdown"> </slot>
+        </el-dropdown-menu>
+      </el-dropdown>
+
+      <!-- el-tooltip content="Save search filter" placement="top">
+        <el-button @click="onSaveSearchFilter()" size="mini">
+          <i class="fas fa-fw fa-save"></i>
+        </el-button>
+      </el-tooltip -->
+
       <!-- 
 
       <el-tooltip content="Clear cache" placement="top-start">
@@ -80,37 +117,14 @@
           <i class="fa fa-times-circle"></i>
         </el-button>
       </el-tooltip>
-
-      <div class="dropdown" v-if="dropdown.length > 0">
-        <el-dropdown>
-          <el-button>
-            Export
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              v-for="(x, index) in dropdown"
-              :key="index"
-              v-text="x.label"
-              @click.native="clickExport(x)"
-            ></el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-
-      <div class="btn-group">
-        <button
-          v-for="(button, index) in bottomButtons"
-          :key="index"
-          @click="onClickButton(button)"
-          class="btn btn-default btn-sm"
-          type="button"
-          v-text="button.text"
-        ></button>
-      </div> -->
+ -->
+    </div>
+    <div class="float-right">
+      {{ info.from }} - {{ info.to }} of {{ info.total }}
     </div>
   </el-card>
 </template>
+
 
 <script>
 export default {
@@ -122,11 +136,16 @@ export default {
       },
     },
     remote: String,
+    pageLengthOption: {
+      type: Array,
+      default: [10, 25, 50, 100],
+    },
     pageLength: {
       type: Number,
       default: 25,
     },
     cellUrl: String,
+    selectable: Boolean,
   },
   components: {
     "r-table-pagination": () => import("./r-table-pagination"),
@@ -144,9 +163,20 @@ export default {
       showColumnSelector: false,
       total: 0,
       key: null,
+      selectedValue: [],
+      dropdowns: [],
+      subRow: [],
+      subRowContent: [],
     };
   },
   computed: {
+    info() {
+      return {
+        from: (this.page - 1) * this.localPageLength + 1,
+        to: Math.min(this.page * this.localPageLength, this.total),
+        total: this.total,
+      };
+    },
     pageCount() {
       return Math.ceil(this.total / this.localPageLength);
     },
@@ -157,6 +187,14 @@ export default {
     },
     isSearchable() {
       return this.columns.some((o) => o.searchable);
+    },
+    columnsLength() {
+      let l = 0;
+      l = this.columns.length;
+      if (this.selectable) {
+        l++;
+      }
+      return l;
     },
   },
   watch: {
@@ -170,12 +208,23 @@ export default {
   },
   async created() {},
   async mounted() {
+    if (this.$slots.dropdown) {
+      this.dropdowns = this.$slots.dropdown.map((v) => v.componentInstance);
+      this.dropdowns.forEach((dd) => {
+        dd.$on("click", () => {
+          dd.clickCallback(this);
+        });
+      });
+    }
+
     this.columns = this.$slots.default
       .filter((v) => v.componentOptions?.tag == "r-table-column")
       .map((v) => v.componentInstance);
 
     this.columns.forEach((column) => {
       column.$on("order-changed", async () => {
+        this.clearEditMode();
+
         this.order = [];
         this.order.push({
           name: column.prop,
@@ -191,10 +240,31 @@ export default {
     }
   },
   methods: {
-    onEditStarted() {
+    async toggleSubRow(index, e) {
+      if (this.subRow[index]) {
+        this.subRow[index] = false;
+      } else {
+        this.subRow[index] = true;
+
+        let resp = await this.$http.get(e.url, {
+          params: e.params,
+          headers: {
+            Accept: "text/html",
+          },
+        });
+        resp = resp.body;
+        this.subRowContent[index] = resp;
+      }
+      this.$forceUpdate();
+    },
+    onSaveSearchFilter() {},
+    clearEditMode() {
       this.$refs.cell.forEach((cell) => {
         cell.editMode = false;
       });
+    },
+    onEditStarted() {
+      this.clearEditMode();
     },
     async updateData(data, prop, value) {
       if (!this.cellUrl) {
@@ -252,8 +322,6 @@ export default {
       };
 
       params.search = Object.values(this.searchData);
-
-      console.log(params);
 
       let resp = await this.$http.get(this.remote, { params });
       this.loading = false;

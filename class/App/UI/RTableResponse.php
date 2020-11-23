@@ -54,7 +54,7 @@ class RTableResponse implements JsonSerializable
 
     public function __construct()
     {
-        $this->draw = $_GET["draw"];
+        $this->draw = intval($_GET["draw"]);
         $this->request["columns"] = $_GET["columns"];
         $this->order = $_GET["order"];
         $this->page = intval($_GET["page"]);
@@ -243,7 +243,7 @@ class RTableResponse implements JsonSerializable
                         $col = $this->_columns[$c];
 
                         if ($col->type == "sub-row") {
-                            $d[$c] = ["url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
+                            $d[$c] = ["type" => "subrow", "url" => $col->url, "params" => [$col->key =>  $object_vars[$col->key]]];
                         } elseif ($col->type == "delete") {
                             if ($content = (string) $col->getData($obj, $c)) {
                                 $d[$c] = ["type" => $col->type, "content" => (string) $content];
@@ -320,6 +320,7 @@ class RTableResponse implements JsonSerializable
             }
         }
 
+
         foreach ($this->search as $k => $c) {
             $column = $this->_columns[$c["name"]];
             $value = $c["value"];
@@ -341,7 +342,6 @@ class RTableResponse implements JsonSerializable
                         $s[] = "?{$field}_{$k}";
                         $p["{$field}_{$k}"] = $k;
                     }
-
 
                     $source->where("$field in (" . implode(",", $s) . ")", $p);
                     continue;

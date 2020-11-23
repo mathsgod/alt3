@@ -1,5 +1,6 @@
 <?php
 
+use App\UI\RTableResponse;
 use App\UI\RTRequest;
 use App\UI\RTResponse;
 use App\User;
@@ -9,23 +10,24 @@ class User_list extends App\Page
 {
     private function getRT()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+
+        $rt = $this->createRTable([$this, "ds"]);
         //$rt->selectable = true;
         $rt->addView();
         $rt->addEdit();
         $rt->addDel();
         $rt->add("Username", "username")->ss();
-        $rt->add("User group", "usergroup_id")->searchMultiple(App\UserGroup::Query());
+        $rt->add("User group", "usergroup_id")->searchable("multiselect")->searchOption(App\UserGroup::Query());
         $rt->add("First name", "first_name")->ss();
         $rt->add("Last name", "last_name")->ss();
         $rt->add("Phone", "phone")->ss()->editable();
         $rt->add("Email", "email")->ss(); //->overflow("hidden");
-        $rt->add("Status", "status")->sort()->searchOption(User::STATUS);
+        $rt->add("Status", "status")->sortable()->searchOption(User::STATUS);
 
         //        $rt->add("Status", "Status()")->index("status")->sort()->searchOption(User::$_Status);
         // $rt->add("Expiry date", "expiry_date")->sort()->searchDateRange();
-        $rt->add("Join date", "join_date")->sort()->searchDate();
-        $rt->add("Language", "language")->sort();
+        $rt->add("Join date", "join_date")->sortable()->searchable("date");
+        $rt->add("Language", "language")->sortable();
 
         $rt->add("Online", "isonline");
         $rt->add("2-Step", "two_step");
@@ -70,15 +72,14 @@ class User_list extends App\Page
     {
 
         $this->write($this->getRT());
-        
     }
 
-    public function ds(RTResponse $rt, $t): RTResponse
+    public function ds(RTableResponse $rt, $t)
     {
-        if (!$this->getRT()->validate($rt)) {
+        /*     if (!$this->getRT()->validate($rt)) {
             throw new Exception("access deny");
         }
-
+ */
         $rt->source = App\User::Query();
 
         $rt->columns = [
@@ -88,7 +89,7 @@ class User_list extends App\Page
                 "format" => "tick"
             ]
         ];
-        $rt->key("user_id");
+        $rt->setKey("user_id");
         $rt->add("two_step", "secret")->format("tick");
         $rt->add("usergroup_id", function ($obj) {
             $ugs = [];

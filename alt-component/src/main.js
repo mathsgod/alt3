@@ -134,3 +134,4 @@ Vue.component("r-table", () => import("./r-table"));
 Vue.component("r-table-column", () => import("./r-table-column"));
 Vue.component("r-table-column-search", () => import("./r-table-column-search"));
 Vue.component("r-table-cell", () => import("./r-table-cell"));
+Vue.component("r-table-dropdown-item", () => import("./r-table-dropdown-item"));

@@ -7,6 +7,7 @@
       sorting_desc: localOrder == 'desc',
       sorting_asc: localOrder == 'asc',
     }"
+    style="white-space: nowrap"
   >
     {{ label }}
   </th>
@@ -37,6 +38,7 @@ export default {
   props: {
     label: String,
     prop: String,
+    type: String,
     sortable: Boolean,
     searchable: Boolean,
     searchType: {

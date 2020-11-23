@@ -126,7 +126,7 @@ export default {
         case "select":
           method = "eq";
           break;
-        case "multiple":
+        case "multiselect":
           method = "in";
           break;
         case "date":

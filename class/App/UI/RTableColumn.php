@@ -6,6 +6,12 @@ use P\HTMLElement;
 
 class RTableColumn extends HTMLElement
 {
+    const EDIT_TYPE_TEXT = "text";
+    const EDIT_TYPE_MULTISELECT = "multiselect";
+    const EDIT_TYPE_SELECT = "select";
+    const EDIT_TYPE_DATE = "date";
+
+
     public function __construct()
     {
         parent::__construct("r-table-column");
@@ -16,6 +22,14 @@ class RTableColumn extends HTMLElement
         $this->setAttribute("editable", true);
         $this->setAttribute("edit-type", $type);
         return $this;
+    }
+
+    /**
+     * @deprecated use sortable
+     **/
+    public function sort()
+    {
+        return $this->sortable();
     }
 
     public function ss()
@@ -33,16 +47,30 @@ class RTableColumn extends HTMLElement
         return $this;
     }
 
-    public function searchOption($options = null)
+    public function searchOption($options = null, string $display_member = null, string $value_member = null)
     {
-        $opt = [];
-        foreach ($options as $value => $label) {
-            $opt[] = [
-                "value" => $value,
-                "label" => $label
-            ];
+        if ($value_member === null) {
+            $value_member = $this->getAttribute("prop");
         }
-        $this->setAttribute(":search-option", json_encode($opt, JSON_UNESCAPED_UNICODE));
+
+
+        $data = [];
+        foreach ($options as $k => $v) {
+            if (is_object($v)) {
+                $d = [
+                    "label" => $display_member ? var_get($v, $display_member) : (string)$v,
+                    "value" => var_get($v, $value_member)
+                ];
+                /*                 if ($this->searchOptValue) {
+                    $d["group"] = \My\Func::_($this->searchOptValue)->call($v);
+                }
+ */
+                $data[] = $d;
+            } else {
+                $data[] = ['label' => $v, 'value' => $k];
+            }
+        }
+        $this->setAttribute(":search-option", json_encode($data, JSON_UNESCAPED_UNICODE));
         return $this;
     }
 
