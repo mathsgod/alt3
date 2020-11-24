@@ -48,7 +48,7 @@
 </template>
 <style scoped>
 td {
-    padding: .15rem;
+  padding: 0.15rem;
 }
 </style>
 <script>
@@ -69,6 +69,16 @@ export default {
       let style = {};
       if (this.column.nowrap) {
         style["white-space"] = "nowrap";
+      }
+
+      if (this.column.prop == "__view__") {
+        style["text-align"] = "center";
+      }
+      if (this.column.prop == "__edit__") {
+        style["text-align"] = "center";
+      }
+      if (this.column.prop == "__del__") {
+        style["text-align"] = "center";
       }
       return style;
     },
