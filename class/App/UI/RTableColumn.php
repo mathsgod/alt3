@@ -15,6 +15,16 @@ class RTableColumn extends HTMLElement
     public function __construct()
     {
         parent::__construct("r-table-column");
+        $this->setAttribute("nowarp", true);
+    }
+
+    public function nowrap(bool $nowrap){
+        if($nowrap){
+            $this->setAttribute("nowrap",true);
+        }else{
+            $this->removeAttribute("nowrap ");
+        }
+        return $this;
     }
 
     public function editable(string $type = "text")
@@ -32,10 +42,17 @@ class RTableColumn extends HTMLElement
         return $this->sortable();
     }
 
+    /**
+     * @deprecated use searchable
+     **/
+    public function search()
+    {
+        return $this->searchable();
+    }
+
     public function ss()
     {
         $this->sortable();
-
         $this->searchable();
         return $this;
     }

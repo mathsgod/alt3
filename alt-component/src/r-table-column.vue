@@ -62,6 +62,7 @@ export default {
     },
     editable: Boolean,
     editType: String,
+    nowrap:Boolean
   },
   data() {
     return {

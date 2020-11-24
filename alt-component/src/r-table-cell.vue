@@ -1,5 +1,5 @@
 <template>
-  <td @click="onClick">
+  <td @click="onClick" :style="style">
     <template v-if="editMode">
       <template v-if="column.editType == 'text'">
         <el-input
@@ -21,7 +21,10 @@
       </template>
     </template>
     <template v-else>
-      <runtime-template-compiler v-if="type == 'vue'" :template="value"></runtime-template-compiler>
+      <runtime-template-compiler
+        v-if="type == 'vue'"
+        :template="value"
+      ></runtime-template-compiler>
       <template v-else-if="type == 'subrow'">
         <el-button
           size="mini"
@@ -57,6 +60,13 @@ export default {
     };
   },
   computed: {
+    style() {
+      let style = {};
+      if (this.column.nowrap) {
+        style["white-space"] = "nowrap";
+      }
+      return style;
+    },
     type() {
       var o = this.data[this.column.prop];
       if (o === null) return "text";
@@ -67,7 +77,7 @@ export default {
       return "text";
     },
     value() {
-      if (this.type == "html" || this.type=="vue") {
+      if (this.type == "html" || this.type == "vue") {
         return this.data[this.column.prop].content;
       } else {
         return this.data[this.column.prop];
