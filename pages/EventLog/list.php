@@ -9,17 +9,17 @@ class EventLog_list extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
-        $rt->addCheckbox("eventlog_id");
+        $rt = $this->createRTable([$this, "ds"]);
+//        $rt->selectable();
         $rt->order("eventlog_id", "desc");
         $rt->addView();
         $rt->add("ID", "eventlog_id")->ss();
         $rt->add("Class", "class")->ss();
         $rt->add("Object ID", "id")->ss();
         $rt->add("Action", "action")->ss();
-        $rt->add("User", "user_id")->searchOption(User::find());
-        $rt->add("Created time", "created_time")->sort()->searchDate();
-        $rt->add("Status", "status")->sort()->searchOption(EventLog::STATUS);
+        $rt->add("User", "user_id")->searchOption(User::Query());
+        $rt->add("Created time", "created_time")->sortable()->searchDate();
+        $rt->add("Status", "status")->sortable()->searchOption(EventLog::STATUS);
 
         $this->write($rt);
     }

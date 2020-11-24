@@ -3,30 +3,6 @@
 class System_update extends ALT\Page
 {
 
-    public function getLastestVersion()
-    {
-        $v = $this->getVersionList();
-        return $v[0];
-    }
-
-    public function getVersionList()
-    {
-
-        $composer = new App\Composer($this->app);
-
-        $auth = $composer->auth();
-        $username = $auth["http-basic"]["raymond2.hostlink.com.hk"]["username"];
-        $password = $auth["http-basic"]["raymond2.hostlink.com.hk"]["password"];
-
-        $context = stream_context_create(array(
-            'http' => array(
-                'header' => "Authorization: Basic " . base64_encode("$username:$password")
-            )
-        ));
-
-        $repo = json_decode(file_get_contents("https://raymond2.hostlink.com.hk/bitbucket/repo/packages.json", false, $context), true);
-        return array_reverse(array_keys($repo["packages"]["hostlink/r-alt"]));
-    }
 
     public function globr($sDir, $sPattern, $nFlags = null)
     {
@@ -85,16 +61,18 @@ class System_update extends ALT\Page
         if ($p->needUpdate()) {
             $this->callout->warning("System", "DB version updated, please update db.");
         }
-
         if (My\File::_($cms_root . "/plugins")->permission() != "0777") {
             $this->callout->warning("System", "$cms_root/plugins permission not equal 0777");
         }
 
         $this->navbar()->addButton("DB check", "System/db_check");
 
+
         $this->write("<h4>Use compose to update system: <a href='System/composer'>composer</a></h4>");
         $this->write("<h4>Your current system: " . $this->app->version() . "</h4>");
-        $this->write("<h4>Lasted version: " . $this->getLastestVersion() . "</h4>");
+
+        return;
+
 
         $path = $this->app->config["system"]["update_source"] . "get3.php";
         $source = json_decode(file_get_contents($path), true);

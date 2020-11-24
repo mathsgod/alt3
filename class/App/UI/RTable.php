@@ -3,9 +3,7 @@
 
 namespace App\UI;
 
-use Closure;
 use P\HTMLElement;
-
 
 class RTable extends HTMLElement
 {
@@ -18,21 +16,30 @@ class RTable extends HTMLElement
         $this->append($this->dropdown);
     }
 
+    public function addSubrow(string $prop)
+    {
+        $col = $this->add("", $prop);
+        $col->setAttribute("width", "55px");
+        return $col;
+    }
+
     public function addView()
     {
         $col = new RTableColumn();
+        $col->setAttribute("width", "36px");
         $col->setAttribute("prop", "__view__");
-        
+
         $this->append($col);
 
         return $col;
     }
 
+
     public function addEdit()
     {
         $col = new RTableColumn();
         $col->setAttribute("prop", "__edit__");
-        
+        $col->setAttribute("width", "36px");
         $this->append($col);
         return $col;
     }
@@ -40,8 +47,9 @@ class RTable extends HTMLElement
     public function addDel()
     {
         $col = new RTableColumn();
+        $col->setAttribute("width", "36px");
         $col->setAttribute("prop", "__del__");
-        
+
         $this->append($col);
         return $col;
     }
@@ -91,5 +99,12 @@ class RTable extends HTMLElement
 
 
         $this->dropdown->append($item);
+    }
+
+    public function order(string $name, string $dir = null)
+    {
+        $this->setAttribute("default-sorting", $name);
+        $this->setAttribute("default-sorting-order", $dir);
+        return $this;
     }
 }

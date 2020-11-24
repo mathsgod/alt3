@@ -6,7 +6,7 @@ class User_v_userlog extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+        $rt = $this->createRTable([$this, "ds"]);
         $rt->order("userlog_id", "desc");
         $rt->add("Login time", "login_dt")->searchDate()->sort();
         $rt->add("Logout time", "logout_dt");

@@ -8,12 +8,12 @@ class MailLog_list extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+        $rt = $this->createRTable([$this, "ds"]);
 
         $rt->order("maillog_id", "desc");
-        $rt->addSubRow("subrow1");
+        $rt->addSubrow("subrow1");
+        $rt->add("ID", "maillog_id")->sortable();
         $rt->add("Subject", "subject");
-
         $rt->add("From", "from");
         $rt->add("To", "to");
 

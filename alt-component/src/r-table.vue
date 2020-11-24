@@ -138,7 +138,9 @@ export default {
     remote: String,
     pageLengthOption: {
       type: Array,
-      default: [10, 25, 50, 100],
+      default() {
+        return [10, 25, 50, 100];
+      },
     },
     pageLength: {
       type: Number,
@@ -146,6 +148,8 @@ export default {
     },
     cellUrl: String,
     selectable: Boolean,
+    defaultSorting: String,
+    defaultSortingOrder: String,
   },
   components: {
     "r-table-pagination": () => import("./r-table-pagination"),
@@ -235,6 +239,13 @@ export default {
       });
     });
 
+    if (this.defaultSorting) {
+      this.order.push({
+        name: this.defaultSorting,
+        dir: this.defaultSortingOrder,
+      });
+    }
+
     if (this.remote) {
       await this.reload();
     }
@@ -259,6 +270,7 @@ export default {
     },
     onSaveSearchFilter() {},
     clearEditMode() {
+      if (!this.$refs.cell) return;
       this.$refs.cell.forEach((cell) => {
         cell.editMode = false;
       });

@@ -15,12 +15,14 @@ class System_example_list2 extends ALT\Page
 
         $rt->add("", "subrow1");
         $rt->add("Username", "username")->ss();
+        
 
         $rt->add("Usergroup", "usergroup_id")->searchable("multiselect")->searchOption(App\UserGroup::Query());
         $rt->add("Status", "status")->searchable("select")->searchOption(App\User::STATUS);
 
         $rt->add("First name", "first_name")->editable();
         $rt->add("Join date", "join_date")->searchable("date")->editable("date");
+        $rt->add("card", "card");
 
         $rt->selectable();
 
@@ -52,6 +54,13 @@ class System_example_list2 extends ALT\Page
     public function ds(RTableResponse  $rt)
     {
         $rt->source = App\User::Query();
+
+        $that = $this;
+        $rt->add("card", function () use ($that) {
+            $t = $that->createT(App\User::Query());
+            $t->add("Username", "username");
+            return (string)$t;
+        })->type = "vue";
 
         $rt->addSubRow("subrow1", [$this, "subrow1"], "user_id");
 

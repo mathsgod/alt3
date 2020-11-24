@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="white-space: nowrap">
     <el-tooltip content="最前一頁" placement="top">
       <el-button @click="$emit('input', 1)" :disabled="firstPageDisabled">
         <i class="fa fa-fw fa-step-backward"></i>

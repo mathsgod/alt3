@@ -1,5 +1,18 @@
 <template>
   <td>
+    <template v-if="column.searchable && column.searchType == 'equal'">
+      <el-input
+        @keyup.enter.native="doSearch"
+        v-model="search"
+        clearable
+        @clear="
+          search = '';
+          doSearch();
+        "
+        size="mini"
+      ></el-input>
+    </template>
+
     <template v-if="column.searchable && column.searchType == 'text'">
       <el-input
         @keyup.enter.native="doSearch"
@@ -26,6 +39,7 @@
         format="yyyy-MM-dd"
         value-format="yyyy-MM-dd"
         size="mini"
+        style="max-width: 200px"
       ></el-date-picker>
     </template>
 

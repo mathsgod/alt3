@@ -8,7 +8,7 @@ class User_v_usergroup extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+        $rt = $this->createRTable([$this, "ds"]);
         $rt->addView();
         $rt->add("UserGroup", "usergroup");
         $this->write($rt);
@@ -18,7 +18,7 @@ class User_v_usergroup extends App\Page
     {
         $q = App\UserGroup::Query()->leftJoin('UserList', 'UserList.usergroup_id=UserGroup.usergroup_id');
         $q->where("UserList.user_id=" . $this->object()->user_id);
-        $rt->source = $q; 
+        $rt->source = $q;
         $rt->add("usergroup", "__toString()");
         return $rt;
     }

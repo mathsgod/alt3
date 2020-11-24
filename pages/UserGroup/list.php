@@ -6,14 +6,14 @@ class UserGroup_list extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+        $rt = $this->createRTable([$this, "ds"]);
         $rt->addView();
         $rt->addEdit();
         $rt->addDel();
 
-        $rt->addSubRow("subrow1");
+        $rt->add("", "subrow1");
 
-        $rt->add("Usergroup ID", "usergroup_id")->sort()->searchEq();
+        $rt->add("Usergroup ID", "usergroup_id")->sortable()->searchable("equal");
         $rt->add("Name", "name")->ss();
         $rt->add("Code", "code")->ss();
         $rt->add("User count", "usercount");

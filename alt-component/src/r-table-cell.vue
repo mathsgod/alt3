@@ -21,7 +21,8 @@
       </template>
     </template>
     <template v-else>
-      <template v-if="type == 'subrow'">
+      <runtime-template-compiler v-if="type == 'vue'" :template="value"></runtime-template-compiler>
+      <template v-else-if="type == 'subrow'">
         <el-button
           size="mini"
           :icon="showSubRow ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"
@@ -66,7 +67,7 @@ export default {
       return "text";
     },
     value() {
-      if (this.type == "html") {
+      if (this.type == "html" || this.type=="vue") {
         return this.data[this.column.prop].content;
       } else {
         return this.data[this.column.prop];

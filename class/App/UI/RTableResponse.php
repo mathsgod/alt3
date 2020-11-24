@@ -260,6 +260,9 @@ class RTableResponse implements JsonSerializable
                             } else {
                                 $d[$c] = ["type" => "html", "content" => (string) $content];
                             }
+                        } elseif ($col->type == "vue") {
+                            $content = $col->getData($obj, $c);
+                            $d[$c] = ["type" => "vue", "content" => (string) $content];
                         } else {
                             $v = $col->getData($obj, $c);
 
@@ -348,7 +351,7 @@ class RTableResponse implements JsonSerializable
                 } elseif ($c["method"] == "like") {
                     $name = ":" . $c["name"];
                     $source->where($c["name"] . " like $name", [$name => "%$value%"]);
-                } elseif ($c["method"] == "equal") {
+                } elseif ($c["method"] == "eq") {
                     $source->filter([$c["name"] => $value]);
                 } elseif ($c["method"] == "between") {
 

@@ -79,4 +79,15 @@ class RTableColumn extends HTMLElement
         $this->setAttribute("sortable", true);
         return $this;
     }
+
+    public function width(string $width)
+    {
+        $this->setAttribute("wdith", $width);
+        return $this;
+    }
+
+    public function searchDate()
+    {
+        return $this->searchable("date");
+    }
 }
