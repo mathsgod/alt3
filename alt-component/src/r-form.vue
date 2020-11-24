@@ -1,7 +1,14 @@
 <template>
   <card :type="type" :outline="outline">
     <card-body>
-      <el-form ref="form1" :action="action" :model="form" label-width="auto">
+      <el-form
+        ref="form1"
+        :action="action"
+        :model="form"
+        label-width="auto"
+        :method="method"
+        :enctype="enctype"
+      >
         <slot v-bind:form="form"> </slot>
       </el-form>
     </card-body>
@@ -19,6 +26,8 @@ export default {
     type: String,
     action: String,
     outline: Boolean,
+    method: String,
+    enctype: String,
     data: {
       type: Object,
       default() {
@@ -30,6 +39,9 @@ export default {
     return {
       form: this.data,
     };
+  },
+  provide: {
+    rForm: this,
   },
   mounted() {},
   methods: {

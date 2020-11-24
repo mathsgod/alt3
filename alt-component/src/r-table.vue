@@ -155,11 +155,15 @@ export default {
     defaultSorting: String,
     defaultSortingOrder: String,
   },
+  provide() {
+    return {
+      rTable: this,
+    };
+  },
   components: {
     "r-table-column-search": () => import("./r-table-column-search"),
     "r-table-pagination": () => import("./r-table-pagination"),
     "r-table-cell": () => import("./r-table-cell"),
-  
   },
   data() {
     return {

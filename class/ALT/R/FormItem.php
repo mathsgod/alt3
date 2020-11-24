@@ -3,6 +3,7 @@
 
 namespace ALT\R;
 
+use Element\Button;
 use Element\FormItem as ElementFormItem;
 use Element\Select;
 use P\CustomEvent;
@@ -182,7 +183,7 @@ class FormItem extends ElementFormItem
 
     public function number(string $name)
     {
-/*         $rules = [];
+        /*         $rules = [];
         $rules[] = ["type" => "email"];
         $this->setAttribute(":rules", json_encode($rules));
  */
@@ -296,5 +297,41 @@ class FormItem extends ElementFormItem
 
         $this->setAttribute("prop", $name);
         return $select;
+    }
+
+    public function file(string $name)
+    {
+        $input = new HTMLElement("input");
+        $input->setAttribute("name", $name);
+        $input->setAttribute("type", "file");
+        $this->append($input);
+
+        if ($form = $this->closest("r-form")) {
+            $form->setAttribute("enctype", "multipart/form-data");
+        }
+
+        return $input;
+    }
+
+    public function upload(string $name)
+    {
+        $upload = new HTMLElement("el-upload");
+        $upload->setAttribute("name", $name);
+        $upload->setAttribute("action", "https://jsonplaceholder.typicode.com/posts/");
+        $upload->setAttribute(":limit", 1);
+        $upload->setAttribute(":auto-upload", "false");
+        $upload->setAttribute(":file-list", "scope.form.$name");
+
+
+        $button = new Button();
+        $button->textContent = "Select file";
+        $upload->append($button);
+        $this->append($upload);
+
+        if ($form = $this->closest("r-form")) {
+            $form->setAttribute("enctype", "multipart/form-data");
+        }
+
+        return $upload;
     }
 }

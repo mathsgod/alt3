@@ -70,6 +70,7 @@ export default {
       localOrder: this.order,
     };
   },
+  inject: ['rTable'],
   computed: {
     style() {
       let style = {};
