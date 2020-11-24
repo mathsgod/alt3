@@ -1,53 +1,55 @@
 <template>
   <el-card v-loading="loading" :body-style="{ padding: '0px' }" shadow="never">
-    <table class="table table-hover table-sm table-bordered m-0">
-      <thead>
-        <tr>
-          <th v-if="selectable"></th>
-          <slot></slot>
-        </tr>
-        <tr v-if="isSearchable">
-          <td v-if="selectable"></td>
-          <r-table-column-search
-            v-for="(c, i) in columns"
-            :key="`column-search-${i}`"
-            :column="c"
-            @search="search(...$event)"
-          ></r-table-column-search>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="(d, k) in localData">
-          <tr :key="`${draw}-${k}`">
-            <td v-if="selectable">
-              <el-checkbox-group
-                v-model="selectedValue"
-                class="r-table-checkbox-group"
-              >
-                <el-checkbox :label="d[key]"></el-checkbox>
-              </el-checkbox-group>
-            </td>
-
-            <r-table-cell
-              ref="cell"
-              @click.native="onCellClicked()"
+    <div class="table-responsive">
+      <table class="table table-hover table-sm table-bordered m-0">
+        <thead>
+          <tr>
+            <th v-if="selectable"></th>
+            <slot></slot>
+          </tr>
+          <tr v-if="isSearchable">
+            <td v-if="selectable"></td>
+            <r-table-column-search
               v-for="(c, i) in columns"
-              :key="i"
+              :key="`column-search-${i}`"
               :column="c"
-              :data="d"
-              @update-data="updateData(d, c.prop, $event)"
-              @edit-started="onEditStarted()"
-              @toggle-sub-row="toggleSubRow(k, $event)"
-              @data-deleted="reload"
-            ></r-table-cell>
+              @search="search(...$event)"
+            ></r-table-column-search>
           </tr>
+        </thead>
+        <tbody>
+          <template v-for="(d, k) in localData">
+            <tr :key="`${draw}-${k}`">
+              <td v-if="selectable">
+                <el-checkbox-group
+                  v-model="selectedValue"
+                  class="r-table-checkbox-group"
+                >
+                  <el-checkbox :label="d[key]"></el-checkbox>
+                </el-checkbox-group>
+              </td>
 
-          <tr v-show="subRow[k]" :key="`subrow-${k}`">
-            <td v-html="subRowContent[k]" :colspan="columnsLength"></td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
+              <r-table-cell
+                ref="cell"
+                @click.native="onCellClicked()"
+                v-for="(c, i) in columns"
+                :key="i"
+                :column="c"
+                :data="d"
+                @update-data="updateData(d, c.prop, $event)"
+                @edit-started="onEditStarted()"
+                @toggle-sub-row="toggleSubRow(k, $event)"
+                @data-deleted="reload"
+              ></r-table-cell>
+            </tr>
+
+            <tr v-show="subRow[k]" :key="`subrow-${k}`">
+              <td v-html="subRowContent[k]" :colspan="columnsLength"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
 
     <div class="float-left d-flex">
       <r-table-pagination
@@ -63,6 +65,23 @@
         ></el-button>
       </el-tooltip>
 
+      <!-- el-tooltip content="Save search filter" placement="top">
+        <el-button @click="onSaveSearchFilter()" size="mini">
+          <i class="fas fa-fw fa-save"></i>
+        </el-button>
+      </el-tooltip -->
+
+      <!-- 
+
+      <el-tooltip content="Clear cache" placement="top-start">
+        <el-button @click="resetLocalStorage">
+          <i class="fa fa-times-circle"></i>
+        </el-button>
+      </el-tooltip>
+ -->
+    </div>
+
+    <div class="float-left d-flex">
       <el-tooltip content="每頁顯示" placement="top">
         <el-select v-model="localPageLength" style="width: 70px">
           <el-option
@@ -103,21 +122,6 @@
           <slot name="dropdown"> </slot>
         </el-dropdown-menu>
       </el-dropdown>
-
-      <!-- el-tooltip content="Save search filter" placement="top">
-        <el-button @click="onSaveSearchFilter()" size="mini">
-          <i class="fas fa-fw fa-save"></i>
-        </el-button>
-      </el-tooltip -->
-
-      <!-- 
-
-      <el-tooltip content="Clear cache" placement="top-start">
-        <el-button @click="resetLocalStorage">
-          <i class="fa fa-times-circle"></i>
-        </el-button>
-      </el-tooltip>
- -->
     </div>
     <div class="float-right">
       {{ info.from }} - {{ info.to }} of {{ info.total }}

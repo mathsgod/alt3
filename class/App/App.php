@@ -87,6 +87,14 @@ class App extends \R\App
         } else {
             $this->user = new User($_SESSION["app"]["user_id"]);
         }
+        if (is_string($this->user->style)) {
+            $this->user->style = json_decode($this->user->style, true);
+        }
+
+        if ($this->user->style["body"] === null) {
+            $this->user->style["body"] = ["text-sm"];
+        }
+
         $this->user_id = $this->user->user_id;
 
         if ($this->user->language) {
@@ -97,6 +105,7 @@ class App extends \R\App
         foreach ($this->user->UserGroup() as $ug) {
             $this->usergroup_id[] = $ug->usergroup_id;
         }
+
 
         foreach (SystemValue::Query() as $sv) {
             $this->system_value[$sv->language][$sv->name] = $sv;
