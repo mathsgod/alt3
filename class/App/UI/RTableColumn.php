@@ -15,14 +15,15 @@ class RTableColumn extends HTMLElement
     public function __construct()
     {
         parent::__construct("r-table-column");
-        $this->setAttribute("nowarp", true);
+        $this->setAttribute("nowrap", true);
     }
 
-    public function nowrap(bool $nowrap){
-        if($nowrap){
-            $this->setAttribute("nowrap",true);
-        }else{
-            $this->removeAttribute("nowrap ");
+    public function nowrap(bool $nowrap)
+    {
+        if ($nowrap) {
+            $this->setAttribute("nowrap", true);
+        } else {
+            $this->removeAttribute("nowrap");
         }
         return $this;
     }
