@@ -100,7 +100,8 @@ class RTableColumn extends HTMLElement
 
     public function width(string $width)
     {
-        $this->setAttribute("wdith", $width);
+        $this->setAttribute("width", $width);
+        $this->nowrap(false);
         return $this;
     }
 

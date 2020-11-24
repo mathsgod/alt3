@@ -14,7 +14,7 @@ class System_example_list2 extends ALT\Page
         $rt->setCellUrl("User");
 
         $rt->add("", "subrow1");
-        $rt->add("Username", "username")->ss();
+        $rt->add("Username", "username")->ss()->width("10px");
         
 
         $rt->add("Usergroup", "usergroup_id")->searchable("multiselect")->searchOption(App\UserGroup::Query());

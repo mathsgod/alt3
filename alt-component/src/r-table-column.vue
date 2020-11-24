@@ -77,7 +77,10 @@ export default {
 
       if (this.width) {
         style.width = this.width;
+        style["min-width"]=this.width;
+        style["max-width"]=this.width;
       }
+
       return style;
     },
   },
