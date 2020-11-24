@@ -7,7 +7,7 @@
       sorting_desc: localOrder == 'desc',
       sorting_asc: localOrder == 'asc',
     }"
-    style="white-space: nowrap"
+    :style="style"
   >
     {{ label }}
   </th>
@@ -62,12 +62,24 @@ export default {
     },
     editable: Boolean,
     editType: String,
-    nowrap:Boolean
+    nowrap: Boolean,
+    width: String,
   },
   data() {
     return {
       localOrder: this.order,
     };
+  },
+  computed: {
+    style() {
+      let style = {};
+      style["white-space"] = "nowrap";
+
+      if (this.width) {
+        style.width = this.width;
+      }
+      return style;
+    },
   },
   watch: {
     localOrder() {
