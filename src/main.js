@@ -20,11 +20,20 @@ window.VueDialog = VueDialog;
 
 
 var observer = new MutationObserver(mutationList => {
-    mutationList.forEach(record => {
-        let tables = record.target.querySelectorAll("r-table");
-        tables.forEach(node => {
-            new Vue({
-                el: node
+    setTimeout(() => {
+        mutationList.forEach(record => {
+            let tables = record.target.querySelectorAll("r-table");
+            tables.forEach(node => {
+                new Vue({
+                    el: node
+                });
+            });
+
+            let cards = record.target.querySelectorAll("card");
+            cards.forEach(node => {
+                new Vue({
+                    el: node
+                });
             });
         });
     });

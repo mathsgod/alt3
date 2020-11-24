@@ -130,8 +130,13 @@ Vue.component("r-form", () => import("./r-form"));
 Vue.component("r-date", () => import("./r-date"));
 
 
-Vue.component("r-table", () => import("./r-table"));
-Vue.component("r-table-column", () => import("./r-table-column"));
-Vue.component("r-table-column-search", () => import("./r-table-column-search"));
-Vue.component("r-table-cell", () => import("./r-table-cell"));
-Vue.component("r-table-dropdown-item", () => import("./r-table-dropdown-item"));
+import RTable from "./r-table";
+import RTableColumn from "./r-table-column";
+import RTableDropdownItem from "./r-table-dropdown-item";
+Vue.component("r-table", RTable);
+Vue.component("r-table-column", RTableColumn);
+Vue.component("r-table-dropdown-item", RTableDropdownItem);
+
+//Vue.component("r-table", () => import("./r-table"));
+//Vue.component("r-table-column", () => import("./r-table-column"));
+//Vue.component("r-table-dropdown-item", () => import("./r-table-dropdown-item"));

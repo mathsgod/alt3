@@ -156,7 +156,10 @@ export default {
     defaultSortingOrder: String,
   },
   components: {
+    "r-table-column-search": () => import("./r-table-column-search"),
     "r-table-pagination": () => import("./r-table-pagination"),
+    "r-table-cell": () => import("./r-table-cell"),
+  
   },
   data() {
     return {
@@ -340,11 +343,11 @@ export default {
       params.search = Object.values(this.searchData);
 
       let resp = await this.$http.get(this.remote, { params });
-      this.loading = false;
       resp = resp.data;
       this.localData = resp.data;
       this.total = resp.total;
       this.key = resp.key;
+      this.loading = false;
     },
   },
 };
