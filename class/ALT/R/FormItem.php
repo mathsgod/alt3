@@ -98,8 +98,10 @@ class FormItem extends ElementFormItem
         $hidden = new HTMLElement("input");
         $hidden->setAttribute("type", "hidden");
         $hidden->setAttribute("name", $name . "[]");
-        $hidden->setAttribute("v-for", "v in scope.form.$name");
-        $hidden->setAttribute("v-model", "v");
+        $hidden->setAttribute("v-for", "(v,index) in scope.form.$name");
+        $hidden->setAttribute(":value", "v");
+        $hidden->setAttribute(":key","index");
+        
         $this->append($hidden);
 
 
@@ -234,18 +236,41 @@ class FormItem extends ElementFormItem
         $select->setAttribute("v-model", "scope.form.{$name}");
         $this->append($select);
 
+
         foreach ($data_source as $r => $v) {
-            $option = new HTMLElement("el-option");
-            $value = var_get($v, $value_member);
-            if (is_numeric($value)) {
-                $option->setAttribute(":value", $value);
+            if (is_string($v)) { //[value=>label]
+
+                $option = new HTMLElement("el-option");
+                if (is_numeric($r)) {
+                    $option->setAttribute(":value", $r);
+                } else {
+                    $option->setAttribute("value", $r);
+                }
+                $option->setAttribute("label", $v);
             } else {
-                $option->setAttribute("value", $value);
+                $option = new HTMLElement("el-option");
+                if ($value_member === null) {
+                    $value_member = $name;
+                }
+                $value = var_get($v, $value_member);
+                if (is_numeric($value)) {
+                    $option->setAttribute(":value", $value);
+                } else {
+                    $option->setAttribute("value", $value);
+                }
+
+                if ($display_member === null) {
+                    $label = (string)$v;
+                } else {
+                    $label = var_get($v, $display_member);
+                }
+
+                $option->setAttribute("label", $label);
             }
 
-            $option->setAttribute("label", var_get($v, $display_member));
             $select->append($option);
         }
+
 
         $hidden = new HTMLElement("input");
         $hidden->setAttribute("type", "hidden");

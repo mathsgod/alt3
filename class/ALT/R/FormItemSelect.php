@@ -17,7 +17,7 @@ class FormItemSelect extends Select
         }
         return $this;
     }
-    
+
     public function option($source, string $label = "item", string $value = "value")
     {
         $data = [];
@@ -40,6 +40,7 @@ class FormItemSelect extends Select
 
         $option->setAttribute(":label", $label);
         $option->setAttribute(":value", $value);
+        $option->setAttribute(":key", "value");
 
         $option->setAttribute("v-for", "(item,value) in " . json_encode($data, JSON_UNESCAPED_UNICODE));
         return $option;

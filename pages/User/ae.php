@@ -20,8 +20,7 @@ class User_ae extends ALT\Page
             $resp = $this->app->executeQuery(Builder::Mutation("updateUser", [
                 "user_id" => $obj->user_id,
                 "data" => $data
-            ]),true);
-            
+            ]), true);
         } else {
             $data["usergroup_id"] = array_map(function ($ug_id) {
                 return intval($ug_id);
@@ -75,7 +74,7 @@ class User_ae extends ALT\Page
         $form->add("Status")->select("status")->required()->option(User::STATUS);
         $form->add("Expiry date")->date("expiry_date");
 
-
+        
         if (($user->isAdmin() || $user->isPowerUser()) && !$obj->user_id) {
             $u = UserGroup::_("Users");
             $ugs = UserGroup::Query()->toList()->filter(function ($o) {
@@ -85,11 +84,8 @@ class User_ae extends ALT\Page
             $form->add("User group")->multiselect("usergroup_id")->option($ugs, "name", "usergroup_id");
         }
 
-
         $form->add("Language")->select("language")->option($this->app->config["system"]["language"]);
         $form->add("Default page")->input("default_page");
-
-
         $this->write($card);
     }
 }
