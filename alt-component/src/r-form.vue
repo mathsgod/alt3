@@ -5,6 +5,7 @@
       <el-button @click="onSubmit()" icon="el-icon-check" type="success"
         >Submit</el-button
       >
+      <el-button @click="onBack()" type="warning">Back</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -32,6 +33,9 @@ export default {
           this.$refs.form1.$el.submit();
         }
       });
+    },
+    onBack() {
+      window.history.go(-1);
     },
   },
 };
