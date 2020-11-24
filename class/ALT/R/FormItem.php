@@ -100,8 +100,8 @@ class FormItem extends ElementFormItem
         $hidden->setAttribute("name", $name . "[]");
         $hidden->setAttribute("v-for", "(v,index) in scope.form.$name");
         $hidden->setAttribute(":value", "v");
-        $hidden->setAttribute(":key","index");
-        
+        $hidden->setAttribute(":key", "index");
+
         $this->append($hidden);
 
 
@@ -174,6 +174,21 @@ class FormItem extends ElementFormItem
         $input->setAttribute("name", $name);
         $input->setAttribute("v-model", "scope.form.{$name}");
         $input->setAttribute("show-password", true);
+
+        $this->append($input);
+        $this->setAttribute("prop", $name);
+        return $input;
+    }
+
+    public function number(string $name)
+    {
+/*         $rules = [];
+        $rules[] = ["type" => "email"];
+        $this->setAttribute(":rules", json_encode($rules));
+ */
+        $input = new FormItemInputNumber();
+        $input->setAttribute("name", $name);
+        $input->setAttribute("v-model", "scope.form.{$name}");
 
         $this->append($input);
         $this->setAttribute("prop", $name);

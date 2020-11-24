@@ -65,7 +65,7 @@ class User_ae extends ALT\Page
         $form->add("Last name")->input("last_name");
         $form->add("Phone")->input("phone");
         $form->add("Email")->email("email")->required();
-
+        
         $form->add("Address")->input("addr1");
         $form->add("")->input("addr2");
         $form->add("")->input("addr3");
@@ -74,7 +74,7 @@ class User_ae extends ALT\Page
         $form->add("Status")->select("status")->required()->option(User::STATUS);
         $form->add("Expiry date")->date("expiry_date");
 
-        
+
         if (($user->isAdmin() || $user->isPowerUser()) && !$obj->user_id) {
             $u = UserGroup::_("Users");
             $ugs = UserGroup::Query()->toList()->filter(function ($o) {
@@ -84,7 +84,7 @@ class User_ae extends ALT\Page
             $form->add("User group")->multiselect("usergroup_id")->option($ugs, "name", "usergroup_id");
         }
 
-        $form->add("Language")->select("language")->option($this->app->config["system"]["language"]);
+        $form->add("Language")->select("language", $this->app->config["system"]["language"]);
         $form->add("Default page")->input("default_page");
         $this->write($card);
     }
