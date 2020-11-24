@@ -46,6 +46,11 @@
     </template>
   </td>
 </template>
+<style scoped>
+td {
+    padding: .15rem;
+}
+</style>
 <script>
 export default {
   props: {
