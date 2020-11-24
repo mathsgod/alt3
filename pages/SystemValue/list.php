@@ -8,7 +8,7 @@ class SystemValue_list extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+        $rt = $this->createRTable([$this, "ds"]);
 
         $rt->addEdit();
         $rt->addDel();

@@ -52,8 +52,7 @@ class User_ae extends ALT\Page
 
         $obj = $this->object();
         $obj->password = "";
-        $card = $this->createCard();
-        $form = $card->addRForm($obj);
+        $form = $this->createRForm($obj);
 
         $user = $this->app->user;
         if (!$obj->user_id) {
@@ -61,11 +60,11 @@ class User_ae extends ALT\Page
             $form->add("Password")->password("password")->required()->setAttribute("auto-complete", "new-password");
         }
 
+       
         $form->add("First name")->input("first_name")->required();
         $form->add("Last name")->input("last_name");
         $form->add("Phone")->input("phone");
         $form->add("Email")->email("email")->required();
-        
         $form->add("Address")->input("addr1");
         $form->add("")->input("addr2");
         $form->add("")->input("addr3");
@@ -86,6 +85,6 @@ class User_ae extends ALT\Page
 
         $form->add("Language")->select("language", $this->app->config["system"]["language"]);
         $form->add("Default page")->input("default_page");
-        $this->write($card);
+        $this->write($form);
     }
 }

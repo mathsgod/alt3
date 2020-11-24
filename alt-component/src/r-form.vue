@@ -1,18 +1,24 @@
 <template>
-  <el-form ref="form1" :action="action" :model="form" label-width="auto">
-    <slot v-bind:form="form"> </slot>
-    <el-form-item>
+  <card :type="type" :outline="outline">
+    <card-body>
+      <el-form ref="form1" :action="action" :model="form" label-width="auto">
+        <slot v-bind:form="form"> </slot>
+      </el-form>
+    </card-body>
+    <card-footer>
       <el-button @click="onSubmit()" icon="el-icon-check" type="success"
         >Submit</el-button
       >
       <el-button @click="onBack()" type="warning">Back</el-button>
-    </el-form-item>
-  </el-form>
+    </card-footer>
+  </card>
 </template>
 <script>
 export default {
   props: {
+    type: String,
     action: String,
+    outline: Boolean,
     data: {
       type: Object,
       default() {

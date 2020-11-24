@@ -122,6 +122,24 @@ class Page extends \R\Page
         return $rt;
     }
 
+    protected function createRForm($data = null)
+    {
+        if ($data === null) {
+            $data = $this->object();
+        }
+
+        $form = new \ALT\R\Form();
+        $form->setPage($this);
+        $form->setAttribute("type", "primary");
+        $form->setAttribute("outline", true);
+        $form->setAttribute("method", "POST");
+        $form->setAttribute("label-width", "auto");
+
+        if ($data) {
+            $form->setData($data);
+        }
+        return $form;
+    }
 
     protected function createCard(string $type = "primary"): UI\Card
     {

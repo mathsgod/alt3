@@ -6,7 +6,7 @@ class DynamicPage_list extends App\Page
 {
     public function get()
     {
-        $rt2 = $this->createRT2([$this, "ds"]);
+        $rt2 = $this->createRTable([$this, "ds"]);
         $rt2->addView();
         $rt2->addEdit();
         $rt2->addDel();

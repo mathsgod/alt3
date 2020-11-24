@@ -39,3 +39,10 @@ var observer = new MutationObserver(mutationList => {
     });
 });
 observer.observe(document.body, { attributes: false, childList: true, subtree: true });
+
+var forms = document.querySelectorAll("r-form");
+forms.forEach(node => {
+    new Vue({
+        el: node
+    });
+});

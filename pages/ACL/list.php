@@ -8,7 +8,7 @@ class ACL_list extends App\Page
 {
     public function get()
     {
-        $rt = $this->createRT2([$this, "ds"]);
+        $rt = $this->createRTable([$this, "ds"]);
         $rt->order("user_id", "desc");
 
         $rt->addDel();
@@ -18,8 +18,8 @@ class ACL_list extends App\Page
         $rt->Add("User", "user_id");
         $rt->Add("UserGroup", "usergroup_id");
         $rt->Add("Special User", "special_user");
-        $rt->Add("Value", "value")->sort();
-        $rt->add("Type", "type")->sort();
+        $rt->Add("Value", "value")->sortable();
+        $rt->add("Type", "type")->sortable();
 
         $this->write($rt);
     }

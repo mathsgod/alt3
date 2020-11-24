@@ -127,7 +127,7 @@ class Card extends HTMLElement implements Scriptable
 
     public function script()
     {
-        
+
         $script = new \Vue\Script();
         $script->el = "#" . $this->getAttribute("id");
 
