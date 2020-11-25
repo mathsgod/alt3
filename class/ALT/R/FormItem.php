@@ -251,6 +251,7 @@ class FormItem extends ElementFormItem
         $select = new FormItemSelect();
         $select->setAttribute("v-model", "scope.form.{$name}");
         $select->setAttribute("filterable", true);
+        $select->setAttribute("clearable", true);
         $this->append($select);
 
 
