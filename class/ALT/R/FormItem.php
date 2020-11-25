@@ -1,13 +1,10 @@
 <?php
 
-
 namespace ALT\R;
 
 use Element\Button;
 use Element\FormItem as ElementFormItem;
-use Element\Select;
 use P\CustomEvent;
-use P\Event;
 use P\HTMLElement;
 
 class FormItem extends ElementFormItem
@@ -23,6 +20,39 @@ class FormItem extends ElementFormItem
         $this->setAttribute(":rules", json_encode($rules));
 
         return $this;
+    }
+
+
+    private static $FILEMAN_NUM = 0;
+    public function fileman(string $name)
+    {
+        $fileman = new HTMLElement("fileman");
+        $fileman->setAttribute("name", $name);
+        $fileman->setAttribute("url", "Fileman/?token=");
+        $fileman->setAttribute("id", "_fileman_" . self::$FILEMAN_NUM);
+        $fileman->setAttribute("v-model", "scope.form.{$name}");
+        self::$FILEMAN_NUM++;
+        $this->append($fileman);
+        $this->setAttribute("prop", $name);
+        return $fileman;
+    }
+
+    public function colorPicker(string $name)
+    {
+        $color = new HTMLElement("el-color-picker");
+        $color->setAttribute("name", $name);
+        $color->setAttribute("v-model", "scope.form.{$name}");
+        $this->append($color);
+        $this->setAttribute("prop", $name);
+
+        $hidden = new HTMLElement("input");
+        $hidden->setAttribute("type", "hidden");
+        $hidden->setAttribute("name", $name);
+        $hidden->setAttribute("v-model", "scope.form.$name");
+        $this->append($hidden);
+
+
+        return $color;
     }
 
     public function timeSelect(string $name)
