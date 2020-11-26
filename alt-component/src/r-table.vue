@@ -14,6 +14,7 @@
               :key="`column-search-${i}`"
               :column="c"
               @search="search(...$event)"
+              ref="searchColumn"
             ></r-table-column-search>
           </tr>
         </thead>
@@ -64,12 +65,6 @@
           size="mini"
         ></el-button>
       </el-tooltip>
-
-      <!-- el-tooltip content="Save search filter" placement="top">
-        <el-button @click="onSaveSearchFilter()" size="mini">
-          <i class="fas fa-fw fa-save"></i>
-        </el-button>
-      </el-tooltip -->
 
       <!-- 
 
@@ -122,6 +117,36 @@
           <slot name="dropdown"> </slot>
         </el-dropdown-menu>
       </el-dropdown>
+
+      <el-tooltip content="Save search filter" placement="top">
+        <el-button @click="onSaveSearchFilter()">
+          <i class="fas fa-fw fa-save"></i>
+        </el-button>
+      </el-tooltip>
+
+      <el-dropdown @command="searchFilterCommand" v-if="savedFilter.length > 0">
+        <el-button>
+          <template v-if="selected_filter"
+            >{{ selected_filter.name }}
+          </template>
+          <template v-else> search filter </template>
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            v-for="(filter, index) in savedFilter"
+            v-text="filter.name"
+            :key="index"
+            @click.native="onSelectFilter(filter)"
+          ></el-dropdown-item>
+
+          <template v-if="selected_filter">
+            <el-dropdown-item command="remove" divided icon="el-icon-delete"
+              >Remove</el-dropdown-item
+            >
+          </template>u
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <div class="float-right">
       {{ info.from }} - {{ info.to }} of {{ info.total }}
@@ -167,6 +192,7 @@ export default {
   },
   data() {
     return {
+      selected_filter: null,
       loading: false,
       columns: [],
       localData: this.data,
@@ -185,6 +211,13 @@ export default {
     };
   },
   computed: {
+    storage() {
+      let store = localStorage.getItem(this.remote);
+      return store ? JSON.parse(store) : {};
+    },
+    savedFilter() {
+      return this.storage.filters ?? [];
+    },
     info() {
       return {
         from: (this.page - 1) * this.localPageLength + 1,
@@ -262,6 +295,46 @@ export default {
     }
   },
   methods: {
+    async searchFilterCommand(command) {
+      if (command == "remove") {
+        if (
+          await this.$confirm(`Remove ${this.selected_filter.name} filter?`)
+        ) {
+          let filters = this.getStorage("filters");
+          let i = filters.indexOf(this.selected_filter);
+          filters.splice(i, 1);
+          this.updateStorage("filters", filters);
+          this.selected_filter = null;
+        }
+      }
+    },
+    getSearchColumn(name) {
+      return this.$refs.searchColumn.find((c) => c.name == name);
+    },
+    onSelectFilter(filter) {
+      this.selected_filter = filter;
+      Object.values(filter.value).forEach((v) => {
+        let col = this.getSearchColumn(v.name);
+        col.search = v.value;
+      });
+
+      this.searchData = filter.value;
+      this.page = 1;
+
+      this.reload();
+    },
+    clearStorage() {
+      localStorage.setItem(this.remote, "");
+    },
+    getStorage(name) {
+      let store = this.storage;
+      return store[name] ?? {};
+    },
+    updateStorage(name, data) {
+      let store = this.storage;
+      store[name] = data;
+      localStorage.setItem(this.remote, JSON.stringify(store));
+    },
     async toggleSubRow(index, e) {
       if (this.subRow[index]) {
         this.subRow[index] = false;
@@ -279,7 +352,19 @@ export default {
       }
       this.$forceUpdate();
     },
-    onSaveSearchFilter() {},
+    onSaveSearchFilter() {
+      this.$prompt("Please input filter name", "", {
+        inputValue: "filter " + (this.savedFilter.length + 1),
+      }).then(({ value }) => {
+        let filters = this.savedFilter;
+        filters.push({
+          name: value,
+          value: this.searchData,
+        });
+        this.updateStorage("filters", filters);
+        this.$forceUpdate();
+      });
+    },
     clearEditMode() {
       if (!this.$refs.cell) return;
       this.$refs.cell.forEach((cell) => {

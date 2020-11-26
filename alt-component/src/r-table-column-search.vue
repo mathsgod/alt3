@@ -86,6 +86,11 @@ export default {
   props: {
     column: Object,
   },
+  computed: {
+    name() {
+      return this.column.prop;
+    },
+  },
   data() {
     return {
       search: null,
