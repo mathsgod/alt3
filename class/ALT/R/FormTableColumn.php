@@ -6,7 +6,6 @@ use Element\Button;
 use Element\Checkbox;
 use Element\DatePicker;
 use P\HTMLElement;
-use Element\Input;
 use Element\InputNumber;
 use Element\Option;
 use Element\Select;
@@ -30,7 +29,7 @@ class FormTableColumn extends HTMLElement
         $fileman = new HTMLElement("fileman");
         $fileman->setAttribute("name", $name);
         $fileman->setAttribute("url", "Fileman/?token=");
-        $fileman->setAttribute(":id", "`_fileman_" . self::$FILEMAN_NUM.'_${scope.$index}`');
+        $fileman->setAttribute(":id", "`_fileman_" . self::$FILEMAN_NUM . '_${scope.$index}`');
         $fileman->setAttribute("v-model", "scope.row.{$name}");
         self::$FILEMAN_NUM++;
         $this->template->append($fileman);
