@@ -1,5 +1,7 @@
 <?php
 
+
+
 class System_example_ae extends ALT\Page
 {
     public function post()
@@ -10,6 +12,21 @@ class System_example_ae extends ALT\Page
 
     public function get()
     {
+
+        $table = $this->createFormTable(App\User::Query()->toArray(), "user_id", "users");
+
+        $table->add("Username")->input("username")->required();
+        $table->add("Email")->email("email")->required();
+        $table->add("Number")->number("status");
+        $table->add("Status")->select("status", [0 => "Active", 1 => "Inactive"]);
+        
+        $table->add("upload")->fileman("test");
+  //      $table->add("Join date")->datePicker("join_date");
+
+        //$table->add("Check box")->checkbox("status");
+
+        $this->write("<form method='POST'><vue>$table</vue> <button type='submit'>Submit</button></form>");
+        return;
 
         $langs = ["en" => "EN", "zh-hk" => "HK"];
         $form = $this->createRForm([

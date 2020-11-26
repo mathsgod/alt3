@@ -124,6 +124,8 @@ import API from './class/API';
 Vue.use(API);
 
 
+Vue.component("vue", () => import("./vue"));
+Vue.component("r-form-table", () => import("./r-form-table"));
 
 
 Vue.component("r-form", () => import("./r-form"));

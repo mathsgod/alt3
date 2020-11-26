@@ -179,6 +179,19 @@ class Page extends \R\Page
         return new UI\V($object, $this);
     }
 
+    public function createFormTable($data, string $data_key, string $data_name = "data")
+    {
+        $t = new \ALT\R\FormTable();
+        $t->setAttribute("data-key", $data_key);
+
+        $t->setAttribute("data-name", $data_name);
+
+        if ($data) {
+            $t->setAttribute(":data", json_encode($data));
+        }
+        return $t;
+    }
+
     public function createT($objects): UI\T
     {
         return new UI\T($objects, $this);

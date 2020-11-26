@@ -46,3 +46,10 @@ forms.forEach(node => {
         el: node
     });
 });
+
+var vues = document.querySelectorAll("vue");
+vues.forEach(node => {
+    new Vue({
+        el: node
+    });
+});
