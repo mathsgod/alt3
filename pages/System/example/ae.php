@@ -19,9 +19,10 @@ class System_example_ae extends ALT\Page
         $table->add("Email")->email("email")->required();
         $table->add("Number")->number("status");
         $table->add("Status")->select("status", [0 => "Active", 1 => "Inactive"]);
-        
+        $table->add('remark')->textarea("remark");
+
         $table->add("upload")->fileman("test");
-  //      $table->add("Join date")->datePicker("join_date");
+        //      $table->add("Join date")->datePicker("join_date");
 
         //$table->add("Check box")->checkbox("status");
 

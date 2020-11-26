@@ -1,13 +1,6 @@
 <template>
   <el-table :data="data">
-    <input
-      type="hidden"
-      v-for="(i, index) in deletedId"
-      :key="index"
-      :value="i"
-      name="data_del[]"
-    />
-    <el-table-column>
+    <el-table-column width="46px">
       <template slot="header">
         <button class="btn btn-xs btn-primary" @click.prevent="addRow()">
           <i class="fa fa-fw fa-plus"></i>
@@ -36,6 +29,14 @@
       </template>
     </el-table-column>
     <slot></slot>
+
+    <input
+      type="hidden"
+      v-for="(i, index) in deletedId"
+      :key="index"
+      :value="i"
+      :name="`${dataName}[${data.length + index}][__del__]`"
+    />
   </el-table>
 </template>
 

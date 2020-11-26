@@ -17,6 +17,12 @@ class FormTableColumn extends HTMLElement
         parent::__construct("el-table-column");
     }
 
+    public function width(string $width)
+    {
+        $this->setAttribute("width", $width);
+        return $this;
+    }
+
     private static $FILEMAN_NUM = 0;
     public function fileman(string $name)
     {
@@ -27,7 +33,7 @@ class FormTableColumn extends HTMLElement
         $this->append($this->template);
 
         $fileman = new HTMLElement("fileman");
-        $fileman->setAttribute("name", $name);
+        $fileman->setAttribute(":name", '`' . $data_name . '[${scope.$index}][' . $name . ']`');
         $fileman->setAttribute("url", "Fileman/?token=");
         $fileman->setAttribute(":id", "`_fileman_" . self::$FILEMAN_NUM . '_${scope.$index}`');
         $fileman->setAttribute("v-model", "scope.row.{$name}");
@@ -48,7 +54,7 @@ class FormTableColumn extends HTMLElement
 
 
         $upload = new HTMLElement("el-upload");
-        $upload->setAttribute("name", $name);
+        $upload->setAttribute(":name", '`' . $data_name . '[${scope.$index}][' . $name . ']`');
         $upload->setAttribute("action", "https://jsonplaceholder.typicode.com/posts/");
         $upload->setAttribute(":limit", 1);
         $upload->setAttribute(":auto-upload", "false");
@@ -152,6 +158,22 @@ class FormTableColumn extends HTMLElement
         $this->append($this->template);
         return $input;
     }
+
+    public function textarea(string $name)
+    {
+        $data_name = $this->parentNode->getAttribute("data-name");
+        $this->template = new HTMLElement('template');
+        $this->template->setAttribute("slot-scope", "scope");
+        $input = new FormTableInput();
+        $input->setAttribute("type", "textarea");
+        $input->setAttribute(":name", '`' . $data_name . '[${scope.$index}][' . $name . ']`');
+        $input->setAttribute("v-model", "scope.row.{$name}");
+
+        $this->template->append($input);
+
+        $this->append($this->template);
+    }
+
 
     public function input(string $name)
     {
