@@ -41,10 +41,14 @@ export default {
   },
   methods: {
     async click() {
-      try {
-        await this.$confirm(this.confirmMessage);
+      if (this.confirm) {
+        try {
+          await this.$confirm(this.confirmMessage);
+          window.self.location = this.href;
+        } catch (e) {}
+      } else {
         window.self.location = this.href;
-      } catch (e) {}
+      }
     },
   },
 };
