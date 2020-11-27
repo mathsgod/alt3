@@ -17,39 +17,24 @@ window.WebAuthn = WebAuthn;
 import VueDialog from './VueDialog';
 window.VueDialog = VueDialog;
 
+var init_vue = function (element) {
 
+    var nodes = element.querySelectorAll("r-form, r-a, vue, r-table, card");
+    nodes.forEach(node => {
+        new Vue({
+            el: node
+        });
+    });
+}
 
 var observer = new MutationObserver(mutationList => {
     setTimeout(() => {
         mutationList.forEach(record => {
-            let tables = record.target.querySelectorAll("r-table");
-            tables.forEach(node => {
-                new Vue({
-                    el: node
-                });
-            });
-
-            let cards = record.target.querySelectorAll("card");
-            cards.forEach(node => {
-                new Vue({
-                    el: node
-                });
-            });
+            init_vue(record.target);
         });
     });
 });
 observer.observe(document.body, { attributes: false, childList: true, subtree: true });
 
-var forms = document.querySelectorAll("r-form");
-forms.forEach(node => {
-    new Vue({
-        el: node
-    });
-});
 
-var vues = document.querySelectorAll("vue");
-vues.forEach(node => {
-    new Vue({
-        el: node
-    });
-});
+init_vue(document);
