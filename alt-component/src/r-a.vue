@@ -1,5 +1,5 @@
 <template>
-  <a class="btn" :class="getClass">
+  <a :class="getClass" @click.prevent="click">
     <template v-if="icon"><i :class="icon"></i></template>
     <slot></slot
   ></a>
@@ -14,6 +14,12 @@ export default {
     size: String,
     icon: String,
     block: Boolean,
+    confirm: Boolean,
+    confirmMessage: {
+      type: String,
+      default: "Are you sure?",
+    },
+    href: String,
   },
   computed: {
     getClass() {
@@ -31,6 +37,14 @@ export default {
       }
 
       return c;
+    },
+  },
+  methods: {
+    async click() {
+      try {
+        await this.$confirm(this.confirmMessage);
+        window.self.location = this.href;
+      } catch (e) {}
     },
   },
 };
