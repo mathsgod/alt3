@@ -1,5 +1,5 @@
 <template>
-  <a :class="getClass" @click.prevent="click">
+  <a :class="getClass" @click.prevent="click" :href="href">
     <template v-if="icon"><i :class="icon"></i></template>
     <slot></slot
   ></a>
