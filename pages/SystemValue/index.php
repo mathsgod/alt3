@@ -1,5 +1,7 @@
 <?php
 
+use App\SystemValue;
+
 class SystemValue_index extends ALT\Page
 {
 	public function get()

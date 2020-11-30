@@ -8,6 +8,7 @@ class SystemValue_list extends App\Page
 {
     public function get()
     {
+        
         $rt = $this->createRTable([$this, "ds"]);
 
         $rt->addEdit();

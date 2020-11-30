@@ -24,7 +24,7 @@ class ACL_edit extends ALT\Page
             $acl->delete();
         }
 
-        return ["code" => 200];
+        return ["data" => true];
     }
 
     public function post()
@@ -35,17 +35,13 @@ class ACL_edit extends ALT\Page
         $value = $_POST["value"];
         $special_user = $_POST["special_user"];
         if ($value["action"]) {
-            $acls = $this->getACL([
+            $this->getACL([
                 "user_id" => $user_id,
                 "usergroup_id" => $usergroup_id,
                 "special_user" => $special_user,
                 "module" => $module,
                 "action" => $value["action"]
-            ]);
-
-            foreach ($acls as $acl) {
-                $acl->delete();
-            }
+            ])->delete();
 
             if ($value["allow"]) {
                 $o = new ACL();
@@ -75,11 +71,9 @@ class ACL_edit extends ALT\Page
                 "special_user" => $special_user,
                 "module" => $module,
                 "path" => $value["path"]
-            ]);
+            ])->delete();
 
-            foreach ($acls as $acl) {
-                $acl->delete();
-            }
+
             if ($value["allow"]) {
                 $o = new ACL();
                 $o->module = $module;
@@ -103,7 +97,7 @@ class ACL_edit extends ALT\Page
             }
         }
 
-        return ["code" => 200];
+        return ["data" => true];
     }
 
     public function data()
@@ -123,17 +117,15 @@ class ACL_edit extends ALT\Page
     }
 
 
-    public function getValue($module, $usergroup_id, $user_id, $special_user)
+    public function getValue($module = null, $usergroup_id = null, $user_id = null, $special_user = null)
     {
         if (!$usergroup_id && !$user_id && !$special_user) {
             return [];
         }
 
+        $m = $this->app->module($module);
 
-
-        $module = $this->app->module($module);
-
-        if ($module) {
+        if ($m) {
             $ds = [];
             foreach (ACL::ACTION as $action) {
                 $d = [];
@@ -141,31 +133,30 @@ class ACL_edit extends ALT\Page
 
                 $count = $this->getACL([
                     "user_id" => $user_id,
-                    "usergroup_id" => $usergroup_id,
-                    "special_user" => $special_user,
-                    "module" => $module->name,
+                    "usergroup_id" => $usergroup_id ?? null,
+                    "special_user" => $special_user ?? null,
+                    "module" => $module,
                     "action" => $action,
                     "value" => "allow"
                 ])->count();
 
                 $d["allow"] = $count ? true : false;
 
-                $w = [];
-                if ($user_id) {
-                    $w[] = "user_id=$user_id";
-                } elseif ($usergroup_id) {
-                    $w[] = "usergroup_id=$usergroup_id";
-                } elseif ($special_user) {
-                    $w[] = "special_user=$special_user";
-                }
-                $w[] = ["module=?", $module->class];
-                $w[] = ["action=?", $action];
-                $w[] = "value='deny'";
-                $d["deny"] = ACL::count($w) ? true : false;
+
+                $count = $this->getACL([
+                    "user_id" => $user_id,
+                    "usergroup_id" => $usergroup_id,
+                    "special_user" => $special_user,
+                    "module" => $module,
+                    "action" => $action,
+                    "value" => "deny"
+                ])->count();
+                $d["deny"] = $count ? true : false;
                 $ds[] = $d;
             }
             $dds["action"] = $ds;
         }
+
 
         if ($special_user) {
             return $dds;
@@ -173,10 +164,10 @@ class ACL_edit extends ALT\Page
 
         ///------------
         $paths = [];
-        if ($module) {
+        if ($m) {
 
             $paths[] = "";
-            foreach ($module->getAction() as $act) {
+            foreach ($m->getAction() as $act) {
                 $paths[] = $act["filename"];
             }
 
@@ -190,7 +181,7 @@ class ACL_edit extends ALT\Page
                     "user_id" => $user_id,
                     "usergroup_id" => $usergroup_id,
                     "special_user" => $special_user,
-                    "module" => $module->name,
+                    "module" => $module,
                     "path" => $path,
                     "value" => 'allow'
                 ])->count();
@@ -200,7 +191,7 @@ class ACL_edit extends ALT\Page
                     "user_id" => $user_id,
                     "usergroup_id" => $usergroup_id,
                     "special_user" => $special_user,
-                    "module" => $module->name,
+                    "module" => $module,
                     "path" => $path,
                     "value" => 'deny'
                 ])->count();
@@ -215,8 +206,9 @@ class ACL_edit extends ALT\Page
             "user_id" => $user_id,
             "usergroup_id" => $usergroup_id,
             "special_user" => $special_user,
-            "module" => $module ? $module->name : null,
+            "module" => $module->name ?? null,
         ]);
+
 
         //custom
         $ds = [];
@@ -262,39 +254,19 @@ class ACL_edit extends ALT\Page
         outp($this->app->modules());
     }
 
-    public function getACL($s)
+    public function getACL(array $s)
     {
-        $module = $s["module"];
-        $user_id = $s["user_id"];
-        $usergroup_id = $s["usergroup_id"];
-        $special_user = $s["special_user"];
-        $path = $s["path"];
-        $action = $s["action"];
-        $value = $s["value"];
+        $filter = $s;
+        if (!$filter["user_id"]) unset($filter["user_id"]);
+        if (!$filter["usergroup_id"]) unset($filter["usergroup_id"]);
+        if (!$filter["special_user"]) unset($filter["special_user"]);
 
-        $w = [];
-        $w[] = $module ? ["module=?", $module] : "module is null";
-
-        if ($user_id) {
-            $w[] = ["user_id=?", $user_id];
-        } elseif ($usergroup_id) {
-            $w[] = ["usergroup_id=?", $usergroup_id];
-        } elseif ($special_user) {
-            $w[] = ["special_user=?", $special_user];
-        }
-
-
-        if ($action) {
-            $w[] = ["action=?", $action];
+        if ($s["action"]) {
+            $filter["action"] = $s["action"];
         } else {
-            $w[] = ["path=?", $path];
+            $filter["path"] = $s["path"];
         }
-
-        if ($value) {
-            $w[] = ["value=?", $value];
-        }
-
-
-        return ACL::Find($w);
+        if (!$filter["value"]) unset($filter["value"]);
+        return ACL::Query($filter);
     }
 }

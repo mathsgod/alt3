@@ -3,27 +3,27 @@
         <card-body>
             <el-form label-width="auto">
                 <el-form-item label="Module">
-                    <el-select v-model="module" clearable>
-                        <el-option v-for="m in modules" :value="m" :label="m.name"></el-option>
+                    <el-select v-model="form.module" clearable filterable>
+                        <el-option v-for="m in modules" :value="m.name" :label="m.name"></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="User group">
-                    <el-select v-model="usergroup" @change="changeUserGroup" clearable>
-                        <el-option v-for="ug in usergroups" :value="ug" :label="ug.name"></el-option>
+                    <el-select v-model="form.usergroup_id" @change="changeUserGroup" clearable filterable>
+                        <el-option v-for="ug in usergroups" :value="ug.usergroup_id" :label="ug.name"></el-option>
                     </el-select>
                 </el-form-item>
 
 
                 <el-form-item label="User">
-                    <el-select v-model="user" @change="changeUser" clearable>
-                        <el-option v-for="u in users" :value="u"
+                    <el-select v-model="form.user_id" @change="changeUser" clearable filterable>
+                        <el-option v-for="u in users" :value="u.user_id"
                             :label="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="SPECIAL USER" clearable>
-                    <el-select v-model="special_user" @change="changeSpecialUser">
+                    <el-select v-model="form.special_user" @change="changeSpecialUser">
                         <el-option v-for="(k,v) in special_users" :value="v" :label="k"></el-option>
                     </el-select>
                 </el-form-item>
@@ -127,24 +127,25 @@
     var vm = new Vue({
         el: "#div1",
         data: {
+            form: {
+                module: null,
+                user_id: null,
+                usergroup_id: null,
+                special_user: null
+            },
             custom: null,
-            module: null,
             modules: [],
             usergroups: [],
             users: [],
-            usergroup: null,
-            user: null,
             data1: [],
             special_users: [],
-            special_user: null
         },
-        created() {
-            this.$http.get(window.location + "/data").then(resp => {
-                this.modules = resp.data.module;
-                this.usergroups = resp.data.usergroup;
-                this.users = resp.data.user;
-                this.special_users = resp.data.special_user;
-            });
+        async created() {
+            let resp = await this.$http.get("ACL/edit/data");
+            this.modules = resp.data.module;
+            this.usergroups = resp.data.usergroup;
+            this.users = resp.data.user;
+            this.special_users = resp.data.special_user;
         }, watch: {
             module() {
                 this.getValue();
@@ -157,64 +158,37 @@
                 return false;
 
             },
-            actionChecked(a) {
-                let p = {};
-                if (this.module) {
-                    p.module = this.module.name;
-                }
-
-                if (this.usergroup) {
-                    p.usergroup_id = this.usergroup.usergroup_id
-                }
-
-                if (this.user) {
-                    p.user_id = this.user.user_id;
-                }
-
-                if (this.special_user) {
-                    p.special_user = this.special_user;
-                }
-
+            async actionChecked(a) {
+                let p = this.form;
                 p.value = a;
-                return this.$http.post(window.location.toString(), p);
+                let resp = await this.$http.post(window.location.toString(), p);
+                resp = resp.data;
+                if (resp.data) {
+                    this.$message({ message: "ACL updated", type: "success" })
+                }
+
             },
-            getValue() {
-                let p = {};
-                if (this.module) {
-                    p.module = this.module.name;
-                }
+            async getValue() {
+                let p = this.form;
 
-                if (this.usergroup) {
-                    p.usergroup_id = this.usergroup.usergroup_id
-                }
+                let resp = await this.$http.get("ACL/edit/getValue", { params: p });
 
-                if (this.user) {
-                    p.user_id = this.user.user_id;
-                }
+                this.data1 = resp.data;
 
-                if (this.special_user) {
-                    p.special_user = this.special_user;
-                }
-
-                this.$http.get(window.location + "/getValue", {
-                    params: p
-                }).then(resp => {
-                    this.data1 = resp.data;
-                });
 
             },
             changeSpecialUser() {
-                this.user = null;
-                this.usergroup = null;
+                this.form.user_id = null;
+                this.form.usergroup_id = null;
                 this.getValue();
             },
             changeUserGroup() {
-                this.user = null;
-                this.special_user = null;
+                this.form.user_id = null;
+                this.form.special_user = null;
                 this.getValue();
             }, changeUser() {
-                this.usergroup = null;
-                this.special_user = null;
+                this.form.usergroup_id = null;
+                this.form.special_user = null;
                 this.getValue();
             }, onSaveCustom() {
                 this.actionChecked(this.custom).then(resp => {

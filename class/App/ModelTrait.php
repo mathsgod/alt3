@@ -29,7 +29,7 @@ trait ModelTrait
     private function _acl_allow($action = []): bool
     {
 
-        $class = get_class($this);
+        $class = basename(get_class($this));
 
         //--- deny ---
         if (array_intersect($action, self::$_app->acl["action"]["deny"][$class] ?? [])) {
