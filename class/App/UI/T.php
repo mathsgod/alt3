@@ -2,6 +2,8 @@
 
 namespace App\UI;
 
+use Traversable;
+
 class T extends Card
 {
     public $objects;
@@ -11,6 +13,7 @@ class T extends Card
     {
         parent::__construct($page);
         $this->objects = $objects;
+
         $this->setAttribute("primary", true);
         $this->setAttribute("outline", true);
 

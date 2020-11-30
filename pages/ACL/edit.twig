@@ -1,24 +1,25 @@
+{% verbatim %}   
 <div id="div1">
     <card>
         <card-body>
             <el-form label-width="auto">
                 <el-form-item label="Module">
                     <el-select v-model="form.module" clearable filterable>
-                        <el-option v-for="m in modules" :value="m.name" :label="m.name"></el-option>
+                        <el-option v-for="(m,index) in modules" :value="m.name" :label="m.name" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="User group">
                     <el-select v-model="form.usergroup_id" @change="changeUserGroup" clearable filterable>
-                        <el-option v-for="ug in usergroups" :value="ug.usergroup_id" :label="ug.name"></el-option>
+                        <el-option v-for="(ug,index) in usergroups" :value="ug.usergroup_id" :label="ug.name" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
 
 
                 <el-form-item label="User">
                     <el-select v-model="form.user_id" @change="changeUser" clearable filterable>
-                        <el-option v-for="u in users" :value="u.user_id"
-                            :label="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'"></el-option>
+                        <el-option v-for="(u,index) in users" :value="u.user_id"
+                            :label="u.first_name + ' ' + u.last_name + ' (' + u.username + ')'" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
 
@@ -63,7 +64,7 @@
 
                 <tbody>
                     <tr v-for="(a,index) in data1.path">
-                        <td v-text="a.path"></td>
+                        <td>{{a.path}}<template v-if="a.path==''">[Nav menu]</template></td>
                         <td>
                             <el-checkbox v-model="a.allow" @change="actionChecked(a)"></el-checkbox>
                         </td>
@@ -74,54 +75,11 @@
                 </tbody>
             </table>
 
-            <table class="table table-sm" v-if="allowAddCustom()">
-                <thead>
-                    <tr>
-                        <th><button class="btn btn-xs btn-primary" @click="custom={allow:1,deny:0}"><i
-                                    class="fa fa-fw fa-plus"></i></button></th>
-                        <th>Path</th>
-                        <th>Allow</th>
-                        <th>Deny</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr v-if="custom">
-                        <td><button @click.prevent="onSaveCustom" class="btn btn-xs btn-success"><i
-                                    class="fa fa-fw fa-check"></i></button>
-                            <button @click.prevent="custom=null" class="btn btn-xs btn-warning"><i
-                                    class="fa fa-fw fa-undo"></i></button></td>
-                        <td>
-                            <el-input v-model="custom.path"></el-input>
-                        </td>
-                        <td>
-                            <el-checkbox v-model="custom.allow"></el-checkbox>
-                        </td>
-                        <td>
-                            <el-checkbox v-model="custom.deny"></el-checkbox>
-                        </td>
-
-                    </tr>
-                    <tr v-for="a in data1.custom">
-                        <td><button @click.prevent="delAction(a)" class="btn btn-xs btn-danger"><i
-                                    class="fa fa-fw fa-times"></i></button></td>
-                        <td v-text="a.path"></td>
-                        <td>
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="">
-                            </div>
-
-                            <!-- icheck v-model="a.allow" @input="actionChecked(a)" value="1"></icheck -->
-                        </td>
-                        <td>
-                            <!-- icheck v-model="a.deny" @input="actionChecked(a)" value="1"></icheck -->
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+          
         </card-body>
     </card>
 </div>
+{% endverbatim %}
 
 <script>
     var vm = new Vue({

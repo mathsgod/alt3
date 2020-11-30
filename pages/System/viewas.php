@@ -17,7 +17,7 @@ class System_viewas extends ALT\Page
 
 
         $ref = $_SERVER['HTTP_REFERER'];
-        $t = $this->createT(App\User::Find());
+        $t = $this->createT(App\User::Query()->toArray());
         $t->add("Username", "username");
         $t->add("User group", function ($u) {
 
