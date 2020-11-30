@@ -147,13 +147,13 @@
             this.users = resp.data.user;
             this.special_users = resp.data.special_user;
         }, watch: {
-            module() {
+            "form.module"() {
                 this.getValue();
             }
         }, methods: {
             allowAddCustom() {
-                if (this.user) return true;
-                if (this.usergroup) return true;
+                if (this.form.user_id) return true;
+                if (this.form.usergroup_id) return true;
 
                 return false;
 
@@ -161,21 +161,16 @@
             async actionChecked(a) {
                 let p = this.form;
                 p.value = a;
-                let resp = await this.$http.post(window.location.toString(), p);
+                let resp = await this.$http.post("ACL/edit", p);
                 resp = resp.data;
                 if (resp.data) {
                     this.$message({ message: "ACL updated", type: "success" })
                 }
-
             },
             async getValue() {
                 let p = this.form;
-
                 let resp = await this.$http.get("ACL/edit/getValue", { params: p });
-
                 this.data1 = resp.data;
-
-
             },
             changeSpecialUser() {
                 this.form.user_id = null;
@@ -197,22 +192,11 @@
                 });
 
             }, delAction(a) {
-                let p = {};
-                if (this.module) {
-                    p.module = this.module.name;
-                }
-
-                if (this.usergroup) {
-                    p.usergroup_id = this.usergroup.usergroup_id
-                }
-
-                if (this.user) {
-                    p.user_id = this.user.user_id;
-                }
+                let p = this.form;
 
                 p.value = a;
 
-                this.$http.post(window.location + "/delACL", p).then(resp => {
+                this.$http.post("ACL/edit/delACL", p).then(resp => {
                     this.getValue();
                 });
             }
