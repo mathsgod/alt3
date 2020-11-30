@@ -614,13 +614,18 @@ class App extends \R\App
 
 
         $result = false;
-        if ($this->config["system"]["user_default_acl"] && $this->user->isUser()) {
-            if ($module) {
-                if (!starts_with($module->class, "App")) { //module is not system module
-                    $result = true;
+        if ($module->user_default_acl === false) {
+        } else {
+            if ($this->config["system"]["user_default_acl"] && $this->user->isUser()) {
+                if ($module) {
+                    if (!starts_with($module->class, "App")) { //module is not system module
+                        $result = true;
+                    }
                 }
             }
         }
+
+
 
         if (!$result) {
             $result = (bool) in_array($path, $this->acl["path"]["allow"]);
