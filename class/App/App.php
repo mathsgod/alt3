@@ -695,13 +695,17 @@ class App extends \R\App
 
     public function version(): string
     {
-        if ($_SESSION["app"]["version"])
-            return $_SESSION["app"]["version"];
-
         $package = $this->composer->package("mathsgod/alt3");
+        if (!$package) return "dev";
 
-        $_SESSION["app"]["version"] = $package["version"] ?? "6.0.0";
-        return $_SESSION["app"]["version"];
+        if ($package["version"]) {
+            $version = $package["version"];
+        }
+
+        if ($version == "dev-master") {
+            $version .= " " . substr($package["source"]["reference"], 0, 8);
+        }
+        return $version;
     }
 
     public function composer(): Composer
