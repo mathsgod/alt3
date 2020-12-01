@@ -41,6 +41,7 @@
                 @edit-started="onEditStarted()"
                 @toggle-sub-row="toggleSubRow(k, $event)"
                 @data-deleted="reload"
+                v-show="c.isVisible"
               ></r-table-cell>
             </tr>
 

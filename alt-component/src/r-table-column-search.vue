@@ -1,5 +1,5 @@
 <template>
-  <td>
+  <td v-show="column.isVisible">
     <template v-if="column.searchable && column.searchType == 'equal'">
       <el-input
         @keyup.enter.native="doSearch"

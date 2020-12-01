@@ -1,5 +1,6 @@
 <template>
   <th
+    v-show="isVisible"
     @click="click"
     class="unselectable"
     v-bind:class="{
@@ -56,7 +57,7 @@ export default {
       default: "like",
     },
     order: String,
-    isVisible: {
+    visible: {
       type: Boolean,
       default: true,
     },
@@ -68,9 +69,10 @@ export default {
   data() {
     return {
       localOrder: this.order,
+      isVisible: this.visible,
     };
   },
-  inject: ['rTable'],
+  inject: ["rTable"],
   computed: {
     style() {
       let style = {};
@@ -78,8 +80,8 @@ export default {
 
       if (this.width) {
         style.width = this.width;
-        style["min-width"]=this.width;
-        style["max-width"]=this.width;
+        style["min-width"] = this.width;
+        style["max-width"] = this.width;
       }
 
       return style;
