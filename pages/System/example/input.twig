@@ -1,14 +1,29 @@
+{% verbatim %}
+
+
 <div id="app">
     <card>
         <card-body>
             abc
-        </card-body> 
+            {{input_id}}
+        </card-body>
     </card>
 </div>
-
+{% endverbatim %}
 <script>
 
+    const router = new VueRouter({
+        routes: [
+            { path: "/:input_id" }
+        ]
+    });
     new Vue({
-        el: "#app"
+        router,
+        el: "#app",
+        data() {
+            return {
+                input_id: this.$route.params.input_id
+            }
+        }
     });
 </script>

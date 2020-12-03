@@ -45,7 +45,9 @@ export default {
         try {
           await this.$confirm(this.confirmMessage);
           window.self.location = this.href;
-        } catch (e) {}
+        } catch (e) {
+          console.log('cancel');
+        }
       } else {
         window.self.location = this.href;
       }

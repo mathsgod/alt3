@@ -3,9 +3,11 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n'
 import Element from 'element-ui';
 import VueResource from 'vue-resource';
-
-
 Vue.use(VueResource);
+
+import VueRouter from 'vue-router';
+window.VueRouter = VueRouter;
+
 
 import VueGQL from '@mathsgod/vue-gql/src/index.js';
 Vue.use(VueGQL);
