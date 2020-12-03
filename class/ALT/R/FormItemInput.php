@@ -15,4 +15,10 @@ class FormItemInput extends Input
         }
         return $this;
     }
+
+    public function placeholder(string $placeholder)
+    {
+        $this->setAttribute("placeholder", $placeholder);
+        return $this;
+    }
 }
