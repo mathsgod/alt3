@@ -1,2 +1,0 @@
-(("undefined"!==typeof self?self:this)["webpackJsonpalt_component"]=("undefined"!==typeof self?self:this)["webpackJsonpalt_component"]||[]).push([[8],{a0dd:function(e,t,n){"use strict";n.r(t);var l=function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",[e._t("default")],2)},s=[],f={},u=f,a=n("2877"),o=Object(a["a"])(u,l,s,!1,null,null,null);t["default"]=o.exports}}]);
-//# sourceMappingURL=alt-component.umd.min.8.js.map
