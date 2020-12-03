@@ -77,6 +77,7 @@ export default {
     style() {
       let style = {};
       style["white-space"] = "nowrap";
+      style["overflow"]="hidden";
 
       if (this.width) {
         style.width = this.width;
