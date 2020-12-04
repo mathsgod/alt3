@@ -1,7 +1,5 @@
 <?php
 
-use Firebase\JWT\JWT;
-
 /**
  * @property App\App $app
  */
@@ -29,25 +27,18 @@ class _index extends R\Page
 
         if ($token) {
             if ($this->app->loginByToken($token)) {
-                $this->response = $this->response->withHeader("Location", "");
+                $this->response = $this->response->withHeader("Location", "User/profile");
                 return;
             }
         }
-
 
         $twig = $this->app->twig(__DIR__ . "/index.twig");
 
         $pi = $this->app->pathInfo();
 
-
         $data = $pi;
         $data["app"] = $this->app;
 
-
-
         $this->write($twig->render($data));
-        //print_r($this->app->loader);
-
-        //$this->write("index");
     }
 }
