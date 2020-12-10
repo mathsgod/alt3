@@ -145,3 +145,5 @@ Vue.component("r-table-dropdown-item", RTableDropdownItem);
 //Vue.component("r-table-column", () => import("./r-table-column"));
 //Vue.component("r-table-dropdown-item", () => import("./r-table-dropdown-item"));
 Vue.component("r-a", () => import("./r-a"));
+import RDialog from "./r-dialog";
+Vue.component("r-dialog", RDialog);
