@@ -17,8 +17,8 @@ class Fileman_api extends R\Page
     public function upload_file($token)
     {
         $config = $this->app->config["hostlink-fileman"];
-        $f = new Fileman\App($token, $config);
-
+        $f = new Fileman\App($config, $this->app->loader);
+        
         return $f->uploadFile($token, $_POST["path"], $_FILES["file"]);
     }
 }
