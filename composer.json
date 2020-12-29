@@ -11,13 +11,6 @@
     ],
     "repositories": [
         {
-            "type": "path",
-            "url": "../hostlink-fileman",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
             "type": "composer",
             "url": "https://raymond2.hostlink.com.hk/satis/web"
         }

@@ -55,8 +55,8 @@ class User_ae extends ALT\Page
         $form = $this->createRForm($obj);
 
         $user = $this->app->user;
+        $form->add("Username")->input("username")->required();
         if (!$obj->user_id) {
-            $form->add("Username")->input("username")->required();
             $form->add("Password")->password("password")->required()->setAttribute("auto-complete", "new-password");
         }
 
