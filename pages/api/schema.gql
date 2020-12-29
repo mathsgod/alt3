@@ -39,6 +39,7 @@ type Mutation{
 input UserInput{
     first_name:String
     last_name:String
+   
 }
 
 input MyInfoInput{
