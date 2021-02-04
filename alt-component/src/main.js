@@ -12,7 +12,6 @@ window.VueRouter = VueRouter;
 import VueGQL from '@mathsgod/vue-gql/src/index.js';
 Vue.use(VueGQL);
 
-import "element-ui/lib/theme-chalk/index.css";
 import enLocale from 'element-ui/lib/locale/lang/en';
 import zhLocale from 'element-ui/lib/locale/lang/zh-TW';
 
