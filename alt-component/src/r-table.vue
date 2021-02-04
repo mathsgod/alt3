@@ -145,7 +145,7 @@
             <el-dropdown-item command="remove" divided icon="el-icon-delete"
               >Remove</el-dropdown-item
             >
-          </template>u
+          </template>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -296,6 +296,16 @@ export default {
     }
   },
   methods: {
+    selectAll(){
+
+      this.selectedValue=[];
+      for(let k in this.localData){
+        this.selectedValue.push(this.localData[k][this.key]);
+      }
+    },
+    getSelectedValue() {
+      return this.selectedValue;
+    },
     async searchFilterCommand(command) {
       if (command == "remove") {
         if (

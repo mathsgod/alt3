@@ -12,7 +12,13 @@ class System_example_ae extends ALT\Page
 
     public function get()
     {
+        $f = $this->createRForm();
 
+        $f->add("input")->input("a");
+        $this->write($f);
+
+
+        return;
         $table = $this->createFormTable(App\User::Query()->toArray(), "user_id", "users");
 
         $table->add("Username")->input("username")->required();

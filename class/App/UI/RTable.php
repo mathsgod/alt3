@@ -5,6 +5,10 @@ namespace App\UI;
 
 use P\HTMLElement;
 
+
+/**
+ * @property bool $selectable 
+ */
 class RTable extends HTMLElement
 {
     public function __construct()
@@ -14,6 +18,28 @@ class RTable extends HTMLElement
         $this->dropdown = new Element("template");
         $this->dropdown->setAttribute("slot", "dropdown");
         $this->append($this->dropdown);
+    }
+
+    public function __set($name, $value)
+    {
+
+        switch ($name) {
+            case "selectable":
+                $this->setAttribute("selectable", true);
+                return;
+                break;
+        }
+        parent::__set($name, $value);
+    }
+
+    public function __get($name)
+    {
+        switch ($name) {
+            case "selectable":
+                return $this->getAttribute("selectable");
+        }
+
+        return parent::__get($name);
     }
 
     public function addSubrow(string $prop)
@@ -66,10 +92,7 @@ class RTable extends HTMLElement
         return $this;
     }
 
-    public function selectable()
-    {
-        $this->setAttribute("selectable", true);
-    }
+
 
     public function add(string $label, string $prop)
     {

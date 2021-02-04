@@ -287,7 +287,7 @@ class Page extends \R\Page
             $request = $request->withQueryParams(["request" => $rt]);
         }
 
-        if ($this->isAccept("text/html") && $request->getMethod() == "GET" && $request->getRequestTarget() == "get") {
+        if (($this->isAccept("text/html") || $this->isAccept("*/*")) && $request->getMethod() == "GET" && $request->getRequestTarget() == "get") {
             $file = $route->file;
             $pi = pathinfo($file);
             if (file_exists($template_file = $pi["dirname"] . "/" . $pi["filename"] . ".twig")) {
