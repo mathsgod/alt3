@@ -305,12 +305,13 @@ export default {
   },
   methods: {
     clearSearch() {
-      
       this.searchData = {};
-      for(let s of this.$refs.searchColumn){
-        s.search="";
+      for (let s of this.$refs.searchColumn) {
+        s.search = "";
       }
-      
+
+      this.updateStorage("search", {});
+
       this.reload();
     },
     selectAll() {
