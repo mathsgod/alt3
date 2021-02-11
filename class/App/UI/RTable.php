@@ -18,6 +18,10 @@ class RTable extends HTMLElement
         $this->dropdown = new Element("template");
         $this->dropdown->setAttribute("slot", "dropdown");
         $this->append($this->dropdown);
+
+        $this->header = new Element("template");
+        $this->header->setAttribute("slot", "header");
+        $this->append($this->header);
     }
 
     public function __set($name, $value)

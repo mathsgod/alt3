@@ -43,6 +43,10 @@ class User_list extends App\Page
         $rt->cellUrl = "User";
 
         $rt->addDropdown("XLSX", [$this, "getXLSX"], $_GET);
+
+
+//        $rt->header->innerHTML .= "<button>aa</button>";
+//        $rt->header->innerHTML .= "<button>bb</button>";
         return $rt;
     }
 

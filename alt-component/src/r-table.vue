@@ -1,5 +1,18 @@
 <template>
   <el-card v-loading="loading" :body-style="{ padding: '0px' }" shadow="never">
+    <div>
+      <slot name="header"></slot>
+      
+      <el-dropdown v-if="$slots.dropdown">
+        <el-button>
+          Export
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <slot name="dropdown"> </slot>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
     <div class="table-responsive">
       <table class="table table-hover table-sm table-bordered m-0">
         <thead>
@@ -108,16 +121,6 @@
           <i class="fas fa-fw fa-list"></i>
         </el-button>
       </el-tooltip>
-
-      <el-dropdown v-if="$slots.dropdown">
-        <el-button>
-          Export
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <slot name="dropdown"> </slot>
-        </el-dropdown-menu>
-      </el-dropdown>
 
       <el-tooltip content="Save search filter" placement="top">
         <el-button @click="onSaveSearchFilter()">
@@ -296,10 +299,9 @@ export default {
     }
   },
   methods: {
-    selectAll(){
-
-      this.selectedValue=[];
-      for(let k in this.localData){
+    selectAll() {
+      this.selectedValue = [];
+      for (let k in this.localData) {
         this.selectedValue.push(this.localData[k][this.key]);
       }
     },
