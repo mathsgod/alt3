@@ -83,6 +83,7 @@
 
 <script>
 export default {
+  inject:['rTable'],
   props: {
     column: Object,
   },
@@ -134,6 +135,9 @@ export default {
         ],
       },
     };
+  },
+  created(){
+    this.search=this.rTable.searchData[this.column.prop]?.value;
   },
   methods: {
     doSearch() {

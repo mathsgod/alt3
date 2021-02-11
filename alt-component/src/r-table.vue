@@ -1,8 +1,9 @@
 <template>
   <el-card v-loading="loading" :body-style="{ padding: '0px' }" shadow="never">
     <div>
+      <el-button @click="clearSearch">Clear search</el-button>
       <slot name="header"></slot>
-      
+
       <el-dropdown v-if="$slots.dropdown">
         <el-button>
           Export
@@ -294,11 +295,24 @@ export default {
       });
     }
 
+    if (this.getStorage("search")) {
+      this.searchData = this.getStorage("search");
+    }
+
     if (this.remote) {
       await this.reload();
     }
   },
   methods: {
+    clearSearch() {
+      
+      this.searchData = {};
+      for(let s of this.$refs.searchColumn){
+        s.search="";
+      }
+      
+      this.reload();
+    },
     selectAll() {
       this.selectedValue = [];
       for (let k in this.localData) {
@@ -426,6 +440,8 @@ export default {
       };
 
       this.reload();
+
+      this.updateStorage("search", this.searchData);
     },
     async reload() {
       this.loading = true;
