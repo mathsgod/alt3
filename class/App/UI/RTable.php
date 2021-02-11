@@ -8,6 +8,7 @@ use P\HTMLElement;
 
 /**
  * @property bool $selectable 
+ * @property \P\Element $header
  */
 class RTable extends HTMLElement
 {
