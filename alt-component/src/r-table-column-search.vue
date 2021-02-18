@@ -137,7 +137,7 @@ export default {
     };
   },
   created(){
-    this.search=this.rTable.searchData[this.column.prop]?.value;
+    this.search=this.rTable.searchValue[this.column.prop];
   },
   methods: {
     doSearch() {

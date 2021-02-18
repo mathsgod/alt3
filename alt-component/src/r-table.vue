@@ -213,6 +213,7 @@ export default {
       dropdowns: [],
       subRow: [],
       subRowContent: [],
+      searchValue: {},
     };
   },
   computed: {
@@ -295,8 +296,23 @@ export default {
       });
     }
 
-    if (this.getStorage("search")) {
-      this.searchData = this.getStorage("search");
+    let s = this.getStorage("search");
+
+    if (s) {
+      this.searchValue = s;
+//      console.log(this.searchValue);
+
+      this.searchData = {};
+      for (let c of this.columns) {
+        if (this.searchValue[c.prop]) {
+          this.searchData[c.prop] = {
+            name: c.prop,
+            method: "like",
+            value: this.searchValue[c.prop],
+          };
+        }
+      }
+     // console.log(this.searchData);
     }
 
     if (this.remote) {
@@ -440,11 +456,16 @@ export default {
         method,
       };
 
-      this.reload();
+      let ss = {};
+      for (let s of Object.values(this.searchData)) {
+        ss[s.name] = s.value;
+      }
+      this.updateStorage("search", ss);
 
-      this.updateStorage("search", this.searchData);
+      this.reload();
     },
     async reload() {
+      console.log(this.searchData);
       this.loading = true;
       this.draw++;
 
