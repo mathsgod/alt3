@@ -252,6 +252,9 @@ export default {
     },
   },
   watch: {
+    selectedValue() {
+      this.$emit("select-change",this.selectedValue);
+    },
     async localPageLength() {
       this.page = 1;
       await this.reload();
@@ -300,7 +303,7 @@ export default {
 
     if (s) {
       this.searchValue = s;
-//      console.log(this.searchValue);
+      //      console.log(this.searchValue);
 
       this.searchData = {};
       for (let c of this.columns) {
@@ -312,7 +315,7 @@ export default {
           };
         }
       }
-     // console.log(this.searchData);
+      // console.log(this.searchData);
     }
 
     if (this.remote) {
