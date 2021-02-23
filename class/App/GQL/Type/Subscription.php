@@ -37,6 +37,11 @@ class Subscription
             throw new Error("access deny");
         }
 
+        //check user duplication
+        if (User::Query(["username" => $args["username"]])->count()) {
+            throw new Error("user " . $args["usrname"] . " already exists");
+        }
+
 
         $user = new User();
         $user->bind($args);
