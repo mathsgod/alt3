@@ -65,6 +65,7 @@ class MasterPage extends \R\Page
         $path = $request->getUri()->getPath();
         if ($path[0] == "/") $path = substr($path, 1);
 
+
         $menu_gen = function ($ms) use (&$menu_gen, $app, $path) {
             $sidebar_menu = [];
             foreach ($ms as $modulegroup_name => $modules) {

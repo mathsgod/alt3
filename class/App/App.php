@@ -572,6 +572,7 @@ class App extends \R\App
             return true;
         }
 
+     
         $acl = $this->acl["action"]["deny"][$module];
         if (in_array("FC", $acl)) {
             return false;

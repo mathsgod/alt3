@@ -1,5 +1,5 @@
 class: App\User
-show_create: 1
+show_create: true
 icon: fa fa-user fa-fw
 group: System
 
