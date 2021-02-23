@@ -14,7 +14,7 @@ class User_index extends ALT\Page
         //$tab->add("All user", "list", - 1)->addBadge("a")->addClass("bg-yellow");
         $tab->add("All user", "list", -1); //->addClass("bg-yellow");
 
-        $tab->add("All user2", "list2", -1); //->addClass("bg-yellow");
+//        $tab->add("All user2", "list2", -1); //->addClass("bg-yellow");
 
 
         //        if ($this->app->user->isAdmin()) {
