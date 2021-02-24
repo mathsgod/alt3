@@ -28,10 +28,8 @@ var init_vue = function (element) {
 }
 
 var observer = new MutationObserver(mutationList => {
-    setTimeout(() => {
-        mutationList.forEach(record => {
-            init_vue(record.target);
-        });
+    mutationList.forEach(record => {
+        init_vue(record.target);
     });
 });
 observer.observe(document.body, { attributes: false, childList: true, subtree: true });
