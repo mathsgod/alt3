@@ -1,0 +1,12 @@
+<script>
+
+    setTimeout(() => {
+        let rt = document.getElementById("rt").__vue__.$parent;
+
+        rt.$on("select-change", (values) => {
+            console.log(values);
+
+        });
+
+    }, 100)
+</script>

@@ -10,7 +10,8 @@ class EventLog_list extends App\Page
     public function get()
     {
         $rt = $this->createRTable([$this, "ds"]);
-//        $rt->selectable();
+        $rt->setAttribute("id","rt");
+        $rt->selectable=true;
         $rt->order("eventlog_id", "desc");
         $rt->addView();
         $rt->add("ID", "eventlog_id")->ss();
@@ -27,6 +28,9 @@ class EventLog_list extends App\Page
     public function ds($rt)
     {
         $rt->source = EventLog::Query();
+
+        $rt->setKey("eventlog_id");
+        
         $rt->add("user_id", "User()")->alink("v");
 
         $rt->add("status", "Status()");

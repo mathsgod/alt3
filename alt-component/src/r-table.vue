@@ -40,7 +40,7 @@
                   v-model="selectedValue"
                   class="r-table-checkbox-group"
                 >
-                  <el-checkbox :label="d[key]"></el-checkbox>
+                  <el-checkbox :label="d[key]" @change="$emit('select-change',selectedValue)"></el-checkbox>
                 </el-checkbox-group>
               </td>
 
@@ -252,9 +252,6 @@ export default {
     },
   },
   watch: {
-    selectedValue() {
-      this.$emit("select-change",this.selectedValue);
-    },
     async localPageLength() {
       this.page = 1;
       await this.reload();
