@@ -29,7 +29,8 @@ class RTRequest
         foreach ($this->query["filter"] as $filter) {
             $name = $filter["name"];
             if (isset($this->search_callback[$name])) {
-                $source->where(call_user_func($this->search_callback[$name], $filter["value"]));
+                $r = call_user_func($this->search_callback[$name], $filter["value"]);
+                $source->where($r[0], $r[1]);
                 continue;
             }
 
