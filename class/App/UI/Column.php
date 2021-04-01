@@ -319,9 +319,9 @@ class Column implements JsonSerializable
 
         if ($this->alink && $last_obj) {
 
-            $a = html("a")->href($last_obj->uri($this->alink));
+            $a = html("el-link")->href($last_obj->uri($this->alink))->type("info");
             $a->text($result);
-            $result = $a;
+            $result = "<vue>$a</vue>";
         }
         return $result;
     }

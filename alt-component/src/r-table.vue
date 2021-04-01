@@ -443,7 +443,7 @@ export default {
       //should be reload
     },
     onCellClicked() {
-      console.log("cell clicked");
+      //console.log("cell clicked");
     },
     onColumnSelectorClose() {},
     loadData() {},
@@ -465,7 +465,7 @@ export default {
       this.reload();
     },
     async reload() {
-      console.log(this.searchData);
+      //console.log(this.searchData);
       this.loading = true;
       this.draw++;
 
