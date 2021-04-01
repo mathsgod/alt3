@@ -165,7 +165,7 @@ class Col extends HTMLElement
 
                 $href = $object->uri($uri);
 
-                $a = p("a")->attr('href', $href);
+                $a = p("el-link")->attr('href', $href)->attr("type","info");
                 $a->append(p($cell)->contents());
                 $a->appendTo(p($cell));
             }
