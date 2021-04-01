@@ -123,7 +123,7 @@ class V extends Card
         if ($getter instanceof \Closure) {
             $cell->html($getter($this->object));
         } elseif ($getter) {
-            $cell->attr("data-field", $getter);
+            $cell->attr("data-name", $getter);
             $cell->text(Func::_($getter)->call($this->object));
         }
 
