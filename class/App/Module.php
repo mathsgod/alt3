@@ -3,7 +3,7 @@
 namespace App;
 use ALT\NavItem;
 
-class Module
+class Module 
 {
     public static $_app;
 
