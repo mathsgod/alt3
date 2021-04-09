@@ -14,7 +14,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class App extends \R\App
+class App extends \R\App implements TranslatorInterface
 {
     public $config = [];
     public $user;
@@ -561,9 +561,9 @@ class App extends \R\App
         return $modules;
     }
 
-    public function translate(string $str): string
+    public function translate(string $name): string
     {
-        return $this->translate[$str] ?? $str;
+        return $this->translate[$name] ?? $name;
     }
 
     public function allowAction(string $action, string $module): bool
@@ -572,7 +572,7 @@ class App extends \R\App
             return true;
         }
 
-     
+
         $acl = $this->acl["action"]["deny"][$module];
         if (in_array("FC", $acl)) {
             return false;

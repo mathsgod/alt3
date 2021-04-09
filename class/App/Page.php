@@ -13,7 +13,7 @@ use PHP\Psr7\StringStream;
 use ReflectionObject;
 use Vue\Scriptable;
 
-class Page extends \R\Page
+class Page extends \R\Page implements TranslatorInterface
 {
     /**
      * @var \App\App
@@ -31,13 +31,14 @@ class Page extends \R\Page
         $this->alert = $app->alert;
     }
 
-    public function translate(string $str): string
+    public function translate(string $name): string
     {
         if ($module = $this->module()) {
-            return $module->translate($str);
+            return $module->translate($name);
         }
-        return $this->app->translate($str);
+        return $this->app->translate($name);
     }
+
 
     public function object()
     {
@@ -104,6 +105,8 @@ class Page extends \R\Page
     protected function createRTable(array $function)
     {
         $rtable = new RTable($this);
+        $rtable->setTranslator($this);
+
         $path = (string) $function[0]->request->getURI()->getPath();
         $remote = (string) $path . "/" . $function[1] . "?" . $this->request->getUri()->getQuery();
         $rtable->setAttribute("remote", $remote);

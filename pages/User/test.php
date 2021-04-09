@@ -4,6 +4,17 @@ class User_test extends ALT\Page
 {
     public function get()
     {
+
+        $t = new App\Testing(3);
+        $t->d = "2022-01-02";
+        $t->save();
+        outp($t);
+
+        $t = new App\Testing(3);
+        outp($t);
+
+
+        return;
         $this->addLib("ckeditor/ckeditor");
         $m = $this->createE(["cke" => "hello"]);
         $m->add("CKE")->ckeditor("cke");

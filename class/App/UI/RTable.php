@@ -3,14 +3,17 @@
 
 namespace App\UI;
 
+use App\Translatable;
+use App\TranslatorInterface;
 use P\HTMLElement;
 
 
 /**
  * @property bool $selectable 
  * @property \P\Element $header
+ * @property \App\TranslatorInterface $translator
  */
-class RTable extends HTMLElement
+class RTable extends HTMLElement implements Translatable
 {
     public function __construct()
     {
@@ -23,6 +26,11 @@ class RTable extends HTMLElement
         $this->header = new Element("template");
         $this->header->setAttribute("slot", "header");
         $this->append($this->header);
+    }
+
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
     }
 
     public function __set($name, $value)
@@ -102,9 +110,8 @@ class RTable extends HTMLElement
     public function add(string $label, string $prop)
     {
         $col = new RTableColumn();
-        $col->setAttribute("label", $label);
+        $col->setAttribute("label", $this->translator->translate($label));
         $col->setAttribute("prop", $prop);
-
 
         $this->append($col);
 
