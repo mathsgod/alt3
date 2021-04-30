@@ -350,7 +350,10 @@ class RTableResponse implements JsonSerializable
                     continue;
                 } elseif ($c["method"] == "like") {
                     $name = ":" . $c["name"];
-                    $source->where($c["name"] . " like $name", [$name => "%$value%"]);
+                    if (strpos($c["name"],".") !== false) {
+                        $name = str_replace(".", "_", $name);
+                    }
+                    $source->where($c["name"] . " like $name", [$name => "%$value%"]);s
                 } elseif ($c["method"] == "eq") {
                     $source->filter([$c["name"] => $value]);
                 } elseif ($c["method"] == "between") {
