@@ -10,6 +10,7 @@ menu:
   My favorite:
     icon: fa fa-heart fa-fw
     link: User/myfav
+    target: blank
   
 translate:
   zh-hk:

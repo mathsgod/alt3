@@ -1,6 +1,6 @@
 <template>
   <li class="has-treeview" :class="getClass">
-    <a :href="menu.link" class="nav-link" :class="{ active: isActive }">
+    <a :href="menu.link" class="nav-link" :class="{ active: isActive }" :target="menu.target">
       <i class="nav-icon" :class="menu.icon"></i>
       <p>
         {{ menu.label }}
