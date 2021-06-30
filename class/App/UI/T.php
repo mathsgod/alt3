@@ -58,7 +58,9 @@ class T extends Card
 
     public function setCreate(string $uri)
     {
-        return $this->header->addButton(null, $uri)->icon("fa fa-fw fa-plus")->addClass("btn-primary");
+        $button = $this->header->addButton(null, $uri)->icon("fa fa-fw fa-plus");
+        $button->classList->add("btn-primary");
+        return $button;
     }
 
     public function formCreate($options, $default = null)
@@ -96,5 +98,5 @@ class T extends Card
 
             return "<button class='btn btn-xs btn-primary table-childrow-btn table-childrow-close' data-url='$url' data-target=''><i class='fa fa-chevron-up'></i></button>";
         });
-    }    
+    }
 }
