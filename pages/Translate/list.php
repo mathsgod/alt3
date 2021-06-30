@@ -33,6 +33,7 @@ class Translate_list extends App\Page
             "language" => $lang[0]
         ]);
 
+
         foreach ($this->app->config["language"] as $v => $l) {
             $rt->add($l, function ($o) use ($v) {
                 $w = [];

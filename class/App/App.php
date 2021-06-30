@@ -116,6 +116,7 @@ class App extends \R\App implements TranslatorInterface
         $uri = $uri->withPath($path);
         $this->request = $this->request->withUri($uri);
     }
+    
 
     public function loginWith(User $user)
     {

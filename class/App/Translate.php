@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Symfony\Component\Yaml\Yaml;
@@ -123,21 +124,20 @@ class Translate extends Model
 
 	public function delete()
 	{
+		$q = Translate::Query([
+			"name" => $this->name
+		]);
 		// delete other
-		$w[] = ["name=?", $this->name];
+
+
 		if ($this->module) {
-			$w[] = ["module=?", $this->module];
+			$q->filter(["module" => $this->module]);
 		} else {
-			$w[] = "module is null";
+			$q->where("module is null");
 		}
 
-		if ($this->action) {
-			$w[] = ["action=?", $this->action];
-		} else {
-			$w[] = "action is null";
-		}
-
-		Translate::Query()->where($w)->delete()->execute();
+		$q->filter(["action" => $this->action]);
+		$q->delete()->execute();
 	}
 
 	public function get($language)

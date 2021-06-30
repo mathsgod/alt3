@@ -42,23 +42,6 @@ class Tab extends Card
         $this->classList[] = "my_tab";
     }
 
-    public function collapsible()
-    {
-        return;
-        $li = p("li")->addClass("pull-right");
-        $a = p("a")->attr("href", "#")->html('<i class="fa fa-minus"></i>')->attr('data-widget', "collapse")->appendTo($li);
-        p($this->navs)->append($li);
-    }
-
-    public function pinable()
-    {
-        return;
-        $li = p("li")->addClass("pull-right");
-        $a = p("a")->attr("href", "#")->html('<i class="fa fa-thumbtack"></i>')->appendTo($li);
-        $a->attr("@click.prevent", '$emit("toggle-pin")');
-        p($this->navs)->append($li);
-        $this->attributes[":pinable"] = "true";
-    }
 
     public function add($label, $uri, $t = null)
     {

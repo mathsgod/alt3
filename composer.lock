@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a182b4c09ae1c514c39b41ef4c3cd078",
+    "content-hash": "f138677fd17bf578508e441d43efbc62",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -153,16 +153,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "4.1.4",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "f38ff0d968788aef0ddefb957062024b4ea521e1"
+                "reference": "d6d964bda88ea9e40032018208b073845cbd3c2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/f38ff0d968788aef0ddefb957062024b4ea521e1",
-                "reference": "f38ff0d968788aef0ddefb957062024b4ea521e1",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/d6d964bda88ea9e40032018208b073845cbd3c2e",
+                "reference": "d6d964bda88ea9e40032018208b073845cbd3c2e",
                 "shasum": ""
             },
             "require": {
@@ -213,7 +213,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/4.1.4"
+                "source": "https://github.com/endroid/qr-code/tree/4.2.0"
             },
             "funding": [
                 {
@@ -221,7 +221,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-08T14:30:54+00:00"
+            "time": "2021-06-27T06:44:36+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1186,16 +1186,16 @@
         },
         {
             "name": "mathsgod/p-query",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathsgod/p-query.git",
-                "reference": "281bd466c49bcf49baec8f45c968d158bd112f07"
+                "reference": "0938c5387619b9f4c98e141c25d481eff8cab9bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathsgod/p-query/zipball/281bd466c49bcf49baec8f45c968d158bd112f07",
-                "reference": "281bd466c49bcf49baec8f45c968d158bd112f07",
+                "url": "https://api.github.com/repos/mathsgod/p-query/zipball/0938c5387619b9f4c98e141c25d481eff8cab9bf",
+                "reference": "0938c5387619b9f4c98e141c25d481eff8cab9bf",
                 "shasum": ""
             },
             "require": {
@@ -1227,9 +1227,9 @@
             "description": "Using jQuery liked method to parse html by using php",
             "support": {
                 "issues": "https://github.com/mathsgod/p-query/issues",
-                "source": "https://github.com/mathsgod/p-query/tree/3.0.0"
+                "source": "https://github.com/mathsgod/p-query/tree/3.0.1"
             },
-            "time": "2021-06-25T09:56:27+00:00"
+            "time": "2021-06-30T08:30:53+00:00"
         },
         {
             "name": "mathsgod/php-psr7",
@@ -1326,11 +1326,11 @@
         },
         {
             "name": "mathsgod/r",
-            "version": "3.7.2",
+            "version": "3.7.3",
             "source": {
                 "type": "git",
-                "url": "https://mathsgod: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@github.com/mathsgod/r.git",
-                "reference": "294ea825a425a770dc4cf7dfd5f07e7b8f6f37e9"
+                "url": "https://mathsgod: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@github.com/mathsgod/r.git",
+                "reference": "0b16fd41835b4d0b42d4bbd8f8ec5db1aab4d47a"
             },
             "require": {
                 "mathsgod/php-psr7": "^1.0",
@@ -1365,7 +1365,7 @@
                 }
             ],
             "description": "raymond core",
-            "time": "2020-09-09T07:15:33+00:00"
+            "time": "2021-06-30T08:17:27+00:00"
         },
         {
             "name": "mathsgod/r-db",
@@ -1517,16 +1517,16 @@
         },
         {
             "name": "myclabs/php-enum",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "46cf3d8498b095bd33727b13fd5707263af99421"
+                "reference": "55555d31a622b4bc9662664132a0533ae6ef47b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/46cf3d8498b095bd33727b13fd5707263af99421",
-                "reference": "46cf3d8498b095bd33727b13fd5707263af99421",
+                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/55555d31a622b4bc9662664132a0533ae6ef47b1",
+                "reference": "55555d31a622b4bc9662664132a0533ae6ef47b1",
                 "shasum": ""
             },
             "require": {
@@ -1536,7 +1536,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "1.*",
-                "vimeo/psalm": "^4.5.1"
+                "vimeo/psalm": "^4.6.2"
             },
             "type": "library",
             "autoload": {
@@ -1561,7 +1561,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/php-enum/issues",
-                "source": "https://github.com/myclabs/php-enum/tree/1.8.0"
+                "source": "https://github.com/myclabs/php-enum/tree/1.8.1"
             },
             "funding": [
                 {
@@ -1573,7 +1573,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-15T16:11:48+00:00"
+            "time": "2021-06-29T09:20:05+00:00"
         },
         {
             "name": "paragonie/random_compat",
