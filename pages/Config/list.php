@@ -14,8 +14,8 @@ class Config_list extends App\Page
             }
 
             $t = $this->createT($c);
-            $t->header->title = $category;
-
+            
+            
             $t->add("Name", function ($o) {
                 return $o[0];
             });

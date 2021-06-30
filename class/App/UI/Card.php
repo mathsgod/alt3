@@ -82,7 +82,7 @@ class Card extends HTMLElement implements Scriptable
         return p($this->body);
     }
 
-    public function header($title = null)
+    public function header(string $title = null)
     {
         if ($title) {
             $this->header->title = $title;
